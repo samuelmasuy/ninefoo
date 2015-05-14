@@ -34,3 +34,4 @@ And for mentions:
 
 Amir Commit
 Melissa Commit
+Vince Commit
