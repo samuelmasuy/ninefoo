@@ -70,13 +70,13 @@ And for mentions:
 
 ## git Basics
 
-**git clone** theUrlOfTheRepo
-**git pull**  Retreive changes from the remote repo to your local copy, always pull remote changes before you start working. <br>
-**git status**
-**git add**  myFiles
-**git commit** -m "the commit message inside quotes"
-**git push** origin myBranch
-**git diff** - see your changes before commiting
-**git branch** - Create your own branch.
-**git push --set-upstream origin** - Push origin on GitHub.
+**git clone** theUrlOfTheRepo  
+**git pull**  Retreive changes from the remote repo to your local copy, always pull remote changes before you start working.  
+**git status**  
+**git add**  myFiles  
+**git commit** -m "the commit message inside quotes"  
+**git push** origin myBranch  
+**git diff** - see your changes before commiting  
+**git branch** - Create your own branch.  
+**git push --set-upstream origin** - Push origin on GitHub.  
 **git checkout** - Switch to a branch.
