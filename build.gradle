@@ -4,15 +4,17 @@ apply plugin: 'eclipse'
 
 sourceCompatibility = 1.5
 version = '1.0'
+mainClassName = "ninefoo.application.Application"
 jar {
     manifest {
         attributes 'Implementation-Title': 'ninefoo',
-                'Implementation-Version': version
+                'Implementation-Version': 1.0,
+                'Main-Class': 'ninefoo.application.Application'
     }
 }
-
-mainClassName = "ninefoo.application.Application"
-
+sourceSets {
+ main.java.srcDir "src/main"
+}
 
 repositories {
     mavenCentral()
