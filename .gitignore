@@ -49,4 +49,5 @@ local.properties
 .gradle
 build/
 gradle-app.setting
+.gradletasknamecache
 !gradle-wrapper.jar
