@@ -50,6 +50,7 @@ Note we will use for this project:
 
 - ``gradle build`` will build and test the project.
 - ``gradle test``
+- ``gradle run`` run the main application.
 
 For a gradle quickstart: https://docs.gradle.org/current/userguide/tutorial_java_projects.html
 
@@ -79,4 +80,6 @@ And for mentions:
 **git diff** - see your changes before commiting  
 **git branch** - Create your own branch.  
 **git push --set-upstream origin** - Push origin on GitHub.  
-**git checkout** - Switch to a branch.
+**git checkout** - Switch to a branch.  
+**git log** - See previous commits  
+
