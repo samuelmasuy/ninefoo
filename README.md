@@ -51,6 +51,7 @@ Note we will use for this project:
 - ``gradle build`` will build and test the project.
 - ``gradle test``
 - ``gradle run`` run the main application.
+- ``gradle tasks`` for all the possible thing you can do with gradle.
 
 For a gradle quickstart: https://docs.gradle.org/current/userguide/tutorial_java_projects.html
 
