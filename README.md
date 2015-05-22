@@ -10,15 +10,15 @@ Note we will use for this project:
 
 1. Download gradle binaries
 
-https://services.gradle.org/distributions/gradle-2.4-bin.zip
+    https://services.gradle.org/distributions/gradle-2.4-bin.zip
 
 2. Add gradle to you environment path
 
-GRADLE_HOME/bin to your PATH environment variable
+    GRADLE_HOME/bin to your PATH environment variable
 
 3. Make sure it works
 
-Navigate to the git repo in your terminal.
+    Navigate to the git repo in your terminal.
 
     ```bash
     cd ninefoo/
