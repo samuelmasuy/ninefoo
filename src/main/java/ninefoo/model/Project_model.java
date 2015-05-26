@@ -15,21 +15,22 @@ public class Project_model{
         Connection connection = null;
         try
         {
+            DbManager.createTables();
             // create a database connection
             connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
             
-            CreateTables.createStatusTable(statement);
-            CreateTables.createMemberTable(statement);
-            CreateTables.createProjectTable(statement);
-            CreateTables.createActivityTable(statement);
-            CreateTables.createActivityLogTable(statement);
-            CreateTables.createConfigTable(statement);
-            CreateTables.createMemberWorkProjectTable(statement);
-            CreateTables.createMemberManagesProjectTable(statement);
-            CreateTables.createActivityPrerequisiteTable(statement);
-            CreateTables.createMemberConfigTable(statement);
+//            CreateTables.createStatusTable(statement);
+//            CreateTables.createMemberTable(statement);
+//            CreateTables.createProjectTable(statement);
+//            CreateTables.createActivityTable(statement);
+//            CreateTables.createActivityLogTable(statement);
+//            CreateTables.createConfigTable(statement);
+//            CreateTables.createMemberWorkProjectTable(statement);
+//            CreateTables.createMemberManagesProjectTable(statement);
+//            CreateTables.createActivityPrerequisiteTable(statement);
+//            CreateTables.createMemberConfigTable(statement);
 
             statement.executeUpdate("drop table if exists person");
             statement.executeUpdate("create table person (id integer, name string)");
