@@ -51,3 +51,6 @@ build/
 gradle-app.setting
 .gradletasknamecache
 !gradle-wrapper.jar
+
+#db
+sample.db
