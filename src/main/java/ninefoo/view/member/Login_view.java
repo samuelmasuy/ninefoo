@@ -94,7 +94,7 @@ public class Login_view extends FormPanel{
 		// Add components to fixedPanel
 		int row = 0;
 		this.gcGrid(row++, 0, 2);
-		fixedPanel.add(new JLabel(new ImageIcon(getClass().getResource(""))), gc);
+		fixedPanel.add(new JLabel(new ImageIcon(getClass().getResource("/images/login_user.png"))), gc);
 		
 		this.gcGrid(row++, 0, 2);
 		fixedPanel.add(this.errorMessage, gc);

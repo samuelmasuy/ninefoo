@@ -20,9 +20,11 @@ public class Tools extends JPanel{
 		// Set layout
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		
-		// Initialize components			
-		this.newProject = new JButton(new ImageIcon(getClass().getResource("")));
-		this.newMember = new JButton(new ImageIcon(getClass().getResource("")));
+		// Initialize components
+		System.out.println(getClass());
+		this.newProject = new JButton(new ImageIcon(getClass().getResource("/images/new_project.png")));
+		this.newMember = new JButton(new ImageIcon(getClass().getResource("/images/new_user.png")));
+
 		
 		// Customize buttons
 		this.newProject.setContentAreaFilled(false);
