@@ -2,6 +2,7 @@
 *.class
 # Package Files #
 *.jar
+!sqlite-jdbc-3.8.10.1.jar
 
 # macosx
 .DS_Store
