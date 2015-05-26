@@ -92,7 +92,7 @@ public class Register_view extends FormPanel{
 		
 		// Add components to fixedPanel
 		this.gcGrid(0, 0, 2);
-		fixedPanel.add(new JLabel(new ImageIcon(getClass().getResource(Application.APPLICATION_PATH + "view/images/register_user.png"))), gc);
+		fixedPanel.add(new JLabel(new ImageIcon(getClass().getResource(""))), gc);
 		
 		this.gcGrid(1, 0, 1);
 		fixedPanel.add(new JLabel("First name"), gc);

@@ -29,7 +29,7 @@ public abstract class FormPanel extends JPanel{
 		
 		// Set Border for fixedPanel
 		titledBorder = BorderFactory.createTitledBorder("");
-		titledBorder.setTitleFont(new Font(titledBorder.getTitleFont().getFontName(),Font.PLAIN, 20));
+//		titledBorder.setTitleFont(new Font(titledBorder.getTitleFont().getFontName(),Font.PLAIN, 20));
 		fixedPanel.setBorder(BorderFactory.createCompoundBorder(titledBorder, BorderFactory.createEmptyBorder(10,10,10,10)));
 		
 		// Default configuration gc
