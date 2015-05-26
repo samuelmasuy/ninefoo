@@ -54,4 +54,4 @@ gradle-app.setting
 !gradle-wrapper.jar
 
 #db
-sample.db
+*.db
