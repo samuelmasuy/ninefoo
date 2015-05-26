@@ -49,7 +49,7 @@ public class Member_controller {
 						this.setErrorMessage("Password must be \"demo\".");
 					
 					else if(Application.LANGUAGE_TEXT.getCurrentLanguage() == Application.LANGUAGE_TEXT.FRENCH)
-						this.setErrorMessage("Mot de passe doit être \"demo\".");
+						this.setErrorMessage("Mot de passe doit etre \"demo\".");
 					
 					return false;
 				}

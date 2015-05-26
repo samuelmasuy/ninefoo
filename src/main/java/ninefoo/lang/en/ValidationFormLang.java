@@ -24,7 +24,7 @@ public class ValidationFormLang implements Language{
 		ValidationFormLang.REQUIRED = "%s est requis.";
 		ValidationFormLang.WRONG_FORMAT = "%s est invalide.";
 		ValidationFormLang.WRONG_USERNAME_PASSWORD = "Nom d'utilisateur ou mot de passe incorrect.";
-		ValidationFormLang.MIN_LENGTH = "%s doit être au moins %d.";
-		ValidationFormLang.MAX_LENGTH = "%s doit être au plus %d.";
+		ValidationFormLang.MIN_LENGTH = "%s doit etre au moins %d.";
+		ValidationFormLang.MAX_LENGTH = "%s doit etre au plus %d.";
 	}
 }
