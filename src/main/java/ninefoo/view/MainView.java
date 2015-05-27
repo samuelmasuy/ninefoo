@@ -7,13 +7,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import ninefoo.config.Session;
-import ninefoo.controller.Member_controller;
 import ninefoo.helper.Console;
-import ninefoo.lib.ValidationFeedback;
 import ninefoo.view.include.footer.StatusBar;
 import ninefoo.view.include.menu.Builder;
 import ninefoo.view.include.menu.Menu;
 import ninefoo.view.include.menu.Tools;
+import ninefoo.view.listeners.MemberListener;
 import ninefoo.view.member.Login_view;
 import ninefoo.view.member.Register_view;
 import ninefoo.view.member.listeners.LoginListener;
@@ -36,8 +35,8 @@ public class MainView extends JFrame{
 	// Define variables
 	private JPanel currentCenterPanel;
 	
-	// Define controllers
-	private Member_controller member_controller;
+	// Define listeners
+	private MemberListener memberListener;
 	
 	public MainView(String AppTitle) {
 		
@@ -57,9 +56,6 @@ public class MainView extends JFrame{
 		this.tabularDataPanel = new TabularData_view();
 		this.loginPanel = new Login_view();
 		this.registerPanel = new Register_view();
-		
-		// Initialize controllers
-		this.member_controller = new Member_controller();
 		
 		// Add panels
 		this.add(this.toolsPanel, BorderLayout.NORTH);
@@ -92,21 +88,9 @@ public class MainView extends JFrame{
 			public void login(String username, String password) {
 				Console.log(String.format("Login info= [%s : %s]" , username, password));
 				
-				// Pass info to member_controller
-				ValidationFeedback feedback = member_controller.login(username, password);
-				
-				// If logged is successful
-				if(feedback.isSuccess()){
-					
-					// Change view
-					MainView.this.loadView(tabularDataPanel);
-					Console.log("Login successful");
-				
-				// If not logged in, display error
-				} else {
-					loginPanel.setErrorMessage(feedback.getMessage());
-					Console.error(feedback.getMessage());
-				}
+				// Pass info to controller
+				if(memberListener != null)
+					memberListener.login(username, password);
 			}
 		});
 		
@@ -176,5 +160,34 @@ public class MainView extends JFrame{
 		this.add(currentCenterPanel, BorderLayout.CENTER);
 		this.currentCenterPanel.setVisible(true);
 		this.repaint();
+	}
+	
+	/**
+	 * Set member listener
+	 * @param memberListener
+	 */
+	public void setMemberListener(MemberListener memberListener){
+		this.memberListener = memberListener;
+	};
+	
+	/**
+	 * Try login (Information sent from Controller)
+	 * @param success
+	 * @param message
+	 */
+	public void tryLogin(boolean success, String message){
+		
+		// If logged is successful
+		if(success){
+			
+			// Change view
+			MainView.this.loadView(tabularDataPanel);
+			Console.log("Login successful");
+		
+		// If not logged in, display error
+		} else {
+			loginPanel.setErrorMessage(message);
+			Console.error(message);
+		}
 	}
 }

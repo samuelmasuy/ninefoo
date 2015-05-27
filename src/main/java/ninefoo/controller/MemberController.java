@@ -3,25 +3,24 @@ package ninefoo.controller;
 import ninefoo.application.Application;
 import ninefoo.config.Session;
 import ninefoo.lang.en.ValidationFormLang;
-import ninefoo.lib.ValidationFeedback;
 import ninefoo.lib.ValidationForm;
 import ninefoo.lib.ValidationRule;
+import ninefoo.view.MainView;
+import ninefoo.view.listeners.MemberListener;
 
-public class Member_controller {
+public class MemberController extends Controller implements MemberListener{
 	
 	// Constructor
-	public Member_controller() {
-		// TODO to be completed
-		
+	public MemberController(MainView view) {
+		super(view);
 	}
 	
 	/**
 	 * Validate login
 	 * @param username
 	 * @param password
-	 * @return ValidationFeedback
 	 */
-	public ValidationFeedback login(String username, final String password){
+	public void login(String username, final String password){
 		
 		// Create a validation form
 		ValidationForm validation = new ValidationForm();
@@ -73,16 +72,16 @@ public class Member_controller {
 				newSession.open(); // Session must be opened before setting the data inside it
 				newSession.setUserId(1);
 				
-				return new ValidationFeedback(true, null);
+				this.view.tryLogin(true, null);
 			
 			// If user not found
 			}else{
-				return new ValidationFeedback(false, ValidationFormLang.WRONG_USERNAME_PASSWORD);
+				this.view.tryLogin(false, ValidationFormLang.WRONG_USERNAME_PASSWORD);
 			}
 		
 		// If requirements are not met
 		} else {
-			return new ValidationFeedback(false, validation.getError());
+			this.view.tryLogin(false, validation.getError());
 		}
 	}
 }
