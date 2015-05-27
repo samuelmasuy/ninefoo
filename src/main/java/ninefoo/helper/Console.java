@@ -27,7 +27,7 @@ public class Console {
 	 * @param msg Message to be printed
 	 */
 	public static void error(String msg){
-		System.out.println(Console.template("ERROR", msg));
+		System.err.println(Console.template("ERROR", msg));
 	}
 	
 	/**
