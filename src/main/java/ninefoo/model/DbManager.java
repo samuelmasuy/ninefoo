@@ -51,7 +51,10 @@ public class DbManager {
         createProjectTable(statement);
         createProjectMemberTable(statement);
         createActivityTable(statement);
+        createActivityRelationTable(statement);
+        createActivityLogTable(statement);
     }
+
     private static void createMemberTable(Statement statement) throws SQLException {
         statement.executeUpdate("DROP TABLE IF EXISTS member");
         statement.executeUpdate("CREATE TABLE member(" +
@@ -61,6 +64,7 @@ public class DbManager {
                 "username           VARCHAR(50), " +
                 "password           VARCHAR(50), " +
                 "register_date      DATETIME    DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')), " +
+
                 "UNIQUE (username) " +
         ")");
     }
@@ -100,6 +104,7 @@ public class DbManager {
                 "project_id         INT, " +
                 "member_id          INT, " +
                 "role_id            INT, " +
+
                 "PRIMARY KEY (project_id, member_id, role_id), " +
                 "FOREIGN KEY (project_id)       REFERENCES project(project_id) " +
                 "                               ON UPDATE CASCADE ON DELETE CASCADE, " +
@@ -113,20 +118,59 @@ public class DbManager {
     private static void createActivityTable(Statement statement) throws SQLException {
         statement.executeUpdate("DROP TABLE IF EXISTS activity");
         statement.executeUpdate("CREATE TABLE activity(" +
-                "activity_id        INTEGER     PRIMARY KEY         AUTOINCREMENT, " +
-                "activity_label     VARCHAR(50), " +
-                "description        VARCHAR(255), " +
-                "duration           INT, " +
+                "activity_id            INTEGER     PRIMARY KEY         AUTOINCREMENT, " +
+                "activity_label         VARCHAR(50), " +
+                "description            VARCHAR(255), " +
+                "duration               INT, " +
                 "optimistic_duration    INT, " +
                 "likely_duration        INT, " +
                 "pessimistic_duration   INT, " +
                 "create_date            DATETIME    DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')), " +
                 "project_id             INT         NOT NULL, " +
                 "member_id              INT, " +
+                "prerequisite           INT, " +
+
                 "FOREIGN KEY (project_id)       REFERENCES project(project_id) " +
                 "                               ON UPDATE CASCADE ON DELETE CASCADE, " +
                 "FOREIGN KEY (member_id)        REFERENCES member(member_id) " +
-                "                               ON UPDATE CASCADE ON DELETE CASCADE" +
+                "                               ON UPDATE CASCADE ON DELETE CASCADE, " +
+                "FOREIGN KEY (prerequisite)     REFERENCES activity(activity_id) " +
+                "                               ON UPDATE CASCADE ON DELETE CASCADE " +
+        ")");
+    }
+
+    private static void createActivityRelationTable(Statement statement) throws SQLException {
+        statement.executeUpdate("DROP TABLE IF EXISTS activity_relation");
+        statement.executeUpdate("CREATE TABLE activity_relation(" +
+                "activity_id            INT, " +
+                "prereq_activity_id     INT, " +
+
+                "PRIMARY KEY (activity_id, prereq_activity_id), " +
+                "FOREIGN KEY (activity_id)          REFERENCES activity(activity_id) " +
+                "                                   ON UPDATE CASCADE ON DELETE CASCADE, " +
+                "FOREIGN KEY (prereq_activity_id)   REFERENCES activity(activity_id) " +
+                "                                   ON UPDATE CASCADE ON DELETE CASCADE" +
+        ")");
+    }
+
+    private static void createActivityLogTable(Statement statement) throws SQLException {
+        statement.executeUpdate("DROP TABLE IF EXISTS activity_log");
+        statement.executeUpdate("CREATE TABLE activity_log(" +
+                "activity_log_id        INTEGER     PRIMARY KEY        AUTOINCREMENT, " +
+                "project_id             INT, " +
+                "member_id              INT, " +
+                "status_id              INT, " +
+                "activity_id            INT, " +
+                "create_date            DATETIME    DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')), " +
+
+                "FOREIGN KEY (project_id)   REFERENCES project(project_id) " +
+                "                           ON UPDATE CASCADE ON DELETE CASCADE, " +
+                "FOREIGN KEY (member_id)    REFERENCES member(member_id)" +
+                "                           ON UPDATE CASCADE ON DELETE CASCADE, " +
+                "FOREIGN KEY (status_id)    REFERENCES status(status_id) " +
+                "                           ON UPDATE CASCADE ON DELETE CASCADE, " +
+                "FOREIGN KEY (activity_id)  REFERENCES activity(activity_id) " +
+                "                           ON UPDATE CASCADE ON DELETE CASCADE " +
         ")");
     }
 }
