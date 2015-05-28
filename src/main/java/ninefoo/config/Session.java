@@ -1,9 +1,11 @@
 package ninefoo.config;
 
-import ninefoo.helper.Console;
+import org.apache.logging.log4j.LogManager;
+
 
 public class Session {
 
+    private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 	// Create one instance only
 	private final static Session instance = new Session();
 	
@@ -44,11 +46,11 @@ public class Session {
 		// If session opened
 		if(this.isOpened()){
 			this.userId = userId;
-			Console.log("Session populated");
+			LOGGER.info("Session populated");
 		
 		// If session closed
 		} else {
-			Console.log("Cannot popluate a closed session");
+			LOGGER.info("Cannot popluate a closed session");
 		}
 	}
 	
@@ -65,7 +67,7 @@ public class Session {
 	 */
 	public void open(){
 		this.open = true;
-		Console.log("Session opened");
+		LOGGER.info("Session opened");
 	}
 	
 	/**
@@ -73,6 +75,6 @@ public class Session {
 	 */
 	public void close(){
 		this.open = false;
-		Console.log("Session closed");
+		LOGGER.info("Session closed");
 	}
 }

@@ -8,9 +8,11 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import ninefoo.application.Application;
+import org.apache.logging.log4j.LogManager;
 
 public class Tools extends JPanel{
-	
+
+	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 	// Create components
 	private JButton newProject, newMember;
 	
@@ -21,7 +23,7 @@ public class Tools extends JPanel{
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		
 		// Initialize components
-		System.out.println(getClass());
+		LOGGER.error(getClass());
 		this.newProject = new JButton(new ImageIcon(getClass().getResource("/images/new_project.png")));
 		this.newMember = new JButton(new ImageIcon(getClass().getResource("/images/new_user.png")));
 

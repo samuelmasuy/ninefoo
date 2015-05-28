@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import ninefoo.config.Session;
-import ninefoo.helper.Console;
 import ninefoo.view.include.footer.StatusBar;
 import ninefoo.view.include.menu.Builder;
 import ninefoo.view.include.menu.Menu;
@@ -18,9 +17,12 @@ import ninefoo.view.member.Register_view;
 import ninefoo.view.member.listeners.LoginListener;
 import ninefoo.view.member.listeners.RegisterListener;
 import ninefoo.view.project.TabularData_view;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MainView extends JFrame{
-	
+
+    private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 	// Define menu
 	private Menu menu;
 	
@@ -86,7 +88,7 @@ public class MainView extends JFrame{
 			 */
 			@Override
 			public void login(String username, String password) {
-				Console.log(String.format("Login info= [%s : %s]" , username, password));
+				LOGGER.info(String.format("Login info= [%s : %s]", username, password));
 				
 				// Pass info to controller
 				if(memberListener != null)
@@ -105,9 +107,9 @@ public class MainView extends JFrame{
 			 * @param password
 			 */
 			@Override
-			public void register(String firstName, String lastname, String username, String password) {
+			public void register(String firstName, String lastName, String username, String password) {
 				// TODO Send information to the controller
-				Console.log(String.format("Registration info= [%s : %s : %s : %s]" , firstName, lastname, username, password));				
+				LOGGER.info(String.format("Registration info= [%s : %s : %s : %s]", firstName, lastName, username, password));
 				
 			}
 			
@@ -182,12 +184,12 @@ public class MainView extends JFrame{
 			
 			// Change view
 			MainView.this.loadView(tabularDataPanel);
-			Console.log("Login successful");
+			LOGGER.info("Login successful");
 		
 		// If not logged in, display error
 		} else {
 			loginPanel.setErrorMessage(message);
-			Console.error(message);
+			LOGGER.error(message);
 		}
 	}
 }

@@ -1,5 +1,7 @@
 package ninefoo.model;
 
+import org.apache.logging.log4j.LogManager;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,6 +10,8 @@ import java.sql.Statement;
 
 
 public class Project_model{
+    private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
+
     public static void createDatabase() throws ClassNotFoundException {
         // load the sqlite-JDBC driver using the current class loader
         Class.forName("org.sqlite.JDBC");
@@ -40,15 +44,15 @@ public class Project_model{
             while(rs.next())
             {
                 // read the result set
-                System.out.println("name = " + rs.getString("name"));
-                System.out.println("id = " + rs.getInt("id"));
+                LOGGER.debug("name = " + rs.getString("name"));
+                LOGGER.debug("id = " + rs.getInt("id"));
             }
         }
         catch(SQLException e)
         {
             // if the error message is "out of memory",
             // it probably means no database file is found
-            System.err.println(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
         finally
         {
@@ -60,7 +64,7 @@ public class Project_model{
             catch(SQLException e)
             {
                 // connection close failed.
-                System.err.println(e);
+                LOGGER.error(e);
             }
         }
     }
