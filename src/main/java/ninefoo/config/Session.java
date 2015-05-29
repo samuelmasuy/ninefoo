@@ -5,8 +5,10 @@ import org.apache.logging.log4j.LogManager;
 
 public class Session {
 
+	// Logger
     private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
-	// Create one instance only
+	
+    // Create one instance only
 	private final static Session instance = new Session();
 	
 	// Define variables

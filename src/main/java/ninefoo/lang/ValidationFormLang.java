@@ -1,6 +1,5 @@
-package ninefoo.lang.en;
+package ninefoo.lang;
 
-import ninefoo.lang.Language;
 
 public class ValidationFormLang implements Language{
 	
@@ -9,6 +8,7 @@ public class ValidationFormLang implements Language{
 	public static String WRONG_USERNAME_PASSWORD;
 	public static String MIN_LENGTH;
 	public static String MAX_LENGTH;
+	public static String REGISTRATION_SUCCESS;
 	
 	@Override
 	public void load_en() {
@@ -17,6 +17,7 @@ public class ValidationFormLang implements Language{
 		ValidationFormLang.WRONG_USERNAME_PASSWORD = "Wrong username or password.";
 		ValidationFormLang.MIN_LENGTH = "%s must be at least %d.";
 		ValidationFormLang.MAX_LENGTH = "%s must be at most %d.";
+		ValidationFormLang.REGISTRATION_SUCCESS = "Registration successful! Please login.";
 	}
 	
 	@Override
@@ -26,5 +27,6 @@ public class ValidationFormLang implements Language{
 		ValidationFormLang.WRONG_USERNAME_PASSWORD = "Nom d'utilisateur ou mot de passe incorrect.";
 		ValidationFormLang.MIN_LENGTH = "%s doit etre au moins %d.";
 		ValidationFormLang.MAX_LENGTH = "%s doit etre au plus %d.";
+		ValidationFormLang.REGISTRATION_SUCCESS = "Inscription reussie! Connecter vous.";
 	}
 }

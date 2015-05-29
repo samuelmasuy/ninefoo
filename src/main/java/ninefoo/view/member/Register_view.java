@@ -2,10 +2,6 @@ package ninefoo.view.member;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -15,13 +11,10 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 
-import ninefoo.application.Application;
 import ninefoo.lib.FormPanel;
 import ninefoo.view.member.listeners.RegisterListener;
 
@@ -91,33 +84,37 @@ public class Register_view extends FormPanel{
 		});
 		
 		// Add components to fixedPanel
-		this.gcGrid(0, 0, 2);
+		int row = 0;
+		this.gcGrid(row++, 0, 2);
 		fixedPanel.add(new JLabel(new ImageIcon(getClass().getResource("/images/register_user.png"))), gc);
 		
-		this.gcGrid(1, 0, 1);
+		this.gcGrid(row++, 0, 2);
+		fixedPanel.add(this.errorMessage, gc);
+		
+		this.gcGrid(row, 0, 1);
 		fixedPanel.add(new JLabel("First name"), gc);
-		this.gcGrid(1, 1, 1);
+		this.gcGrid(row++, 1, 1);
 		fixedPanel.add(this.firstName, gc);
 		
-		this.gcGrid(2, 0, 1);
+		this.gcGrid(row, 0, 1);
 		fixedPanel.add(new JLabel("Last name"), gc);
-		this.gcGrid(2, 1, 1);
+		this.gcGrid(row++, 1, 1);
 		fixedPanel.add(this.lastName, gc);
 		
-		this.gcGrid(3, 0, 1);
+		this.gcGrid(row, 0, 1);
 		fixedPanel.add(new JLabel("Username"), gc);
-		this.gcGrid(3, 1, 1);
+		this.gcGrid(row++, 1, 1);
 		fixedPanel.add(this.usernameField, gc);
 		
-		this.gcGrid(4, 0, 1);
+		this.gcGrid(row, 0, 1);
 		fixedPanel.add(new JLabel("Password"), gc);
-		this.gcGrid(4, 1, 1);
+		this.gcGrid(row++, 1, 1);
 		fixedPanel.add(this.passwordField, gc);
 		
-		this.gcGrid(5, 1, 1);
+		this.gcGrid(row++, 1, 1);
 		fixedPanel.add(this.registerButton, gc);
 		
-		this.gcGrid(6, 0, 2);
+		this.gcGrid(row++, 0, 2);
 		fixedPanel.add(loginText, gc);
 		
 		// Add components to this panel
@@ -133,5 +130,16 @@ public class Register_view extends FormPanel{
 	 */
 	public void setRegisterListener(RegisterListener registerListener){
 		this.registerListener = registerListener;
+	}
+	
+	/**
+	 * Reset form
+	 */
+	public void reset(){
+		this.errorMessage.setText("");
+		this.usernameField.setText("");
+		this.passwordField.setText("");
+		this.firstName.setText("");
+		this.lastName.setText("");
 	}
 }

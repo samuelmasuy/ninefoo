@@ -2,7 +2,7 @@ package ninefoo.lib;
 
 import java.util.regex.Pattern;
 
-import ninefoo.lang.en.ValidationFormLang;
+import ninefoo.lang.ValidationFormLang;
 
 public class ValidationRule {
 	

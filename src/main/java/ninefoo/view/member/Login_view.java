@@ -15,10 +15,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
-import ninefoo.application.Application;
 import ninefoo.lib.FormPanel;
 import ninefoo.view.member.listeners.LoginListener;
 
@@ -28,7 +26,7 @@ public class Login_view extends FormPanel{
 	private JButton loginButton;
 	private JTextField usernameField;
 	private JPasswordField passwordField;
-	private JLabel registerText, errorMessage;
+	private JLabel registerText, successMessage;
 	private LoginListener loginListener;
 	
 	// Constructor
@@ -42,7 +40,7 @@ public class Login_view extends FormPanel{
 		this.usernameField = new JTextField(10);
 		this.passwordField = new JPasswordField(10);
 		this.registerText = new JLabel("<html>Don't have an account ? <font color=\"#000099\"><u>Register now</u></font></html>");
-		this.errorMessage = new JLabel();
+		this.successMessage = new JLabel();
 		
 		// Configure buttons
 		Border inputPadding = BorderFactory.createEmptyBorder(3, 3, 3, 3);
@@ -50,9 +48,9 @@ public class Login_view extends FormPanel{
 		this.passwordField.setBorder(BorderFactory.createCompoundBorder(this.passwordField.getBorder(), inputPadding));
 		this.registerText.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		
-		// Configure error message
+		// Configure success text
 		this.errorMessage.setFont(new Font(this.errorMessage.getFont().getFontName(), Font.PLAIN, 12));
-		this.errorMessage.setForeground(Color.RED);
+		this.successMessage.setForeground(Color.decode("#4F8A10"));
 		
 		// Set border name
 		this.titledBorder.setTitle("Welcome!");
@@ -98,6 +96,7 @@ public class Login_view extends FormPanel{
 		
 		this.gcGrid(row++, 0, 2);
 		fixedPanel.add(this.errorMessage, gc);
+		fixedPanel.add(this.successMessage, gc);
 		
 		this.gcGrid(row, 0, 1);
 		fixedPanel.add(new JLabel("Username"), gc);
@@ -136,5 +135,25 @@ public class Login_view extends FormPanel{
 	 */
 	public void setErrorMessage(String msg){
 		this.errorMessage.setText(String .format("<html>%s</html>", msg));
+		this.successMessage.setText("");
+	}
+	
+	/**
+	 * Set success message
+	 * @param msg
+	 */
+	public void setSuccessMessage(String msg){
+		this.successMessage.setText(msg);
+		this.errorMessage.setText("");
+	}
+	
+	/**
+	 * Reset form
+	 */
+	public void reset(){
+		this.errorMessage.setText("");
+		this.successMessage.setText("");
+		this.usernameField.setText("");
+		this.passwordField.setText("");
 	}
 }

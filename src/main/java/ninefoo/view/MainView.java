@@ -18,12 +18,13 @@ import ninefoo.view.member.listeners.LoginListener;
 import ninefoo.view.member.listeners.RegisterListener;
 import ninefoo.view.project.TabularData_view;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class MainView extends JFrame{
 
-    private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
-	// Define menu
+    // Logger
+	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
+	
+    // Define menu
 	private Menu menu;
 	
 	// Define panels
@@ -78,6 +79,7 @@ public class MainView extends JFrame{
 			 */
 			@Override
 			public void registerLink() {
+				MainView.this.registerPanel.reset();
 				MainView.this.loadView(registerPanel);
 			}
 			
@@ -108,9 +110,13 @@ public class MainView extends JFrame{
 			 */
 			@Override
 			public void register(String firstName, String lastName, String username, String password) {
-				// TODO Send information to the controller
+				
+				// Logger info
 				LOGGER.info(String.format("Registration info= [%s : %s : %s : %s]", firstName, lastName, username, password));
 				
+				// Pass info to controller
+				if(memberListener != null)
+					memberListener.register(firstName, lastName, username, password);
 			}
 			
 			/**
@@ -118,6 +124,7 @@ public class MainView extends JFrame{
 			 */
 			@Override
 			public void loginLink() {
+				MainView.this.loginPanel.reset();
 				MainView.this.loadView(loginPanel);
 			}
 		});
@@ -190,6 +197,31 @@ public class MainView extends JFrame{
 		} else {
 			loginPanel.setErrorMessage(message);
 			LOGGER.error(message);
+		}
+	}
+	
+	/**
+	 * Try register (Information sent from controller)
+	 * @param success
+	 * @param message
+	 */
+	public void tryRegister(boolean success, String message){
+		
+		// If register is successful
+		if(success){
+			
+			// Load login view
+			MainView.this.loginPanel.reset();
+			MainView.this.loadView(loginPanel);
+			MainView.this.loginPanel.setSuccessMessage(message);
+			LOGGER.info(message);
+		
+		// If error
+		} else {
+			
+			// Display error
+			MainView.this.registerPanel.setErrorMessage(message);
+			LOGGER.info(message);
 		}
 	}
 }

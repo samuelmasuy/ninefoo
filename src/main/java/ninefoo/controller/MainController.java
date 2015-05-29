@@ -7,14 +7,15 @@ public class MainController {
 	// Create View
 	private MainView view;
 	
-	// All controllers
-	private MemberController memberController;
-	
 	/**
 	 * Constructor
 	 */
 	public MainController(String appTitle) {
+		
+		// Create view (GUI)
 		this.view = new MainView(appTitle);
-		view.setMemberListener(new MemberController(view));
+		
+		// Set GUI Listener
+		view.setMemberListener(new Member_controller(view));
 	}
 }

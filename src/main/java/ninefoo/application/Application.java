@@ -9,8 +9,10 @@ import org.apache.logging.log4j.LogManager;
 
 public class Application {
 
-    private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
-	// Global Constants
+    // Logger
+	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
+	
+    // Global Constants
 	public final static String APPLICATION_PATH = "/";
 	public final static LanguageText LANGUAGE_TEXT = new LanguageText();
 	public final static String VERSION = "1.0";
@@ -18,8 +20,12 @@ public class Application {
 	// Main thread
 	public static void main(String[] args) throws ClassNotFoundException {
 
-        LOGGER.info("Hello LOGGER");
+        // Welcome logger
+		LOGGER.info("Application started ...");
+		
+		// FIXME To be moved to controller
 		Project_model.createDatabase();
+		
 		// Set default language to English
 		LANGUAGE_TEXT.load_en();
 		

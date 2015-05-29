@@ -11,8 +11,10 @@ import ninefoo.application.Application;
 import org.apache.logging.log4j.LogManager;
 
 public class Tools extends JPanel{
-
+	
+	// Logger
 	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
+	
 	// Create components
 	private JButton newProject, newMember;
 	

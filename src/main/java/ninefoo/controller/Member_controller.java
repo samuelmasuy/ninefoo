@@ -1,17 +1,19 @@
 package ninefoo.controller;
 
+import org.apache.logging.log4j.LogManager;
+
 import ninefoo.application.Application;
 import ninefoo.config.Session;
-import ninefoo.lang.en.ValidationFormLang;
+import ninefoo.lang.ValidationFormLang;
 import ninefoo.lib.ValidationForm;
 import ninefoo.lib.ValidationRule;
 import ninefoo.view.MainView;
 import ninefoo.view.listeners.MemberListener;
 
-public class MemberController extends Controller implements MemberListener{
+public class Member_controller extends AbstractController implements MemberListener{
 	
 	// Constructor
-	public MemberController(MainView view) {
+	public Member_controller(MainView view) {
 		super(view);
 	}
 	
@@ -20,6 +22,7 @@ public class MemberController extends Controller implements MemberListener{
 	 * @param username
 	 * @param password
 	 */
+	@Override
 	public void login(String username, final String password){
 		
 		// Create a validation form
@@ -83,5 +86,19 @@ public class MemberController extends Controller implements MemberListener{
 		} else {
 			this.view.tryLogin(false, validation.getError());
 		}
+	}
+
+	/**
+	 * Validate registration
+	 * @param firstName
+	 * @param lastName
+	 * @param username
+	 * @param password
+	 */
+	@Override
+	public void register(String firstName, String lastName, String username, String password) {
+		
+		// FIXME Validate input first (Check above example)
+		this.view.tryRegister(true, ValidationFormLang.REGISTRATION_SUCCESS);
 	}
 }

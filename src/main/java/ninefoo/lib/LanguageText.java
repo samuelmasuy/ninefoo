@@ -2,7 +2,7 @@ package ninefoo.lib;
 
 import java.util.ArrayList;
 
-import ninefoo.lang.en.ValidationFormLang;
+import ninefoo.lang.ValidationFormLang;
 import ninefoo.lang.Language;
 
 public class LanguageText {
