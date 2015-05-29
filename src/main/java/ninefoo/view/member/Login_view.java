@@ -49,7 +49,7 @@ public class Login_view extends FormPanel{
 		this.registerText.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		
 		// Configure success text
-		this.errorMessage.setFont(new Font(this.errorMessage.getFont().getFontName(), Font.PLAIN, 12));
+		this.successMessage.setFont(new Font(this.successMessage.getFont().getFontName(), Font.PLAIN, 12));
 		this.successMessage.setForeground(Color.decode("#4F8A10"));
 		
 		// Set border name
