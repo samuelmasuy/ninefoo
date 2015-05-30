@@ -4,24 +4,14 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
         </Console>
-        <RollingFile name="RollingFile" fileName="logs/app.log" filePattern="logs/$${date:yyyy-MM}/app-%d{yyyy-MM-dd-HH}-%i.log.gz">
-          <PatternLayout>
-            <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
-          </PatternLayout>
-          <Policies>
-            <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
-            <SizeBasedTriggeringPolicy size="250 MB"/>
-          </Policies>
-        </RollingFile>
-        <!-- <File name="MyFile" class="org.apache.log4j.DailyRollingFileAppender" > -->
-        <!--     <DatePatten patten="yyy-MM-dd HH:mm:ss.SSS"/> -->
-        <!--     <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/> -->
-        <!-- </File> -->
+        <File name="MyFile" fileName="logs/all-${date:yyyy-MM-dd-HH:mm:ss}.log" immediateFlush="false" append="false">
+            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
     </Appenders>
     <Loggers>
         <Root level="debug">
             <AppenderRef ref="Console" />
-            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="MyFile" />
         </Root>
     </Loggers>
 </Configuration>
