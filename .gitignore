@@ -1,3 +1,5 @@
+# logs
+*.log
 # java
 *.class
 # Package Files #
