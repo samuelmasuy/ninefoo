@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 
 public class Builder extends JPanel{
 	
+	private static final long serialVersionUID = -4575274768995131221L;
+	
 	// Define components
 	private JButton newActivity;
 	

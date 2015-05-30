@@ -21,7 +21,9 @@ import org.apache.logging.log4j.LogManager;
 
 public class MainView extends JFrame{
 
-    // Logger
+	private static final long serialVersionUID = 4320359862680051619L;
+
+	// Logger
 	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 	
     // Define menu

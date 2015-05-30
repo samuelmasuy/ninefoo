@@ -2,8 +2,6 @@ package ninefoo.lib;
 
 import java.util.regex.Pattern;
 
-import ninefoo.lang.ValidationFormLang;
-
 public class ValidationRule {
 	
 	// Define restriction
@@ -81,7 +79,7 @@ public class ValidationRule {
 		// If empty checker is enabled, check if empty
 		if(this.emptyChecker){
 			if(this.value.isEmpty()){
-				errorMessage = String.format(ValidationFormLang.REQUIRED, this.name);
+				errorMessage = String.format(LanguageText.getConstant("REQUIRED"), this.name);
 				return false;
 			}
 		}
@@ -89,7 +87,7 @@ public class ValidationRule {
 		// If format checker is enabled, check if pattern matches
 		if(this.formatChecker){
 			if(!Pattern.matches(this.pattern, this.value)){
-				errorMessage = String.format(ValidationFormLang.WRONG_FORMAT, this.name);
+				errorMessage = String.format(LanguageText.getConstant("WRONG_FORMAT"), this.name);
 				return false;
 			}
 		}
@@ -97,7 +95,7 @@ public class ValidationRule {
 		// If min length checker is enabled, check length
 		if(this.minLengthChecker){
 			if(this.value.length() < minLength){
-				errorMessage = String.format(ValidationFormLang.MIN_LENGTH, this.name, minLength);
+				errorMessage = String.format(LanguageText.getConstant("MIN_LENGTH"), this.name, minLength);
 				return false;
 			}
 		}
@@ -105,7 +103,7 @@ public class ValidationRule {
 		// If max length checker is enabled, check length
 		if(this.maxLengthChecker){
 			if(this.value.length() > maxLength){
-				errorMessage = String.format(ValidationFormLang.MAX_LENGTH, this.name, maxLength);
+				errorMessage = String.format(LanguageText.getConstant("MAX_LENGTH"), this.name, maxLength);
 				return false;
 			}
 		}
