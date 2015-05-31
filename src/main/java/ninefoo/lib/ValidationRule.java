@@ -2,6 +2,9 @@ package ninefoo.lib;
 
 import java.util.regex.Pattern;
 
+/**
+ * Rules for input fields.
+ */
 public class ValidationRule {
 	
 	// Define restriction

@@ -6,9 +6,13 @@ import java.util.HashMap;
 
 import org.apache.logging.log4j.LogManager;
 
-import ninefoo.application.Application;
+import ninefoo.config.Config;
 
+/**
+ * Singleton class, loads all the language constants and put them in a hash map.
+ */
 public class LanguageText {
+	
 	// Logger - Must be declared before the Singleton instance
 	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 		
@@ -41,14 +45,14 @@ public class LanguageText {
 	}
 	
 	/**
-	 * Add language in different languages if available
+	 * Add constants in different languages if available
 	 * @param className
 	 */
 	private void addLanguage(String className){
 		
 		// Load class
 		for(String language : languages){
-			String classPath = String.format("%s.lang.%s.%sLang", Application.APPLICATION_PATH, language, className);
+			String classPath = String.format("%s.lang.%s.%sLang", Config.APPLICATION_PATH, language, className);
 			try {
 				Class <?> languageClass = Class.forName(classPath);
 				
@@ -64,7 +68,7 @@ public class LanguageText {
 				}
 				LOGGER.info(String.format("%s version of %s was loaded succesfully!", language, className));
 			} catch (ClassNotFoundException e) {
-				LOGGER.error(String.format("Language '%s' not found!", classPath));
+				LOGGER.error(String.format("%s version of the language '%s' was not found!", language, className));
 			}
 		}
 	}
@@ -72,13 +76,13 @@ public class LanguageText {
 	/**
 	 * Get constant
 	 * @param constantName
-	 * @return String or <code>""</code> if not found
+	 * @return String or <code>"undefined"</code> if not found
 	 */
 	public static String getConstant(String constantName){
 		String key = constantName + "_" + instance.currentLanguage;
 		if(instance.phrases.get(key) != null)
 			return instance.phrases.get(constantName + "_" + instance.currentLanguage);
-		return "";
+		return "undefined";
 	}
 	
 	/**

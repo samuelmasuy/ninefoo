@@ -5,11 +5,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Custom annotation for the application
+ */
 public class Annotation {
 	
 	/**
-	 * Auto load on program load
-	 * @author Amir
+	 * Auto load methods on program load
 	 */
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.METHOD)

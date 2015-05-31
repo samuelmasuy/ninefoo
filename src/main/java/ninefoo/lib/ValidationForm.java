@@ -2,6 +2,9 @@ package ninefoo.lib;
 
 import java.util.ArrayList;
 
+/**
+ * Validate a form and generate automatic messages
+ */
 public class ValidationForm {
 	
 	// Define variables

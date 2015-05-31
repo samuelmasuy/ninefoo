@@ -11,6 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+/**
+ * Template for form panels.
+ */
 public abstract class FormPanel extends JPanel{
 	
 	private static final long serialVersionUID = 8991855477647061617L;

@@ -2,7 +2,10 @@ package ninefoo.config;
 
 import org.apache.logging.log4j.LogManager;
 
-
+/**
+ * Session class follows the Singleton approach. Only one session can be create per process.
+ * A session must be opened when a user login to the application, and closed on logout.
+ */
 public class Session {
 
 	// Logger
@@ -68,15 +71,19 @@ public class Session {
 	 * Open session
 	 */
 	public void open(){
-		this.open = true;
-		LOGGER.info("Session opened");
+		if(this.open == false){
+			this.open = true;
+			LOGGER.info("Session opened");
+		}
 	}
 	
 	/**
 	 * Close session
 	 */
 	public void close(){
-		this.open = false;
-		LOGGER.info("Session closed");
+		if(this.open == true){
+			this.open = false;
+			LOGGER.info("Session closed");
+		}
 	}
 }

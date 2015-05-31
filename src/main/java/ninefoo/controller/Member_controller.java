@@ -7,6 +7,10 @@ import ninefoo.lib.ValidationRule;
 import ninefoo.view.MainView;
 import ninefoo.view.listeners.MemberListener;
 
+/**
+ * Control the 'member' functionality.
+ * @see AbstractControlle, MemberListener
+ */
 public class Member_controller extends AbstractController implements MemberListener{
 	
 	// Constructor

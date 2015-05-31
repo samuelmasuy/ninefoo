@@ -1,5 +1,7 @@
 package ninefoo.lang.fr;
-
+/**
+ * Validation form language
+ */
 public class ValidationFormLang{
 	
 	public static String REQUIRED = "%s est requis.";

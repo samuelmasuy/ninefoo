@@ -4,6 +4,9 @@ import org.apache.logging.log4j.LogManager;
 
 import ninefoo.view.MainView;
 
+/**
+ * Main controller where the _controller classes get connected to the GUI
+ */
 public class MainController {
 	
 	// Logger
