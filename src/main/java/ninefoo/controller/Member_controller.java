@@ -30,14 +30,14 @@ public class Member_controller extends AbstractController implements MemberListe
 		ValidationForm validation = new ValidationForm();
 		
 		// Create validation rule
-		ValidationRule usernameRule = new ValidationRule("Username", username);
+		ValidationRule usernameRule = new ValidationRule(LanguageText.getConstant("USERNAME"), username);
 		ValidationRule passwordRule;
 		
 		// Set rules for username
 		usernameRule.checkEmpty().checkFormat("[a-zA-Z0-9]*");
 		
 		// Create custom rules for password
-		passwordRule = new ValidationRule("Password", password){
+		passwordRule = new ValidationRule(LanguageText.getConstant("PASSWORD"), password){
 			@Override
 			public boolean validate() {
 				

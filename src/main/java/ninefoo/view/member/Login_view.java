@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import ninefoo.lib.FormPanel;
+import ninefoo.lib.LanguageText;
 import ninefoo.view.member.listeners.LoginListener;
 
 public class Login_view extends FormPanel{
@@ -38,10 +39,10 @@ public class Login_view extends FormPanel{
 		super();
 		
 		// Initialize components
-		this.loginButton = new JButton("Login");
+		this.loginButton = new JButton(LanguageText.getConstant("LOGIN"));
 		this.usernameField = new JTextField(10);
 		this.passwordField = new JPasswordField(10);
-		this.registerText = new JLabel("<html>Don't have an account ? <font color=\"#000099\"><u>Register now</u></font></html>");
+		this.registerText = new JLabel(LanguageText.getConstant("REGISTRATION_LINK"));
 		this.successMessage = new JLabel();
 		
 		// Configure buttons
@@ -55,7 +56,7 @@ public class Login_view extends FormPanel{
 		this.successMessage.setForeground(Color.decode("#4F8A10"));
 		
 		// Set border name
-		this.titledBorder.setTitle("Welcome!");
+		this.titledBorder.setTitle(LanguageText.getConstant("WELCOME") + "!");
 		
 		// Add listeners for the login button
 		loginButton.addActionListener(new ActionListener() {
@@ -101,12 +102,12 @@ public class Login_view extends FormPanel{
 		fixedPanel.add(this.successMessage, gc);
 		
 		this.gcGrid(row, 0, 1);
-		fixedPanel.add(new JLabel("Username"), gc);
+		fixedPanel.add(new JLabel(LanguageText.getConstant("USERNAME")), gc);
 		this.gcGrid(row++, 1, 1);
 		fixedPanel.add(this.usernameField, gc);
 		
 		this.gcGrid(row, 0, 1);
-		fixedPanel.add(new JLabel("Password"), gc);
+		fixedPanel.add(new JLabel(LanguageText.getConstant("PASSWORD")), gc);
 		this.gcGrid(row++, 1, 1);
 		fixedPanel.add(this.passwordField, gc);
 		

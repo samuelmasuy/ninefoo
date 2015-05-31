@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import ninefoo.lib.FormPanel;
+import ninefoo.lib.LanguageText;
 import ninefoo.view.member.listeners.RegisterListener;
 
 public class Register_view extends FormPanel{
@@ -33,12 +34,12 @@ public class Register_view extends FormPanel{
 	public Register_view() {
 		
 		// Initialize components
-		this.registerButton = new JButton("Register");
+		this.registerButton = new JButton(LanguageText.getConstant("REGISTER"));
 		this.firstName = new JTextField(10);
 		this.lastName = new JTextField(10);
 		this.usernameField = new JTextField(10);
 		this.passwordField = new JPasswordField(10);
-		this.loginText = new JLabel("<html>Already registered ? <font color=\"#000099\"><u>Login now</u></font></html>");
+		this.loginText = new JLabel(LanguageText.getConstant("LOGIN_LINK"));
 		
 		// Configure buttons
 		Border inputPadding = BorderFactory.createEmptyBorder(3, 3, 3, 3);
@@ -49,7 +50,7 @@ public class Register_view extends FormPanel{
 		this.loginText.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		
 		// Set Border title
-		titledBorder.setTitle("New account");
+		titledBorder.setTitle(LanguageText.getConstant("NEW_ACCOUNT"));
 		
 		// Add listeners for the register button
 		registerButton.addActionListener(new ActionListener() {
@@ -94,22 +95,22 @@ public class Register_view extends FormPanel{
 		fixedPanel.add(this.errorMessage, gc);
 		
 		this.gcGrid(row, 0, 1);
-		fixedPanel.add(new JLabel("First name"), gc);
+		fixedPanel.add(new JLabel(LanguageText.getConstant("FIRST_NAME")), gc);
 		this.gcGrid(row++, 1, 1);
 		fixedPanel.add(this.firstName, gc);
 		
 		this.gcGrid(row, 0, 1);
-		fixedPanel.add(new JLabel("Last name"), gc);
+		fixedPanel.add(new JLabel(LanguageText.getConstant("LAST_NAME")), gc);
 		this.gcGrid(row++, 1, 1);
 		fixedPanel.add(this.lastName, gc);
 		
 		this.gcGrid(row, 0, 1);
-		fixedPanel.add(new JLabel("Username"), gc);
+		fixedPanel.add(new JLabel(LanguageText.getConstant("USERNAME")), gc);
 		this.gcGrid(row++, 1, 1);
 		fixedPanel.add(this.usernameField, gc);
 		
 		this.gcGrid(row, 0, 1);
-		fixedPanel.add(new JLabel("Password"), gc);
+		fixedPanel.add(new JLabel(LanguageText.getConstant("PASSWORD")), gc);
 		this.gcGrid(row++, 1, 1);
 		fixedPanel.add(this.passwordField, gc);
 		

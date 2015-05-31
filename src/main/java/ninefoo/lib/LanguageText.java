@@ -40,15 +40,13 @@ public class LanguageText {
 		languages.add(ENGLISH);
 		languages.add(FRENCH);
 		
-		// Add language classes - Exclude the Lang from the class name
-		this.addLanguage("ValidationForm");
 	}
 	
 	/**
 	 * Add constants in different languages if available
 	 * @param className
 	 */
-	private void addLanguage(String className){
+	private void addLanguageToInstance(String className){
 		
 		// Load class
 		for(String language : languages){
@@ -71,6 +69,14 @@ public class LanguageText {
 				LOGGER.error(String.format("%s version of the language '%s' was not found!", language, className));
 			}
 		}
+	}
+	
+	/**
+	 * Add new language to instance
+	 * @param className
+	 */
+	public static void addLanguage(String className){
+		LanguageText.instance.addLanguageToInstance(className);
 	}
 	
 	/**
