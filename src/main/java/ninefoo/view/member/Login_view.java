@@ -22,6 +22,8 @@ import ninefoo.view.member.listeners.LoginListener;
 
 public class Login_view extends FormPanel{
 	
+	private static final long serialVersionUID = 1578431485931709295L;
+	
 	// Define components
 	private JButton loginButton;
 	private JTextField usernameField;

@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 
 public class StatusBar extends JPanel{
 	
+	private static final long serialVersionUID = -5534459903549181858L;
+	
 	// Define components
 	private JLabel status;
 	

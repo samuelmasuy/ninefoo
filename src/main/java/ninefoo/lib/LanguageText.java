@@ -1,53 +1,104 @@
 package ninefoo.lib;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import ninefoo.lang.ValidationFormLang;
-import ninefoo.lang.Language;
+import org.apache.logging.log4j.LogManager;
+
+import ninefoo.application.Application;
 
 public class LanguageText {
+	// Logger - Must be declared before the Singleton instance
+	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
+		
+	// Singleton
+	private static final LanguageText instance = new LanguageText();
 	
 	// Define language array list
-	ArrayList<Language> languages;
+	private ArrayList<String> languages;
+	private HashMap<String, String> phrases;
 	
 	// Store current language
-	public final int ENGLISH = 0;
-	public final int FRENCH = 1;
-	private int currentLanguage;
+	public static final String ENGLISH = "en";
+	public static final String FRENCH = "fr";
+	private String currentLanguage;
+	
 	
 	// Constructor
-	public LanguageText() {
+	private LanguageText() {
 		
-		// Initialize language array list
+		// Initialize variable
 		languages = new ArrayList<>();
+		phrases = new HashMap<>();
 		
-		// Add language classes
-		languages.add(new ValidationFormLang());
+		// Add languages
+		languages.add(ENGLISH);
+		languages.add(FRENCH);
+		
+		// Add language classes - Exclude the Lang from the class name
+		this.addLanguage("ValidationForm");
 	}
 	
 	/**
-	 * Load English text
+	 * Add language in different languages if available
+	 * @param className
 	 */
-	public void load_en(){
-		for(int i=0; i < languages.size(); i++)
-			this.languages.get(i).load_en();
-		this.currentLanguage = this.ENGLISH;
+	private void addLanguage(String className){
+		
+		// Load class
+		for(String language : languages){
+			String classPath = String.format("%s.lang.%s.%sLang", Application.APPLICATION_PATH, language, className);
+			try {
+				Class <?> languageClass = Class.forName(classPath);
+				
+				// Store variables in a hash map
+				for(Field field : languageClass.getFields()){
+					try {
+						phrases.put(field.getName() + "_" + language, (String)field.get(languageClass));
+					} catch (IllegalArgumentException e) {
+						LOGGER.error(String.format("Illegal language constant '%s' in %s version of %s", field.getName(), language, className));
+					} catch (IllegalAccessException e) {
+						LOGGER.error(String.format("Illegal language constant access '%s' in %s version of %s", field.getName(), language, className));
+					}
+				}
+				LOGGER.info(String.format("%s version of %s was loaded succesfully!", language, className));
+			} catch (ClassNotFoundException e) {
+				LOGGER.error(String.format("Language '%s' not found!", classPath));
+			}
+		}
 	}
 	
 	/**
-	 * Load French text
+	 * Get constant
+	 * @param constantName
+	 * @return String or <code>""</code> if not found
 	 */
-	public void load_fr(){
-		for(int i=0; i < languages.size(); i++)
-			this.languages.get(i).load_fr();
-		this.currentLanguage = this.FRENCH;
+	public static String getConstant(String constantName){
+		String key = constantName + "_" + instance.currentLanguage;
+		if(instance.phrases.get(key) != null)
+			return instance.phrases.get(constantName + "_" + instance.currentLanguage);
+		return "";
 	}
 	
 	/**
 	 * Get current language
 	 * @return int (e.g. <code>ENGLISH</code>, <code>FRENCH</code>)
 	 */
-	public int getCurrentLanguage(){
-		return this.currentLanguage;
+	public static String getCurrentLanguage(){
+		return instance.currentLanguage;
+	}
+	
+	/**
+	 * Set language
+	 * @param language
+	 */
+	public static void setLanguage(String language){
+		switch(language){
+		case ENGLISH:
+		case FRENCH:
+			LanguageText.instance.currentLanguage = language;
+			LOGGER.info("Language set to: " + language);
+		}
 	}
 }

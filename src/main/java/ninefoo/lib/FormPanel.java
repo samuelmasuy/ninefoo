@@ -13,6 +13,8 @@ import javax.swing.border.TitledBorder;
 
 public abstract class FormPanel extends JPanel{
 	
+	private static final long serialVersionUID = 8991855477647061617L;
+	
 	// Define components
 	protected JPanel fixedPanel;
 	protected GridBagConstraints gc;

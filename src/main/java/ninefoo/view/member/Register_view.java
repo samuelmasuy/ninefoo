@@ -20,6 +20,8 @@ import ninefoo.view.member.listeners.RegisterListener;
 
 public class Register_view extends FormPanel{
 	
+	private static final long serialVersionUID = 6743725688945067304L;
+	
 	// Define components
 	private JButton registerButton;
 	private JTextField usernameField, firstName, lastName;

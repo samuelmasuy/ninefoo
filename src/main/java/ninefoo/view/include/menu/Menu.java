@@ -6,6 +6,8 @@ import javax.swing.JMenuItem;
 
 public class Menu extends JMenuBar{
 	
+	private static final long serialVersionUID = -481460797811819303L;
+	
 	// Define components
 	private JMenu project, edit, member, help;
 	private JMenuItem newProject, openProject, saveProject, restart, exit, editTitle, editMembers, editActivites, login, logout, allMember, newMember, assignProject, tourGuide, aboutInfo;

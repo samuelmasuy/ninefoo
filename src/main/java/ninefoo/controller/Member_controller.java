@@ -1,10 +1,7 @@
 package ninefoo.controller;
 
-import org.apache.logging.log4j.LogManager;
-
-import ninefoo.application.Application;
 import ninefoo.config.Session;
-import ninefoo.lang.ValidationFormLang;
+import ninefoo.lib.LanguageText;
 import ninefoo.lib.ValidationForm;
 import ninefoo.lib.ValidationRule;
 import ninefoo.view.MainView;
@@ -47,10 +44,10 @@ public class Member_controller extends AbstractController implements MemberListe
 				if(!password.equals("demo")){
 					
 					// Add custom message for this rule
-					if(Application.LANGUAGE_TEXT.getCurrentLanguage() == Application.LANGUAGE_TEXT.ENGLISH)
+					if(LanguageText.getCurrentLanguage() == LanguageText.ENGLISH)
 						this.setErrorMessage("Password must be \"demo\".");
 					
-					else if(Application.LANGUAGE_TEXT.getCurrentLanguage() == Application.LANGUAGE_TEXT.FRENCH)
+					else if(LanguageText.getCurrentLanguage() == LanguageText.FRENCH)
 						this.setErrorMessage("Mot de passe doit etre \"demo\".");
 					
 					return false;
@@ -79,7 +76,7 @@ public class Member_controller extends AbstractController implements MemberListe
 			
 			// If user not found
 			}else{
-				this.view.tryLogin(false, ValidationFormLang.WRONG_USERNAME_PASSWORD);
+				this.view.tryLogin(false, LanguageText.getConstant("WRONG_USERNAME_PASSWORD"));
 			}
 		
 		// If requirements are not met
@@ -99,6 +96,6 @@ public class Member_controller extends AbstractController implements MemberListe
 	public void register(String firstName, String lastName, String username, String password) {
 		
 		// FIXME Validate input first (Check above example)
-		this.view.tryRegister(true, ValidationFormLang.REGISTRATION_SUCCESS);
+		this.view.tryRegister(true, LanguageText.getConstant("REGISTRATION_SUCCESS"));
 	}
 }

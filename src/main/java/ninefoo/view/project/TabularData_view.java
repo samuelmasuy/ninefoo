@@ -10,6 +10,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class TabularData_view extends JPanel {
 	
+	private static final long serialVersionUID = 6595729954886810500L;
+
 	// Constants
 	private final Object[] dataTableHeader = {"Activity ID", "Activity Name", "Start", "Finish", "Activity % Complete", "Total Float"};
 	
