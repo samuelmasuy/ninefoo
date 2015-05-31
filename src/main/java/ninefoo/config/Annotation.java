@@ -16,6 +16,6 @@ public class Annotation {
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.METHOD)
 	public @interface autoload{
-		boolean active() default false;
+		boolean active() default true;
 	}
 }
