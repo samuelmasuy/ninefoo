@@ -16,7 +16,9 @@ import ninefoo.view.member.Login_view;
 import ninefoo.view.member.Register_view;
 import ninefoo.view.member.listeners.LoginListener;
 import ninefoo.view.member.listeners.RegisterListener;
+import ninefoo.view.project.TableChartSlider_view;
 import ninefoo.view.project.TabularData_view;
+
 import org.apache.logging.log4j.LogManager;
 
 public class MainView extends JFrame{
@@ -33,7 +35,7 @@ public class MainView extends JFrame{
 	private Tools toolsPanel;
 	private StatusBar statusBarPanel;
 	private Builder builderPanel;
-	private TabularData_view tabularDataPanel;
+	private TableChartSlider_view tableChartPanel;
 	private Login_view loginPanel;
 	private Register_view registerPanel;
 	
@@ -58,7 +60,7 @@ public class MainView extends JFrame{
 		this.toolsPanel = new Tools();
 		this.statusBarPanel = new StatusBar();
 		this.builderPanel = new Builder();
-		this.tabularDataPanel = new TabularData_view();
+		this.tableChartPanel = new TableChartSlider_view();
 		this.loginPanel = new Login_view();
 		this.registerPanel = new Register_view();
 		
@@ -133,7 +135,7 @@ public class MainView extends JFrame{
 		
 		// Configure the JFrame
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);		// Exit when click on X
-		this.setPreferredSize(new Dimension(1000, 800)); 	// Frame initial size
+		this.setPreferredSize(new Dimension(1300, 800)); 	// Frame initial size
 		this.setMinimumSize(new Dimension(500, 500));		// Minimum window size
 		this.setVisible(true); 								// Make the frame visible
 		this.pack();										// Force setting the size of components
@@ -192,7 +194,7 @@ public class MainView extends JFrame{
 		if(success){
 			
 			// Change view
-			MainView.this.loadView(tabularDataPanel);
+			MainView.this.loadView(tableChartPanel);
 			LOGGER.info("Login successful");
 		
 		// If not logged in, display error

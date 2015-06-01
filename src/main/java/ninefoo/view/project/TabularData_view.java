@@ -1,6 +1,7 @@
 package ninefoo.view.project;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -31,11 +32,19 @@ public class TabularData_view extends JPanel {
 		
 		// Initialize data
 		this.dataTableModel = new DefaultTableModel(null, dataTableHeader);
-		this.dataTable = new JTable(dataTableModel);
-		this.dataTableScrollPane = new JScrollPane(dataTable);
+		this.dataTable = new JTable(dataTableModel){
+			private static final long serialVersionUID = 7608473620850578557L;
+			public boolean getScrollableTracksViewportWidth(){
+                return getPreferredSize().width < getParent().getWidth();
+            }
+		};
+		this.dataTableScrollPane = new JScrollPane(dataTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 		// Customize the Table
-		dataTable.getTableHeader().setReorderingAllowed(false); // Disable column drag
+		this.dataTable.getTableHeader().setReorderingAllowed(false); // Disable column drag
+
+		// Customize the scroll table
+		this.dataTableScrollPane.setPreferredSize(new Dimension(300, 0));
 		
 		// Populate data with random data - For test only
 		for(int i=0; i < 100; i++)
@@ -43,8 +52,5 @@ public class TabularData_view extends JPanel {
 		
 		// Add components
 		this.add(dataTableScrollPane, BorderLayout.CENTER);
-		
-		// Configure JPanel
-		this.setVisible(false);
 	}
 }
