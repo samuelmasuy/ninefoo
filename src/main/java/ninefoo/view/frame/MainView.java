@@ -75,9 +75,7 @@ public class MainView extends JFrame implements UpdatableView{
 		this.setJMenuBar(menu);
 		
 		// By default, load login view
-		Session.getInstance().open();
-		this.loadView(tableChartPanel);
-//		this.loadView(loginPanel);
+		this.loadView(loginPanel);
 		
 		// Add listener to login panel
 		this.loginPanel.setLoginListener(new LoginListener() {
@@ -145,7 +143,7 @@ public class MainView extends JFrame implements UpdatableView{
 			 */
 			@Override
 			public void newProject(CreateProjectDialog dialog, String name, String budget, String deadline, String description) {
-				LOGGER.info(String.format("Project '%s' has been created!", name));
+				LOGGER.info(String.format("Project '%s' has been been submitted!", name));
 				
 				// If listener has been set
 				if(projectListener != null){
@@ -279,6 +277,8 @@ public class MainView extends JFrame implements UpdatableView{
 			// If project created
 			if(success){
 				
+				LOGGER.info(message);
+				
 				// Display success message
 				createProjectDialog.setSuccessMessage(message);
 				
@@ -287,6 +287,8 @@ public class MainView extends JFrame implements UpdatableView{
 			
 			// If project not created
 			} else {
+				
+				LOGGER.error(message);
 				
 				// Display message
 				createProjectDialog.setErrorMessage(message);
