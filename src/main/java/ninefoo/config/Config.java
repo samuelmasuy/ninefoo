@@ -3,6 +3,7 @@ package ninefoo.config;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 
 import ninefoo.config.Annotation.autoload;
 
@@ -15,12 +16,15 @@ public class Config {
 	// Application name
 	public final static String APPLICATION_NAME = "PM Expert";
 	
-	// Application verssion
+	// Application version
 	public final static String APPLICATION_VERSION = "1.0";
 	
 	// Path for the application
 	public final static String APPLICATION_PATH = "ninefoo";
-	
+
+	// Date format used when creating (and parsing) dates.
+	public final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
 	/**
 	 * Auto load methods
 	 * @throws InvocationTargetException 

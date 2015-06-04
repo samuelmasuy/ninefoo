@@ -1,6 +1,8 @@
 package ninefoo.model;
 
-import javax.swing.plaf.nimbus.State;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,48 +13,101 @@ import java.sql.Statement;
  */
 public class DbManager {
     private static Connection dbConnection = null;
+//    private static Statement statement = null;
     private static final String dbName = "test.db";
+    private static final Logger LOGGER = LogManager.getLogger();
 
     /**
-     * Creates a connection to the database.
-     * @return Newly created connection.
-     * @throws ClassNotFoundException If SQLite JDBC class cannot be found.
-     * @throws SQLException If there is any error when creating the connection.
+     * Creates a Statement object to be used to run SQL commands against the database
+     * @return the desired Statement object
      */
-    public static Connection createConnection() throws ClassNotFoundException, SQLException {
+    public static Statement createConnectionStatement() {
 
-        if (dbConnection != null)
-            return dbConnection;
+//        try {
+//            Class.forName("org.sqlite.JDBC");
+//            dbConnection = DriverManager.getConnection("jdbc:sqlite:" + dbName);
+//            statement = dbConnection.createStatement();
+//
+//        } catch (ClassNotFoundException e) {
+//            LOGGER.error("Could not find org.sqlite.JDBC class --- detailed info: " +
+//                    e.getMessage());
+//            return null;
+//        } catch (SQLException e) {
+//            LOGGER.error("Could not create a db connection --- detailed info: " +
+//                    e.getMessage());
+//            return null;
+//        }
+//
+//        return statement;
 
-        Class.forName("org.sqlite.JDBC");
-        dbConnection = DriverManager.getConnection("jdbc:sqlite:" + dbName);
+        Statement statement = null;
 
-        return dbConnection;
+        if (dbConnection == null) {
+            try {
+                Class.forName("org.sqlite.JDBC");
+                dbConnection = DriverManager.getConnection("jdbc:sqlite:" + dbName);
+
+            } catch (ClassNotFoundException e) {
+                LOGGER.error("Could not find org.sqlite.JDBC class --- detailed info: " +
+                        e.getMessage());
+                return null;
+            } catch (SQLException e) {
+                LOGGER.error("Could not create a db connection --- detailed info: " +
+                        e.getMessage());
+                return null;
+            }
+        }
+
+        try {
+
+            statement = dbConnection.createStatement();
+
+        } catch (SQLException e) {
+            LOGGER.error("Could not create db statement object --- detailed info: "+
+                    e.getMessage());
+        }
+
+        return statement;
     }
 
     /**
      * Closes the connection to the database.
-     * @throws SQLException In case there was an error when closing the connection.
      */
-    public static void closeConnection() throws SQLException {
+    public static void closeConnection() {
 
         if (dbConnection != null)
-            dbConnection.close();
+            try {
+                dbConnection.close();
+                dbConnection = null;
+            } catch (SQLException e) {
+                LOGGER.warn("Could not close db connection --- detailed info: " +
+                        e.getMessage());
+            }
     }
 
-    public static void createTables() throws SQLException, ClassNotFoundException {
-        dbConnection = createConnection();
-        Statement statement = dbConnection.createStatement();
-        statement.setQueryTimeout(30);
+    public static void createTables() {
+        Statement statement = createConnectionStatement();
 
-        createMemberTable(statement);
-        createRoleTable(statement);
-        createStatusTable(statement);
-        createProjectTable(statement);
-        createProjectMemberTable(statement);
-        createActivityTable(statement);
-        createActivityRelationTable(statement);
-        createActivityLogTable(statement);
+        if (statement == null)
+            return;
+
+        try {
+            statement.setQueryTimeout(30);
+
+            createMemberTable(statement);
+            createRoleTable(statement);
+            createStatusTable(statement);
+            createProjectTable(statement);
+            createProjectMemberTable(statement);
+            createActivityTable(statement);
+            createActivityRelationTable(statement);
+            createActivityLogTable(statement);
+            createConfigTable(statement);
+        } catch (SQLException e) {
+            LOGGER.error("Problem creating db entities --- detailed info: " + e.getMessage());
+        }
+
+        closeConnection();
     }
 
     private static void createMemberTable(Statement statement) throws SQLException {
@@ -73,7 +128,9 @@ public class DbManager {
         statement.executeUpdate("DROP TABLE IF EXISTS role");
         statement.executeUpdate("CREATE TABLE role(" +
                 "role_id            INTEGER     PRIMARY KEY         AUTOINCREMENT, " +
-                "role_name          VARCHAR(50)" +
+                "role_name          VARCHAR(50), " +
+
+                "UNIQUE (role_name)" +
         ")");
     }
 
@@ -128,14 +185,11 @@ public class DbManager {
                 "create_date            DATETIME    DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')), " +
                 "project_id             INT         NOT NULL, " +
                 "member_id              INT, " +
-                "prerequisite           INT, " +
 
                 "FOREIGN KEY (project_id)       REFERENCES project(project_id) " +
                 "                               ON UPDATE CASCADE ON DELETE CASCADE, " +
                 "FOREIGN KEY (member_id)        REFERENCES member(member_id) " +
-                "                               ON UPDATE CASCADE ON DELETE CASCADE, " +
-                "FOREIGN KEY (prerequisite)     REFERENCES activity(activity_id) " +
-                "                               ON UPDATE CASCADE ON DELETE CASCADE " +
+                "                               ON UPDATE CASCADE ON DELETE CASCADE" +
         ")");
     }
 
@@ -171,6 +225,14 @@ public class DbManager {
                 "                           ON UPDATE CASCADE ON DELETE CASCADE, " +
                 "FOREIGN KEY (activity_id)  REFERENCES activity(activity_id) " +
                 "                           ON UPDATE CASCADE ON DELETE CASCADE " +
+        ")");
+    }
+
+    private static void createConfigTable(Statement statement) throws SQLException {
+        statement.executeUpdate("DROP TABLE IF EXISTS config");
+        statement.executeUpdate("CREATE TABLE config(" +
+                "config_id          INTEGER         PRIMARY KEY     AUTOINCREMENT, " +
+                "config_name        VARCHAR(50)     NOT NULL" +
         ")");
     }
 }
