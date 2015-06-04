@@ -17,6 +17,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import ninefoo.helper.LayoutHelper;
 import ninefoo.lib.FormPanel;
 import ninefoo.lib.LanguageText;
 import ninefoo.view.member.listeners.LoginListener;
@@ -94,27 +95,27 @@ public class Login_view extends FormPanel{
 		
 		// Add components to fixedPanel
 		int row = 0;
-		this.gcGrid(row++, 0, 2);
+		LayoutHelper.gcGrid(gc, row++, 0, 2);
 		fixedPanel.add(new JLabel(new ImageIcon(getClass().getResource("/images/login_user.png"))), gc);
 		
-		this.gcGrid(row++, 0, 2);
+		LayoutHelper.gcGrid(gc, row++, 0, 2);
 		fixedPanel.add(this.errorMessage, gc);
 		fixedPanel.add(this.successMessage, gc);
 		
-		this.gcGrid(row, 0, 1);
+		LayoutHelper.gcGrid(gc, row, 0, 1);
 		fixedPanel.add(new JLabel(LanguageText.getConstant("USERNAME")), gc);
-		this.gcGrid(row++, 1, 1);
+		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.usernameField, gc);
 		
-		this.gcGrid(row, 0, 1);
+		LayoutHelper.gcGrid(gc, row, 0, 1);
 		fixedPanel.add(new JLabel(LanguageText.getConstant("PASSWORD")), gc);
-		this.gcGrid(row++, 1, 1);
+		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.passwordField, gc);
 		
-		this.gcGrid(row++, 1, 1);
+		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.loginButton, gc);
 		
-		this.gcGrid(row++, 0, 2);
+		LayoutHelper.gcGrid(gc, row++, 0, 2);
 		fixedPanel.add(registerText, gc);
 		
 		// Add components to this panel

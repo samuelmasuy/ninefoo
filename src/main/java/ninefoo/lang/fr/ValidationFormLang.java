@@ -1,4 +1,5 @@
 package ninefoo.lang.fr;
+
 /**
  * Validation form language
  */
@@ -10,5 +11,7 @@ public class ValidationFormLang{
 	public static String MIN_LENGTH = "%s doit etre au moins %d.";
 	public static String MAX_LENGTH = "%s doit etre au plus %d.";
 	public static String REGISTRATION_SUCCESS = "Inscription reussie! Connecter vous.";
-	
+
+	public static String OPERATION_FAILED = "L'operation a echoue";
+	public static String PROJECT_CREATED = "Projet cree avec succes!";
 }

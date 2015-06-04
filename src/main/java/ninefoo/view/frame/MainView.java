@@ -1,4 +1,4 @@
-package ninefoo.view;
+package ninefoo.view.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -8,20 +8,21 @@ import javax.swing.JPanel;
 
 import ninefoo.config.Session;
 import ninefoo.view.include.footer.StatusBar;
-import ninefoo.view.include.menu.Builder;
 import ninefoo.view.include.menu.Menu;
 import ninefoo.view.include.menu.Tools;
+import ninefoo.view.include.menu.dialog.CreateProjectDialog;
+import ninefoo.view.include.menu.listener.ToolsListener;
 import ninefoo.view.listeners.MemberListener;
+import ninefoo.view.listeners.ProjectListener;
 import ninefoo.view.member.Login_view;
 import ninefoo.view.member.Register_view;
 import ninefoo.view.member.listeners.LoginListener;
 import ninefoo.view.member.listeners.RegisterListener;
 import ninefoo.view.project.TableChartSlider_view;
-import ninefoo.view.project.TabularData_view;
 
 import org.apache.logging.log4j.LogManager;
 
-public class MainView extends JFrame{
+public class MainView extends JFrame implements UpdatableView{
 
 	private static final long serialVersionUID = 4320359862680051619L;
 
@@ -34,16 +35,19 @@ public class MainView extends JFrame{
 	// Define panels
 	private Tools toolsPanel;
 	private StatusBar statusBarPanel;
-	private Builder builderPanel;
 	private TableChartSlider_view tableChartPanel;
 	private Login_view loginPanel;
 	private Register_view registerPanel;
+	
+	// Define dialogs
+	private CreateProjectDialog createProjectDialog;
 	
 	// Define variables
 	private JPanel currentCenterPanel;
 	
 	// Define listeners
 	private MemberListener memberListener;
+	private ProjectListener projectListener;
 	
 	public MainView(String AppTitle) {
 		
@@ -57,9 +61,8 @@ public class MainView extends JFrame{
 		this.menu = new Menu();
 		
 		// Initialize panels
-		this.toolsPanel = new Tools();
+		this.toolsPanel = new Tools(this);
 		this.statusBarPanel = new StatusBar();
-		this.builderPanel = new Builder();
 		this.tableChartPanel = new TableChartSlider_view();
 		this.loginPanel = new Login_view();
 		this.registerPanel = new Register_view();
@@ -67,13 +70,14 @@ public class MainView extends JFrame{
 		// Add panels
 		this.add(this.toolsPanel, BorderLayout.NORTH);
 		this.add(this.statusBarPanel, BorderLayout.SOUTH);
-		this.add(this.builderPanel, BorderLayout.WEST);
 		
 		// Add menu
 		this.setJMenuBar(menu);
 		
 		// By default, load login view
-		this.loadView(loginPanel);
+		Session.getInstance().open();
+		this.loadView(tableChartPanel);
+//		this.loadView(loginPanel);
 		
 		// Add listener to login panel
 		this.loginPanel.setLoginListener(new LoginListener() {
@@ -133,6 +137,28 @@ public class MainView extends JFrame{
 			}
 		});
 		
+		// Add listener to tools panel
+		this.toolsPanel.setToolsListener(new ToolsListener() {
+			
+			/**
+			 * Create new project
+			 */
+			@Override
+			public void newProject(CreateProjectDialog dialog, String name, String budget, String deadline, String description) {
+				LOGGER.info(String.format("Project '%s' has been created!", name));
+				
+				// If listener has been set
+				if(projectListener != null){
+					
+					// Store dialog
+					createProjectDialog = dialog;
+					
+					// Pass to controller
+					projectListener.createProject(name, budget, deadline, description);
+				}
+			}
+		});
+		
 		// Configure the JFrame
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);		// Exit when click on X
 		this.setPreferredSize(new Dimension(1300, 800)); 	// Frame initial size
@@ -156,14 +182,12 @@ public class MainView extends JFrame{
 		if(Session.getInstance().isOpened()){
 			this.toolsPanel.setVisible(true);
 			this.statusBarPanel.setVisible(true);
-			this.builderPanel.setVisible(true);
 			this.menu.enableMenu();
 			
 		// If not logged in
 		} else {
 			this.toolsPanel.setVisible(false);
 			this.statusBarPanel.setVisible(false);
-			this.builderPanel.setVisible(false);
 			this.menu.disableMenu();
 		}
 		
@@ -179,8 +203,18 @@ public class MainView extends JFrame{
 	 * Set member listener
 	 * @param memberListener
 	 */
+	@Override
 	public void setMemberListener(MemberListener memberListener){
 		this.memberListener = memberListener;
+	};
+	
+	/**
+	 * Set project listener
+	 * @param memberListener
+	 */
+	@Override
+	public void setProjectListener(ProjectListener projectListener){
+		this.projectListener = projectListener;
 	};
 	
 	/**
@@ -188,7 +222,8 @@ public class MainView extends JFrame{
 	 * @param success
 	 * @param message
 	 */
-	public void tryLogin(boolean success, String message){
+	@Override
+	public void updateLogin(boolean success, String message){
 		
 		// If logged is successful
 		if(success){
@@ -209,7 +244,8 @@ public class MainView extends JFrame{
 	 * @param success
 	 * @param message
 	 */
-	public void tryRegister(boolean success, String message){
+	@Override
+	public void updateRegister(boolean success, String message){
 		
 		// If register is successful
 		if(success){
@@ -226,6 +262,38 @@ public class MainView extends JFrame{
 			// Display error
 			MainView.this.registerPanel.setErrorMessage(message);
 			LOGGER.info(message);
+		}
+	}
+	
+	/**
+	 * Try to create the project
+	 * @param success
+	 * @param message
+	 */
+	@Override
+	public void updateCreateProject(boolean success, String message){
+		
+		// If dialog exists
+		if(createProjectDialog != null){
+			
+			// If project created
+			if(success){
+				
+				// Display success message
+				createProjectDialog.setSuccessMessage(message);
+				
+				// Close dialog
+				createProjectDialog.dispose();
+			
+			// If project not created
+			} else {
+				
+				// Display message
+				createProjectDialog.setErrorMessage(message);
+			}
+			
+			// Reset dialog pointer so that it cannot be used anywhere else
+			createProjectDialog = null;
 		}
 	}
 }

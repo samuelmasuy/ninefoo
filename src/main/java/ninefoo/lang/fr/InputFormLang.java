@@ -16,4 +16,11 @@ public class InputFormLang {
 	public static String LOGIN = "Connecter";
 	public static String REGISTER = "Enregistrer";
 	
+	public static String CREATE_NEW_PROJECT = "Creer un nouveau projet";
+	public static String CREATE_PROJECT = "Creer un projet";
+	public static String PROJECT = "Projet";
+	public static String NAME = "Nom";
+	public static String BUDGET = "Budget";
+	public static String DEADLINE = "Date limite";
+	public static String DESCRIPTION = "Description";
 }

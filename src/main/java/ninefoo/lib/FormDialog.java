@@ -1,20 +1,18 @@
 package ninefoo.lib;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 /**
  * Template for form panels.
  */
-public abstract class FormPanel extends JPanel{
+public abstract class FormDialog extends JPanel{
 	
 	private static final long serialVersionUID = 8991855477647061617L;
 	
@@ -22,23 +20,17 @@ public abstract class FormPanel extends JPanel{
 	protected JPanel fixedPanel;
 	protected GridBagConstraints gc;
 	protected TitledBorder titledBorder;
-	protected JLabel errorMessage;
 	
 	// Constructor
-	public FormPanel() {
+	public FormDialog() {
 		
 		// Initialize components
 		this.fixedPanel = new JPanel();
 		this.gc = new GridBagConstraints();
-		this.errorMessage = new JLabel();
 		
 		// Set layout
 		this.setLayout(new GridBagLayout());
 		fixedPanel.setLayout(new GridBagLayout());
-		
-		// Configure error message
-		this.errorMessage.setFont(new Font(this.errorMessage.getFont().getFontName(), Font.PLAIN, 12));
-		this.errorMessage.setForeground(Color.RED);
 		
 		// Set Border for fixedPanel
 		titledBorder = BorderFactory.createTitledBorder("");
@@ -48,16 +40,21 @@ public abstract class FormPanel extends JPanel{
 		// Default configuration gc
 		gc.fill = GridBagConstraints.NONE;
 		gc.insets = new Insets(5, 5, 5, 5); // Spacing between components
-		
-		// Configure this JPanel
-		this.setVisible(false);
 	}
 	
 	/**
-	 * Set the error message
+	 * Set the error message as a prompt
 	 * @param msg Message to be displayed
 	 */
 	public void setErrorMessage(String msg){
-		this.errorMessage.setText(String .format("<html>%s</html>", msg));
+		JOptionPane.showMessageDialog(this, String .format("<html>%s</html>", msg), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
+	}
+	
+	/**
+	 * Set the success message as a prompt
+	 * @param msg Message to be displayed
+	 */
+	public void setSuccessMessage(String msg){
+		JOptionPane.showMessageDialog(this, String .format("<html>%s</html>", msg), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.INFORMATION_MESSAGE);
 	}
 }

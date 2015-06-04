@@ -4,7 +4,8 @@ import ninefoo.config.Session;
 import ninefoo.lib.LanguageText;
 import ninefoo.lib.ValidationForm;
 import ninefoo.lib.ValidationRule;
-import ninefoo.view.MainView;
+import ninefoo.view.frame.MainView;
+import ninefoo.view.frame.UpdatableView;
 import ninefoo.view.listeners.MemberListener;
 
 /**
@@ -13,8 +14,11 @@ import ninefoo.view.listeners.MemberListener;
  */
 public class Member_controller extends AbstractController implements MemberListener{
 	
-	// Constructor
-	public Member_controller(MainView view) {
+	/**
+	 * Constructor
+	 * @param view
+	 */
+	public Member_controller(UpdatableView view) {
 		super(view);
 	}
 	
@@ -76,16 +80,16 @@ public class Member_controller extends AbstractController implements MemberListe
 				newSession.open(); // Session must be opened before setting the data inside it
 				newSession.setUserId(1);
 				
-				this.view.tryLogin(true, null);
+				this.view.updateLogin(true, null);
 			
 			// If user not found
 			}else{
-				this.view.tryLogin(false, LanguageText.getConstant("WRONG_USERNAME_PASSWORD"));
+				this.view.updateLogin(false, LanguageText.getConstant("WRONG_USERNAME_PASSWORD"));
 			}
 		
 		// If requirements are not met
 		} else {
-			this.view.tryLogin(false, validation.getError());
+			this.view.updateLogin(false, validation.getError());
 		}
 	}
 
@@ -100,6 +104,6 @@ public class Member_controller extends AbstractController implements MemberListe
 	public void register(String firstName, String lastName, String username, String password) {
 		
 		// FIXME Validate input first (Check above example)
-		this.view.tryRegister(true, LanguageText.getConstant("REGISTRATION_SUCCESS"));
+		this.view.updateRegister(true, LanguageText.getConstant("REGISTRATION_SUCCESS"));
 	}
 }
