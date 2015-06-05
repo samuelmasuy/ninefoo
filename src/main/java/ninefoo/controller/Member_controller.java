@@ -138,4 +138,14 @@ public class Member_controller extends AbstractController implements MemberListe
 			this.view.updateRegister(false, validation.getError());
 		}
 	}
+	
+	/**
+	 * Logout
+	 */
+	@Override
+	public void logout() {
+		Session.getInstance().close();
+		
+		// TODO update view to login
+	}
 }

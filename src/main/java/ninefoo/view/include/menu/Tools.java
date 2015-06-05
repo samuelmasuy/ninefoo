@@ -24,7 +24,7 @@ public class Tools extends JPanel{
 	private static final long serialVersionUID = -1862085076331720213L;
 
 	// Create components
-	private JButton newProject, newMember, newActivity, logout;
+	private JButton newProject, newMember, newActivity, assign, logout;
 	
 	// Create listener
 	private ToolsListener toolsListener;
@@ -40,7 +40,8 @@ public class Tools extends JPanel{
 		this.newMember = new JButton(new ImageIcon(getClass().getResource("/images/new_user.png")));
 		this.newActivity = new JButton(new ImageIcon(getClass().getResource("/images/new_activity.png")));
 		this.logout = new JButton(new ImageIcon(getClass().getResource("/images/logout.png")));
-
+		this.assign = new JButton(new ImageIcon(getClass().getResource("/images/assign.png")));
+		
 		// Customize buttons
 		this.newProject.setContentAreaFilled(false);
 		this.newProject.setBorder(null);
@@ -60,6 +61,12 @@ public class Tools extends JPanel{
 		this.newMember.setHorizontalTextPosition(SwingConstants.CENTER);
 		this.newMember.setText("New Member");
 		
+		this.assign.setContentAreaFilled(false);
+		this.assign.setBorder(null);
+		this.assign.setVerticalTextPosition(SwingConstants.BOTTOM);
+		this.assign.setHorizontalTextPosition(SwingConstants.CENTER);
+		this.assign.setText("Assign");
+
 		this.logout.setContentAreaFilled(false);
 		this.logout.setBorder(null);
 		this.logout.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -73,7 +80,32 @@ public class Tools extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				
 				// Open dialog
-				new CreateProjectDialog(parentFrame, toolsListener);
+				if(toolsListener != null)
+					new CreateProjectDialog(parentFrame, toolsListener);
+			}
+		});
+		
+		// Add new activity listener
+		this.newActivity.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				// Create new activity
+				if(toolsListener != null)
+					toolsListener.newActivity();
+			}
+		});
+		
+		// Add logout listener
+		this.logout.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				// Logout
+				if(toolsListener != null)
+					toolsListener.logout();
 			}
 		});
 		
@@ -85,6 +117,8 @@ public class Tools extends JPanel{
 		this.add(this.newActivity);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
 		this.add(this.newMember);
+		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
+		this.add(this.assign);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
 		this.add(this.logout);
 		

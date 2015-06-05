@@ -38,4 +38,11 @@ public class TableChartSlider_view extends JPanel{
 		// Add components
 		this.add(splitPane);
 	}
+	
+	/**
+	 * Add empty row to the table
+	 */
+	public void addEmptyRow(){
+		this.tabularPanel.addEmptyRow();
+	}
 }

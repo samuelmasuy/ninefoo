@@ -75,9 +75,9 @@ public class MainView extends JFrame implements UpdatableView{
 		this.setJMenuBar(menu);
 		
 		// By default, load login view
-//		Session.getInstance().open();
-//		this.loadView(tableChartPanel);
-		this.loadView(loginPanel);
+		Session.getInstance().open();
+		this.loadView(tableChartPanel);
+//		this.loadView(loginPanel);
 		
 		// Add listener to login panel
 		this.loginPanel.setLoginListener(new LoginListener() {
@@ -140,9 +140,6 @@ public class MainView extends JFrame implements UpdatableView{
 		// Add listener to tools panel
 		this.toolsPanel.setToolsListener(new ToolsListener() {
 			
-			/**
-			 * Create new project
-			 */
 			@Override
 			public void newProject(CreateProjectDialog dialog, String name, String budget, String deadline, String description) {
 				LOGGER.info(String.format("Project '%s' has been been submitted!", name));
@@ -157,11 +154,27 @@ public class MainView extends JFrame implements UpdatableView{
 					projectListener.createProject(name, budget, deadline, description);
 				}
 			}
+
+			@Override
+			public void newActivity() {
+				LOGGER.info("Activity added");
+				
+				// Add empty row
+				tableChartPanel.addEmptyRow();
+			}
+
+			@Override
+			public void logout() {
+				
+				// Logout
+				if(memberListener != null)
+					memberListener.logout();
+			}
 		});
 		
 		// Configure the JFrame
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);		// Exit when click on X
-		this.setPreferredSize(new Dimension(1300, 800)); 	// Frame initial size
+		this.setPreferredSize(new Dimension(1300, 700)); 	// Frame initial size
 		this.setMinimumSize(new Dimension(500, 500));		// Minimum window size
 		this.setVisible(true); 								// Make the frame visible
 		this.pack();										// Force setting the size of components
