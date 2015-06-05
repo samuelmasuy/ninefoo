@@ -20,12 +20,33 @@ public class MemberModel {
     /**
      * Inserts a new member into the database.
      * @param member Member object to be inserted to the database.
-     * @return True if successful, false otherwise.
+     * @return The ID (primary key) of the newly inserted record, 0 if the insertion
+     *         was not successful.
      */
-    public boolean insertNewMember(Member member) {
+    // ------------------------------------ Testing notes ------------------------------
+    // NOTE: to make sure there is not already a member with the same username as the
+    //       new Member object you want to create, you can use one of the delete methods
+    //       to delete the existing member.
+    // Suggested test case:
+    //  1. Create a new Member object
+    //  2. Use this method to add the member to the DB
+    //  3. Make sure the return value is not 0
+    //  4. (the ideal way would be to mock the functionality of the query method) Run
+    //     getMemberByUsername and check that the ID of the returned object is the same
+    //     as the one we had in step 3.
+    // Suggested alternate test case:
+    //  1. Create a new Member object
+    //  2. Use this method to add it to the DB.
+    //  3. Check that the returned value is not 0.
+    //  4. Try to add the user again using this method.
+    //  5. The return value should be 0.
+    public int insertNewMember(Member member) {
         Statement statement = DbManager.createConnectionStatement();
-        if (statement == null)
-            return false;
+
+        if (statement == null) {
+            LOGGER.warn("Could not get a connection statement to DB");
+            return 0;
+        }
 
         String insertMemberSql = String.format("INSERT INTO " +
                 "member(first_name, last_name, username, password) " +
@@ -33,8 +54,16 @@ public class MemberModel {
                 member.getUsername(), member.getPassword());
 
         try {
-            statement.executeUpdate(insertMemberSql);
-            return true;
+            int updatedRows = statement.executeUpdate(insertMemberSql);
+
+            if (updatedRows == 1) {
+                ResultSet rs = statement.executeQuery("SELECT last_insert_rowid()");
+
+                if (rs.next())
+                    return rs.getInt("last_insert_rowid()");
+            }
+
+            LOGGER.warn("Updated row count was not equal to 1");
 
         } catch (SQLException e) {
             LOGGER.error("Could not add member to db --- detailed info: " + e.getMessage());
@@ -42,10 +71,12 @@ public class MemberModel {
             DbManager.closeConnection();
         }
 
-        return false;
+        return 0;
     }
 
     // Utility method used to get the next member from the DB ResultSet object.
+    // ------------------------------------ Testing notes ------------------------------
+    // No need to test this method because it's not "public".
     private Member getNextMember(ResultSet members) {
 
         try {
@@ -68,12 +99,22 @@ public class MemberModel {
      * Returns all the members stored in the database.
      * @return List of Member objects.
      */
+    // ------------------------------------ Testing notes ------------------------------
+    // Suggested test case:
+    //  1. First run the method and keep track of the size of the returned list.
+    //  2. Create 1 or more Member objects.
+    //  3. Add them to the DB using insertNewMember method.
+    //  4. Now run this method again to get the list of member.
+    //  5. The difference between the new List's size and the old one should be equal
+    //     to the number of users you created in step 2.
     public List<Member> getAllMembers() {
         List<Member> allMembers = new ArrayList<>();
         Statement statement = DbManager.createConnectionStatement();
 
-        if (statement == null)
+        if (statement == null) {
+            LOGGER.warn("Could not get a connection statement to DB");
             return null;
+        }
 
         String getAllMembersSql = "SELECT * FROM member";
         try {
@@ -102,11 +143,18 @@ public class MemberModel {
      * @param memberId integer representing the ID of the member to be found.
      * @return Member object if it exists in the DB, NULL otherwise.
      */
+    // ------------------------------------ Testing notes ------------------------------
+    // Suggested test case:
+    //  1. Create a new Member and add it to DB using insertNewMember.
+    //  2. (Assuming the returned value of insertNewMember is not zero) Run this method
+    //     to make sure the returned value is not NULL.
     public Member getMemberById(int memberId) {
         Statement statement = DbManager.createConnectionStatement();
 
-        if (statement == null)
+        if (statement == null) {
+            LOGGER.warn("Could not get a connection statement to DB");
             return null;
+        }
 
         String getMemberByIdSql = "SELECT * FROM member " + "WHERE member_id = " + memberId;
 
@@ -134,11 +182,16 @@ public class MemberModel {
      * @param username String representing the username of the member.
      * @return Member object having the username, NULL if no member with this username is found.
      */
+    // ------------------------------------ Testing notes ------------------------------
+    // Suggested test case:
+    //  I think exactly the same as the first suggested one for insertNewMember.
     public Member getMemberByUsername(String username) {
         Statement statement = DbManager.createConnectionStatement();
 
-        if (statement == null)
+        if (statement == null) {
+            LOGGER.warn("Could not get a connection statement to DB");
             return null;
+        }
 
         String getMemberByUsernameSql = String.format("SELECT * FROM member WHERE " +
                 "username = '%s'", username);
@@ -160,5 +213,88 @@ public class MemberModel {
         }
 
         return null;
+    }
+
+    /**
+     * Deletes a member from DB corresponding to the specified Member object.
+     * @param member Member object to be deleted from DB.
+     * @return True if a record was deleted; False otherwise.
+     */
+    // ------------------------------------ Testing notes ------------------------------
+    // NOTE: you cannot create a Member object directly and pass it to this method because
+    //      the constructor we use to create instances from Java code doesn't allow
+    //      specifying ID, so the resulting instance will NOT have an ID.
+    // Suggested test case:
+    //  1. Use on of the query methods (getMemberById or getMemberByUsername) to get
+    //     a Member object from the database.
+    //  2. Use this method to delete the member.
+    //  3. Use the query method again to make sure the returned object is NULL.
+    public boolean deleteMember(Member member) {
+        if (member == null)
+            return false;
+
+        return deleteMemberById(member.getMemberId());
+    }
+
+    /**
+     *
+     * Deletes a member from DB corresponding to the specified member ID.
+     * @param memberId integer representing the ID of the member to be deleted.
+     * @return True if a record was deleted; False otherwise.
+     */
+    // ------------------------------------ Testing notes ------------------------------
+    // Suggested test case:
+    //  1. Make sure there exists in the DB a user with the ID you want to delete (you
+    //     can use one of the query methods).
+    //  2. Use this method to delete that member.
+    //  3. Query again to make sure the result is NULL.
+    public boolean deleteMemberById(int memberId) {
+        Statement statement = DbManager.createConnectionStatement();
+
+        if (statement == null) {
+            LOGGER.warn("Could not get a connection statement to DB");
+            return false;
+        }
+
+        String deleteMemberSql = "DELETE FROM member WHERE member_id = " + memberId;
+
+        try {
+            int updatedRows = statement.executeUpdate(deleteMemberSql);
+            return (updatedRows == 1);
+
+        } catch (SQLException e) {
+            LOGGER.error("Could not delete member --- detailed info: " + e.getMessage());
+        }
+
+        return false;
+    }
+
+    /**
+     * Deletes a member from DB corresponding to the specified username.
+     * @param username String representing the username of the member to be deleted.
+     * @return True if a record was deleted; False otherwise.
+     */
+    // ------------------------------------ Testing notes ------------------------------
+    // Suggested test case:
+    //  Same as deleteMemberById, but considering username instead of the ID.
+    public boolean deleteMemberByUsername(String username) {
+        Statement statement = DbManager.createConnectionStatement();
+
+        if (statement == null) {
+            LOGGER.warn("Could not get a connection statement to DB");
+            return false;
+        }
+
+        String deleteMemberSql = "DELETE FROM member WHERE username = " + username;
+
+        try {
+            int updatedRows = statement.executeUpdate(deleteMemberSql);
+            return (updatedRows == 1);
+
+        } catch (SQLException e) {
+            LOGGER.error("Could not delete member --- detailed info: " + e.getMessage());
+        }
+
+        return false;
     }
 }

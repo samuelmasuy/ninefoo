@@ -30,7 +30,7 @@ public class Application {
 
 		Member newMember = new Member("demo", "demo", "demo", "demo");
 		MemberModel mm = new MemberModel();
-		boolean success = mm.insertNewMember(newMember);
+		int success = mm.insertNewMember(newMember);
 		LOGGER.info(success);
 
 		// Start the application
