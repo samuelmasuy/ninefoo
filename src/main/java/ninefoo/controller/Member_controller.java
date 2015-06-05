@@ -5,7 +5,7 @@ import ninefoo.lib.LanguageText;
 import ninefoo.lib.ValidationForm;
 import ninefoo.lib.ValidationRule;
 import ninefoo.model.Member;
-import ninefoo.model.MemberModel;
+import ninefoo.model.Member_model;
 import ninefoo.view.frame.UpdatableView;
 import ninefoo.view.listeners.MemberListener;
 
@@ -30,7 +30,7 @@ public class Member_controller extends AbstractController implements MemberListe
 	 */
 	@Override
 	public void login(final String username, final String password){
-		final MemberModel mm = new MemberModel();
+		final Member_model mm = new Member_model();
 		// Create a validation form
 		ValidationForm validation = new ValidationForm();
 		
@@ -128,7 +128,7 @@ public class Member_controller extends AbstractController implements MemberListe
 		if(validation.validate()){
 
 			Member newMember = new Member(firstName, lastName, username, password);
-			MemberModel mm = new MemberModel();
+			Member_model mm = new Member_model();
 			boolean success = mm.insertNewMember(newMember);
 			if (!success) this.view.updateLogin(false, validation.getError());
 

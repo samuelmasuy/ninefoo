@@ -3,8 +3,8 @@ package ninefoo.application;
 import ninefoo.config.Config;
 import ninefoo.controller.MainController;
 import ninefoo.model.Member;
-import ninefoo.model.MemberModel;
-import ninefoo.model.Project_model;
+import ninefoo.model.Member_model;
+import ninefoo.model.Project_model_old;
 
 import org.apache.logging.log4j.LogManager;
 
@@ -26,10 +26,10 @@ public class Application {
 		Config.autoload();
 		
 		// FIXME To be moved to controller
-		Project_model.createDatabase();
+		Project_model_old.createDatabase();
 
 		Member newMember = new Member("demo", "demo", "demo", "demo");
-		MemberModel mm = new MemberModel();
+		Member_model mm = new Member_model();
 		int success = mm.insertNewMember(newMember);
 		LOGGER.info(success);
 

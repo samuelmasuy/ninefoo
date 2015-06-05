@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by Farzad on 02-Jun-2015.
  */
-public class ProjectMemberModel {
+public class ProjectMember_model {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
@@ -58,7 +58,7 @@ public class ProjectMemberModel {
         }
 
         // Now that we have the list of project IDs, we get the list of projects.
-        ProjectModel projectModel = new ProjectModel();
+        Project_model projectModel = new Project_model();
 
         for (Integer projectId : projectIds) {
             Project project = projectModel.getProjectById(projectId);

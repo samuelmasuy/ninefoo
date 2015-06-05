@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by Farzad on 30-May-2015.
  */
-public class MemberModel {
+public class Member_model {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
