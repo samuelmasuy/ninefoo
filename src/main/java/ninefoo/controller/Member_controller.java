@@ -8,13 +8,15 @@ import ninefoo.model.Member;
 import ninefoo.model.Member_model;
 import ninefoo.view.frame.UpdatableView;
 import ninefoo.view.listeners.MemberListener;
+import org.apache.logging.log4j.LogManager;
 
 /**
  * Control the 'member' functionality.
  * @see AbstractController, MemberListener
  */
 public class Member_controller extends AbstractController implements MemberListener{
-	
+	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
+
 	/**
 	 * Constructor
 	 * @param view
@@ -60,8 +62,8 @@ public class Member_controller extends AbstractController implements MemberListe
 						this.setErrorMessage("Le nom d'usager n'existe pas dans le repertoire.");
 					return false;
 				}
-
-				if (memberCheck.getPassword() != password) {
+				LOGGER.info("mc password " +  memberCheck.getPassword() + " == " + password);
+				if (!password.equals(memberCheck.getPassword())) {
 					if (LanguageText.getCurrentLanguage() == LanguageText.ENGLISH)
 						this.setErrorMessage("Password does not match");
 
