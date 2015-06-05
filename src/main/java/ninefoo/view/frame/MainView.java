@@ -75,9 +75,9 @@ public class MainView extends JFrame implements UpdatableView{
 		this.setJMenuBar(menu);
 		
 		// By default, load login view
-		Session.getInstance().open();
-		this.loadView(tableChartPanel);
-//		this.loadView(loginPanel);
+//		Session.getInstance().open();
+//		this.loadView(tableChartPanel);
+		this.loadView(loginPanel);
 		
 		// Add listener to login panel
 		this.loginPanel.setLoginListener(new LoginListener() {

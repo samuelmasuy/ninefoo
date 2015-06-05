@@ -47,8 +47,9 @@ public class TabularData_view extends JPanel {
 		this.dataTableScrollPane.setPreferredSize(new Dimension(300, 0));
 		
 		// Populate data with random data - For test only
-		for(int i=0; i < 100; i++)
-			dataTableModel.addRow(new Object[]{"EC" + i, "Activity Name " + i, String.format("%d-Sep-10", i%30+1), String.format("%d-Nov-10", i%30+1), "100%", i+1+"d"});
+//		for(int i=0; i < 100; i++)
+//			dataTableModel.addRow(new Object[]{"EC" + i, "Activity Name " + i, String.format("%d-Sep-10", i%30+1), String.format("%d-Nov-10", i%30+1), "100%", i+1+"d"});
+		dataTableModel.addRow(new Object[]{});
 		
 		// Add components
 		this.add(dataTableScrollPane, BorderLayout.CENTER);
