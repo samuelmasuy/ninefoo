@@ -1,5 +1,6 @@
 package ninefoo.controller;
 
+import ninefoo.lib.LanguageText;
 import ninefoo.view.frame.UpdatableView;
 import ninefoo.view.listeners.ProjectListener;
 
@@ -19,5 +20,6 @@ public class Project_controller extends AbstractController implements ProjectLis
 		// TODO Verify correct deadline, correct budget [if not empty], name is required, description [optional]. 
 		// Date on the GUI is going to be dd/mm/yyyy
 		
+		this.view.updateCreateProject(false, LanguageText.getConstant("PROJECT_CREATED"));
 	}
 }

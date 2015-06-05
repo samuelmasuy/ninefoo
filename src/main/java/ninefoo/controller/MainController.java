@@ -12,7 +12,7 @@ public class MainController {
 	
 	// Logger
 	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
-		
+	
 	// Create View
 	private UpdatableView view;
 	
@@ -29,5 +29,6 @@ public class MainController {
 		
 		// Set GUI Listener
 		view.setMemberListener(new Member_controller(view));
+		view.setProjectListener(new Project_controller(view));
 	}
 }
