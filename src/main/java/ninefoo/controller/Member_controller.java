@@ -6,13 +6,12 @@ import ninefoo.lib.ValidationForm;
 import ninefoo.lib.ValidationRule;
 import ninefoo.model.Member;
 import ninefoo.model.MemberModel;
-import ninefoo.view.frame.MainView;
 import ninefoo.view.frame.UpdatableView;
 import ninefoo.view.listeners.MemberListener;
 
 /**
  * Control the 'member' functionality.
- * @see AbstractControlle, MemberListener
+ * @see AbstractController, MemberListener
  */
 public class Member_controller extends AbstractController implements MemberListener{
 	
@@ -51,36 +50,24 @@ public class Member_controller extends AbstractController implements MemberListe
 				boolean validate = super.validate();
 				
 				// Check if password is equal to demo
-				if(!password.equals("demo")){
-					
-					// Add custom message for this rule
-					if(LanguageText.getCurrentLanguage() == LanguageText.ENGLISH)
-						this.setErrorMessage("Password must be \"demo\".");
-					
-					else if(LanguageText.getCurrentLanguage() == LanguageText.FRENCH)
-						this.setErrorMessage("Mot de passe doit etre \"demo\".");
+
+				Member memberCheck = mm.getMemberByUsername(username);
+				if (memberCheck == null) {
+					if (LanguageText.getCurrentLanguage() == LanguageText.ENGLISH)
+						this.setErrorMessage("Username does not exist!");
+
+					else if (LanguageText.getCurrentLanguage() == LanguageText.FRENCH)
+						this.setErrorMessage("Le nom d'usager n'existe pas dans le repertoire.");
 					return false;
 				}
-				// db validation
-				else {
-					Member memberCheck = mm.getMemberByUsername(username);
-					if (memberCheck == null) {
-						if (LanguageText.getCurrentLanguage() == LanguageText.ENGLISH)
-							this.setErrorMessage("Username does not exist!");
 
-						else if (LanguageText.getCurrentLanguage() == LanguageText.FRENCH)
-							this.setErrorMessage("Le nom d'usager n'existe pas dans le repertoire.");
-						return false;
-					}
+				if (memberCheck.getPassword() != password) {
+					if (LanguageText.getCurrentLanguage() == LanguageText.ENGLISH)
+						this.setErrorMessage("Password does not match");
 
-					if (memberCheck.getPassword() != password) {
-						if (LanguageText.getCurrentLanguage() == LanguageText.ENGLISH)
-							this.setErrorMessage("Password does not match");
-
-						else if (LanguageText.getCurrentLanguage() == LanguageText.FRENCH)
-							this.setErrorMessage("Le mot de passe est incorrect");
-						return false;
-					}
+					else if (LanguageText.getCurrentLanguage() == LanguageText.FRENCH)
+						this.setErrorMessage("Le mot de passe est incorrect");
+					return false;
 				}
 
 				return validate;
@@ -116,21 +103,20 @@ public class Member_controller extends AbstractController implements MemberListe
 	@Override
 	public void register(String firstName, String lastName, String username, final String password) {
 		
-		this.view.updateRegister(true, LanguageText.getConstant("REGISTRATION_SUCCESS"));
 		// Create a validation form
 		ValidationForm validation = new ValidationForm();
 
 		// Create validation rule
 		ValidationRule usernameRule = new ValidationRule(LanguageText.getConstant("USERNAME"), username);
-		ValidationRule firstNameRule = new ValidationRule(LanguageText.getConstant("FIRSTNAME"), username);
-		ValidationRule lastNameRule = new ValidationRule(LanguageText.getConstant("LASTNAME"), username);
-		ValidationRule passwordRule = new ValidationRule(LanguageText.getConstant("PASSWORD"), username);
+		ValidationRule firstNameRule = new ValidationRule(LanguageText.getConstant("FIRST_NAME"), firstName);
+		ValidationRule lastNameRule = new ValidationRule(LanguageText.getConstant("LAST_NAME"), lastName);
+		ValidationRule passwordRule = new ValidationRule(LanguageText.getConstant("PASSWORD"), password);
 
 		// Set rules for username
-		usernameRule.checkEmpty().checkFormat("[a-zA-Z0-9]*");
-		firstNameRule.checkEmpty().checkFormat("[a-zA-Z]");
-		lastNameRule.checkEmpty().checkFormat("[a-zA-Z]");
-		passwordRule.checkMaxLength(5);
+		usernameRule.checkEmpty().checkFormat("[a-zA-Z0-9]+");
+		firstNameRule.checkEmpty().checkFormat("[a-zA-Z]+");
+		lastNameRule.checkEmpty().checkFormat("[a-zA-Z]+");
+		passwordRule.checkMinLength(4).checkMaxLength(10);
 
 		// Add rules to the validation
 		validation.setRule(usernameRule);
@@ -145,9 +131,11 @@ public class Member_controller extends AbstractController implements MemberListe
 			MemberModel mm = new MemberModel();
 			boolean success = mm.insertNewMember(newMember);
 			if (!success) this.view.updateLogin(false, validation.getError());
+
+			this.view.updateRegister(true, LanguageText.getConstant("REGISTRATION_SUCCESS"));
 			// If requirements are not met
 		} else {
-			this.view.updateLogin(false, validation.getError());
+			this.view.updateRegister(false, validation.getError());
 		}
 	}
 }
