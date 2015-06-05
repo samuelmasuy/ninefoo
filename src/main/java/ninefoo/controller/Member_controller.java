@@ -4,6 +4,8 @@ import ninefoo.config.Session;
 import ninefoo.lib.LanguageText;
 import ninefoo.lib.ValidationForm;
 import ninefoo.lib.ValidationRule;
+import ninefoo.model.Member;
+import ninefoo.model.MemberModel;
 import ninefoo.view.frame.MainView;
 import ninefoo.view.frame.UpdatableView;
 import ninefoo.view.listeners.MemberListener;
@@ -28,8 +30,8 @@ public class Member_controller extends AbstractController implements MemberListe
 	 * @param password
 	 */
 	@Override
-	public void login(String username, final String password){
-		
+	public void login(final String username, final String password){
+		final MemberModel mm = new MemberModel();
 		// Create a validation form
 		ValidationForm validation = new ValidationForm();
 		
@@ -57,10 +59,30 @@ public class Member_controller extends AbstractController implements MemberListe
 					
 					else if(LanguageText.getCurrentLanguage() == LanguageText.FRENCH)
 						this.setErrorMessage("Mot de passe doit etre \"demo\".");
-					
 					return false;
 				}
-				
+				// db validation
+				else {
+					Member memberCheck = mm.getMemberByUsername(username);
+					if (memberCheck == null) {
+						if (LanguageText.getCurrentLanguage() == LanguageText.ENGLISH)
+							this.setErrorMessage("Username does not exist!");
+
+						else if (LanguageText.getCurrentLanguage() == LanguageText.FRENCH)
+							this.setErrorMessage("Le nom d'usager n'existe pas dans le repertoire.");
+						return false;
+					}
+
+					if (memberCheck.getPassword() != password) {
+						if (LanguageText.getCurrentLanguage() == LanguageText.ENGLISH)
+							this.setErrorMessage("Password does not match");
+
+						else if (LanguageText.getCurrentLanguage() == LanguageText.FRENCH)
+							this.setErrorMessage("Le mot de passe est incorrect");
+						return false;
+					}
+				}
+
 				return validate;
 			}
 		};
@@ -70,23 +92,14 @@ public class Member_controller extends AbstractController implements MemberListe
 		validation.setRule(passwordRule);
 		
 		// If all requirements are met
-		if(validation.validate()){
+		if(validation.validate()) {
+            // Open session
+            Session newSession = Session.getInstance();
+            newSession.open(); // Session must be opened before setting the data inside it
+            newSession.setUserId(1);
+
+            this.view.updateLogin(true, null);
 			
-			// FOR TEST ONLY - (Username: demo, Password: demo)
-			if(username.equals("demo") && password.equals("demo")){
-				
-				// Open session
-				Session newSession = Session.getInstance();
-				newSession.open(); // Session must be opened before setting the data inside it
-				newSession.setUserId(1);
-				
-				this.view.updateLogin(true, null);
-			
-			// If user not found
-			}else{
-				this.view.updateLogin(false, LanguageText.getConstant("WRONG_USERNAME_PASSWORD"));
-			}
-		
 		// If requirements are not met
 		} else {
 			this.view.updateLogin(false, validation.getError());
@@ -101,9 +114,40 @@ public class Member_controller extends AbstractController implements MemberListe
 	 * @param password
 	 */
 	@Override
-	public void register(String firstName, String lastName, String username, String password) {
+	public void register(String firstName, String lastName, String username, final String password) {
 		
-		// FIXME Validate input first (Check above example)
 		this.view.updateRegister(true, LanguageText.getConstant("REGISTRATION_SUCCESS"));
+		// Create a validation form
+		ValidationForm validation = new ValidationForm();
+
+		// Create validation rule
+		ValidationRule usernameRule = new ValidationRule(LanguageText.getConstant("USERNAME"), username);
+		ValidationRule firstNameRule = new ValidationRule(LanguageText.getConstant("FIRSTNAME"), username);
+		ValidationRule lastNameRule = new ValidationRule(LanguageText.getConstant("LASTNAME"), username);
+		ValidationRule passwordRule = new ValidationRule(LanguageText.getConstant("PASSWORD"), username);
+
+		// Set rules for username
+		usernameRule.checkEmpty().checkFormat("[a-zA-Z0-9]*");
+		firstNameRule.checkEmpty().checkFormat("[a-zA-Z]");
+		lastNameRule.checkEmpty().checkFormat("[a-zA-Z]");
+		passwordRule.checkMaxLength(5);
+
+		// Add rules to the validation
+		validation.setRule(usernameRule);
+		validation.setRule(firstNameRule);
+		validation.setRule(lastNameRule);
+		validation.setRule(passwordRule);
+
+		// If all requirements are met
+		if(validation.validate()){
+
+			Member newMember = new Member(firstName, lastName, username, password);
+			MemberModel mm = new MemberModel();
+			boolean success = mm.insertNewMember(newMember);
+			if (!success) this.view.updateLogin(false, validation.getError());
+			// If requirements are not met
+		} else {
+			this.view.updateLogin(false, validation.getError());
+		}
 	}
 }
