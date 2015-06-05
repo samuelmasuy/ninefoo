@@ -129,8 +129,8 @@ public class Member_controller extends AbstractController implements MemberListe
 
 			Member newMember = new Member(firstName, lastName, username, password);
 			Member_model mm = new Member_model();
-			boolean success = mm.insertNewMember(newMember);
-			if (!success) this.view.updateLogin(false, validation.getError());
+			int success = mm.insertNewMember(newMember);
+			if (success == 0) this.view.updateLogin(false, validation.getError());
 
 			this.view.updateRegister(true, LanguageText.getConstant("REGISTRATION_SUCCESS"));
 			// If requirements are not met

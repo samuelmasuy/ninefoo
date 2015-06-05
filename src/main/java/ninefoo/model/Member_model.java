@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * This class contains all the methods for manipulating members in our database. For example,
+ *      to find a specific member by ID or username, delete a member, or get a list of all members.
  * Created by Farzad on 30-May-2015.
  */
 public class Member_model {

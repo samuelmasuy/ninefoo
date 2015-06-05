@@ -1,9 +1,12 @@
 package ninefoo.model;
 
+import ninefoo.lib.DateUtils;
+
 import java.util.Date;
 import java.util.List;
 
 /**
+ * This class represents an activity entity in the database.
  * Created by Farzad on 30-May-2015.
  */
 public class Activity {
@@ -14,15 +17,30 @@ public class Activity {
     private int optimisticDuration;
     private int likelyDuration;
     private int pessimisticDuration;
-    private Date createDate;
+    private String createDate;
     private Project project;
-    private int memberId;
+    private Member member;
     private List<Activity> prerequisites;
 
+    /**
+     * This constructor is used when converting DB entities to Java classes.
+     * @param activityId integer representing the ID of the activity.
+     * @param activityLabel label associated with the activity.
+     * @param description description for the activity.
+     * @param duration duration (days) of the activity.
+     * @param optimisticDuration optimistic duration (days) of the activity.
+     * @param likelyDuration likely duration (days) of the activity.
+     * @param pessimisticDuration pessimistic duration (days) of the activity.
+     * @param createDate Date when the activity was first created.
+     * @param project Project object associated with this activity.
+     * @param member Member object associated with this activity.
+     * @param prerequisites List of Activity objects that are prerequisites to this activity.
+     */
     public Activity(int activityId, String activityLabel, String description,
                     int duration, int optimisticDuration, int likelyDuration,
                     int pessimisticDuration, Date createDate, Project project,
-                    int memberId, List<Activity> prerequisites) {
+                    Member member, List<Activity> prerequisites) {
+
         this.activityId = activityId;
         this.activityLabel = activityLabel;
         this.description = description;
@@ -30,15 +48,26 @@ public class Activity {
         this.optimisticDuration = optimisticDuration;
         this.likelyDuration = likelyDuration;
         this.pessimisticDuration = pessimisticDuration;
-        this.createDate = createDate;
         this.project = project;
-        this.memberId = memberId;
+        this.member = member;
         this.prerequisites = prerequisites;
     }
 
+    /**
+     * This constructor should be used when creating new instances of this class in Java.
+     * @param activityLabel label associated with the activity.
+     * @param description description for the activity.
+     * @param duration duration (days) of the activity.
+     * @param optimisticDuration optimistic duration (days) of the activity.
+     * @param likelyDuration likely duration (days) of the activity.
+     * @param pessimisticDuration pessimistic duration (days) of the activity.
+     * @param project Project object associated with this activity.
+     * @param member Member object associated with this activity.
+     * @param prerequisites List of Activity objects that are prerequisites to this activity.
+     */
     public Activity(String activityLabel, String description, int duration,
                     int optimisticDuration, int likelyDuration, int pessimisticDuration,
-                    Date createDate, Project project, int memberId, List<Activity> prerequisites) {
+                    Project project, Member member, List<Activity> prerequisites) {
 
         this.activityLabel = activityLabel;
         this.description = description;
@@ -46,9 +75,8 @@ public class Activity {
         this.optimisticDuration = optimisticDuration;
         this.likelyDuration = likelyDuration;
         this.pessimisticDuration = pessimisticDuration;
-        this.createDate = createDate;
         this.project = project;
-        this.memberId = memberId;
+        this.member = member;
         this.prerequisites = prerequisites;
     }
 
@@ -105,11 +133,7 @@ public class Activity {
     }
 
     public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+        return DateUtils.parse(createDate);
     }
 
     public Project getProject() { return project; }
@@ -118,12 +142,12 @@ public class Activity {
         this.project = project;
     }
 
-    public int getMemberId() {
-        return memberId;
+    public Member getMember() {
+        return member;
     }
 
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public List<Activity> getPrerequisites() { return prerequisites; }

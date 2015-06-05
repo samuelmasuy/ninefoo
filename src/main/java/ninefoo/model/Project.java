@@ -5,6 +5,7 @@ import ninefoo.lib.DateUtils;
 import java.util.Date;
 
 /**
+ * This class represents a project entity in the database.
  * Created by Farzad on 29-May-2015.
  */
 public class Project {

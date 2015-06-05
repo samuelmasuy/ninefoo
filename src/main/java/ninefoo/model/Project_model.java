@@ -12,6 +12,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * This class contains methods for manipulating the projects in the database. For example,
+ *      to add a new project, get the list of all projects, find a specific project by ID,
+ *      or delete a project from the database.
  * Created by Farzad on 01-Jun-2015.
  */
 public class Project_model {
@@ -20,13 +23,16 @@ public class Project_model {
     /**
      * Inserts a new project into the database.
      * @param project the Project object to be stored in the DB.
-     * @return True if the operation was successful, false otherwise.
+     * @return The ID (primary key) of the newly inserted record, 0 if the insertion
+     *         was not successful.
      */
-    public boolean insertNewProject(Project project) {
+    public int insertNewProject(Project project) {
         Statement statement = DbManager.createConnectionStatement();
 
-        if (statement == null)
-            return false;
+        if (statement == null) {
+            LOGGER.warn("Could not get a connection statement to DB");
+            return 0;
+        }
 
         String insertProjectSql = String.format(
                 "INSERT INTO project(project_name, budget, deadline_date, description) " +
@@ -34,15 +40,24 @@ public class Project_model {
                 DateUtils.format(project.getDeadlineDate()), project.getDescription());
 
         try {
-            statement.executeUpdate(insertProjectSql);
-            return true;
+            int updatedRows = statement.executeUpdate(insertProjectSql);
+
+            if (updatedRows == 1) {
+                ResultSet rs = statement.executeQuery("SELECT last_insert_rowid()");
+
+                if (rs.next())
+                    return rs.getInt("last_insert_rowid()");
+            }
+
+            LOGGER.warn("Updated row count was not equal to 1");
+
         } catch (SQLException e) {
             LOGGER.error("Could not insert new project into db --- detailed info: " + e.getMessage());
         } finally {
             DbManager.closeConnection();
         }
 
-        return false;
+        return 0;
     }
 
     // Helper method to get the next Project object from the DB ResultSet object.
@@ -130,6 +145,45 @@ public class Project_model {
         }
 
         return null;
+    }
+
+    /**
+     * Deletes a project from DB corresponding to the specified Project object.
+     * @param project Project object to be deleted from DB.
+     * @return True if a record was deleted; False otherwise.
+     */
+    public boolean deleteProject(Project project) {
+
+        if (project == null)
+            return false;
+
+        return deleteProjectById(project.getProjectId());
+    }
+
+    /**
+     * Deletes a project from DB corresponding to the specified project ID.
+     * @param projectId integer representing the ID of the project to be deleted.
+     * @return True if a record was deleted; False otherwise.
+     */
+    public boolean deleteProjectById(int projectId) {
+        Statement statement = DbManager.createConnectionStatement();
+
+        if (statement == null) {
+            LOGGER.warn("Could not get a connection statement to DB");
+            return false;
+        }
+
+        String deleteProjectSql = "DELETE FROM project WHERE project_id = " + projectId;
+
+        try {
+            int updatedRows = statement.executeUpdate(deleteProjectSql);
+            return (updatedRows == 1);
+
+        } catch (SQLException e) {
+            LOGGER.error("Could not delete project --- detailed info: " + e.getMessage());
+        }
+
+        return false;
     }
 
 }
