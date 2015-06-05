@@ -2,6 +2,8 @@ package ninefoo.application;
 
 import ninefoo.config.Config;
 import ninefoo.controller.MainController;
+import ninefoo.model.Member;
+import ninefoo.model.MemberModel;
 import ninefoo.model.Project_model;
 
 import org.apache.logging.log4j.LogManager;
@@ -25,7 +27,12 @@ public class Application {
 		
 		// FIXME To be moved to controller
 		Project_model.createDatabase();
-		
+
+		Member newMember = new Member("demo", "demo", "demo", "demo");
+		MemberModel mm = new MemberModel();
+		boolean success = mm.insertNewMember(newMember);
+		LOGGER.info(success);
+
 		// Start the application
 		new MainController(String.format("%s - v%s", Config.APPLICATION_NAME, Config.APPLICATION_VERSION));
 	}
