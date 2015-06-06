@@ -1,11 +1,14 @@
 package ninefoo.model;
 
+import ninefoo.config.Database;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Farzad on 02-Jun-2015.
@@ -18,27 +21,35 @@ public class Role_model {
      * @param role the Role object to be stored in the database.
      * @return True if successful, false otherwise.
      */
-    public boolean insertNewRole(Role role) {
+    public int insertNewRole(Role role) {
         Statement statement = DbManager.createConnectionStatement();
-        if (statement == null)
-            return false;
 
-        String insertMemberSql = String.format("INSERT INTO " +
-                        "role(role_name) VALUES('%s')", role.getRoleName());
+        if (statement == null) {
+            LOGGER.warn("Could not get a connection statement to DB");
+            return Database.ERROR;
+        }
+
+        String insertRoleSql = String.format("INSERT INTO " +
+                "role(role_name, description) VALUES('%s', '%s')",
+                role.getRoleName(), role.getDescription());
 
         try {
-            statement.executeUpdate(insertMemberSql);
-            return true;
+            int updatedRows = statement.executeUpdate(insertRoleSql);
+
+            if (updatedRows == 1) {
+                ResultSet rs = statement.executeQuery("SELECT last_insert_rowid()");
+
+                if (rs.next())
+                    return rs.getInt("last_insert_rowid()");
+            }
+
+            LOGGER.warn("Updated row count was not equal to 1");
 
         } catch (SQLException e) {
-            LOGGER.error("Could not add role to db --- detailed info: " + e.getMessage());
+            LOGGER.error("Could not add member to db --- detailed info: " + e.getMessage());
         }
-        //TODO remove if not needed
-//        } finally {
-//            DbManager.closeConnection();
-//        }
 
-        return false;
+        return Database.ERROR;
     }
 
     // Helper method to get the next Role object from the DB ResultSet object.
@@ -46,8 +57,9 @@ public class Role_model {
         try {
             int roleId = roles.getInt("role_id");
             String roleName = roles.getString("role_name");
+            String description = roles.getString("description");
 
-            return new Role(roleId, roleName);
+            return new Role(roleId, roleName, description);
 
         } catch (SQLException e) {
             LOGGER.error("Could not get next role from db --- detailed info: " + e.getMessage());
@@ -124,6 +136,40 @@ public class Role_model {
 //        } finally {
 //            DbManager.closeConnection();
 //        }
+
+        return null;
+    }
+
+    /**
+     * Returns all the roles stored in the database.
+     * @return List of Role objects; empty ArrayList if there are no roles in the database; NULL
+     *         if there is an error connecting to the database.
+     */
+    public List<Role> getAllRoles() {
+        List<Role> allRoles = new ArrayList<>();
+        Statement statement = DbManager.createConnectionStatement();
+
+        if (statement == null) {
+            LOGGER.warn("Could not get a connection statement to DB");
+            return null;
+        }
+
+        String getAllMembersSql = "SELECT * FROM Role";
+        try {
+            ResultSet allRolesFromDb = statement.executeQuery(getAllMembersSql);
+
+            while (allRolesFromDb.next()) {
+                Role nextRole = getNextRole(allRolesFromDb);
+
+                if (nextRole != null)
+                    allRoles.add(nextRole);
+            }
+
+            return allRoles;
+
+        } catch (SQLException e) {
+            LOGGER.error("Could not get members from db --- detailed info: " + e.getMessage());
+        }
 
         return null;
     }

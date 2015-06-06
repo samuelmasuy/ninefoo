@@ -1,6 +1,8 @@
 package ninefoo.model;
 
-import ninefoo.lib.DateUtils;
+import ninefoo.config.*;
+import ninefoo.config.Config;
+import ninefoo.helper.DateHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,7 +25,7 @@ public class Project_model {
     /**
      * Inserts a new project into the database.
      * @param project the Project object to be stored in the DB.
-     * @return The ID (primary key) of the newly inserted record, 0 if the insertion
+     * @return The ID (primary key) of the newly inserted record, <code>Database.ERROR</code> if the insertion
      *         was not successful.
      */
     public int insertNewProject(Project project) {
@@ -31,13 +33,14 @@ public class Project_model {
 
         if (statement == null) {
             LOGGER.warn("Could not get a connection statement to DB");
-            return 0;
+            return Database.ERROR;
         }
 
         String insertProjectSql = String.format(
                 "INSERT INTO project(project_name, budget, start_date, deadline_date, description) " +
                 "VALUES ('%s', %f, '%s', '%s', '%s')", project.getProjectName(), project.getBudget(),
-                DateUtils.format(project.getStartDate()), DateUtils.format(project.getDeadlineDate()), project.getDescription());
+                DateHelper.format(project.getStartDate(), Config.DATE_FORMAT),
+                DateHelper.format(project.getDeadlineDate(), Config.DATE_FORMAT), project.getDescription());
 
         try {
             int updatedRows = statement.executeUpdate(insertProjectSql);
@@ -59,7 +62,7 @@ public class Project_model {
 //            DbManager.closeConnection();
 //        }
 
-        return 0;
+        return Database.ERROR;
     }
 
     // Helper method to get the next Project object from the DB ResultSet object.
@@ -68,12 +71,12 @@ public class Project_model {
         try {
             int projectId = projects.getInt("project_id");
             String projectName = projects.getString("project_name");
-            Date createDate = DateUtils.parse(projects.getString("create_date"));
-            Date updateDate = DateUtils.parse(projects.getString("update_date"));
+            Date createDate = DateHelper.parse(projects.getString("create_date"), Config.DATE_FORMAT);
+            Date updateDate = DateHelper.parse(projects.getString("update_date"), Config.DATE_FORMAT);
             double budget = projects.getDouble("budget");
-            Date deadlineDate = DateUtils.parse(projects.getString("deadline_date"));
+            Date deadlineDate = DateHelper.parse(projects.getString("deadline_date"), Config.DATE_FORMAT);
             String description = projects.getString("description");
-            Date startDate = DateUtils.parse(projects.getString("start_date"));
+            Date startDate = DateHelper.parse(projects.getString("start_date"), Config.DATE_FORMAT);
             
             return new Project(projectId, projectName, createDate, startDate, updateDate, budget, deadlineDate, description);
 

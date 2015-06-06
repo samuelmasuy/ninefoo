@@ -1,6 +1,8 @@
 package ninefoo.model;
 
-import ninefoo.lib.DateUtils;
+import ninefoo.config.*;
+import ninefoo.config.Config;
+import ninefoo.helper.DateHelper;
 
 import java.util.Date;
 import java.util.List;
@@ -48,7 +50,7 @@ public class Activity {
         this.optimisticDuration = optimisticDuration;
         this.likelyDuration = likelyDuration;
         this.pessimisticDuration = pessimisticDuration;
-        this.createDate = DateUtils.format(createDate);
+        this.createDate = DateHelper.format(createDate, Config.DATE_FORMAT);
         this.project = project;
         this.member = member;
         this.prerequisites = prerequisites;
@@ -134,7 +136,7 @@ public class Activity {
     }
 
     public Date getCreateDate() {
-        return DateUtils.parse(createDate);
+        return DateHelper.parse(createDate, Config.DATE_FORMAT);
     }
 
     public Project getProject() { return project; }
