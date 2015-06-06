@@ -11,9 +11,12 @@ public class ValidationFormLang{
 	public static String MIN_LENGTH = "%s must be at least %d.";
 	public static String MAX_LENGTH = "%s must be at most %d.";
 	public static String REGISTRATION_SUCCESS = "Registration successful! Please login.";
+	public static String UNIQUE = "%s must be unique";
 	
 	public static String OPERATION_FAILED = "Operation failed";
 	public static String OPERATION_SUCCESSFUL = "Operation successful";
+	public static String ERROR_OCCURED = "An error occured";
 	
 	public static String PROJECT_CREATED = "Project created successfully!";
+	
 }

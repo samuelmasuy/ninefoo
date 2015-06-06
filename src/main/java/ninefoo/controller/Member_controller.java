@@ -1,5 +1,6 @@
 package ninefoo.controller;
 
+import ninefoo.config.Database;
 import ninefoo.config.Session;
 import ninefoo.lib.LanguageText;
 import ninefoo.lib.ValidationForm;
@@ -8,6 +9,7 @@ import ninefoo.model.Member;
 import ninefoo.model.Member_model;
 import ninefoo.view.frame.UpdatableView;
 import ninefoo.view.listeners.MemberListener;
+
 import org.apache.logging.log4j.LogManager;
 
 /**
@@ -15,9 +17,12 @@ import org.apache.logging.log4j.LogManager;
  * @see AbstractController, MemberListener
  */
 public class Member_controller extends AbstractController implements MemberListener{
+
+	// Logger
 	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 
-	private Member_model mm = new Member_model();
+	// Define Models
+	private Member_model member_model;
 
 	/**
 	 * Constructor
@@ -25,6 +30,9 @@ public class Member_controller extends AbstractController implements MemberListe
 	 */
 	public Member_controller(UpdatableView view) {
 		super(view);
+		
+		// Initialize models
+		this.member_model = new Member_model();
 	}
 	
 	/**
@@ -34,64 +42,48 @@ public class Member_controller extends AbstractController implements MemberListe
 	 */
 	@Override
 	public void login(final String username, final String password){
+		
 		// Create a validation form
 		ValidationForm validation = new ValidationForm();
 		
 		// Create validation rule
 		ValidationRule usernameRule = new ValidationRule(LanguageText.getConstant("USERNAME"), username);
-		ValidationRule passwordRule;
+		ValidationRule passwordRule = new ValidationRule(LanguageText.getConstant("PASSWORD"), password);
 		
-		// Set rules for username
-		usernameRule.checkEmpty().checkFormat("[a-zA-Z0-9]*");
-		
-		// Create custom rules for password
-		passwordRule = new ValidationRule(LanguageText.getConstant("PASSWORD"), password){
-			@Override
-			public boolean validate() {
-				
-				// Keep super validation (Recommended)
-				boolean validate = super.validate();
-				
-				// Check if password is equal to demo
-
-				Member memberCheck = mm.getMemberByUsername(username);
-				if (memberCheck == null) {
-					if (LanguageText.getCurrentLanguage() == LanguageText.ENGLISH)
-						this.setErrorMessage("Username does not exist!");
-
-					else if (LanguageText.getCurrentLanguage() == LanguageText.FRENCH)
-						this.setErrorMessage("Le nom d'usager n'existe pas dans le repertoire.");
-					return false;
-				}
-				LOGGER.info("mc password " +  memberCheck.getPassword() + " == " + password);
-				if (!password.equals(memberCheck.getPassword())) {
-					if (LanguageText.getCurrentLanguage() == LanguageText.ENGLISH)
-						this.setErrorMessage("Password does not match");
-
-					else if (LanguageText.getCurrentLanguage() == LanguageText.FRENCH)
-						this.setErrorMessage("Le mot de passe est incorrect");
-					return false;
-				}
-
-				return validate;
-			}
-		};
+		// Set rules for username and password
+		usernameRule.checkEmpty().checkFormat("[a-zA-Z0-9]+"); // No special characters
+		passwordRule.checkEmpty().checkFormat("[^ ]+"); // No spaces allowed
 		
 		// Add rules to the validation
 		validation.setRule(usernameRule);
 		validation.setRule(passwordRule);
 		
-		// If all requirements are met
+		// If all input requirements are met
 		if(validation.validate()) {
-            // Open session
-            Session newSession = Session.getInstance();
-            newSession.open(); // Session must be opened before setting the data inside it
-            newSession.setUserId(1);
-
-            this.view.updateLogin(true, null);
 			
+			// Check if user is in the database
+			Member member;
+			if( (member = member_model.getMemberByUsername(username)) != null && member.getPassword().equals(password)){
+				
+	            // Open session
+	            Session newSession = Session.getInstance();
+	            newSession.open(); // Session must be opened before setting the data inside it
+	            newSession.setUserId(member.getMemberId());
+	            
+	            // Update view
+	            this.view.updateLogin(true, null);
+			
+			// If login is not successful
+			} else {
+				
+				// Display error
+				this.view.updateLogin(false, LanguageText.getConstant("WRONG_USERNAME_PASSWORD"));
+			}
+            
 		// If requirements are not met
 		} else {
+			
+			// Display errors
 			this.view.updateLogin(false, validation.getError());
 		}
 	}
@@ -115,11 +107,11 @@ public class Member_controller extends AbstractController implements MemberListe
 		ValidationRule lastNameRule = new ValidationRule(LanguageText.getConstant("LAST_NAME"), lastName);
 		ValidationRule passwordRule = new ValidationRule(LanguageText.getConstant("PASSWORD"), password);
 
-		// Set rules for username
+		// Set rules for the fields
 		usernameRule.checkEmpty().checkFormat("[a-zA-Z0-9]+");
 		firstNameRule.checkEmpty().checkFormat("[a-zA-Z]+");
 		lastNameRule.checkEmpty().checkFormat("[a-zA-Z]+");
-		passwordRule.checkMinLength(4).checkMaxLength(10);
+		passwordRule.checkMinLength(4).checkMaxLength(10).checkFormat("[^ ]+");
 
 		// Add rules to the validation
 		validation.setRule(usernameRule);
@@ -130,12 +122,31 @@ public class Member_controller extends AbstractController implements MemberListe
 		// If all requirements are met
 		if(validation.validate()){
 
+			// Create a temp member
 			Member newMember = new Member(firstName, lastName, username, password);
-			int success = mm.insertNewMember(newMember);
-			if (success == 0) this.view.updateLogin(false, validation.getError());
+			
+			// Check if user is unique
+			if(member_model.getMemberByUsername(username) == null){
+				
+				// If registration not successful
+				if(member_model.insertNewMember(newMember) == Database.ERROR){
+					
+					// Display error
+					this.view.updateRegister(false, LanguageText.getConstant("ERROR_OCCURED"));
+				} else {
 
-			this.view.updateRegister(true, LanguageText.getConstant("REGISTRATION_SUCCESS"));
-			// If requirements are not met
+					// Display success
+					this.view.updateRegister(true, LanguageText.getConstant("REGISTRATION_SUCCESS"));
+				}
+			
+			// If user is not unique
+			} else {
+
+				// Display error
+				this.view.updateRegister(false, String.format(LanguageText.getConstant("UNIQUE"), LanguageText.getConstant("USERNAME")));
+			}
+			
+		// If requirements are not met
 		} else {
 			this.view.updateRegister(false, validation.getError());
 		}
