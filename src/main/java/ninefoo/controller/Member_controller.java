@@ -17,7 +17,7 @@ import org.apache.logging.log4j.LogManager;
 public class Member_controller extends AbstractController implements MemberListener{
 	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 
-	Member_model mm = new Member_model();
+	private Member_model mm = new Member_model();
 
 	/**
 	 * Constructor
@@ -34,7 +34,6 @@ public class Member_controller extends AbstractController implements MemberListe
 	 */
 	@Override
 	public void login(final String username, final String password){
-		final Member_model mm = new Member_model();
 		// Create a validation form
 		ValidationForm validation = new ValidationForm();
 		
