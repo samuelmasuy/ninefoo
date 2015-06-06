@@ -17,6 +17,8 @@ import org.apache.logging.log4j.LogManager;
 public class Member_controller extends AbstractController implements MemberListener{
 	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 
+	Member_model mm = new Member_model();
+
 	/**
 	 * Constructor
 	 * @param view
@@ -130,7 +132,6 @@ public class Member_controller extends AbstractController implements MemberListe
 		if(validation.validate()){
 
 			Member newMember = new Member(firstName, lastName, username, password);
-			Member_model mm = new Member_model();
 			int success = mm.insertNewMember(newMember);
 			if (success == 0) this.view.updateLogin(false, validation.getError());
 
