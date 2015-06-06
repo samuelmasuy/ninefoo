@@ -12,11 +12,23 @@ public class Annotation {
 	
 	/**
 	 * Auto load methods on program load
+	 * @param active Check if method should be executed
+	 * @param priority Priority of execution (High priority = 0, by default 0)
 	 */
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.METHOD)
 	public @interface autoload{
 		boolean active() default true;
-		int order() default 0;
+		int priority() default 0;
+	}
+	
+	/**
+	 * Configure the auto load
+	 * @param lowestPriority The lowest possible priority (default 0)
+	 */
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.TYPE)
+	public @interface autoloadConfig{
+		int lowestPriority() default 0;
 	}
 }
