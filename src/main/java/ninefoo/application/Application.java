@@ -33,9 +33,6 @@ public class Application {
 		Member_model mm = new Member_model();
 		int success = mm.insertNewMember(newMember);
 		LOGGER.info(success);
-		Member m = mm.getMemberByUsername("demo");
-		LOGGER.info(m.getUsername());
-		LOGGER.info(m.getPassword());
 
 		// Start the application
 		new MainController(String.format("%s - v%s", Config.APPLICATION_NAME, Config.APPLICATION_VERSION));

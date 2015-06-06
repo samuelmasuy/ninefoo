@@ -63,7 +63,6 @@ public class Member_controller extends AbstractController implements MemberListe
 						this.setErrorMessage("Le nom d'usager n'existe pas dans le repertoire.");
 					return false;
 				}
-				LOGGER.info("mc password " +  memberCheck.getPassword() + " == " + password);
 				if (!password.equals(memberCheck.getPassword())) {
 					if (LanguageText.getCurrentLanguage() == LanguageText.ENGLISH)
 						this.setErrorMessage("Password does not match");
