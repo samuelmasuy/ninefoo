@@ -7,11 +7,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import ninefoo.config.Session;
+import ninefoo.model.Activity;
 import ninefoo.view.include.footer.StatusBar;
 import ninefoo.view.include.menu.Menu;
 import ninefoo.view.include.menu.Tools;
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
 import ninefoo.view.include.menu.listener.ToolsListener;
+import ninefoo.view.listeners.ActivityListener;
 import ninefoo.view.listeners.MemberListener;
 import ninefoo.view.listeners.ProjectListener;
 import ninefoo.view.member.Login_view;
@@ -49,6 +51,7 @@ public class MainView extends JFrame implements UpdatableView{
 	// Define listeners
 	private MemberListener memberListener;
 	private ProjectListener projectListener;
+	private ActivityListener activityListener;
 	
 	public MainView(String AppTitle) {
 		
@@ -142,7 +145,7 @@ public class MainView extends JFrame implements UpdatableView{
 		this.toolsPanel.setToolsListener(new ToolsListener() {
 			
 			@Override
-			public void newProject(CreateProjectDialog dialog, String name, String budget, String deadline, String description) {
+			public void newProject(CreateProjectDialog dialog, String name, String budget, String startDate, String deadline, String description) {
 				LOGGER.info(String.format("Project '%s' has been been submitted!", name));
 				
 				// If listener has been set
@@ -152,7 +155,7 @@ public class MainView extends JFrame implements UpdatableView{
 					createProjectDialog = dialog;
 					
 					// Pass to controller
-					projectListener.createProject(name, budget, deadline, description);
+					projectListener.createProject(name, budget, startDate, deadline, description);
 				}
 			}
 
@@ -178,6 +181,11 @@ public class MainView extends JFrame implements UpdatableView{
 			
 			@Override
 			public void tableUpdated(int row, String activityId, String activityName, String start, String end, String activityCompleted) {
+				
+				// Create or update listener
+				if(activityListener != null)
+					activityListener.createUpdateActivity(row, activityId, activityName, start, end, activityCompleted);
+				
 				LOGGER.info(String.format("Table updated at row %d: %s, %s, %s, %s, %s", row, activityId, activityName, start, end, activityCompleted));
 			}
 		});
@@ -239,6 +247,15 @@ public class MainView extends JFrame implements UpdatableView{
 	public void setProjectListener(ProjectListener projectListener){
 		this.projectListener = projectListener;
 	};
+	
+	/**
+	 * Set activity listener
+	 * @param activityListener
+	 */
+	@Override
+	public void setActivityListener(ActivityListener activityListener) {
+		this.activityListener = activityListener;
+	}
 	
 	/**
 	 * Try login (Information sent from Controller)
@@ -322,5 +339,10 @@ public class MainView extends JFrame implements UpdatableView{
 			// Reset dialog pointer so that it cannot be used anywhere else
 			createProjectDialog = null;
 		}
+	}
+
+	@Override
+	public void updateCreateUpdateProject(int row, Activity activity, boolean success, String message) {
+		// TODO To be completed
 	}
 }

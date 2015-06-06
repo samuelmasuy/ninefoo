@@ -35,9 +35,9 @@ public class Project_model {
         }
 
         String insertProjectSql = String.format(
-                "INSERT INTO project(project_name, budget, deadline_date, description) " +
-                "VALUES ('%s', %f, '%s', '%s')", project.getProjectName(), project.getBudget(),
-                DateUtils.format(project.getDeadlineDate()), project.getDescription());
+                "INSERT INTO project(project_name, budget, start_date, deadline_date, description) " +
+                "VALUES ('%s', %f, '%s', '%s', '%s')", project.getProjectName(), project.getBudget(),
+                DateUtils.format(project.getStartDate()), DateUtils.format(project.getDeadlineDate()), project.getDescription());
 
         try {
             int updatedRows = statement.executeUpdate(insertProjectSql);
@@ -71,8 +71,9 @@ public class Project_model {
             double budget = projects.getDouble("budget");
             Date deadlineDate = DateUtils.parse(projects.getString("deadline_date"));
             String description = projects.getString("description");
-
-            return new Project(projectId, projectName, createDate, updateDate, budget, deadlineDate, description);
+            Date startDate = DateUtils.parse(projects.getString("start_date"));
+            
+            return new Project(projectId, projectName, createDate, startDate, updateDate, budget, deadlineDate, description);
 
         } catch (SQLException e) {
             LOGGER.error("Could not get next project from db --- detailed info: " + e.getMessage());

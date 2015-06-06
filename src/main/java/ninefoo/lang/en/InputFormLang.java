@@ -23,4 +23,6 @@ public class InputFormLang {
 	public static String BUDGET = "Budget";
 	public static String DEADLINE = "Deadline";
 	public static String DESCRIPTION = "Description";
+	
+	public static String START_DATE = "Start date";
 }

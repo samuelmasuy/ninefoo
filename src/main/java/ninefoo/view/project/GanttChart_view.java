@@ -47,7 +47,7 @@ public class GanttChart_view extends JPanel{
 				g2.setRenderingHint ( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
 				
 				drawCalendar(g2);
-				drawActivity(g2, 0, 0, 6, "Activity 1");
+				drawActivity(g2, 0, 0, 10, "Activity 1");
 				drawActivity(g2, 1, 2, 2, "Activity 2");
 				
 			}

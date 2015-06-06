@@ -4,6 +4,9 @@ import org.apache.logging.log4j.LogManager;
 
 import ninefoo.config.Annotation.autoload;
 import ninefoo.lib.LanguageText;
+import ninefoo.model.DbManager;
+import ninefoo.model.Member;
+import ninefoo.model.Member_model;
 
 /**
  * Methods in this class will be loaded automatically if they have the annotation <code>@autoload</code> and [optional] parameter <code>active = true</code><br>
@@ -33,5 +36,18 @@ public class Autoload {
 		// Add language classes - Exclude the Lang from the class name
 		LanguageText.addLanguage("ValidationForm");
 		LanguageText.addLanguage("InputForm");
+	}
+	
+	@autoload
+	public void createDB(){
+		DbManager.createTables();
+	}
+	
+	@autoload(active=false)
+	public void createDemoUser(){
+		Member newMember = new Member("demo", "demo", "demo", "demo");
+		Member_model mm = new Member_model();
+		int success = mm.insertNewMember(newMember);
+		LOGGER.info(success);
 	}
 }

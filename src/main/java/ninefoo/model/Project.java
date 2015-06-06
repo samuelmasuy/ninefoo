@@ -12,6 +12,7 @@ public class Project {
     private int projectId;
     private String projectName;
     private String createDate;
+    private String startDate;
     private String updateDate;
     private double budget;
     private String deadlineDate;
@@ -26,11 +27,12 @@ public class Project {
      * @param deadlineDate Deadline date defined for the project
      * @param description Optional description for the project
      */
-    Project(int projectId, String projectName, Date createDate,
+    Project(int projectId, String projectName, Date createDate, Date startDate,
             Date updateDate, double budget, Date deadlineDate, String description) {
 
         this.projectId = projectId;
         this.projectName = projectName;
+        this.startDate = DateUtils.format(startDate);
         this.createDate = DateUtils.format(createDate);
         this.updateDate = DateUtils.format(updateDate);
         this.budget = budget;
@@ -46,14 +48,15 @@ public class Project {
      * @param deadlineDate Deadline date defined for the project
      * @param description Optional description for the project
      */
-    public Project(String projectName, double budget, Date deadlineDate, String description) {
+    public Project(String projectName, double budget, Date startDate, Date deadlineDate, String description) {
 
         this.projectName = projectName;
         this.budget = budget;
+        this.startDate = DateUtils.format(startDate);
         this.deadlineDate = DateUtils.format(deadlineDate);
         this.description = description;
     }
-
+    
     public int getProjectId() {
         return projectId;
     }
@@ -97,8 +100,16 @@ public class Project {
     public String getDescription() {
         return description;
     }
+    
+    public Date getStartDate() {
+		return DateUtils.parse(startDate);
+	}
 
-    public String toString() {
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String toString() {
         return String.format("Project [ID: %d, Name: '%s', Create: '%s', " +
                 "Update: '%s', Budget: %.2f, Deadline: '%s']", projectId, projectName,
                 createDate, updateDate, budget, deadlineDate);

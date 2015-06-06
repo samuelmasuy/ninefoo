@@ -17,5 +17,6 @@ public class Annotation {
 	@Target(ElementType.METHOD)
 	public @interface autoload{
 		boolean active() default true;
+		int order() default 0;
 	}
 }

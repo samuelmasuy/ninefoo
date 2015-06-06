@@ -24,6 +24,9 @@ public class Config {
 
 	// Date format used when creating (and parsing) dates.
 	public final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+	
+	// Date format short version
+	public final static String DATE_FORMAT_SHORT = "dd/MM/yyyy";
 
 	/**
 	 * Auto load methods

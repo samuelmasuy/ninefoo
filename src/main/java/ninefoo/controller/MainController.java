@@ -30,5 +30,6 @@ public class MainController {
 		// Set GUI Listener
 		view.setMemberListener(new Member_controller(view));
 		view.setProjectListener(new Project_controller(view));
+		view.setActivityListener(new Activity_controller(view));
 	}
 }

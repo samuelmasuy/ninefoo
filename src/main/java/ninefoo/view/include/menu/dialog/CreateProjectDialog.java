@@ -28,7 +28,7 @@ public class CreateProjectDialog extends JDialog{
 	
 	// Create components
 	private JButton createButton;
-	private JTextField name, budget, deadline;
+	private JTextField name, budget, deadline, start;
 	private JTextArea description;
 	
 	// Create panels
@@ -44,6 +44,7 @@ public class CreateProjectDialog extends JDialog{
 		this.name = new JTextField(10);
 		this.budget= new JTextField(10);
 		this.deadline = new JTextField(10);
+		this.start = new JTextField(10);
 		this.description = new JTextArea(3,10);
 		
 		// Set title
@@ -64,7 +65,7 @@ public class CreateProjectDialog extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(toolsListener != null)
-					toolsListener.newProject(CreateProjectDialog.this, name.getText(), budget.getText(), deadline.getText(), description.getText());
+					toolsListener.newProject(CreateProjectDialog.this, name.getText(), budget.getText(), start.getText(), deadline.getText(), description.getText());
 			}
 		});
 		
@@ -121,6 +122,7 @@ public class CreateProjectDialog extends JDialog{
 			budget.setBorder(BorderFactory.createCompoundBorder(budget.getBorder(), inputPadding));
 			deadline.setBorder(BorderFactory.createCompoundBorder(deadline.getBorder(), inputPadding));
 			description.setBorder(BorderFactory.createCompoundBorder(description.getBorder(), inputPadding));
+			start.setBorder(BorderFactory.createCompoundBorder(start.getBorder(), inputPadding));
 			
 			// Add components
 			int row = 0;
@@ -133,6 +135,11 @@ public class CreateProjectDialog extends JDialog{
 			this.fixedPanel.add(new JLabel(LanguageText.getConstant("BUDGET")), gc);
 			LayoutHelper.gcGrid(gc, row++, 1, 1);
 			this.fixedPanel.add(budget,gc);
+			
+			LayoutHelper.gcGrid(gc, row, 0, 1);
+			this.fixedPanel.add(new JLabel(LanguageText.getConstant("START_DATE")), gc);
+			LayoutHelper.gcGrid(gc, row++, 1, 1);
+			this.fixedPanel.add(start,gc);
 			
 			LayoutHelper.gcGrid(gc, row, 0, 1);
 			this.fixedPanel.add(new JLabel(LanguageText.getConstant("DEADLINE")), gc);

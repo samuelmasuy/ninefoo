@@ -26,14 +26,6 @@ public class Application {
 		// Run the auto load before the Controller starts
 		Config.autoload();
 		
-		// FIXME To be moved to controller
-		DbManager.createTables();
-
-		Member newMember = new Member("demo", "demo", "demo", "demo");
-		Member_model mm = new Member_model();
-		int success = mm.insertNewMember(newMember);
-		LOGGER.info(success);
-
 		// Start the application
 		new MainController(String.format("%s - v%s", Config.APPLICATION_NAME, Config.APPLICATION_VERSION));
 	}

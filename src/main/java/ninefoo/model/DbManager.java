@@ -148,6 +148,7 @@ public class DbManager {
                 "project_id         INTEGER     PRIMARY KEY         AUTOINCREMENT, " +
                 "project_name       VARCHAR(50) NOT NULL, " +
                 "create_date        DATETIME    DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')), " +
+                "start_date         DATETIME, " +
                 "update_date        DATETIME, " +
                 "budget             DECIMAL(14, 2), " +
                 "deadline_date      DATETIME, " +
