@@ -79,8 +79,6 @@ public class MainView extends JFrame implements UpdatableView{
 		this.setJMenuBar(menu);
 		
 		// By default, load login view
-//		Session.getInstance().open();
-//		this.loadView(tableChartPanel);
 		this.loadView(loginPanel);
 		
 		// Add listener to login panel
@@ -344,5 +342,12 @@ public class MainView extends JFrame implements UpdatableView{
 	@Override
 	public void updateCreateUpdateProject(int row, Activity activity, boolean success, String message) {
 		// TODO To be completed
+	}
+
+	@Override
+	public void updateLogout() {
+		this.loginPanel.reset();
+		this.loadView(loginPanel);
+		LOGGER.info("Logout successful");
 	}
 }
