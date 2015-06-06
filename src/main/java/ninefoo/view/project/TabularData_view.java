@@ -17,10 +17,14 @@ public class TabularData_view extends JPanel {
 	private static final long serialVersionUID = 6595729954886810500L;
 
 	// Constants
-	private final Object[] dataTableHeader = {"Activity ID", "Activity Name", "Start", "Finish", "Activity % Complete", "Total Float"};
+	private final Object[] dataTableHeader = {"", "Activity ID", "Activity Name", "Start", "Finish", "Activity % Complete", "Total Float"};
+	private final int COUNTER_INDEX = 0;
+	private final int ID_INDEX = 1;
+	private final int FLOAT_INDEX = 6;
+	private int counter = 0;
 	
 	// Static variables
-	public static final String PRE_CREATED_ID = "##";
+	public static final String PRE_CREATED_ID = "  ?";
 	
 	// Declare components
 	private JTable dataTable;
@@ -37,7 +41,18 @@ public class TabularData_view extends JPanel {
 		this.setLayout(new BorderLayout());
 		
 		// Initialize data
-		this.dataTableModel = new DefaultTableModel(null, dataTableHeader);
+		this.dataTableModel = new DefaultTableModel(null, dataTableHeader){
+			
+			private static final long serialVersionUID = -1038079031800784743L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				
+				if(column == ID_INDEX || column == FLOAT_INDEX || column == COUNTER_INDEX) 	
+					return false;
+				return true;
+			}
+		};
 		this.dataTable = new JTable(dataTableModel){
 			private static final long serialVersionUID = 7608473620850578557L;
 			public boolean getScrollableTracksViewportWidth(){
@@ -46,6 +61,7 @@ public class TabularData_view extends JPanel {
 		};
 		this.dataTableScrollPane = new JScrollPane(dataTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
+		// Add listener to table model
 		this.dataTable.getModel().addTableModelListener(new TableModelListener() {
 			
 			@Override
@@ -67,7 +83,8 @@ public class TabularData_view extends JPanel {
 		
 		// Customize the Table
 		this.dataTable.getTableHeader().setReorderingAllowed(false); // Disable column drag
-
+		this.dataTable.getColumnModel().getColumn(0).setPreferredWidth(30);
+		
 		// Customize the scroll table
 		this.dataTableScrollPane.setPreferredSize(new Dimension(300, 0));
 		
@@ -87,6 +104,7 @@ public class TabularData_view extends JPanel {
 	 * Add empty row
 	 */
 	public void addEmptyRow(){
-		dataTableModel.addRow(new Object[]{PRE_CREATED_ID, "", "", "", "", ""});
+		dataTableModel.addRow(new Object[]{++counter, PRE_CREATED_ID, "", "", "", "", ""});
+		dataTable.changeSelection(dataTableModel.getRowCount()-1, 0, false, false);
 	}
 }

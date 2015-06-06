@@ -24,7 +24,7 @@ public class Tools extends JPanel{
 	private static final long serialVersionUID = -1862085076331720213L;
 
 	// Create components
-	private JButton newProject, newMember, newActivity, assign, logout;
+	private JButton newProject, newMember, newActivity, assign, logout, viewProject;
 	
 	// Create listener
 	private ToolsListener toolsListener;
@@ -41,6 +41,7 @@ public class Tools extends JPanel{
 		this.newActivity = new JButton(new ImageIcon(getClass().getResource("/images/new_activity.png")));
 		this.logout = new JButton(new ImageIcon(getClass().getResource("/images/logout.png")));
 		this.assign = new JButton(new ImageIcon(getClass().getResource("/images/assign.png")));
+		this.viewProject = new JButton(new ImageIcon(getClass().getResource("/images/view_project.png")));
 		
 		// Customize buttons
 		this.newProject.setContentAreaFilled(false);
@@ -67,12 +68,18 @@ public class Tools extends JPanel{
 		this.assign.setHorizontalTextPosition(SwingConstants.CENTER);
 		this.assign.setText("Assign");
 
+		this.viewProject.setContentAreaFilled(false);
+		this.viewProject.setBorder(null);
+		this.viewProject.setVerticalTextPosition(SwingConstants.BOTTOM);
+		this.viewProject.setHorizontalTextPosition(SwingConstants.CENTER);
+		this.viewProject.setText("View Projects");
+		
 		this.logout.setContentAreaFilled(false);
 		this.logout.setBorder(null);
 		this.logout.setVerticalTextPosition(SwingConstants.BOTTOM);
 		this.logout.setHorizontalTextPosition(SwingConstants.CENTER);
 		this.logout.setText("Logout");
-		
+
 		// Add new project listener
 		this.newProject.addActionListener(new ActionListener() {
 			
@@ -115,6 +122,8 @@ public class Tools extends JPanel{
 		this.add(this.newProject);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
 		this.add(this.newActivity);
+		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
+		this.add(this.viewProject);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
 		this.add(this.newMember);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
