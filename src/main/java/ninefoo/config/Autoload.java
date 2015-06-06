@@ -3,16 +3,18 @@ package ninefoo.config;
 import org.apache.logging.log4j.LogManager;
 
 import ninefoo.config.Annotation.autoload;
+import ninefoo.config.Annotation.autoloadConfig;
 import ninefoo.lib.LanguageText;
 import ninefoo.model.DbManager;
 import ninefoo.model.Member;
 import ninefoo.model.Member_model;
 
 /**
- * Methods in this class will be loaded automatically if they have the annotation <code>@autoload</code> and [optional] parameter <code>active = true</code><br>
- * Note that the order of method execution in this class is random.<br>
+ * Methods in this class will be loaded automatically if they have the annotation <code>@autoload</code> and [optional] parameter <code>active = true</code> and [optional] parameter <code>priority = 0</code><br>
+ * Note that the order of method execution in this class is random if priority attribute is not set (High priority = 0).<br>
  * To temporarily disable a method, make the <code>active = false</code> in the annotation.
  */
+@autoloadConfig(lowestPriority = 2)
 public class Autoload {
 	
 	// Logger
@@ -43,7 +45,7 @@ public class Autoload {
 		DbManager.createTables();
 	}
 	
-	@autoload(active=false)
+	@autoload(active=true, priority = 1)
 	public void createDemoUser(){
 		Member newMember = new Member("demo", "demo", "demo", "demo");
 		Member_model mm = new Member_model();
