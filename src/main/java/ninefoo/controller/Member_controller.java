@@ -158,7 +158,6 @@ public class Member_controller extends AbstractController implements MemberListe
 	@Override
 	public void logout() {
 		Session.getInstance().close();
-		
-		// TODO update view to login
+		this.view.updateLogout();
 	}
 }

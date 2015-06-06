@@ -10,6 +10,7 @@ public interface UpdatableView {
 	public void updateRegister(boolean success, String message);
 	public void updateCreateProject(boolean success, String message);
 	public void updateCreateUpdateProject(int row, Activity activity, boolean success, String message);
+	public void updateLogout();
 	
 	public void setMemberListener(MemberListener memberListener);
 	public void setProjectListener(ProjectListener projectListener);

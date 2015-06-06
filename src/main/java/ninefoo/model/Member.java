@@ -1,6 +1,8 @@
 package ninefoo.model;
 
-import ninefoo.lib.DateUtils;
+import ninefoo.config.*;
+import ninefoo.config.Config;
+import ninefoo.helper.DateHelper;
 
 import java.util.Date;
 
@@ -33,7 +35,7 @@ public class Member {
         this.lastName = lastName;
         this.username = username;
         this.password = password;
-        this.registerDate = DateUtils.format(registerDate);
+        this.registerDate = DateHelper.format(registerDate, Config.DATE_FORMAT);
     }
 
     /**
@@ -90,7 +92,7 @@ public class Member {
     }
 
     public Date getRegisterDate() {
-        return DateUtils.parse(registerDate);
+        return DateHelper.parse(registerDate, Config.DATE_FORMAT);
     }
 
     public String toString() {

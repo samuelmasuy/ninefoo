@@ -129,6 +129,7 @@ public class DbManager {
         statement.executeUpdate("CREATE TABLE role(" +
                 "role_id            INTEGER     PRIMARY KEY         AUTOINCREMENT, " +
                 "role_name          VARCHAR(50), " +
+                "description        VARCHAR(255), " +
 
                 "UNIQUE (role_name)" +
         ")");

@@ -87,6 +87,42 @@ public class Register_view extends FormPanel{
 			}
 		});
 		
+		// Add user name listener
+		usernameField.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				registerButton.doClick();
+			}
+		});
+		
+		// Add password listener
+		passwordField.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				registerButton.doClick();
+			}
+		});
+		
+		// Add first name listener
+		firstName.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				registerButton.doClick();
+			}
+		});
+				
+		// Add last name listener
+		lastName.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				registerButton.doClick();
+			}
+		});
+		
 		// Add components to fixedPanel
 		int row = 0;
 		LayoutHelper.gcGrid(gc, row++, 0, 2);

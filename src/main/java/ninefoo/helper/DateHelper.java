@@ -39,4 +39,19 @@ public class DateHelper {
 			return null;
 		}
 	}
+
+	/**
+	 * Returns a string representation in the correct format for the specified date.
+	 * @param originalDate the input date to be converted to the correct format.
+	 * @return string representation of the input date in the correct format, NULL if the
+	 *         input is empty.
+	 */
+	public static String format(Date originalDate, String dateFormat) {
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+
+		if (originalDate != null)
+			return sdf.format(originalDate);
+
+		return null;
+	}
 }

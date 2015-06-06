@@ -83,7 +83,7 @@ public class TabularData_view extends JPanel {
 		
 		// Customize the Table
 		this.dataTable.getTableHeader().setReorderingAllowed(false); // Disable column drag
-		this.dataTable.getColumnModel().getColumn(0).setPreferredWidth(30);
+		this.dataTable.getColumnModel().getColumn(COUNTER_INDEX).setPreferredWidth(30);
 		
 		// Customize the scroll table
 		this.dataTableScrollPane.setPreferredSize(new Dimension(300, 0));

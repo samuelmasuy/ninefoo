@@ -1,6 +1,8 @@
 package ninefoo.model;
 
-import ninefoo.lib.DateUtils;
+import ninefoo.config.*;
+import ninefoo.config.Config;
+import ninefoo.helper.DateHelper;
 
 import java.util.Date;
 
@@ -32,11 +34,11 @@ public class Project {
 
         this.projectId = projectId;
         this.projectName = projectName;
-        this.startDate = DateUtils.format(startDate);
-        this.createDate = DateUtils.format(createDate);
-        this.updateDate = DateUtils.format(updateDate);
+        this.startDate = DateHelper.format(startDate, Config.DATE_FORMAT);
+        this.createDate = DateHelper.format(createDate, Config.DATE_FORMAT);
+        this.updateDate = DateHelper.format(updateDate, Config.DATE_FORMAT);
         this.budget = budget;
-        this.deadlineDate = DateUtils.format(deadlineDate);
+        this.deadlineDate = DateHelper.format(deadlineDate, Config.DATE_FORMAT);
         this.description = description;
     }
 
@@ -52,8 +54,8 @@ public class Project {
 
         this.projectName = projectName;
         this.budget = budget;
-        this.startDate = DateUtils.format(startDate);
-        this.deadlineDate = DateUtils.format(deadlineDate);
+        this.startDate = DateHelper.format(startDate, Config.DATE_FORMAT);
+        this.deadlineDate = DateHelper.format(deadlineDate, Config.DATE_FORMAT);
         this.description = description;
     }
     
@@ -70,15 +72,15 @@ public class Project {
     }
 
     public Date getCreateDate() {
-        return DateUtils.parse(createDate);
+        return DateHelper.parse(createDate, Config.DATE_FORMAT);
     }
 
     public Date getUpdateDate() {
-        return DateUtils.parse(updateDate);
+        return DateHelper.parse(updateDate, Config.DATE_FORMAT);
     }
 
     public void setUpdateDate(Date updateDate) {
-        this.updateDate = DateUtils.format(updateDate);
+        this.updateDate = DateHelper.format(updateDate, Config.DATE_FORMAT);
     }
 
     public double getBudget() {
@@ -90,11 +92,11 @@ public class Project {
     }
 
     public Date getDeadlineDate() {
-        return DateUtils.parse(deadlineDate);
+        return DateHelper.parse(deadlineDate, Config.DATE_FORMAT);
     }
 
     public void setDeadlineDate(Date deadlineDate) {
-        this.deadlineDate = DateUtils.format(deadlineDate);
+        this.deadlineDate = DateHelper.format(deadlineDate, Config.DATE_FORMAT);
     }
 
     public String getDescription() {
@@ -102,7 +104,7 @@ public class Project {
     }
     
     public Date getStartDate() {
-		return DateUtils.parse(startDate);
+		return DateHelper.parse(startDate, Config.DATE_FORMAT);
 	}
 
 	public void setStartDate(String startDate) {

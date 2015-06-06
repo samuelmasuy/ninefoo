@@ -7,23 +7,26 @@ package ninefoo.model;
 public class Role {
     private int roleId;
     private String roleName;
+    private String description;
 
     /**
      * This constructor is used when converting db entities to Java classes.
      * @param roleId ID of the role
      * @param roleName Name of the role
      */
-    Role(int roleId, String roleName) {
+    Role(int roleId, String roleName, String description) {
         this.roleId = roleId;
         this.roleName = roleName;
+        this.description = description;
     }
 
     /**
      * This constructor is used when creating a new role object from Java.
      * @param roleName Name of the role
      */
-    public Role(String roleName) {
+    public Role(String roleName, String description) {
         this.roleName = roleName;
+        this.description = description;
     }
 
     public int getRoleId() {
@@ -38,7 +41,15 @@ public class Role {
         this.roleName = roleName;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String toString() {
-        return String.format("Role [ID: %d, Name: '%s']", roleId, roleName);
+        return String.format("Role [ID: %d, Name: '%s', Desc: '%s']", roleId, roleName, description);
     }
 }

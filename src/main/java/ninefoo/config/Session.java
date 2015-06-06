@@ -83,6 +83,7 @@ public class Session {
 	public void close(){
 		if(this.open == true){
 			this.open = false;
+			this.userId = 0;
 			LOGGER.info("Session closed");
 		}
 	}

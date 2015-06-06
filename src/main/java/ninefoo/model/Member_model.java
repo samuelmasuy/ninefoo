@@ -1,6 +1,8 @@
 package ninefoo.model;
 
-import ninefoo.lib.DateUtils;
+import ninefoo.config.*;
+import ninefoo.config.Config;
+import ninefoo.helper.DateHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +24,7 @@ public class Member_model {
     /**
      * Inserts a new member into the database.
      * @param member Member object to be inserted to the database.
-     * @return The ID (primary key) of the newly inserted record, 0 if the insertion
+     * @return The ID (primary key) of the newly inserted record, <code>Database.ERROR</code> if the insertion
      *         was not successful.
      */
     // ------------------------------------ Testing notes ------------------------------
@@ -47,7 +49,7 @@ public class Member_model {
 
         if (statement == null) {
             LOGGER.warn("Could not get a connection statement to DB");
-            return 0;
+            return Database.ERROR;
         }
 
         String insertMemberSql = String.format("INSERT INTO " +
@@ -75,7 +77,7 @@ public class Member_model {
 //            DbManager.closeConnection();
 //        }
 
-        return 0;
+        return Database.ERROR;
     }
 
     // Utility method used to get the next member from the DB ResultSet object.
@@ -89,7 +91,7 @@ public class Member_model {
             String lastName = members.getString("last_name");
             String username = members.getString("username");
             String password = members.getString("password");
-            Date registerDate = DateUtils.parse(members.getString("register_date"));
+            Date registerDate = DateHelper.parse(members.getString("register_date"), Config.DATE_FORMAT);
 
             return new Member(memberId, firstName, lastName, username, password, registerDate);
         } catch (SQLException e) {
