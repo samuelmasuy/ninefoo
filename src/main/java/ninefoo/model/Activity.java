@@ -48,6 +48,7 @@ public class Activity {
         this.optimisticDuration = optimisticDuration;
         this.likelyDuration = likelyDuration;
         this.pessimisticDuration = pessimisticDuration;
+        this.createDate = DateUtils.format(createDate);
         this.project = project;
         this.member = member;
         this.prerequisites = prerequisites;
@@ -153,4 +154,12 @@ public class Activity {
     public List<Activity> getPrerequisites() { return prerequisites; }
 
     public void setPrerequisites(List<Activity> prerequisites) { this.prerequisites = prerequisites; }
+
+    public String toString() {
+        return String.format("Activity [ID: %d, Label: '%s', Desc: '%s', Dur: %d, " +
+                "OptDur: %d, LikeDur: %d, PessDur: %d, ProjID: %d, MemID: %d, PrereqCount: %d]",
+                activityId, activityLabel, description, duration, optimisticDuration,
+                likelyDuration, pessimisticDuration, project.getProjectId(),
+                member.getMemberId(), prerequisites == null ? 0 : prerequisites.size());
+    }
 }

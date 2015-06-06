@@ -53,9 +53,11 @@ public class Project_model {
 
         } catch (SQLException e) {
             LOGGER.error("Could not insert new project into db --- detailed info: " + e.getMessage());
-        } finally {
-            DbManager.closeConnection();
         }
+        //TODO remove if not needed
+//        } finally {
+//            DbManager.closeConnection();
+//        }
 
         return 0;
     }
@@ -108,9 +110,10 @@ public class Project_model {
         } catch (SQLException e) {
             LOGGER.error("Could not get project for id " + projectId + " from db --- " +
                     "detailed info: " + e.getMessage());
-        } finally {
-            DbManager.closeConnection();
         }
+//        } finally {
+//            DbManager.closeConnection();
+//        }
 
         return null;
     }
@@ -141,9 +144,11 @@ public class Project_model {
 
         } catch (SQLException e) {
             LOGGER.error("Could not get projects from db --- detailed info: " + e.getMessage());
-        } finally {
-            DbManager.closeConnection();
         }
+        //TODO remove if not needed
+//        } finally {
+//            DbManager.closeConnection();
+//        }
 
         return null;
     }
