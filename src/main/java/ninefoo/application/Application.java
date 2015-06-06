@@ -2,9 +2,10 @@ package ninefoo.application;
 
 import ninefoo.config.Config;
 import ninefoo.controller.MainController;
+import ninefoo.model.DbManager;
 import ninefoo.model.Member;
-import ninefoo.model.MemberModel;
-import ninefoo.model.Project_model;
+import ninefoo.model.Member_model;
+import ninefoo.model.Project_model_old;
 
 import org.apache.logging.log4j.LogManager;
 
@@ -26,12 +27,15 @@ public class Application {
 		Config.autoload();
 		
 		// FIXME To be moved to controller
-		Project_model.createDatabase();
+		DbManager.createTables();
 
 		Member newMember = new Member("demo", "demo", "demo", "demo");
-		MemberModel mm = new MemberModel();
-		boolean success = mm.insertNewMember(newMember);
+		Member_model mm = new Member_model();
+		int success = mm.insertNewMember(newMember);
 		LOGGER.info(success);
+		Member m = mm.getMemberByUsername("demo");
+		LOGGER.info(m.getUsername());
+		LOGGER.info(m.getPassword());
 
 		// Start the application
 		new MainController(String.format("%s - v%s", Config.APPLICATION_NAME, Config.APPLICATION_VERSION));

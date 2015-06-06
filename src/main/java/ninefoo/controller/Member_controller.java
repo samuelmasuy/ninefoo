@@ -5,16 +5,20 @@ import ninefoo.lib.LanguageText;
 import ninefoo.lib.ValidationForm;
 import ninefoo.lib.ValidationRule;
 import ninefoo.model.Member;
-import ninefoo.model.MemberModel;
+import ninefoo.model.Member_model;
 import ninefoo.view.frame.UpdatableView;
 import ninefoo.view.listeners.MemberListener;
+import org.apache.logging.log4j.LogManager;
 
 /**
  * Control the 'member' functionality.
  * @see AbstractController, MemberListener
  */
 public class Member_controller extends AbstractController implements MemberListener{
-	
+	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
+
+	private Member_model mm = new Member_model();
+
 	/**
 	 * Constructor
 	 * @param view
@@ -30,7 +34,6 @@ public class Member_controller extends AbstractController implements MemberListe
 	 */
 	@Override
 	public void login(final String username, final String password){
-		final MemberModel mm = new MemberModel();
 		// Create a validation form
 		ValidationForm validation = new ValidationForm();
 		
@@ -60,8 +63,8 @@ public class Member_controller extends AbstractController implements MemberListe
 						this.setErrorMessage("Le nom d'usager n'existe pas dans le repertoire.");
 					return false;
 				}
-
-				if (memberCheck.getPassword() != password) {
+				LOGGER.info("mc password " +  memberCheck.getPassword() + " == " + password);
+				if (!password.equals(memberCheck.getPassword())) {
 					if (LanguageText.getCurrentLanguage() == LanguageText.ENGLISH)
 						this.setErrorMessage("Password does not match");
 
@@ -128,9 +131,8 @@ public class Member_controller extends AbstractController implements MemberListe
 		if(validation.validate()){
 
 			Member newMember = new Member(firstName, lastName, username, password);
-			MemberModel mm = new MemberModel();
-			boolean success = mm.insertNewMember(newMember);
-			if (!success) this.view.updateLogin(false, validation.getError());
+			int success = mm.insertNewMember(newMember);
+			if (success == 0) this.view.updateLogin(false, validation.getError());
 
 			this.view.updateRegister(true, LanguageText.getConstant("REGISTRATION_SUCCESS"));
 			// If requirements are not met

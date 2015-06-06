@@ -10,7 +10,7 @@ import java.sql.Statement;
 /**
  * Created by Farzad on 02-Jun-2015.
  */
-public class RoleModel {
+public class Role_model {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**

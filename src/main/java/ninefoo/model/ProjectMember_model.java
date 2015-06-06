@@ -10,9 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This class contains method for manipulating the records in the database where there is
+ *      a relationship between project(s) and member(s). For example, to find all the
+ *      projects for a member, or add a list of members to a project.
  * Created by Farzad on 02-Jun-2015.
  */
-public class ProjectMemberModel {
+public class ProjectMember_model {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
@@ -27,16 +30,32 @@ public class ProjectMemberModel {
         if (member == null || role == null)
             return null;
 
-        List<Integer> projectIds = new ArrayList<>();
-        List<Project> projects = new ArrayList<>();
-        Statement statement = DbManager.createConnectionStatement();
+        return getProjectsByMember(member.getMemberId(), role.getRoleId());
+    }
 
-        if (statement == null)
+    /**
+     * Gets the list of projects for the member corresponding to memberId in which that
+     *      member has the role corresponding to the roleId.
+     * @param memberId ID of the member for whom we want to find the projects.
+     * @param roleId ID of the role of that member in the projects.
+     * @return List of Project objects, or NULL if no project is found.
+     */
+    public List<Project> getProjectsByMember(int memberId, int roleId) {
+
+        if (memberId == 0 || roleId == 0)
             return null;
 
+        Statement statement = DbManager.createConnectionStatement();
+
+        if (statement == null) {
+            LOGGER.warn("Could not get a connection statement to DB");
+            return null;
+        }
+
+        List<Integer> projectIds = new ArrayList<>();
+        List<Project> projects = new ArrayList<>();
+
         // First get the list of project IDs from "project_member" table.
-        int roleId = role.getRoleId();
-        int memberId = member.getMemberId();
         String getProjectIdsSql = String.format(
                 "SELECT project_id FROM project_member " +
                 "WHERE member_id = %d AND role_id = %d", memberId, roleId);
@@ -58,7 +77,7 @@ public class ProjectMemberModel {
         }
 
         // Now that we have the list of project IDs, we get the list of projects.
-        ProjectModel projectModel = new ProjectModel();
+        Project_model projectModel = new Project_model();
 
         for (Integer projectId : projectIds) {
             Project project = projectModel.getProjectById(projectId);
@@ -83,19 +102,37 @@ public class ProjectMemberModel {
         if (project == null || members == null || role == null)
             return false;
 
-        Statement statement = DbManager.createConnectionStatement();
-        boolean success = true;
+        List<Integer> memberIds = new ArrayList<>();
+        for (Member member : members)
+            memberIds.add(member.getMemberId());
 
-        if (statement == null)
+        return addMembersToProject(project.getProjectId(), memberIds, role.getRoleId());
+    }
+
+    /**
+     * Adds the members corresponding to the specified list of memberIds to the project
+     *      corresponding to projectId with the role corresponding to roleId.
+     * @param projectId Id of the project to add members.
+     * @param memberIds Ids of the members to be added to the project.
+     * @param roleId Id of the role of all the members in the list in the specified project.
+     * @return True if successful, False otherwise.
+     */
+    public boolean addMembersToProject(int projectId, List<Integer> memberIds, int roleId) {
+
+        if (projectId == 0 || roleId == 0)
             return false;
 
-        int projectId, memberId, roleId;
-        String insertNewProjectMemberSql;
+        Statement statement = DbManager.createConnectionStatement();
 
-        for (Member member : members) {
-            projectId = project.getProjectId();
-            memberId = member.getMemberId();
-            roleId = role.getRoleId();
+        if (statement == null) {
+            LOGGER.warn("Could not get a connection statement to DB");
+            return false;
+        }
+
+        String insertNewProjectMemberSql;
+        boolean success = true;
+
+        for (int memberId : memberIds) {
 
             insertNewProjectMemberSql = String.format(
                     "INSERT INTO project_member VALUES(%d, %d, %d)", projectId, memberId, roleId);

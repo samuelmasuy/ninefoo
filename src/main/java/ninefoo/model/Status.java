@@ -1,6 +1,7 @@
 package ninefoo.model;
 
 /**
+ * This class represents a status entity in the database.
  * Created by Farzad on 30-May-2015.
  */
 public class Status {

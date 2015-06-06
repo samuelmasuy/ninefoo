@@ -5,6 +5,7 @@ import ninefoo.lib.DateUtils;
 import java.util.Date;
 
 /**
+ * This class represents a member entity in the database.
  * Created by Farzad on 30-May-2015.
  */
 public class Member {
@@ -96,5 +97,14 @@ public class Member {
         return String.format("Member [ID: %d, FirstName: '%s', LastName: '%s', " +
                 "Username: '%s', Password: '%s', Register: '%s']", memberId,
                 firstName, lastName, username, password, registerDate);
+    }
+
+    public boolean equals(Object other) {
+        if (other == null)
+            return false;
+
+        Member otherMember = (Member) other;
+        return (otherMember.getMemberId() == this.getMemberId() ||
+                otherMember.getUsername().equals(this.getUsername()));
     }
 }
