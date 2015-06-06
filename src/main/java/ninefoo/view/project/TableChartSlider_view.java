@@ -5,6 +5,8 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import ninefoo.view.project.listener.TabularDataListener;
+
 public class TableChartSlider_view extends JPanel{
 	
 	private static final long serialVersionUID = 1821070698625712816L;
@@ -39,6 +41,14 @@ public class TableChartSlider_view extends JPanel{
 		this.add(splitPane);
 	}
 	
+	/**
+	 * Set tabular listener
+	 * @param tabularDataListener
+	 */
+	public void setTabularDataListener(TabularDataListener tabularDataListener){
+		this.tabularPanel.setTabularDataListener(tabularDataListener);
+	}
+
 	/**
 	 * Add empty row to the table
 	 */

@@ -6,7 +6,11 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+
+import ninefoo.view.project.listener.TabularDataListener;
 
 public class TabularData_view extends JPanel {
 	
@@ -15,10 +19,16 @@ public class TabularData_view extends JPanel {
 	// Constants
 	private final Object[] dataTableHeader = {"Activity ID", "Activity Name", "Start", "Finish", "Activity % Complete", "Total Float"};
 	
+	// Static variables
+	public static final String PRE_CREATED_ID = "##";
+	
 	// Declare components
 	private JTable dataTable;
 	private DefaultTableModel dataTableModel;
 	private JScrollPane dataTableScrollPane;
+	
+	// Define listener
+	private TabularDataListener tabularDataListener;
 	
 	// Constructor
 	public TabularData_view() {
@@ -36,6 +46,25 @@ public class TabularData_view extends JPanel {
 		};
 		this.dataTableScrollPane = new JScrollPane(dataTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
+		this.dataTable.getModel().addTableModelListener(new TableModelListener() {
+			
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				
+				// Pass it
+				if(tabularDataListener != null){
+					 // FIXME BUG HERE
+					int row = e.getFirstRow();
+					String actId = dataTable.getValueAt(row, 0).toString();
+					String actName = dataTable.getValueAt(row, 1).toString();
+					String actStart = dataTable.getValueAt(row, 2).toString();
+					String actFinish = dataTable.getValueAt(row, 3).toString();
+					String actCompleted = dataTable.getValueAt(row, 4).toString();
+					tabularDataListener.tableUpdated(row, actId, actName, actStart, actFinish, actCompleted);
+				}
+			}
+		});
+		
 		// Customize the Table
 		this.dataTable.getTableHeader().setReorderingAllowed(false); // Disable column drag
 
@@ -47,9 +76,17 @@ public class TabularData_view extends JPanel {
 	}
 	
 	/**
+	 * Set tabular listener
+	 * @param tabularDataListener
+	 */
+	public void setTabularDataListener(TabularDataListener tabularDataListener){
+		this.tabularDataListener = tabularDataListener;
+	}
+	
+	/**
 	 * Add empty row
 	 */
 	public void addEmptyRow(){
-		dataTableModel.addRow(new Object[dataTableHeader.length]);
+		dataTableModel.addRow(new Object[]{PRE_CREATED_ID, "", "", "", "", ""});
 	}
 }

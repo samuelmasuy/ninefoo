@@ -19,6 +19,7 @@ import ninefoo.view.member.Register_view;
 import ninefoo.view.member.listeners.LoginListener;
 import ninefoo.view.member.listeners.RegisterListener;
 import ninefoo.view.project.TableChartSlider_view;
+import ninefoo.view.project.listener.TabularDataListener;
 
 import org.apache.logging.log4j.LogManager;
 
@@ -75,9 +76,9 @@ public class MainView extends JFrame implements UpdatableView{
 		this.setJMenuBar(menu);
 		
 		// By default, load login view
-		Session.getInstance().open();
-		this.loadView(tableChartPanel);
-//		this.loadView(loginPanel);
+//		Session.getInstance().open();
+//		this.loadView(tableChartPanel);
+		this.loadView(loginPanel);
 		
 		// Add listener to login panel
 		this.loginPanel.setLoginListener(new LoginListener() {
@@ -107,7 +108,7 @@ public class MainView extends JFrame implements UpdatableView{
 		});
 		
 		// Add listener to register panel
-		registerPanel.setRegisterListener(new RegisterListener() {
+		this.registerPanel.setRegisterListener(new RegisterListener() {
 			
 			/**
 			 * Try to register
@@ -172,10 +173,19 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 		});
 		
+		// Add listener to table
+		this.tableChartPanel.setTabularDataListener(new TabularDataListener() {
+			
+			@Override
+			public void tableUpdated(int row, String activityId, String activityName, String start, String end, String activityCompleted) {
+				LOGGER.info(String.format("Table updated at row %d: %s, %s, %s, %s, %s", row, activityId, activityName, start, end, activityCompleted));
+			}
+		});
+		
 		// Configure the JFrame
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);		// Exit when click on X
 		this.setPreferredSize(new Dimension(1300, 700)); 	// Frame initial size
-		this.setMinimumSize(new Dimension(500, 500));		// Minimum window size
+		this.setMinimumSize(new Dimension(600, 600));		// Minimum window size
 		this.setVisible(true); 								// Make the frame visible
 		this.pack();										// Force setting the size of components
 		this.setLocationRelativeTo(null); 					// Load on center of the screen

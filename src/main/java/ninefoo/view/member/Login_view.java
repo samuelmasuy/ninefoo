@@ -1,9 +1,7 @@
 package ninefoo.view.member;
 
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -13,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -30,7 +29,7 @@ public class Login_view extends FormPanel{
 	private JButton loginButton;
 	private JTextField usernameField;
 	private JPasswordField passwordField;
-	private JLabel registerText, successMessage;
+	private JLabel registerText;
 	private LoginListener loginListener;
 	
 	// Constructor
@@ -44,17 +43,12 @@ public class Login_view extends FormPanel{
 		this.usernameField = new JTextField(10);
 		this.passwordField = new JPasswordField(10);
 		this.registerText = new JLabel(LanguageText.getConstant("REGISTRATION_LINK"));
-		this.successMessage = new JLabel();
 		
 		// Configure buttons
 		Border inputPadding = BorderFactory.createEmptyBorder(3, 3, 3, 3);
 		this.usernameField.setBorder(BorderFactory.createCompoundBorder(this.usernameField.getBorder(), inputPadding));
 		this.passwordField.setBorder(BorderFactory.createCompoundBorder(this.passwordField.getBorder(), inputPadding));
 		this.registerText.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		
-		// Configure success text
-		this.successMessage.setFont(new Font(this.successMessage.getFont().getFontName(), Font.PLAIN, 12));
-		this.successMessage.setForeground(Color.decode("#4F8A10"));
 		
 		// Set border name
 		this.titledBorder.setTitle(LanguageText.getConstant("WELCOME") + "!");
@@ -98,10 +92,6 @@ public class Login_view extends FormPanel{
 		LayoutHelper.gcGrid(gc, row++, 0, 2);
 		fixedPanel.add(new JLabel(new ImageIcon(getClass().getResource("/images/login_user.png"))), gc);
 		
-		LayoutHelper.gcGrid(gc, row++, 0, 2);
-		fixedPanel.add(this.errorMessage, gc);
-		fixedPanel.add(this.successMessage, gc);
-		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
 		fixedPanel.add(new JLabel(LanguageText.getConstant("USERNAME")), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
@@ -134,29 +124,17 @@ public class Login_view extends FormPanel{
 	}
 	
 	/**
-	 * Set the error message
+	 * Set the success message as a prompt
 	 * @param msg Message to be displayed
 	 */
-	public void setErrorMessage(String msg){
-		this.errorMessage.setText(String .format("<html>%s</html>", msg));
-		this.successMessage.setText("");
-	}
-	
-	/**
-	 * Set success message
-	 * @param msg
-	 */
 	public void setSuccessMessage(String msg){
-		this.successMessage.setText(msg);
-		this.errorMessage.setText("");
+		JOptionPane.showMessageDialog(this, String .format("<html>%s</html>", msg), LanguageText.getConstant("OPERATION_SUCCESSFUL"), JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	/**
 	 * Reset form
 	 */
 	public void reset(){
-		this.errorMessage.setText("");
-		this.successMessage.setText("");
 		this.usernameField.setText("");
 		this.passwordField.setText("");
 	}

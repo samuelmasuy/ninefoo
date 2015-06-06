@@ -13,5 +13,7 @@ public class ValidationFormLang{
 	public static String REGISTRATION_SUCCESS = "Inscription reussie! Connecter vous.";
 
 	public static String OPERATION_FAILED = "L'operation a echoue";
+	public static String OPERATION_SUCCESSFUL = "Operation reussie";
+	
 	public static String PROJECT_CREATED = "Projet cree avec succes!";
 }

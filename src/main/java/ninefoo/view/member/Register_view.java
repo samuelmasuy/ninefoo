@@ -92,9 +92,6 @@ public class Register_view extends FormPanel{
 		LayoutHelper.gcGrid(gc, row++, 0, 2);
 		fixedPanel.add(new JLabel(new ImageIcon(getClass().getResource("/images/register_user.png"))), gc);
 		
-		LayoutHelper.gcGrid(gc, row++, 0, 2);
-		fixedPanel.add(this.errorMessage, gc);
-		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
 		fixedPanel.add(new JLabel(LanguageText.getConstant("FIRST_NAME")), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
@@ -140,7 +137,6 @@ public class Register_view extends FormPanel{
 	 * Reset form
 	 */
 	public void reset(){
-		this.errorMessage.setText("");
 		this.usernameField.setText("");
 		this.passwordField.setText("");
 		this.firstName.setText("");
