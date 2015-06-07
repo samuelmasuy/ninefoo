@@ -2,12 +2,17 @@ package ninefoo.controller;
 
 import ninefoo.config.Config;
 import ninefoo.config.Database;
+import ninefoo.config.RoleNames;
+import ninefoo.config.Session;
 import ninefoo.helper.DateHelper;
 import ninefoo.lib.LanguageText;
 import ninefoo.lib.ValidationForm;
 import ninefoo.lib.ValidationRule;
 import ninefoo.model.Project;
+import ninefoo.model.ProjectMember_model;
 import ninefoo.model.Project_model;
+import ninefoo.model.Role;
+import ninefoo.model.Role_model;
 import ninefoo.view.frame.UpdatableView;
 import ninefoo.view.listeners.ProjectListener;
 
@@ -15,13 +20,18 @@ import org.apache.logging.log4j.LogManager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Project_controller extends AbstractController implements ProjectListener{
 	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 
+	// Load models
 	private Project_model project_model = new Project_model();
-
+	private ProjectMember_model projectMember_model = new ProjectMember_model();
+	private Role_model role_model = new Role_model();
+	
 	/**
 	 * Constructor
 	 * @param view
@@ -123,11 +133,11 @@ public class Project_controller extends AbstractController implements ProjectLis
 			double doubleBudget = budget.isEmpty() ? 0 : Double.parseDouble(budget);
 			
 			Date dateDeadline = null;
-			if( (dateDeadline = DateHelper.parse(deadline, Config.DATE_FORMAT_SHORT)) == null)
+			if( !deadline.isEmpty() && (dateDeadline = DateHelper.parse(deadline, Config.DATE_FORMAT_SHORT)) == null)
 				LOGGER.error("Unexpected error!");
 			
 			Date dateStart = null;
-			if( (dateStart = DateHelper.parse(deadline, Config.DATE_FORMAT_SHORT)) == null)
+			if( !startDate.isEmpty() && (dateStart = DateHelper.parse(startDate, Config.DATE_FORMAT_SHORT)) == null)
 				LOGGER.error("Unexpected error!");
 			
 			
@@ -135,14 +145,22 @@ public class Project_controller extends AbstractController implements ProjectLis
 			Project project = new Project(name, doubleBudget, dateStart, dateDeadline, description);
 			
 			// If insert failed
-			if(project_model.insertNewProject(project) == Database.ERROR){
+			int projectId;
+			if( (projectId = project_model.insertNewProject(project)) == Database.ERROR){
 				
 				// Display error
 				this.view.updateCreateProject(false, LanguageText.getConstant("ERROR_OCCURED"));
 			
 			// If insert successful
 			} else {
-			
+				
+				
+				// Get roles
+				Role role = role_model.getRoleByName("Manager");
+				
+				// Add member to database as manager
+				this.projectMember_model.addMemberToProject(projectId, Session.getInstance().getUserId(), role);
+				
 				// Display success
 				this.view.updateCreateProject(true, LanguageText.getConstant("PROJECT_CREATED"));
 			}
@@ -153,5 +171,43 @@ public class Project_controller extends AbstractController implements ProjectLis
 			// Display error
 			this.view.updateCreateProject(false, validation.getError());
 		}
+	}
+
+	@Override
+	public List<Project> getAllProjectsByMemberAndRole(int memberId, RoleNames roleName) {
+		
+		// Load models
+		Project_model project_model = new Project_model();
+		Role_model role_model = new Role_model();
+		
+		// Check role
+		Role role = null;
+		switch(roleName){
+		case Manager:
+			role = role_model.getRoleByName("Manager");
+			break;
+		case Member:
+			role = role_model.getRoleByName("Member");
+			break;
+		}
+		
+		// Get projects as a list
+		List<Project> projects = project_model.getAllProjectsByMemberAndRole(memberId, role.getRoleId());
+		return projects == null ? new ArrayList<Project>() : projects;
+	}
+
+	@Override
+	public void loadProject(int projectId) {
+		
+		// Get project 
+		Project project = this.project_model.getProjectById(projectId);
+		
+		// If project found
+		if(project != null)
+			this.view.updateLoadProject(true, String.format("Project '%s' loaded succesfully", project.getProjectName()), project);
+		
+		// If project not found
+		else
+			this.view.updateLoadProject(false, LanguageText.getConstant("ERROR_OCCURED"), null);
 	}
 }

@@ -2,16 +2,21 @@ package ninefoo.view.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import ninefoo.config.RoleNames;
 import ninefoo.config.Session;
 import ninefoo.model.Activity;
+import ninefoo.model.Project;
 import ninefoo.view.include.footer.StatusBar;
 import ninefoo.view.include.menu.Menu;
 import ninefoo.view.include.menu.Tools;
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
+import ninefoo.view.include.menu.dialog.ViewMyProjectsDialog;
 import ninefoo.view.include.menu.listener.ToolsListener;
 import ninefoo.view.listeners.ActivityListener;
 import ninefoo.view.listeners.MemberListener;
@@ -44,6 +49,7 @@ public class MainView extends JFrame implements UpdatableView{
 	
 	// Define dialogs
 	private CreateProjectDialog createProjectDialog;
+	private ViewMyProjectsDialog viewMyProjectsDialog;
 	
 	// Define variables
 	private JPanel currentCenterPanel;
@@ -79,7 +85,10 @@ public class MainView extends JFrame implements UpdatableView{
 		this.setJMenuBar(menu);
 		
 		// By default, load login view
-		this.loadView(loginPanel);
+		Session.getInstance().open();
+		Session.getInstance().setUserId(1);
+		this.loadView(tableChartPanel);
+//		this.loadView(loginPanel);
 		
 		// Add listener to login panel
 		this.loginPanel.setLoginListener(new LoginListener() {
@@ -172,6 +181,28 @@ public class MainView extends JFrame implements UpdatableView{
 				if(memberListener != null)
 					memberListener.logout();
 			}
+
+			// TODO Change this and add another method for update
+			@Override
+			public List<Project> getAllMyProjectsByRole(ViewMyProjectsDialog viewMyProjectsDialog, RoleNames roleName) {
+
+				LOGGER.info(String.format("Retreiving projects from the DB for user id %d and role %s ", Session.getInstance().getUserId(), roleName.toString()));
+				
+				// Notify to controller
+				if(projectListener != null)
+					return projectListener.getAllProjectsByMemberAndRole(Session.getInstance().getUserId(), roleName);
+				return null;
+			}
+
+			@Override
+			public void loadProject(ViewMyProjectsDialog dialog, int projectId) {
+				
+				// Store view my projects dialog
+				viewMyProjectsDialog = dialog;
+				
+				// Notify controller
+				projectListener.loadProject(projectId);
+			}
 		});
 		
 		// Add listener to table
@@ -181,8 +212,8 @@ public class MainView extends JFrame implements UpdatableView{
 			public void tableUpdated(int row, String activityId, String activityName, String start, String end, String activityCompleted) {
 				
 				// Create or update listener
-				if(activityListener != null)
-					activityListener.createUpdateActivity(row, activityId, activityName, start, end, activityCompleted);
+//				if(activityListener != null)
+//					activityListener.createUpdateActivity(row, activityId, activityName, start, end, activityCompleted);
 				
 				LOGGER.info(String.format("Table updated at row %d: %s, %s, %s, %s, %s", row, activityId, activityName, start, end, activityCompleted));
 			}
@@ -349,5 +380,37 @@ public class MainView extends JFrame implements UpdatableView{
 		this.loginPanel.reset();
 		this.loadView(loginPanel);
 		LOGGER.info("Logout successful");
+	}
+
+	@Override
+	public void updateLoadProject(boolean success, String message, Project project) {
+		
+		// If dialog exists
+		if(this.viewMyProjectsDialog != null){
+			
+			// If success
+			if(success){
+				
+				LOGGER.info(message);
+				
+				// Show success message
+				this.viewMyProjectsDialog.setSuccessMessage(message);
+				
+				// Close window
+				this.viewMyProjectsDialog.dispose();
+				
+				// Load project
+				this.tableChartPanel.loadProject(project);
+			} else {
+				
+				LOGGER.error(message);
+				
+				// Show error message
+				this.viewMyProjectsDialog.setErrorMessage(message);
+			}
+			
+			// Reset pointer so it cannot be used anywhere else
+			this.viewMyProjectsDialog = null;
+		}
 	}
 }
