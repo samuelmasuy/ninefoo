@@ -5,6 +5,7 @@ import ninefoo.config.Config;
 import ninefoo.helper.DateHelper;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * This class represents a project entity in the database.
@@ -19,6 +20,7 @@ public class Project {
     private double budget;
     private String deadlineDate;
     private String description;
+    private List<Activity> acitivies;
 
     /**
      * This constructor is only used when we want to convert db entities to Java classes
@@ -116,4 +118,12 @@ public class Project {
                 "Update: '%s', Budget: %.2f, Deadline: '%s']", projectId, projectName,
                 createDate, updateDate, budget, deadlineDate);
     }
+
+	public List<Activity> getAcitivies() {
+		return acitivies;
+	}
+
+	public void setAcitivies(List<Activity> acitivies) {
+		this.acitivies = acitivies;
+	}
 }
