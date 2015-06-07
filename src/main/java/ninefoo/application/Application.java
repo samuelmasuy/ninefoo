@@ -2,10 +2,6 @@ package ninefoo.application;
 
 import ninefoo.config.Config;
 import ninefoo.controller.MainController;
-import ninefoo.model.DbManager;
-import ninefoo.model.Member;
-import ninefoo.model.Member_model;
-import ninefoo.model.Project_model_old;
 
 import org.apache.logging.log4j.LogManager;
 
