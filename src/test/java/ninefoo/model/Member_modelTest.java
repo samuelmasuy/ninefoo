@@ -83,48 +83,43 @@ public class Member_modelTest
 			
 		
 	}
-	@Test
+	
 	public void testDeleteMember(){
 		Member memD= new Member("f", "f", "f", "f");
 		 Member_model mem_model=new Member_model();
 		int memID=mem_model.insertNewMember(memD);
 		System.out.println(memID);
-		Member meminDB= mem_model.getMemberById(memID);
-		mem_model.deleteMember(meminDB);
-		meminDB= mem_model.getMemberById(memID);
-		 //assertEquals(null, memD.getFirstName());
-		 //assertEquals(null, memD.getLastName());
-		 //assertEquals(null, memD.getPassword());
-		 //assertEquals(null, memD.getUsername());
-		 //assertEquals(null, memD.getMemberId());
-		assertNull(meminDB);
+		Member memDB= mem_model.getMemberById(memID);
+		mem_model.deleteMember(memDB);
+		memDB= mem_model.getMemberById(memID);//update content of a same member ID, by returning a null object
+	/*	 assertEquals(null, memDB.getFirstName());
+		 assertEquals(null, memDB.getLastName());
+		 assertEquals(null, memDB.getPassword());
+		 assertEquals(null, memDB.getUsername());
+		 assertEquals(null, memDB.getMemberId());*/
+	//	assertNull(memDB.getFirstName());
+		assertNull(memDB);
 	}
-	 
+	 	
 	public void testDeleteMemberById(){
-		Member memD= new Member("f", "f", "f", "f");
+		Member mem= new Member("f", "f", "f", "f");
 		 Member_model mem_model=new Member_model();
-		 int idNewMember=mem_model.insertNewMember(memD);
-		
-		 mem_model.deleteMemberById(idNewMember);
-		 assertEquals(null, memD.getFirstName());
-		 assertEquals(null, memD.getLastName());
-		 assertEquals(null, memD.getPassword());
-		 assertEquals(null, memD.getUsername());
-		 assertEquals(null, memD.getMemberId());
-		 assertNull(memD);
+		 int memID=mem_model.insertNewMember(mem);
+		// Member memDB=mem_model.getMemberById(memID);
+		 mem_model.deleteMemberById(memID);
+		 Member memDB=mem_model.getMemberById(memID);//get new object returned from db of the deleted object, should therefore be a null object since it has been deleteds
+		 assertNull(memDB);
 	}
-	
+	@Test
 	public void testDeleteMemberByUsername(){
-		Member memD= new Member("f", "f", "f", "f");
+		Member mem= new Member("f", "f", "mel", "f");
 		 Member_model mem_model=new Member_model();
-		 mem_model.insertNewMember(memD);
-		 mem_model.deleteMemberByUsername(memD.getUsername());
-		 assertEquals(null, memD.getFirstName());
-		 assertEquals(null, memD.getLastName());
-		 assertEquals(null, memD.getPassword());
-		 assertEquals(null, memD.getUsername());
-		 assertEquals(null, memD.getMemberId());
-		 assertNull(memD);
+		 mem_model.insertNewMember(mem);
+		 //Member memDB=mem_model.getMemberByUsername(mem.getUsername());
+	//	String username=mem.getUsername();
+		mem_model.deleteMemberByUsername("mel");
+		 //Member memDB=mem_model.getMemberByUsername(mem.getUsername());
+		// assertNull(memDB);
 	}
 	 
 }
