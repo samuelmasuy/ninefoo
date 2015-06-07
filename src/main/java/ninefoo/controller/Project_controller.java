@@ -185,8 +185,10 @@ public class Project_controller extends AbstractController implements ProjectLis
 		switch(roleName){
 		case Manager:
 			role = role_model.getRoleByName("Manager");
+			break;
 		case Member:
 			role = role_model.getRoleByName("Member");
+			break;
 		}
 		
 		// Get projects as a list
