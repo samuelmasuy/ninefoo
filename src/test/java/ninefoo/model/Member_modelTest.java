@@ -15,8 +15,7 @@ public class Member_modelTest
 		/**
 		 * We want to make sure that when a new member is added, the correct information 
 		 * has been stored in the database
-		 * How: 
-		 * >Testing to see if the information of a member that has been added
+		 * We are testing to see if the information of a member that has been added
 		 * is equivalent to the information that is retrieved from the database after 
 		 * the member has been added.
 		 *
@@ -37,7 +36,9 @@ public class Member_modelTest
 	
 	 public void test02GetAllMember(){
 		/**
-		 * To see wheither 
+		 * To see whether or not a member has been added to the database,
+		 * We check the length of the list of members. If X new members are added, 
+		 * the list should be longer of X.
 		 */
 		
 		 System.out.println("hello");
@@ -63,13 +64,26 @@ public class Member_modelTest
 	 
 	
 	public void test03GetMemberById(){
+		
+		/**
+		 * When adding a new member object to the database, the ID of the member is return as an int.
+		 * We are testing to see if the int returned is greater than zero , meaning that the member has been added 
+		 * succesfully. When a member could not be added, the returned int is 0.
+		 */
 		Member mem= new Member("f", "f", "f", "f");
 		 Member_model mem_model=new Member_model();
 		 int idOfNewlyInsertedMember=mem_model.insertNewMember(mem);
-		assertTrue(idOfNewlyInsertedMember != 0);
+		assertTrue(idOfNewlyInsertedMember > 0);
 	}
 	
 	public void test04GetMemberByUsername(){
+		
+		/**
+		 * We are testing to see if retrieving a member from the database returns valid Member information.
+		 * To test, we are inserting a new member into the database, and retrieving the same member from 
+		 * the database by its username. The information stored in the database should be equal to the information 
+		 *  when it is retrieved of the database.
+		 */
 		Member aMember= new Member("f", "f", "f", "f");
 		 Member_model mem_model=new Member_model();
 		int idWhenInsertedInDB=mem_model.insertNewMember(aMember);
@@ -84,7 +98,15 @@ public class Member_modelTest
 		
 	}
 	
-	public void testDeleteMember(){
+	public void test05DeleteMember(){
+		/**
+		 * We are testing to see if, when we call the delete method on a member X, that the member 
+		 * is no longer contained in the database.
+		 * To test, we are inserting a member in to the database and retaining the retunred ID in an int variable
+		 * we are then retrieving the member from the database with its respective ID
+		 * And we are deleting the member from the database and updating the member object information
+		 * The member should be null, because it no longer exists as a member object or a database member
+		 */
 		Member memD= new Member("f", "f", "f", "f");
 		 Member_model mem_model=new Member_model();
 		int memID=mem_model.insertNewMember(memD);
@@ -92,16 +114,20 @@ public class Member_modelTest
 		Member memDB= mem_model.getMemberById(memID);
 		mem_model.deleteMember(memDB);
 		memDB= mem_model.getMemberById(memID);//update content of a same member ID, by returning a null object
-	/*	 assertEquals(null, memDB.getFirstName());
-		 assertEquals(null, memDB.getLastName());
-		 assertEquals(null, memDB.getPassword());
-		 assertEquals(null, memDB.getUsername());
-		 assertEquals(null, memDB.getMemberId());*/
-	//	assertNull(memDB.getFirstName());
 		assertNull(memDB);
 	}
 	 	
-	public void testDeleteMemberById(){
+	public void test06DeleteMemberById(){
+		/**
+		 * We are testing to see if, when we call the delete  by ID method on a member X, that the member 
+		 * is no longer contained in the database.
+		 * To test, we are inserting a member in to the database 
+		 * We are then deleting it by its ID in the database
+		 * We are also updating the member object to point to an empty member
+		 * The member should be null, because it no longer exists as a member object or a database member
+		 */
+		
+		
 		Member mem= new Member("f", "f", "f", "f");
 		 Member_model mem_model=new Member_model();
 		 int memID=mem_model.insertNewMember(mem);
@@ -111,13 +137,13 @@ public class Member_modelTest
 		 assertNull(memDB);
 	}
 	@Test
-	public void testDeleteMemberByUsername(){
-		Member mem= new Member("f", "f", "mel", "f");
+	public void test07DeleteMemberByUsername(){
+		Member mem= new Member("f", "f", "f", "f");
 		 Member_model mem_model=new Member_model();
 		 mem_model.insertNewMember(mem);
 		 //Member memDB=mem_model.getMemberByUsername(mem.getUsername());
 	//	String username=mem.getUsername();
-		mem_model.deleteMemberByUsername("mel");
+		mem_model.deleteMemberByUsername("f");
 		 //Member memDB=mem_model.getMemberByUsername(mem.getUsername());
 		// assertNull(memDB);
 	}

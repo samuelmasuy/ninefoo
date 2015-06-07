@@ -297,14 +297,14 @@ public class Member_model {
             return false;
         }
 
-        String deleteMemberSql = "DELETE FROM member WHERE username = " + username;
+        String deleteMemberSql = String.format("DELETE FROM member WHERE username LIKE '%s'", username);
 
         try {
             int updatedRows = statement.executeUpdate(deleteMemberSql);
             return (updatedRows == 1);
 
         } catch (SQLException e) {
-            LOGGER.error("Could not delete member --- detailed info: " + e.getMessage());
+            LOGGER.error("MELISSA Could not delete member --- detailed info: " + e.getMessage());
         }
 
         return false;
