@@ -8,6 +8,8 @@ import ninefoo.lib.LanguageText;
 import ninefoo.model.DbManager;
 import ninefoo.model.Member;
 import ninefoo.model.Member_model;
+import ninefoo.model.Role;
+import ninefoo.model.Role_model;
 
 /**
  * Methods in this class will be loaded automatically if they have the annotation <code>@autoload</code> and [optional] parameter <code>active = true</code> and [optional] parameter <code>priority = 0</code><br>
@@ -51,5 +53,13 @@ public class Autoload {
 		Member_model mm = new Member_model();
 		mm.insertNewMember(newMember);
 		LOGGER.info(String.format("Member %s added!", newMember.getUsername()));
+	}
+	
+	@autoload(active=true, priority = 1)
+	public void addRoles(){
+		Role_model role_model = new Role_model();
+		role_model.insertNewRole(new Role("Manager", ""));
+		role_model.insertNewRole(new Role("Member", ""));
+		LOGGER.info("Roles Manager and Member added to the database");
 	}
 }

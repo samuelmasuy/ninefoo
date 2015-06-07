@@ -2,12 +2,15 @@ package ninefoo.controller;
 
 import ninefoo.config.Config;
 import ninefoo.config.Database;
+import ninefoo.config.RoleNames;
 import ninefoo.helper.DateHelper;
 import ninefoo.lib.LanguageText;
 import ninefoo.lib.ValidationForm;
 import ninefoo.lib.ValidationRule;
 import ninefoo.model.Project;
 import ninefoo.model.Project_model;
+import ninefoo.model.Role;
+import ninefoo.model.Role_model;
 import ninefoo.view.frame.UpdatableView;
 import ninefoo.view.listeners.ProjectListener;
 
@@ -15,7 +18,9 @@ import org.apache.logging.log4j.LogManager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Project_controller extends AbstractController implements ProjectListener{
 	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
@@ -153,5 +158,26 @@ public class Project_controller extends AbstractController implements ProjectLis
 			// Display error
 			this.view.updateCreateProject(false, validation.getError());
 		}
+	}
+
+	@Override
+	public List<Project> getAllProjectsByMemberAndRole(int memberId, RoleNames roleName) {
+		
+		// Load models
+		Project_model project_model = new Project_model();
+		Role_model role_model = new Role_model();
+		
+		// Check role
+		Role role = null;
+		switch(roleName){
+		case Manager:
+			role = role_model.getRoleByName("Manager");
+		case Member:
+			role = role_model.getRoleByName("Member");
+		}
+		
+		// Get projects as a list
+		List<Project> projects = project_model.getAllProjectsByMemberAndRole(memberId, role.getRoleId());
+		return projects == null ? new ArrayList<Project>() : projects;
 	}
 }

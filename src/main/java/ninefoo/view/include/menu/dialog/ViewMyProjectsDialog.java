@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -43,6 +44,10 @@ public class ViewMyProjectsDialog extends JDialog{
 	private JLabel descriptionLabel, createdDate, startDate, deadlineDate;
 	private ArrayList<Project> projects;
 	
+	// Declare listener
+	 ToolsListener toolsListener;
+	
+	
 	/**
 	 * Constructor
 	 */
@@ -65,6 +70,9 @@ public class ViewMyProjectsDialog extends JDialog{
 		this.startDate = new JLabel();
 		this.deadlineDate = new JLabel();
 		
+		// Set listener
+		this.toolsListener = toolsListener;
+		
 		// Create components
 		JPanel buttonContainer = new JPanel();
 		
@@ -74,17 +82,17 @@ public class ViewMyProjectsDialog extends JDialog{
 		// Set default role box value
 		this.roleBox.setSelectedIndex(0);
 		
+		// Populate data
+		this.populateProjectList();
+		
 		// Add role box listener
 		this.roleBox.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				populateProjectList(toolsListener);
+				populateProjectList();
 			}
 		});
-		
-		// Populate list
-		this.populateProjectList(toolsListener);
 		
 		// Add open listener
 		this.openButton.addActionListener(new ActionListener() {
@@ -119,7 +127,7 @@ public class ViewMyProjectsDialog extends JDialog{
 	 * Populate list
 	 * @param toolsListener
 	 */
-	private void populateProjectList(ToolsListener toolsListener){
+	private void populateProjectList(){
 		
 		// Reset array
 		this.projects = new ArrayList<>();
@@ -129,9 +137,10 @@ public class ViewMyProjectsDialog extends JDialog{
 		
 		// Fetch data by role
 		RoleNames[] roleNames = {RoleNames.Manager, RoleNames.Member};
-		if(toolsListener != null)
-			this.projects.addAll(toolsListener.getAllMyProjectsByRole(roleNames[this.roleBox.getSelectedIndex()]));
-			
+		if(toolsListener != null){
+			List<Project> loadedProjects = toolsListener.getAllMyProjectsByRole(this, roleNames[this.roleBox.getSelectedIndex()]);
+			this.projects.addAll(loadedProjects);
+		}
 		// Populate list
 		for(int i=0; i < projects.size(); i++)
 			this.listModel.addElement(projects.get(i).getProjectName());

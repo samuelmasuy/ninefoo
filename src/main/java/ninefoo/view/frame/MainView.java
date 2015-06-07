@@ -16,6 +16,7 @@ import ninefoo.view.include.footer.StatusBar;
 import ninefoo.view.include.menu.Menu;
 import ninefoo.view.include.menu.Tools;
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
+import ninefoo.view.include.menu.dialog.ViewMyProjectsDialog;
 import ninefoo.view.include.menu.listener.ToolsListener;
 import ninefoo.view.listeners.ActivityListener;
 import ninefoo.view.listeners.MemberListener;
@@ -48,6 +49,7 @@ public class MainView extends JFrame implements UpdatableView{
 	
 	// Define dialogs
 	private CreateProjectDialog createProjectDialog;
+	private ViewMyProjectsDialog viewMyProjectsDialog;
 	
 	// Define variables
 	private JPanel currentCenterPanel;
@@ -84,6 +86,7 @@ public class MainView extends JFrame implements UpdatableView{
 		
 		// By default, load login view
 		Session.getInstance().open();
+		Session.getInstance().setUserId(1);
 		this.loadView(tableChartPanel);
 //		this.loadView(loginPanel);
 		
@@ -179,13 +182,14 @@ public class MainView extends JFrame implements UpdatableView{
 					memberListener.logout();
 			}
 
+			// TODO Change this and add another method for update
 			@Override
-			public List<Project> getAllMyProjectsByRole(RoleNames roleName) {
-				
-				List<Project> projects = new LinkedList<>();
-				for(int i=0; i < 100; i++)
-					projects.add(new Project("Project " + (int)(Math.random()*100000), 100, null, null, ""));
-				return projects;
+			public List<Project> getAllMyProjectsByRole(ViewMyProjectsDialog viewMyProjectsDialog, RoleNames roleName) {
+
+				// Notify to controller
+				if(projectListener != null)
+					return projectListener.getAllProjectsByMemberAndRole(Session.getInstance().getUserId(), roleName);
+				return null;
 			}
 
 			@Override
@@ -202,8 +206,8 @@ public class MainView extends JFrame implements UpdatableView{
 			public void tableUpdated(int row, String activityId, String activityName, String start, String end, String activityCompleted) {
 				
 				// Create or update listener
-				if(activityListener != null)
-					activityListener.createUpdateActivity(row, activityId, activityName, start, end, activityCompleted);
+//				if(activityListener != null)
+//					activityListener.createUpdateActivity(row, activityId, activityName, start, end, activityCompleted);
 				
 				LOGGER.info(String.format("Table updated at row %d: %s, %s, %s, %s, %s", row, activityId, activityName, start, end, activityCompleted));
 			}

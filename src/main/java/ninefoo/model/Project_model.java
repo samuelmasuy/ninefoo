@@ -157,6 +157,49 @@ public class Project_model {
     }
 
     /**
+     * Get all projects by member id and role id
+     * Added by Amir
+     * @param memberId
+     * @param roleId
+     * @return List of projects
+     */
+    public List<Project> getAllProjectsByMemberAndRole(int memberId, int roleId){
+    	List<Project> allProjects = new ArrayList<>();
+        Statement statement = DbManager.createConnectionStatement();
+
+        if (statement == null)
+            return null;
+
+        String getAllProjectsSql = String.format(
+        		"SELECT P.project_id, P.project_name, P.create_date, P.start_date, P.update_date, P.budget, P.deadline_date, P.description "
+        		+ "FROM Project P, Project_member PM "
+        		+ "WHERE PM.project_id = P.project_id "
+        		+ "AND PM.member_id = %d "
+        		+ "AND PM.role_id = %d", memberId, roleId);
+        try {
+            ResultSet allProjectsFromDb = statement.executeQuery(getAllProjectsSql);
+
+            while (allProjectsFromDb.next()) {
+                Project nextProject = getNextProject(allProjectsFromDb);
+
+                if (nextProject != null)
+                    allProjects.add(nextProject);
+            }
+
+            return allProjects;
+
+        } catch (SQLException e) {
+            LOGGER.error("Could not get projects from db --- detailed info: " + e.getMessage());
+        }
+        //TODO remove if not needed
+//        } finally {
+//            DbManager.closeConnection();
+//        }
+
+        return null;
+    }
+    
+    /**
      * Deletes a project from DB corresponding to the specified Project object.
      * @param project Project object to be deleted from DB.
      * @return True if a record was deleted; False otherwise.
