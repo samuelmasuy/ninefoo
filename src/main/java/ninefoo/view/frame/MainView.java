@@ -193,9 +193,13 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
-			public void loadProject(int projectId) {
-				// TODO Auto-generated method stub
+			public void loadProject(ViewMyProjectsDialog dialog, int projectId) {
 				
+				// Store view my projects dialog
+				viewMyProjectsDialog = dialog;
+				
+				// Notify controller
+				projectListener.loadProject(projectId);
 			}
 		});
 		
@@ -374,5 +378,33 @@ public class MainView extends JFrame implements UpdatableView{
 		this.loginPanel.reset();
 		this.loadView(loginPanel);
 		LOGGER.info("Logout successful");
+	}
+
+	@Override
+	public void updateLoadProject(boolean success, String message, Project project) {
+		
+		// If dialog exists
+		if(this.viewMyProjectsDialog != null){
+			
+			// If success
+			if(success){
+				
+				// Show success message
+				this.viewMyProjectsDialog.setSuccessMessage(message);
+				
+				// Close window
+				this.viewMyProjectsDialog.dispose();
+				
+				// Load project
+				this.tableChartPanel.loadProject(project);
+			} else {
+				
+				// Show error message
+				this.viewMyProjectsDialog.setErrorMessage(message);
+			}
+			
+			// Reset pointer so it cannot be used anywhere else
+			this.viewMyProjectsDialog = null;
+		}
 	}
 }

@@ -195,4 +195,19 @@ public class Project_controller extends AbstractController implements ProjectLis
 		List<Project> projects = project_model.getAllProjectsByMemberAndRole(memberId, role.getRoleId());
 		return projects == null ? new ArrayList<Project>() : projects;
 	}
+
+	@Override
+	public void loadProject(int projectId) {
+		
+		// Get project 
+		Project project = this.project_model.getProjectById(projectId);
+		
+		// If project found
+		if(project != null)
+			this.view.updateLoadProject(true, "Project loaded succesfully", project);
+		
+		// If project not found
+		else
+			this.view.updateLoadProject(false, LanguageText.getConstant("ERROR_OCCURED"), null);
+	}
 }

@@ -2,9 +2,11 @@ package ninefoo.view.project;
 
 import java.awt.BorderLayout;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import ninefoo.model.Project;
 import ninefoo.view.project.listener.TabularDataListener;
 
 public class TableChartSlider_view extends JPanel{
@@ -15,6 +17,7 @@ public class TableChartSlider_view extends JPanel{
 	private TabularData_view tabularPanel;
 	private GanttChart_view chartPanel;
 	private JSplitPane splitPane;
+	private Project project;
 	
 	/**
 	 * Constructor
@@ -54,5 +57,26 @@ public class TableChartSlider_view extends JPanel{
 	 */
 	public void addEmptyRow(){
 		this.tabularPanel.addEmptyRow();
+	}
+	
+	/**
+	 * Set project
+	 * @param project
+	 */
+	public void setProject(Project project){
+		this.project = project;
+	}
+	
+	/**
+	 * Load and populate project
+	 * @param project
+	 */
+	public void loadProject(Project project){
+		
+		// Set project
+		this.setProject(project);
+		
+		// Populate activities
+		
 	}
 }

@@ -44,6 +44,9 @@ public class ViewMyProjectsDialog extends JDialog{
 	private JLabel descriptionLabel, createdDate, startDate, deadlineDate;
 	private ArrayList<Project> projects;
 	
+	// Define panels
+	ProjectPanel projectPanel;
+	
 	// Declare listener
 	 ToolsListener toolsListener;
 	
@@ -69,6 +72,9 @@ public class ViewMyProjectsDialog extends JDialog{
 		this.createdDate = new JLabel();
 		this.startDate = new JLabel();
 		this.deadlineDate = new JLabel();
+		
+		// Initialize panels
+		this.projectPanel = new ProjectPanel();
 		
 		// Set listener
 		this.toolsListener = toolsListener;
@@ -107,13 +113,13 @@ public class ViewMyProjectsDialog extends JDialog{
 				
 				// If project selected
 				else if(toolsListener != null)
-					toolsListener.loadProject(projects.get(projectList.getSelectedIndex()).getProjectId());
+					toolsListener.loadProject(ViewMyProjectsDialog.this, projects.get(projectList.getSelectedIndex()).getProjectId());
 			}
 		});
 		
 		// Add components to dialog
 		this.add(buttonContainer, BorderLayout.SOUTH);
-		this.add(new ProjectPanel(), BorderLayout.CENTER);
+		this.add(projectPanel, BorderLayout.CENTER);
 		
 		// Configure dialog
 		this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
@@ -144,6 +150,22 @@ public class ViewMyProjectsDialog extends JDialog{
 		// Populate list
 		for(int i=0; i < projects.size(); i++)
 			this.listModel.addElement(projects.get(i).getProjectName());
+	}
+	
+	/**
+	 * Set error message
+	 * @param msg
+	 */
+	public void setErrorMessage(String msg){
+		projectPanel.setErrorMessage(msg);
+	}
+	
+	/**
+	 * Set success message
+	 * @param msg
+	 */
+	public void setSuccessMessage(String msg){
+		projectPanel.setSuccessMessage(msg);
 	}
 	
 	/**
