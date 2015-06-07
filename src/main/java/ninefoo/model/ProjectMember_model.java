@@ -152,4 +152,23 @@ public class ProjectMember_model {
 //        DbManager.closeConnection();
         return success;
     }
+    
+    /**
+     * Adds the specified member to the specified project with. Member will have
+     *      the specified role in the project.
+     * @param projectId
+     * @param memberId
+     * @param role 
+     * @return True if successful, False otherwise.
+     */
+    public boolean addMemberToProject(int projectId, int memberId, Role role) {
+
+        if (role == null)
+            return false;
+
+        List<Integer> memberIds = new ArrayList<>();
+        memberIds.add(memberId);
+
+        return addMembersToProject(projectId, memberIds, role.getRoleId());
+    }
 }

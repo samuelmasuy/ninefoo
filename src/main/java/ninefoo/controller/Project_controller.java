@@ -3,11 +3,13 @@ package ninefoo.controller;
 import ninefoo.config.Config;
 import ninefoo.config.Database;
 import ninefoo.config.RoleNames;
+import ninefoo.config.Session;
 import ninefoo.helper.DateHelper;
 import ninefoo.lib.LanguageText;
 import ninefoo.lib.ValidationForm;
 import ninefoo.lib.ValidationRule;
 import ninefoo.model.Project;
+import ninefoo.model.ProjectMember_model;
 import ninefoo.model.Project_model;
 import ninefoo.model.Role;
 import ninefoo.model.Role_model;
@@ -25,8 +27,11 @@ import java.util.List;
 public class Project_controller extends AbstractController implements ProjectListener{
 	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 
+	// Load models
 	private Project_model project_model = new Project_model();
-
+	private ProjectMember_model projectMember_model = new ProjectMember_model();
+	private Role_model role_model = new Role_model();
+	
 	/**
 	 * Constructor
 	 * @param view
@@ -140,14 +145,22 @@ public class Project_controller extends AbstractController implements ProjectLis
 			Project project = new Project(name, doubleBudget, dateStart, dateDeadline, description);
 			
 			// If insert failed
-			if(project_model.insertNewProject(project) == Database.ERROR){
+			int projectId;
+			if( (projectId = project_model.insertNewProject(project)) == Database.ERROR){
 				
 				// Display error
 				this.view.updateCreateProject(false, LanguageText.getConstant("ERROR_OCCURED"));
 			
 			// If insert successful
 			} else {
-			
+				
+				
+				// Get roles
+				Role role = role_model.getRoleByName("Manager");
+				
+				// Add member to database as manager
+				this.projectMember_model.addMemberToProject(projectId, Session.getInstance().getUserId(), role);
+				
 				// Display success
 				this.view.updateCreateProject(true, LanguageText.getConstant("PROJECT_CREATED"));
 			}
