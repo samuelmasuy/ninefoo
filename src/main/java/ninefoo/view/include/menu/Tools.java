@@ -1,12 +1,9 @@
 package ninefoo.view.include.menu;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -14,9 +11,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
+import ninefoo.view.include.menu.dialog.ViewMyProjectsDialog;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
 public class Tools extends JPanel{
@@ -49,37 +46,45 @@ public class Tools extends JPanel{
 		this.newProject.setVerticalTextPosition(SwingConstants.BOTTOM);
 		this.newProject.setHorizontalTextPosition(SwingConstants.CENTER);
 		this.newProject.setText("New Project");
+		this.newProject.setToolTipText("Create a new project");
 		
 		this.newActivity.setContentAreaFilled(false);
 		this.newActivity.setBorder(null);
 		this.newActivity.setVerticalTextPosition(SwingConstants.BOTTOM);
 		this.newActivity.setHorizontalTextPosition(SwingConstants.CENTER);
 		this.newActivity.setText("New Activity");
+		this.newActivity.setToolTipText("Createa an activity");
 		
 		this.newMember.setContentAreaFilled(false);
 		this.newMember.setBorder(null);
 		this.newMember.setVerticalTextPosition(SwingConstants.BOTTOM);
 		this.newMember.setHorizontalTextPosition(SwingConstants.CENTER);
 		this.newMember.setText("New Member");
+		this.newMember.setToolTipText("Register a new member");
 		
 		this.assign.setContentAreaFilled(false);
 		this.assign.setBorder(null);
 		this.assign.setVerticalTextPosition(SwingConstants.BOTTOM);
 		this.assign.setHorizontalTextPosition(SwingConstants.CENTER);
 		this.assign.setText("Assign");
-
+		this.assign.setToolTipText("Assign member to a task");
+		
 		this.viewProject.setContentAreaFilled(false);
 		this.viewProject.setBorder(null);
 		this.viewProject.setVerticalTextPosition(SwingConstants.BOTTOM);
 		this.viewProject.setHorizontalTextPosition(SwingConstants.CENTER);
 		this.viewProject.setText("View Projects");
+		this.viewProject.setToolTipText("View my projects");
 		
 		this.logout.setContentAreaFilled(false);
 		this.logout.setBorder(null);
 		this.logout.setVerticalTextPosition(SwingConstants.BOTTOM);
 		this.logout.setHorizontalTextPosition(SwingConstants.CENTER);
 		this.logout.setText("Logout");
-
+		
+		// Disable buttons at start
+//		this.newActivity.setEnabled(false);
+		
 		// Add new project listener
 		this.newProject.addActionListener(new ActionListener() {
 			
@@ -104,6 +109,16 @@ public class Tools extends JPanel{
 			}
 		});
 		
+		// Add view project listener
+		this.viewProject.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(toolsListener != null)
+					new ViewMyProjectsDialog(parentFrame, toolsListener);
+			}
+		});
+		
 		// Add logout listener
 		this.logout.addActionListener(new ActionListener() {
 			
@@ -121,9 +136,9 @@ public class Tools extends JPanel{
 		this.add(Box.createRigidArea(new Dimension(10,0)));
 		this.add(this.newProject);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
-		this.add(this.newActivity);
-		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
 		this.add(this.viewProject);
+		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
+		this.add(this.newActivity);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
 		this.add(this.newMember);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));

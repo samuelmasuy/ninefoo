@@ -49,7 +49,7 @@ public class Autoload {
 	public void createDemoUser(){
 		Member newMember = new Member("hello", "hello", "hello", "hello");
 		Member_model mm = new Member_model();
-		int success = mm.insertNewMember(newMember);
+		mm.insertNewMember(newMember);
 		LOGGER.info(String.format("Member %s added!", newMember.getUsername()));
 	}
 }
