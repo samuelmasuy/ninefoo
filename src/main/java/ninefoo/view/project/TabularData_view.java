@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -84,6 +85,7 @@ public class TabularData_view extends JPanel {
 		// Customize the Table
 		this.dataTable.getTableHeader().setReorderingAllowed(false); // Disable column drag
 		this.dataTable.getColumnModel().getColumn(COUNTER_INDEX).setPreferredWidth(30);
+		this.dataTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		// Customize the scroll table
 		this.dataTableScrollPane.setPreferredSize(new Dimension(300, 0));

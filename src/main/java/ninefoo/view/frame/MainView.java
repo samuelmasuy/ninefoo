@@ -2,12 +2,16 @@ package ninefoo.view.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import ninefoo.config.RoleNames;
 import ninefoo.config.Session;
 import ninefoo.model.Activity;
+import ninefoo.model.Project;
 import ninefoo.view.include.footer.StatusBar;
 import ninefoo.view.include.menu.Menu;
 import ninefoo.view.include.menu.Tools;
@@ -79,7 +83,9 @@ public class MainView extends JFrame implements UpdatableView{
 		this.setJMenuBar(menu);
 		
 		// By default, load login view
-		this.loadView(loginPanel);
+		Session.getInstance().open();
+		this.loadView(tableChartPanel);
+//		this.loadView(loginPanel);
 		
 		// Add listener to login panel
 		this.loginPanel.setLoginListener(new LoginListener() {
@@ -171,6 +177,21 @@ public class MainView extends JFrame implements UpdatableView{
 				// Logout
 				if(memberListener != null)
 					memberListener.logout();
+			}
+
+			@Override
+			public List<Project> getAllMyProjectsByRole(RoleNames roleName) {
+				
+				List<Project> projects = new LinkedList<>();
+				for(int i=0; i < 100; i++)
+					projects.add(new Project("Project " + (int)(Math.random()*100000), 100, null, null, ""));
+				return projects;
+			}
+
+			@Override
+			public void loadProject(int projectId) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 		
