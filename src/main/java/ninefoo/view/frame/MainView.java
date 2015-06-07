@@ -2,7 +2,6 @@ package ninefoo.view.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -398,6 +397,9 @@ public class MainView extends JFrame implements UpdatableView{
 				
 				// Close window
 				this.viewMyProjectsDialog.dispose();
+				
+				// Enable new activity button
+				this.toolsPanel.setNewActivityEnabled(true);
 				
 				// Load project
 				this.tableChartPanel.loadProject(project);
