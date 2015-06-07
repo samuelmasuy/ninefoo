@@ -73,10 +73,6 @@ public class ProjectMember_model {
 
             return null;
         }
-        //TODO remove if not needed
-//        } finally {
-//            DbManager.closeConnection();
-//        }
 
         // Now that we have the list of project IDs, we get the list of projects.
         Project_model projectModel = new Project_model();
@@ -148,8 +144,6 @@ public class ProjectMember_model {
             }
         }
 
-        //TODO remove if not needed
-//        DbManager.closeConnection();
         return success;
     }
     

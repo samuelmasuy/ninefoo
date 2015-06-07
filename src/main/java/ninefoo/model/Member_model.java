@@ -72,10 +72,6 @@ public class Member_model {
         } catch (SQLException e) {
             LOGGER.error("Could not add member to db --- detailed info: " + e.getMessage());
         }
-        //TODO remove if not needed
-//        } finally {
-//            DbManager.closeConnection();
-//        }
 
         return Database.ERROR;
     }
@@ -138,10 +134,6 @@ public class Member_model {
         } catch (SQLException e) {
             LOGGER.error("Could not get members from db --- detailed info: " + e.getMessage());
         }
-        //TODO remove if not needed
-//        } finally {
-//            DbManager.closeConnection();
-//        }
 
         return null;
     }
@@ -179,10 +171,6 @@ public class Member_model {
             LOGGER.error("Could not get member with member_id = " + memberId + " --- " +
                          "detailed info: " + e.getMessage());
         }
-        //TODO remove if not needed
-//        } finally {
-//            DbManager.closeConnection();
-//        }
 
         return null;
     }
@@ -219,10 +207,6 @@ public class Member_model {
             LOGGER.error("Could not get member with username = '" + username + "' --- " +
                     "detailed info: " + e.getMessage());
         }
-        //TODO remove if not needed
-//        } finally {
-//            DbManager.closeConnection();
-//        }
 
         return null;
     }
