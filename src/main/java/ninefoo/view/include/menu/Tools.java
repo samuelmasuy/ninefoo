@@ -21,7 +21,7 @@ public class Tools extends JPanel{
 	private static final long serialVersionUID = -1862085076331720213L;
 
 	// Create components
-	private JButton newProject, newMember, newActivity, assign, logout, viewProject;
+	private JButton newProject, newMember, newActivity, assign, logout, viewProject, refreshProject;
 	
 	// Create listener
 	private ToolsListener toolsListener;
@@ -39,6 +39,7 @@ public class Tools extends JPanel{
 		this.logout = new JButton(new ImageIcon(getClass().getResource("/images/logout.png")));
 		this.assign = new JButton(new ImageIcon(getClass().getResource("/images/assign.png")));
 		this.viewProject = new JButton(new ImageIcon(getClass().getResource("/images/view_project.png")));
+		this.refreshProject = new JButton(new ImageIcon(getClass().getResource("/images/refresh_project.png")));
 		
 		// Customize buttons
 		this.newProject.setContentAreaFilled(false);
@@ -82,8 +83,15 @@ public class Tools extends JPanel{
 		this.logout.setHorizontalTextPosition(SwingConstants.CENTER);
 		this.logout.setText("Logout");
 		
+		this.refreshProject.setContentAreaFilled(false);
+		this.refreshProject.setBorder(null);
+		this.refreshProject.setVerticalTextPosition(SwingConstants.BOTTOM);
+		this.refreshProject.setHorizontalTextPosition(SwingConstants.CENTER);
+		this.refreshProject.setText("Refresh");
+		this.refreshProject.setToolTipText("Refresh project");
+		
 		// Disable buttons at start
-//		this.newActivity.setEnabled(false);
+		this.newActivity.setEnabled(false);
 		
 		// Add new project listener
 		this.newProject.addActionListener(new ActionListener() {
@@ -144,6 +152,8 @@ public class Tools extends JPanel{
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
 		this.add(this.assign);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
+		this.add(this.refreshProject);
+		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
 		this.add(this.logout);
 		
 		// Configure JPanel
@@ -157,5 +167,13 @@ public class Tools extends JPanel{
 	 */
 	public void setToolsListener(ToolsListener toolsListener){
 		this.toolsListener = toolsListener;
+	}
+	
+	/**
+	 * Set activity button enabled
+	 * @param enable Boolean
+	 */
+	public void setNewActivityEnabled(boolean enable){
+		this.newActivity.setEnabled(enable);
 	}
 }

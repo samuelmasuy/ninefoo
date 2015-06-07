@@ -31,4 +31,12 @@ public class DateHelperTest {
 			//System.out.println(testdate.getTime() + " = " + dateexpected.getTime());
 			assertEquals("Date Formatting does not work",testdate.getTime(),dateexpected.getTime());
 		}
+		@Test
+		public void FormatTest(){
+			SimpleDateFormat sdf = new SimpleDateFormat(Config.DATE_FORMAT_SHORT);
+			Date testdate = new Date();
+			String expected = sdf.format(testdate);
+			String testparam= "07/06/2015";
+			assertEquals("Date Formatting does not work",testparam,expected);
+		}
 }

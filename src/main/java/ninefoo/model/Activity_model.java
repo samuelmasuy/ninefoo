@@ -71,10 +71,6 @@ public class Activity_model {
         } catch (SQLException e) {
             LOGGER.error("Could not insert new activity into db --- detailed info: " + e.getMessage());
         }
-        //TODO remove if not needed
-//        } finally {
-//            DbManager.closeConnection();
-//        }
 
         return Database.ERROR;
     }
@@ -88,8 +84,16 @@ public class Activity_model {
             return false;
         }
 
-        if (prerequisites == null)
+        // To be safe, we first delete all the prerequisites associated with the activity and
+        //      then add them.
+        String deletePrereqsSql = "DELETE FROM activity_relation WHERE activity_id = " + activityId;
+        try {
+            statement.executeUpdate(deletePrereqsSql);
+        } catch (SQLException e) {
+            LOGGER.warn("Could not delete prerequisites for activity ID = " +
+                    activityId + " --- detailed info: " + e.getMessage());
             return false;
+        }
 
         String insertPrereqSql;
         for (Activity prereq : prerequisites) {
@@ -271,5 +275,64 @@ public class Activity_model {
         }
 
         return projectActivities;
+    }
+
+    /**
+     * Updates an activity in the database.
+     * @param activity Activity object to be updated.
+     * @return True if the update was successful; False otherwise.
+     */
+    public boolean updateActivity(Activity activity) {
+        int activityId = activity.getActivityId();
+
+        if (activity == null || activityId == 0)
+            return false;
+
+        Statement statement = DbManager.createConnectionStatement();
+
+        if (statement == null) {
+            LOGGER.warn("Could not get a connection statement to DB");
+            return false;
+        }
+
+        StringBuilder updateActivitySql = new StringBuilder();
+        updateActivitySql.append(String.format(
+                "UPDATE activity " +
+                        "SET    activity_label = '%s', description = '%s', " +
+                        "       duration = %d, optimistic_duration = %d, likely_duration = %d, " +
+                        "       pessimistic_duration = %d, update_date = '%s', project_id = %d, " +
+                        "       member_id = %d", activity.getActivityLabel(), activity.getDescription(),
+                activity.getDuration(), activity.getOptimisticDuration(),
+                activity.getLikelyDuration(), activity.getPessimisticDuration(),
+                DateHelper.format(new Date(), Config.DATE_FORMAT),
+                activity.getProject().getProjectId(), activity.getMember().getMemberId(),
+                activityId));
+
+        // Skip updating start and finish dates if either of them is NULL.
+        if (activity.getStartDate() != null)
+            updateActivitySql.append(String.format(", start_date = '%s'",
+                    DateHelper.format(activity.getStartDate(), Config.DATE_FORMAT)));
+
+        if (activity.getFinishDate() != null)
+            updateActivitySql.append(String.format(", finish_date = '%s'",
+                    DateHelper.format(activity.getFinishDate(), Config.DATE_FORMAT)));
+
+        updateActivitySql.append(String.format(" WHERE activity_id = %d", activityId));
+        try {
+
+            int updatedRows = statement.executeUpdate(updateActivitySql.toString());
+
+            if (updatedRows == 1) {
+                List<Activity> prerequisites = activity.getPrerequisites();
+                if (prerequisites != null)
+                    return insertPrereqs(activityId, activity.getPrerequisites());
+            }
+
+        } catch (SQLException e) {
+            LOGGER.error("Could not update activity with ID = " + activity.getActivityId() +
+                    " --- detailed info: " + e.getMessage());
+        }
+
+        return false;
     }
 }

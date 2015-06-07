@@ -20,6 +20,9 @@ public class Activity {
     private int likelyDuration;
     private int pessimisticDuration;
     private String createDate;
+    private String startDate;
+    private String updateDate;
+    private String finishDate;
     private Project project;
     private Member member;
     private List<Activity> prerequisites;
@@ -163,5 +166,29 @@ public class Activity {
                 activityId, activityLabel, description, duration, optimisticDuration,
                 likelyDuration, pessimisticDuration, project.getProjectId(),
                 member.getMemberId(), prerequisites == null ? 0 : prerequisites.size());
+    }
+
+    public Date getStartDate() {
+        return DateHelper.parse(startDate, Config.DATE_FORMAT);
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = DateHelper.format(startDate, Config.DATE_FORMAT);
+    }
+
+    public Date getUpdateDate() {
+        return DateHelper.parse(updateDate, Config.DATE_FORMAT);
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = DateHelper.format(updateDate, Config.DATE_FORMAT);
+    }
+
+    public Date getFinishDate() {
+        return DateHelper.parse(finishDate, Config.DATE_FORMAT);
+    }
+
+    public void setFinishDate(Date finishDate) {
+        this.finishDate = DateHelper.format(finishDate, Config.DATE_FORMAT);
     }
 }

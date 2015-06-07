@@ -8,6 +8,7 @@ import ninefoo.helper.DateHelper;
 import ninefoo.lib.LanguageText;
 import ninefoo.lib.ValidationForm;
 import ninefoo.lib.ValidationRule;
+import ninefoo.model.Activity_model;
 import ninefoo.model.Project;
 import ninefoo.model.ProjectMember_model;
 import ninefoo.model.Project_model;
@@ -18,8 +19,6 @@ import ninefoo.view.listeners.ProjectListener;
 
 import org.apache.logging.log4j.LogManager;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,10 +26,11 @@ import java.util.List;
 public class Project_controller extends AbstractController implements ProjectListener{
 	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 
-	// Load models
+	// Global models
 	private Project_model project_model = new Project_model();
 	private ProjectMember_model projectMember_model = new ProjectMember_model();
 	private Role_model role_model = new Role_model();
+	private Activity_model activity_model = new Activity_model();
 	
 	/**
 	 * Constructor
@@ -203,11 +203,19 @@ public class Project_controller extends AbstractController implements ProjectLis
 		Project project = this.project_model.getProjectById(projectId);
 		
 		// If project found
-		if(project != null)
+		if(project != null){
+			
+			// Load activities for this project
+			project.setAcitivies(this.activity_model.getActivitiesByProjectId(projectId));
+			
+			// Update view
 			this.view.updateLoadProject(true, String.format("Project '%s' loaded succesfully", project.getProjectName()), project);
 		
 		// If project not found
-		else
+		} else{
+			
+			// Update view
 			this.view.updateLoadProject(false, LanguageText.getConstant("ERROR_OCCURED"), null);
+		}
 	}
 }

@@ -5,6 +5,7 @@ import ninefoo.config.Config;
 import ninefoo.helper.DateHelper;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * This class represents a project entity in the database.
@@ -16,9 +17,11 @@ public class Project {
     private String createDate;
     private String startDate;
     private String updateDate;
+    private String finishDate;
     private double budget;
     private String deadlineDate;
     private String description;
+    private List<Activity> acitivies;
 
     /**
      * This constructor is only used when we want to convert db entities to Java classes
@@ -113,7 +116,23 @@ public class Project {
 
 	public String toString() {
         return String.format("Project [ID: %d, Name: '%s', Create: '%s', " +
-                "Update: '%s', Budget: %.2f, Deadline: '%s']", projectId, projectName,
+                        "Update: '%s', Budget: %.2f, Deadline: '%s']", projectId, projectName,
                 createDate, updateDate, budget, deadlineDate);
+    }
+
+	public List<Activity> getAcitivies() {
+		return acitivies;
+	}
+
+	public void setAcitivies(List<Activity> acitivies) {
+		this.acitivies = acitivies;
+	}
+
+    public Date getFinishDate() {
+        return DateHelper.parse(finishDate, Config.DATE_FORMAT);
+    }
+
+    public void setFinishDate(Date finishDate) {
+        this.finishDate = DateHelper.format(finishDate, Config.DATE_FORMAT);
     }
 }
