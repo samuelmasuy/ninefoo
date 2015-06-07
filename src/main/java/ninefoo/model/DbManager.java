@@ -14,7 +14,7 @@ import java.sql.Statement;
 public class DbManager {
     private static Connection dbConnection = null;
 //    private static Statement statement = null;
-    private static final String dbName = "test.db";
+    private static final String dbName = "pm_expert.db";
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
@@ -22,24 +22,6 @@ public class DbManager {
      * @return the desired Statement object
      */
     public static Statement createConnectionStatement() {
-
-//        try {
-//            Class.forName("org.sqlite.JDBC");
-//            dbConnection = DriverManager.getConnection("jdbc:sqlite:" + dbName);
-//            statement = dbConnection.createStatement();
-//
-//        } catch (ClassNotFoundException e) {
-//            LOGGER.error("Could not find org.sqlite.JDBC class --- detailed info: " +
-//                    e.getMessage());
-//            return null;
-//        } catch (SQLException e) {
-//            LOGGER.error("Could not create a db connection --- detailed info: " +
-//                    e.getMessage());
-//            return null;
-//        }
-//
-//        return statement;
-
         Statement statement = null;
 
         if (dbConnection == null) {
@@ -150,7 +132,7 @@ public class DbManager {
                 "project_name       VARCHAR(50) NOT NULL, " +
                 "create_date        DATETIME    DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')), " +
                 "start_date         DATETIME, " +
-                "update_date        DATETIME, " +
+                "update_date        DATETIME    DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')), " +
                 "budget             DECIMAL(14, 2), " +
                 "deadline_date      DATETIME, " +
                 "description        VARCHAR(255)" +
@@ -185,6 +167,9 @@ public class DbManager {
                 "likely_duration        INT, " +
                 "pessimistic_duration   INT, " +
                 "create_date            DATETIME    DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')), " +
+                "update_date            DATETIME    DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')), " +
+                "start_date             DATETIME, " +
+                "finish_date            DATETIME, " +
                 "project_id             INT         NOT NULL, " +
                 "member_id              INT, " +
 

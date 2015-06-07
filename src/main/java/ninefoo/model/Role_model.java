@@ -96,10 +96,6 @@ public class Role_model {
             LOGGER.error("Could not get role for id " + roleId + " from db --- " +
                     "detailed info: " + e.getMessage());
         }
-        //TODO remove if not needed
-//        } finally {
-//            DbManager.closeConnection();
-//        }
 
         return null;
     }
@@ -132,10 +128,6 @@ public class Role_model {
             LOGGER.error("Could not get role for name '" + roleName + "' from db --- " +
                     "detailed info: " + e.getMessage());
         }
-        //TODO remove if not needed
-//        } finally {
-//            DbManager.closeConnection();
-//        }
 
         return null;
     }
