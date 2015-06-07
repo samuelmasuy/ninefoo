@@ -133,11 +133,11 @@ public class Project_controller extends AbstractController implements ProjectLis
 			double doubleBudget = budget.isEmpty() ? 0 : Double.parseDouble(budget);
 			
 			Date dateDeadline = null;
-			if( (dateDeadline = DateHelper.parse(deadline, Config.DATE_FORMAT_SHORT)) == null)
+			if( !deadline.isEmpty() && (dateDeadline = DateHelper.parse(deadline, Config.DATE_FORMAT_SHORT)) == null)
 				LOGGER.error("Unexpected error!");
 			
 			Date dateStart = null;
-			if( (dateStart = DateHelper.parse(deadline, Config.DATE_FORMAT_SHORT)) == null)
+			if( !startDate.isEmpty() && (dateStart = DateHelper.parse(startDate, Config.DATE_FORMAT_SHORT)) == null)
 				LOGGER.error("Unexpected error!");
 			
 			
@@ -204,7 +204,7 @@ public class Project_controller extends AbstractController implements ProjectLis
 		
 		// If project found
 		if(project != null)
-			this.view.updateLoadProject(true, "Project loaded succesfully", project);
+			this.view.updateLoadProject(true, String.format("Project '%s' loaded succesfully", project.getProjectName()), project);
 		
 		// If project not found
 		else

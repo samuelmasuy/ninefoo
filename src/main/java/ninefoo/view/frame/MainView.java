@@ -186,6 +186,8 @@ public class MainView extends JFrame implements UpdatableView{
 			@Override
 			public List<Project> getAllMyProjectsByRole(ViewMyProjectsDialog viewMyProjectsDialog, RoleNames roleName) {
 
+				LOGGER.info(String.format("Retreiving projects from the DB for user id %d and role %s ", Session.getInstance().getUserId(), roleName.toString()));
+				
 				// Notify to controller
 				if(projectListener != null)
 					return projectListener.getAllProjectsByMemberAndRole(Session.getInstance().getUserId(), roleName);
@@ -389,6 +391,8 @@ public class MainView extends JFrame implements UpdatableView{
 			// If success
 			if(success){
 				
+				LOGGER.info(message);
+				
 				// Show success message
 				this.viewMyProjectsDialog.setSuccessMessage(message);
 				
@@ -398,6 +402,8 @@ public class MainView extends JFrame implements UpdatableView{
 				// Load project
 				this.tableChartPanel.loadProject(project);
 			} else {
+				
+				LOGGER.error(message);
 				
 				// Show error message
 				this.viewMyProjectsDialog.setErrorMessage(message);
