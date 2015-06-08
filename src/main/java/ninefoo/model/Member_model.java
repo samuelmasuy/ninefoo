@@ -288,7 +288,7 @@ public class Member_model {
             return (updatedRows == 1);
 
         } catch (SQLException e) {
-            LOGGER.error("Could not delete member --- detailed info: " + e.getMessage());
+            LOGGER.error("MELISSA Could not delete member --- detailed info: " + e.getMessage());
         }
 
         return false;
