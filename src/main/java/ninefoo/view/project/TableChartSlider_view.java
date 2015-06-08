@@ -2,7 +2,6 @@ package ninefoo.view.project;
 
 import java.awt.BorderLayout;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
@@ -65,6 +64,15 @@ public class TableChartSlider_view extends JPanel{
 	 */
 	public void setProject(Project project){
 		this.project = project;
+		this.tabularPanel.setProject(project);
+	}
+	
+	/**
+	 * Get project
+	 * @return project
+	 */
+	public Project getProject(){
+		return project;
 	}
 	
 	/**

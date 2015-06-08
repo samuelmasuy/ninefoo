@@ -208,13 +208,13 @@ public class MainView extends JFrame implements UpdatableView{
 		this.tableChartPanel.setTabularDataListener(new TabularDataListener() {
 			
 			@Override
-			public void tableUpdated(int row, String activityId, String activityName, String start, String end, String activityCompleted) {
+			public void tableUpdated(int row, Project project, String activityId, String activityName, String start, String end, String duration, String activityCompleted) {
 				
 				// Create or update listener
-//				if(activityListener != null)
-//					activityListener.createUpdateActivity(row, activityId, activityName, start, end, activityCompleted);
+				if(activityListener != null)
+					activityListener.createUpdateActivity(row, activityName, duration, start, end, project, Session.getInstance().getUserId());
 				
-				LOGGER.info(String.format("Table updated at row %d: %s, %s, %s, %s, %s", row, activityId, activityName, start, end, activityCompleted));
+				LOGGER.info(String.format("Table updated at row %d: Project Id: %s, Activity Id: %s, duration: %s, start: %s, finish: %s, user Id: %d", row, project.getProjectId(), activityId, duration, start, end, Session.getInstance().getUserId()));
 			}
 		});
 		
@@ -371,7 +371,7 @@ public class MainView extends JFrame implements UpdatableView{
 
 	@Override
 	public void updateCreateUpdateProject(int row, Activity activity, boolean success, String message) {
-		// TODO To be completed
+		System.out.println(message);
 	}
 
 	@Override

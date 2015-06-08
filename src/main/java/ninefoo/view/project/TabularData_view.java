@@ -11,6 +11,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
+import ninefoo.model.Project;
 import ninefoo.view.project.listener.TabularDataListener;
 
 public class TabularData_view extends JPanel {
@@ -18,11 +19,17 @@ public class TabularData_view extends JPanel {
 	private static final long serialVersionUID = 6595729954886810500L;
 
 	// Constants
-	private final Object[] dataTableHeader = {"", "Activity ID", "Activity Name", "Start", "Finish", "Activity % Complete", "Total Float"};
+	private final Object[] dataTableHeader = {"", "Activity ID", "Activity Name", "Start", "Finish", "Duration", "Activity % Complete", "Total Float"};
 	private final int COUNTER_INDEX = 0;
-	private final int ID_INDEX = 1;
-	private final int FLOAT_INDEX = 6;
+	private final int ID_INDEX = COUNTER_INDEX + 1;
+	private final int ACTIVITY_NAME_INDEX = ID_INDEX + 1;
+	private final int START_DATE_INDEX = ACTIVITY_NAME_INDEX + 1;
+	private final int FINISH_DATE_INDEX = START_DATE_INDEX + 1;
+	private final int DURATION_INDEX = FINISH_DATE_INDEX + 1;
+	private final int COMPLETION_INDEX = DURATION_INDEX + 1;
+	private final int FLOAT_INDEX = COMPLETION_INDEX + 1;
 	private int counter = 0;
+	private Project project;
 	
 	// Static variables
 	public static final String PRE_CREATED_ID = "  ?";
@@ -70,14 +77,15 @@ public class TabularData_view extends JPanel {
 				
 				// Pass it
 				if(tabularDataListener != null){
-					 // FIXME BUG HERE
+					
 					int row = e.getFirstRow();
-					String actId = dataTable.getValueAt(row, 0).toString();
-					String actName = dataTable.getValueAt(row, 1).toString();
-					String actStart = dataTable.getValueAt(row, 2).toString();
-					String actFinish = dataTable.getValueAt(row, 3).toString();
-					String actCompleted = dataTable.getValueAt(row, 4).toString();
-					tabularDataListener.tableUpdated(row, actId, actName, actStart, actFinish, actCompleted);
+					String actId = dataTable.getValueAt(row, ID_INDEX).toString();
+					String actName = dataTable.getValueAt(row, ACTIVITY_NAME_INDEX).toString();
+					String actStart = dataTable.getValueAt(row, START_DATE_INDEX).toString();
+					String actFinish = dataTable.getValueAt(row, FINISH_DATE_INDEX).toString();
+					String actCompleted = dataTable.getValueAt(row, COMPLETION_INDEX).toString();
+					String actDurtation = dataTable.getValueAt(row, DURATION_INDEX).toString();
+					tabularDataListener.tableUpdated(row, project, actId, actName, actStart, actFinish, actDurtation, actCompleted);
 				}
 			}
 		});
@@ -103,10 +111,18 @@ public class TabularData_view extends JPanel {
 	}
 	
 	/**
+	 * Set project
+	 * @param project
+	 */
+	public void setProject(Project project){
+		this.project = project;
+	}
+	
+	/**
 	 * Add empty row
 	 */
 	public void addEmptyRow(){
-		dataTableModel.addRow(new Object[]{++counter, PRE_CREATED_ID, "", "", "", "", ""});
+		dataTableModel.addRow(new Object[]{++counter, PRE_CREATED_ID, "", "", "", "", "", ""});
 		dataTable.changeSelection(dataTableModel.getRowCount()-1, 0, false, false);
 	}
 }

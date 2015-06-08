@@ -281,8 +281,8 @@ public class Member_model {
             return false;
         }
 
-        String deleteMemberSql = "DELETE FROM member WHERE username = " + username;
-
+        String deleteMemberSql = String.format("DELETE FROM member WHERE username LIKE '%s'", username);
+        
         try {
             int updatedRows = statement.executeUpdate(deleteMemberSql);
             return (updatedRows == 1);

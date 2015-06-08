@@ -2,6 +2,9 @@ package ninefoo.lib;
 
 import java.util.regex.Pattern;
 
+import ninefoo.config.Config;
+import ninefoo.helper.DateHelper;
+
 /**
  * Rules for input fields.
  */
@@ -12,6 +15,7 @@ public class ValidationRule {
 	private boolean formatChecker = false;
 	private boolean minLengthChecker = false;
 	private boolean maxLengthChecker = false;
+	private boolean dateChecker = false;
 	
 	// Variables
 	private String name;
@@ -74,6 +78,15 @@ public class ValidationRule {
 	}
 	
 	/**
+	 * Verify that the value is a date
+	 * @return ValidationRule
+	 */
+	public ValidationRule checkDate(){
+		this.dateChecker = true;
+		return this;
+	}
+	
+	/**
 	 * Run validation test
 	 * @return boolean
 	 */
@@ -108,6 +121,16 @@ public class ValidationRule {
 			if(this.value.length() > maxLength){
 				errorMessage = String.format(LanguageText.getConstant("MAX_LENGTH"), this.name, maxLength);
 				return false;
+			}
+		}
+		
+		// If date checker is enabled, check if date is valid
+		if(this.dateChecker){
+			if(!value.isEmpty()){
+				if(! DateHelper.isValid(value, Config.DATE_FORMAT_SHORT)){
+					errorMessage = String.format(LanguageText.getConstant("WRONG_FORMAT") + " e.g. %s", name, Config.DATE_FORMAT_SHORT.toLowerCase());
+					return false;
+				}
 			}
 		}
 		

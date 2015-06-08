@@ -85,6 +85,25 @@ public class Activity {
         this.member = member;
         this.prerequisites = prerequisites;
     }
+    
+    /**
+     * A reduced constructor
+     * @param activityLabel
+     * @param description
+     * @param duration
+     * @param startDate
+     * @param finishDate
+     * @param project
+     * @param member
+     */
+    public Activity(String activityLabel, int duration, String startDate, String finishDate, Project project, Member member){
+    	 this.activityLabel = activityLabel;
+         this.duration = duration;
+         this.startDate = startDate;
+         this.finishDate = finishDate;
+         this.project = project;
+         this.member = member;
+    }
 
     public int getActivityId() {
         return activityId;
