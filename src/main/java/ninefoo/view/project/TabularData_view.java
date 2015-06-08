@@ -11,6 +11,8 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
+import ninefoo.helper.StringHelper;
+import ninefoo.model.Activity;
 import ninefoo.model.Project;
 import ninefoo.view.project.listener.TabularDataListener;
 
@@ -40,6 +42,7 @@ public class TabularData_view extends JPanel {
 	private JScrollPane dataTableScrollPane;
 	
 	// Define listener
+	private TableModelListener tableModelListener;
 	private TabularDataListener tabularDataListener;
 	
 	// Constructor
@@ -47,6 +50,27 @@ public class TabularData_view extends JPanel {
 		
 		// Set layout
 		this.setLayout(new BorderLayout());
+		
+		// Initialize listener
+		tableModelListener = new TableModelListener() {
+			
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				
+				// Pass it
+				if(tabularDataListener != null){
+					
+					int row = e.getFirstRow();
+					String actId = StringHelper.stringOrEmpty(dataTable.getValueAt(row, ID_INDEX));
+					String actName = StringHelper.stringOrEmpty(dataTable.getValueAt(row, ACTIVITY_NAME_INDEX));
+					String actStart = StringHelper.stringOrEmpty(dataTable.getValueAt(row, START_DATE_INDEX));
+					String actFinish = StringHelper.stringOrEmpty(dataTable.getValueAt(row, FINISH_DATE_INDEX));
+					String actCompleted = StringHelper.stringOrEmpty(dataTable.getValueAt(row, COMPLETION_INDEX));
+					String actDurtation = StringHelper.stringOrEmpty(dataTable.getValueAt(row, DURATION_INDEX));
+					tabularDataListener.tableUpdated(row, project, actId, actName, actStart, actFinish, actDurtation, actCompleted);
+				}
+			}
+		};
 		
 		// Initialize data
 		this.dataTableModel = new DefaultTableModel(null, dataTableHeader){
@@ -69,26 +93,8 @@ public class TabularData_view extends JPanel {
 		};
 		this.dataTableScrollPane = new JScrollPane(dataTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
-		// Add listener to table model
-		this.dataTable.getModel().addTableModelListener(new TableModelListener() {
-			
-			@Override
-			public void tableChanged(TableModelEvent e) {
-				
-				// Pass it
-				if(tabularDataListener != null){
-					
-					int row = e.getFirstRow();
-					String actId = dataTable.getValueAt(row, ID_INDEX).toString();
-					String actName = dataTable.getValueAt(row, ACTIVITY_NAME_INDEX).toString();
-					String actStart = dataTable.getValueAt(row, START_DATE_INDEX).toString();
-					String actFinish = dataTable.getValueAt(row, FINISH_DATE_INDEX).toString();
-					String actCompleted = dataTable.getValueAt(row, COMPLETION_INDEX).toString();
-					String actDurtation = dataTable.getValueAt(row, DURATION_INDEX).toString();
-					tabularDataListener.tableUpdated(row, project, actId, actName, actStart, actFinish, actDurtation, actCompleted);
-				}
-			}
-		});
+		// Add listener
+		addListenerToDataModel();
 		
 		// Customize the Table
 		this.dataTable.getTableHeader().setReorderingAllowed(false); // Disable column drag
@@ -119,10 +125,45 @@ public class TabularData_view extends JPanel {
 	}
 	
 	/**
+	 * Update activity at a specific row
+	 * @param row
+	 * @param activity
+	 */
+	public void updateRow(int row, Activity activity){
+		
+		// Remove listener to avoid recursive call
+		this.dataTableModel.removeTableModelListener(this.tableModelListener);
+		
+		// Populate
+		String id = StringHelper.stringOrEmpty(activity.getActivityId());
+		id = id.isEmpty() ? PRE_CREATED_ID : id;
+		this.dataTableModel.setValueAt(id, row, ID_INDEX);
+		this.dataTableModel.setValueAt(StringHelper.stringOrEmpty(activity.getActivityLabel()), row, ACTIVITY_NAME_INDEX);
+		this.dataTableModel.setValueAt(StringHelper.stringOrEmpty(activity.getStartDate()), row, START_DATE_INDEX);
+		this.dataTableModel.setValueAt(StringHelper.stringOrEmpty(activity.getFinishDate()), row, FINISH_DATE_INDEX);
+		this.dataTableModel.setValueAt(StringHelper.stringOrEmpty(activity.getDuration()), row, DURATION_INDEX);
+		
+		// TODO Add activity completion
+//		this.dataTableModel.setValueAt(  , row, COMPLETION_INDEX);
+		
+		// Re-add listener
+		addListenerToDataModel();
+	}
+	
+	/**
 	 * Add empty row
 	 */
 	public void addEmptyRow(){
 		dataTableModel.addRow(new Object[]{++counter, PRE_CREATED_ID, "", "", "", "", "", ""});
 		dataTable.changeSelection(dataTableModel.getRowCount()-1, 0, false, false);
+	}
+	
+	/**
+	 * Add listener to data model
+	 */
+	public void addListenerToDataModel(){
+		
+		// Add listener to table model
+		this.dataTable.getModel().addTableModelListener(this.tableModelListener);
 	}
 }

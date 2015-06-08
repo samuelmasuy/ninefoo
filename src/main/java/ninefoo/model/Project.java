@@ -110,8 +110,8 @@ public class Project {
 		return DateHelper.parse(startDate, Config.DATE_FORMAT);
 	}
 
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	public void setStartDate(Date startDate) {
+		this.startDate = DateHelper.format(startDate, Config.DATE_FORMAT);
 	}
 
 	public String toString() {
