@@ -226,4 +226,57 @@ public class Project_model {
         return false;
     }
 
+    /**
+     * Updates a project in the database
+     * @param project Project object representing the updated project
+     * @return True if update was successful, False otherwise
+     */
+    public boolean updateProject(Project project) {
+
+        if (project == null)
+            return false;
+
+        int projectId = project.getProjectId();
+        if (projectId == 0)
+            return false;
+
+        Statement statement = DbManager.createConnectionStatement();
+
+        if (statement == null) {
+            LOGGER.warn("Could not get a connection statement to DB");
+            return false;
+        }
+
+        StringBuilder updateProjectSql = new StringBuilder();
+        updateProjectSql.append(String.format(
+                "UPDATE project " +
+                "SET project_name = '%s', update_date = '%s', budget = %f, " +
+                "       description = '%s'", project.getProjectName(),
+                DateHelper.format(new Date(), Config.DATE_FORMAT),
+                project.getBudget(), project.getDescription()
+        ));
+
+        // Skip updating start and deadline dates if they are NULL.
+        if (project.getStartDate() != null)
+            updateProjectSql.append(String.format(", start_date = '%s'",
+                    DateHelper.format(project.getStartDate(), Config.DATE_FORMAT)));
+
+        if (project.getDeadlineDate() != null)
+            updateProjectSql.append(String.format(", deadline_date = '%s'",
+                    DateHelper.format(project.getDeadlineDate(), Config.DATE_FORMAT)));
+
+        updateProjectSql.append(String.format(" WHERE project_id = %d", projectId));
+
+        try {
+            int updatedRows = statement.executeUpdate(updateProjectSql.toString());
+
+            return (updatedRows == 1);
+
+        } catch (SQLException e) {
+            LOGGER.error("Could not update project with ID = " + projectId +
+                    " --- detailed info: " + e.getMessage());
+        }
+
+        return false;
+    }
 }
