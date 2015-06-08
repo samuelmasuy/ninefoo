@@ -250,7 +250,7 @@ public class Project_model {
         StringBuilder updateProjectSql = new StringBuilder();
         updateProjectSql.append(String.format(
                 "UPDATE project " +
-                "SET project_name = '%s', update_date = '%s', budget = %f, " +
+                "SET    project_name = '%s', update_date = '%s', budget = %f, " +
                 "       description = '%s'", project.getProjectName(),
                 DateHelper.format(new Date(), Config.DATE_FORMAT),
                 project.getBudget(), project.getDescription()
