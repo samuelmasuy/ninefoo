@@ -283,9 +283,12 @@ public class Activity_model {
      * @return True if the update was successful; False otherwise.
      */
     public boolean updateActivity(Activity activity) {
-        int activityId = activity.getActivityId();
 
-        if (activity == null || activityId == 0)
+        if (activity == null)
+            return false;
+
+        int activityId = activity.getActivityId();
+        if (activityId == 0)
             return false;
 
         Statement statement = DbManager.createConnectionStatement();
@@ -298,10 +301,10 @@ public class Activity_model {
         StringBuilder updateActivitySql = new StringBuilder();
         updateActivitySql.append(String.format(
                 "UPDATE activity " +
-                        "SET    activity_label = '%s', description = '%s', " +
-                        "       duration = %d, optimistic_duration = %d, likely_duration = %d, " +
-                        "       pessimistic_duration = %d, update_date = '%s', project_id = %d, " +
-                        "       member_id = %d", activity.getActivityLabel(), activity.getDescription(),
+                "SET    activity_label = '%s', description = '%s', " +
+                "       duration = %d, optimistic_duration = %d, likely_duration = %d, " +
+                "       pessimistic_duration = %d, update_date = '%s', project_id = %d, " +
+                "       member_id = %d", activity.getActivityLabel(), activity.getDescription(),
                 activity.getDuration(), activity.getOptimisticDuration(),
                 activity.getLikelyDuration(), activity.getPessimisticDuration(),
                 DateHelper.format(new Date(), Config.DATE_FORMAT),
