@@ -21,8 +21,6 @@ public class ModelProjectTest {
 	//Create a DB
 	@Test
 	public void test01_createProjectConstructor(){
-		DbManager.createTables();
-
 		//Create a new Project 
 		Project testProject = new Project("ATestProject1", 1020.00, DateHelper.parse("06/05/2015", Config.DATE_FORMAT_SHORT), DateHelper.parse("07/05/2015", Config.DATE_FORMAT_SHORT), "A Project to test the DB");
 		//Set the expected value
