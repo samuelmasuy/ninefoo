@@ -109,8 +109,8 @@ public class Member_controller extends AbstractController implements MemberListe
 
 		// Set rules for the fields
 		usernameRule.checkEmpty().checkFormat("[a-zA-Z0-9]+");
-		firstNameRule.checkEmpty().checkFormat("[a-zA-Z]+");
-		lastNameRule.checkEmpty().checkFormat("[a-zA-Z]+");
+		firstNameRule.checkEmpty().checkFormat("[a-zA-Z ]+");
+		lastNameRule.checkEmpty().checkFormat("[a-zA-Z ]+");
 		passwordRule.checkMinLength(4).checkMaxLength(10).checkFormat("[^ ]+");
 
 		// Add rules to the validation

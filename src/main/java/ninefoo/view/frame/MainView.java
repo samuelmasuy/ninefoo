@@ -209,12 +209,13 @@ public class MainView extends JFrame implements UpdatableView{
 			
 			@Override
 			public void tableUpdated(int row, Project project, String activityId, String activityName, String start, String end, String duration, String activityCompleted) {
-				
+
+				LOGGER.info(String.format("Table updated at row %d: Project Id: %s, Activity Id: %s, duration: %s, start: %s, finish: %s, user Id: %d", row, project.getProjectId(), activityId, duration, start, end, Session.getInstance().getUserId()));
+	
 				// Create or update listener
 				if(activityListener != null)
-					activityListener.createUpdateActivity(row, activityName, duration, start, end, project, Session.getInstance().getUserId());
+					activityListener.createUpdateActivity(row, activityId, activityName, duration, start, end, project, activityCompleted, Session.getInstance().getUserId());
 				
-				LOGGER.info(String.format("Table updated at row %d: Project Id: %s, Activity Id: %s, duration: %s, start: %s, finish: %s, user Id: %d", row, project.getProjectId(), activityId, duration, start, end, Session.getInstance().getUserId()));
 			}
 		});
 		
@@ -370,8 +371,23 @@ public class MainView extends JFrame implements UpdatableView{
 	}
 
 	@Override
-	public void updateCreateUpdateProject(int row, Activity activity, boolean success, String message) {
-		System.out.println(message);
+	public void updateCreateUpdateActivity(boolean success, String message, int row, Activity activity) {
+		
+		// If activity is set
+		if(activity !=null){
+
+			// If table was updated
+			if(success) {
+				
+				// Update table row
+				this.tableChartPanel.updateTableRow(row, activity);
+				
+			} else {
+				
+				// Display error message
+				this.tableChartPanel.setErrorMessage(message);
+			}
+		}
 	}
 
 	@Override
