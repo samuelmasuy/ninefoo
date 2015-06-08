@@ -1,15 +1,25 @@
 package ninefoo.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
+//delete database members before *re-running* all tests
 public class Member_modelTest 
 {
-
-	//@Test
+	@BeforeClass
+	static public void dbCreator(){
+		DbManager.createTables();
+		
+	}
+	
+	@Test
 	public void test01AddNewMember() 
 		{
 		/**
@@ -25,10 +35,10 @@ public class Member_modelTest
 		int idWhenInsertedInDB = mem_model.insertNewMember(aMember);
 		Member fetchedMember= mem_model.getMemberByUsername(aMember.getUsername());
 		assertEquals(fetchedMember.getUsername(), aMember.getUsername());
-	//	assertEquals(fetchedMember.getFirstName(), aMember.getFirstName());
-	//	assertEquals(fetchedMember.getLastName(), aMember.getLastName());
-	//	assertEquals(fetchedMember.getMemberId(), idWhenInsertedInDB);
-	//	assertEquals(fetchedMember.getPassword(), aMember.getPassword());
+		assertEquals(fetchedMember.getFirstName(), aMember.getFirstName());
+    	assertEquals(fetchedMember.getLastName(), aMember.getLastName());
+		assertEquals(fetchedMember.getMemberId(), idWhenInsertedInDB);
+		assertEquals(fetchedMember.getPassword(), aMember.getPassword());
 		
 		
 		}
@@ -62,7 +72,7 @@ public class Member_modelTest
 		 
 	 }
 	 
-//	@Test
+	@Test
 	public void test03GetMemberById(){
 		
 		/**
@@ -76,7 +86,7 @@ public class Member_modelTest
 		assertTrue(idOfNewlyInsertedMember > 0);
 	}
 	
-//	@Test
+	@Test
 	public void test04GetMemberByUsername(){
 		
 		/**
@@ -90,7 +100,7 @@ public class Member_modelTest
 		int idWhenInsertedInDB=mem_model.insertNewMember(aMember);
 		 String usernameNewMember=aMember.getUsername();
 		 Member fetchedMember=mem_model.getMemberByUsername(usernameNewMember);
-		assertEquals(fetchedMember.getUsername(), "tralala" /*aMember.getUsername()*/);
+		assertEquals(fetchedMember.getUsername(), aMember.getUsername());
 		assertEquals(fetchedMember.getFirstName(), aMember.getFirstName());
 		assertEquals(fetchedMember.getLastName(), aMember.getLastName());
 		assertEquals(fetchedMember.getMemberId(), idWhenInsertedInDB);
@@ -99,7 +109,7 @@ public class Member_modelTest
 		
 	}
 	
-//	@Test
+	@Test
 	public void test05DeleteMember(){
 		/**
 		 * We are testing to see if, when we call the delete method on a member X, that the member 
@@ -119,7 +129,7 @@ public class Member_modelTest
 		assertNull(memDB);
 	}
 	 	
-	//@Test
+	@Test
 	public void test06DeleteMemberById(){
 		/**
 		 * We are testing to see if, when we call the delete  by ID method on a member X, that the member 
@@ -131,7 +141,7 @@ public class Member_modelTest
 		 */
 		
 		
-		Member mem= new Member("f", "f", "f", "f");
+		Member mem= new Member("i", "i", "i", "i");
 		 Member_model mem_model=new Member_model();
 		 int memID=mem_model.insertNewMember(mem);
 		// Member memDB=mem_model.getMemberById(memID);
@@ -139,7 +149,7 @@ public class Member_modelTest
 		 Member memDB=mem_model.getMemberById(memID);//get new object returned from db of the deleted object, should therefore be a null object since it has been deleteds
 		 assertNull(memDB);
 	}
-	//@Test
+	@Test
 	public void test07DeleteMemberByUsername(){
 		
 		/**
@@ -150,12 +160,12 @@ public class Member_modelTest
 		 * We are also updating the member object to point to an empty member
 		 * The member should be null, because it no longer exists as a member object or a database member
 		 */
-		Member mem= new Member("f", "f", "f", "f");
+		Member mem= new Member("i", "i", "i", "i");
 		 Member_model mem_model=new Member_model();
 		 mem_model.insertNewMember(mem);
 		 //Member memDB=mem_model.getMemberByUsername(mem.getUsername());
 	//	String username=mem.getUsername();
-		mem_model.deleteMemberByUsername("f");
+		mem_model.deleteMemberByUsername("i");
 		 Member memDB=mem_model.getMemberByUsername(mem.getUsername());
 		 assertNull(memDB);
 	}
