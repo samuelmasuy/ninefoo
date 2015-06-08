@@ -3,13 +3,21 @@ import static org.junit.Assert.*;
 
 import java.util.regex.Pattern;
 
-import org.junit.Assert;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 
 public class ValidationRuleTest {
 
-
+	@Test
 	public void test01checkEmpty(){
+		/**
+		 * Two test cases: one where an array is empty and one where an array is not empty
+		 * An empty string is returned if the validation passes (with .getError() method), and an error message string is returned 
+		 * when the validation fails.
+		 */
 		ValidationRule testEmpty= new ValidationRule("username", "z"); 
 		testEmpty.checkEmpty();//check against this
 		testEmpty.validate();//populate the error message if any, for the testing
@@ -26,8 +34,15 @@ public class ValidationRuleTest {
 		
 		
 	}
+	
+	@Test
 	public void test02checkFormat(){
-		//validationrule.checkerror
+		/**
+		 * Two test cases: one where the username follows the pattern tested against, and one that does not follow 
+		 * the pattern tested against.
+		 *An empty string is returned if the validation passes (with .getError() method), and an error message string is returned 
+		 * when the validation fails.
+		 */
 		
 		ValidationRule testFormat= new ValidationRule("username", "melissa"); 
 		testFormat.checkFormat("melissa");//check against this
@@ -46,8 +61,16 @@ public class ValidationRuleTest {
 		
 	}
 	
-	
+	@Test
 	public void test03minLength(){
+		/**
+		 * Two test cases: one where the username exceeds the minimum required length, and one where the username does not
+		 * exceed the minimum required length
+		 * An empty string is returned if the validation passes (with .getError() method), and an error message string is returned 
+		 * when the validation fails.
+		 */
+		
+		
 		ValidationRule testLength= new ValidationRule("username", "1234567890000"); 
 		testLength.checkMinLength(10);
 		testLength.validate();
@@ -64,8 +87,15 @@ public class ValidationRuleTest {
 		
 	}
 	
-	
+	@Test
 	public void test04maxLength(){
+		
+		/**
+		 * Two test cases: one where the username does not exceeds the max required length, and one where the username 
+		 * exceed the max required length
+		 * An empty string is returned if the validation passes (with .getError() method), and an error message string is returned 
+		 * when the validation fails.
+		 */
 		ValidationRule testMaxLength= new ValidationRule("username", "1230"); 
 		testMaxLength.checkMaxLength(10);
 		testMaxLength.validate();
@@ -82,8 +112,13 @@ public class ValidationRuleTest {
 		
 	}
 	
-	
+	@Test
 	public void test05date(){
+		/**
+		 * Two test cases: one where the date format is correct, and one where the date format is wrong
+		 * An empty string is returned if the validation passes (with .getError() method), and an error message string is returned 
+		 * when the validation fails.
+		 */
 		ValidationRule testDate= new ValidationRule("username", "12/05/2015"); 
 		testDate.checkDate();
 		testDate.validate();
@@ -102,6 +137,11 @@ public class ValidationRuleTest {
 	
 	@Test
 	public void test06validate(){
+		
+		/**
+		 * Multiple test cases to verify that the validate method works. When a String does pass a validation test,
+		 * it returns True, if it passes the validation test, it returns false.
+		 */
 		ValidationRule testDate= new ValidationRule("username", "12/05/2015"); 
 		testDate.checkDate();
 		testDate.validate();
