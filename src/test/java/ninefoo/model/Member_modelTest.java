@@ -51,13 +51,12 @@ public class Member_modelTest
 		 * the list should be longer of X.
 		 */
 		
-		 System.out.println("hello");
 		 Member memA= new Member("c", "c", "c", "c");
 		 Member memB= new Member("d", "d", "d", "d");
 		 Member memC= new Member("e", "e", "e", "e");
 		 Member_model mem_model=new Member_model();//empty
 		 int num1=mem_model.getAllMembers().size();
-		 System.out.println(num1);
+		
 		 
 		 
 		 //we should see the length of the array bigger
@@ -67,7 +66,7 @@ public class Member_modelTest
 		 mem_model.insertNewMember(memC);
 		 mem_model.getAllMembers();
 		 int num2=mem_model.getAllMembers().size(); 	
-		 System.out.println(num2);
+		
 		 assertEquals(num1+3, num2);
 		 
 	 }
@@ -122,7 +121,6 @@ public class Member_modelTest
 		Member memD= new Member("h", "h", "h", "h");
 		 Member_model mem_model=new Member_model();
 		int memID=mem_model.insertNewMember(memD);
-		System.out.println(memID);
 		Member memDB= mem_model.getMemberById(memID);
 		mem_model.deleteMember(memDB);
 		memDB= mem_model.getMemberById(memID);//update content of a same member ID, by returning a null object
@@ -163,9 +161,7 @@ public class Member_modelTest
 		Member mem= new Member("i", "i", "i", "i");
 		 Member_model mem_model=new Member_model();
 		 mem_model.insertNewMember(mem);
-		 //Member memDB=mem_model.getMemberByUsername(mem.getUsername());
-	//	String username=mem.getUsername();
-		mem_model.deleteMemberByUsername("i");
+		 mem_model.deleteMemberByUsername("i");
 		 Member memDB=mem_model.getMemberByUsername(mem.getUsername());
 		 assertNull(memDB);
 	}
