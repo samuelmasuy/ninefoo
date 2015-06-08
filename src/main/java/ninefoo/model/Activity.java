@@ -97,12 +97,7 @@ public class Activity {
      * @param member
      */
     public Activity(String activityLabel, int duration, String startDate, String finishDate, Project project, Member member){
-    	 this.activityLabel = activityLabel;
-         this.duration = duration;
-         this.startDate = startDate;
-         this.finishDate = finishDate;
-         this.project = project;
-         this.member = member;
+         this(0,activityLabel, null, duration, 0, 0, 0, null, project, member, null);
     }
 
     public int getActivityId() {

@@ -8,6 +8,9 @@ import ninefoo.lib.LanguageText;
 import ninefoo.model.DbManager;
 import ninefoo.model.Member;
 import ninefoo.model.Member_model;
+import ninefoo.model.Project;
+import ninefoo.model.ProjectMember_model;
+import ninefoo.model.Project_model;
 import ninefoo.model.Role;
 import ninefoo.model.Role_model;
 
@@ -61,5 +64,15 @@ public class Autoload {
 		role_model.insertNewRole(new Role("Manager", ""));
 		role_model.insertNewRole(new Role("Member", ""));
 		LOGGER.info("Roles Manager and Member added to the database");
+	}
+	
+	@autoload(active=true, priority = 2)
+	public void addDummyProject(){
+		Project_model project_model = new Project_model();
+		project_model.insertNewProject(new Project("Amir", 100, null, null, null));
+		ProjectMember_model pm_model = new ProjectMember_model();
+		Role_model role = new Role_model();
+		pm_model.addMemberToProject(1, 1, role.getRoleByName("Manager"));
+		LOGGER.info("Inserted dummy project");
 	}
 }

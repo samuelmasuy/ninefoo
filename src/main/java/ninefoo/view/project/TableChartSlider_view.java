@@ -2,9 +2,11 @@ package ninefoo.view.project;
 
 import java.awt.BorderLayout;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import ninefoo.model.Activity;
 import ninefoo.model.Project;
 import ninefoo.view.project.listener.TabularDataListener;
 
@@ -86,5 +88,22 @@ public class TableChartSlider_view extends JPanel{
 		
 		// Populate activities
 		
+	}
+	
+	/**
+	 * Set error message
+	 * @param message
+	 */
+	public void setErrorMessage(String message){
+		JOptionPane.showMessageDialog(this, String.format("<html>%s</html>", message), "Operation failed", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	/**
+	 * Update row
+	 * @param row
+	 * @param activity
+	 */
+	public void updateTableRow(int row, Activity activity){
+		this.tabularPanel.updateRow(row, activity);
 	}
 }
