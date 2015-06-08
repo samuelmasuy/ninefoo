@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import ninefoo.config.Config;
@@ -31,12 +32,17 @@ public class DateHelperTest {
 			//System.out.println(testdate.getTime() + " = " + dateexpected.getTime());
 			assertEquals("Date Formatting does not work",testdate.getTime(),dateexpected.getTime());
 		}
-//		@Test
-//		public void FormatTest(){
-//			SimpleDateFormat sdf = new SimpleDateFormat(Config.DATE_FORMAT_SHORT);
-//			Date testdate = new Date();
-//			String expected = sdf.format(testdate);
-//			String testparam= "08/06/2015";
-//			assertEquals("Date Formatting does not work",testparam, expected);
-//		}
+
+		@Test
+		public void FormatTest(){
+			SimpleDateFormat sdf = new SimpleDateFormat(Config.DATE_FORMAT_SHORT);
+			Date testdate = new Date();
+			String expected = sdf.format(testdate);
+			// Will create current date in the format "dd/mm/yyyy"
+			Calendar cal = Calendar.getInstance();
+			String testparam = String.format("%02d/%02d/%d",
+					cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
+
+			assertEquals("Date Formatting does not work",testparam,expected);
+		}
 }
