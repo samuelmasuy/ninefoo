@@ -49,7 +49,7 @@ public class Autoload {
 	
 	@autoload
 	public void createDB(){
-		File db_file = new File(DbManager.dbName);
+//		File db_file = new File(DbManager.dbName);
 //		if(!db_file.exists()){
 			LOGGER.info(String.format("Database file '%s' created!", DbManager.dbName));
 			DbManager.createTables();
@@ -78,7 +78,7 @@ public class Autoload {
 		LOGGER.info("Roles Manager and Member added to the database");
 	}
 	
-	@autoload(active=true, priority = 2)
+	@autoload(active=false, priority = 2)
 	public void addDummyProject(){
 		Project_model project_model = new Project_model();
 		int id = project_model.insertNewProject(new Project("Amir", 100, null, null, null));

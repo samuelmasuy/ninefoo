@@ -142,7 +142,7 @@ public class TabularData_view extends JPanel {
 			    		  if(i == dataTableModel.getRowCount()){
 	
 			    			  // Display error
-			    			  JOptionPane.showMessageDialog(TabularData_view.this, "Please add more activities to be able to add dependecies", "Operation failed", JOptionPane.ERROR_MESSAGE);
+			    			  JOptionPane.showMessageDialog(parentPanel, "Please add more activities to be able to add dependecies", "Operation failed", JOptionPane.ERROR_MESSAGE);
 			    		  
 			    		  // If at least 2 real activities found
 			    		  }else{
