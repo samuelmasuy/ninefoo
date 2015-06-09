@@ -55,6 +55,6 @@ public abstract class FormDialog extends JPanel{
 	 * @param msg Message to be displayed
 	 */
 	public void setSuccessMessage(String msg){
-		JOptionPane.showMessageDialog(this, String .format("<html>%s</html>", msg), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(this, String .format("<html>%s</html>", msg), LanguageText.getConstant("OPERATION_SUCCESSFUL"), JOptionPane.INFORMATION_MESSAGE);
 	}
 }

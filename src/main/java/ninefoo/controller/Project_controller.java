@@ -225,4 +225,72 @@ public class Project_controller extends AbstractController implements ProjectLis
 			this.view.updateLoadProject(false, LanguageText.getConstant("ERROR_OCCURED"), null);
 		}
 	}
+
+	@Override
+	public void editProject(int projectId, String name, final String budget, String description) {
+		
+		ValidationForm validation = new ValidationForm();
+		
+		ValidationRule nameRule = new ValidationRule(LanguageText.getConstant("NAME"), name);
+		ValidationRule descriptionRule = new ValidationRule(LanguageText.getConstant("DESCRIPTION"), description);
+		ValidationRule budgetRule = new ValidationRule(LanguageText.getConstant("BUDGET"), budget){
+			
+			@Override
+			public boolean validate() {
+				
+				// Keep parent validation
+				boolean validate = super.validate();
+				
+				// Parse budget to double, if not empty
+				if(!budget.isEmpty()){
+					try{
+						Double.parseDouble(budget);
+						
+					// If not a double
+					} catch(IllegalArgumentException e){
+						setErrorMessage(String.format(LanguageText.getConstant("WRONG_FORMAT"), LanguageText.getConstant("BUDGET")));
+						LOGGER.error("Bugdet must be of type double");
+						return false;
+					}
+				}
+				
+				// Return parent validation
+				return validate;
+			}
+		};
+		
+		nameRule.checkEmpty();
+		descriptionRule.checkMaxLength(150);
+		
+		// Set rules
+		validation.setRule(nameRule);
+		validation.setRule(descriptionRule);
+		validation.setRule(budgetRule);
+		
+		// If requirements met
+		if(validation.validate()){
+			
+			// Get project
+			Project project = this.project_model.getProjectById(projectId);
+			
+			// Adjust the values type
+			double doubleBudget = budget.isEmpty() ? 0 : Double.parseDouble(budget);
+						
+			// Update object
+			project.setProjectName(name);
+			project.setBudget(doubleBudget);
+			
+			// Update project
+			this.project_model.updateProject(project);
+			
+			// Update view
+			this.view.updateEditProject(true, "Project updated!", project);
+			
+		// If requirement are not met
+		} else {
+			
+			// Update view
+			this.view.updateEditProject(false, validation.getError(), null);
+		}
+	}
 }

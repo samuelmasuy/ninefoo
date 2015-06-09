@@ -36,7 +36,7 @@ public class ViewMyProjectsDialog extends JDialog{
 	private static final long serialVersionUID = 216394661255136241L;
 	
 	// Create components
-	private JButton openButton;
+	private JButton openButton, editButton;
 	private JComboBox<String> roleBox;
 	private JList<String> projectList;
 	private DefaultListModel<String> listModel;
@@ -50,11 +50,10 @@ public class ViewMyProjectsDialog extends JDialog{
 	// Declare listener
 	 ToolsListener toolsListener;
 	
-	
 	/**
 	 * Constructor
 	 */
-	public ViewMyProjectsDialog(JFrame parentFrame, final ToolsListener toolsListener) {
+	public ViewMyProjectsDialog(final JFrame parentFrame, final ToolsListener toolsListener) {
 		
 		// Set title
 		this.setTitle("View my projects");
@@ -64,6 +63,7 @@ public class ViewMyProjectsDialog extends JDialog{
 		
 		// Initialize components
 		this.openButton = new JButton("Open");
+		this.editButton = new JButton("Edit");
 		this.roleBox = new JComboBox<String>(new String[]{"Manager", "Member"});
 		this.listModel = new DefaultListModel<>();
 		this.projectList = new JList<String>(listModel);
@@ -84,6 +84,7 @@ public class ViewMyProjectsDialog extends JDialog{
 		
 		// Add components to panels
 		buttonContainer.add(openButton);
+		buttonContainer.add(editButton);
 		
 		// Set default role box value
 		this.roleBox.setSelectedIndex(0);
@@ -117,13 +118,30 @@ public class ViewMyProjectsDialog extends JDialog{
 			}
 		});
 		
+		// Add edit listener
+		this.editButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				// If no project selected, show error
+				if(projectList.getSelectedIndex() < 0)
+					JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, "Please select a project to edit", "Opeartion failed", JOptionPane.ERROR_MESSAGE);
+				
+				// If project selected
+				else if(toolsListener != null){
+					new EditProjectDialog(parentFrame, ViewMyProjectsDialog.this, toolsListener, projects.get(projectList.getSelectedIndex()).getProjectId());
+				}
+			}
+		});
+		
 		// Add components to dialog
 		this.add(buttonContainer, BorderLayout.SOUTH);
 		this.add(projectPanel, BorderLayout.CENTER);
 		
 		// Configure dialog
 		this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-		this.setSize(new Dimension(800,600));
+		this.setSize(new Dimension(700,550));
 		this.setLocationRelativeTo(parentFrame);
 		this.setResizable(false);
 		this.setVisible(true);
@@ -133,7 +151,7 @@ public class ViewMyProjectsDialog extends JDialog{
 	 * Populate list
 	 * @param toolsListener
 	 */
-	private void populateProjectList(){
+	public void populateProjectList(){
 		
 		// Reset array
 		this.projects = new ArrayList<>();

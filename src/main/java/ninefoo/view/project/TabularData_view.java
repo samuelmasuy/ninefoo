@@ -86,7 +86,7 @@ public class TabularData_view extends JPanel {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				
-				if(column == ID_INDEX || column == FLOAT_INDEX || column == COUNTER_INDEX || column == DEPENDENCY_INDEX) 	
+				if(column == ID_INDEX || column == FLOAT_INDEX || column == COUNTER_INDEX || column == DEPENDENCY_INDEX || column == START_DATE_INDEX || column == FINISH_DATE_INDEX || column == COMPLETION_INDEX || column == DURATION_INDEX) 	
 					return false;
 				return true;
 			}

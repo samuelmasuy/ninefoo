@@ -15,6 +15,7 @@ import ninefoo.view.include.footer.StatusBar;
 import ninefoo.view.include.menu.Menu;
 import ninefoo.view.include.menu.Tools;
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
+import ninefoo.view.include.menu.dialog.EditProjectDialog;
 import ninefoo.view.include.menu.dialog.ViewMyProjectsDialog;
 import ninefoo.view.include.menu.listener.ToolsListener;
 import ninefoo.view.listeners.ActivityListener;
@@ -51,6 +52,7 @@ public class MainView extends JFrame implements UpdatableView{
 	private CreateProjectDialog createProjectDialog;
 	private ViewMyProjectsDialog viewMyProjectsDialog;
 	private ActivityDependencyDialog activityDependencyDialog;
+	private EditProjectDialog editProjectDialog;
 	
 	// Define variables
 	private JPanel currentCenterPanel;
@@ -203,6 +205,18 @@ public class MainView extends JFrame implements UpdatableView{
 				
 				// Notify controller
 				projectListener.loadProject(projectId);
+			}
+
+			@Override
+			public void updateProject(ViewMyProjectsDialog parentDialog, EditProjectDialog dialog, int projectId, String name, String budget, String description) {
+				
+				// Store dialog
+				viewMyProjectsDialog = parentDialog;
+				editProjectDialog = dialog;
+				
+				// If not null
+				if(projectListener != null)
+					projectListener.editProject(projectId, name, budget, description);
 			}
 		});
 		
@@ -479,6 +493,33 @@ public class MainView extends JFrame implements UpdatableView{
 			this.tableChartPanel.setErrorMessage(message);
 			
 			LOGGER.error(message);
+		}
+	}
+
+	@Override
+	public void updateEditProject(boolean success, String message, Project project) {
+		
+		// If successful
+		if(success){
+			
+			// Set success message
+			this.editProjectDialog.setSuccessMessage(message);
+			
+			// Update parent list
+			this.viewMyProjectsDialog.populateProjectList();
+			
+			// Close window
+			this.editProjectDialog.dispose();
+			
+			// Clear values
+			this.viewMyProjectsDialog = null;
+			this.editProjectDialog = null;
+			
+		// If error
+		}else{
+			
+			// Display error
+			this.editProjectDialog.setErrorMessage(message);
 		}
 	}
 }

@@ -10,7 +10,6 @@ import ninefoo.view.project.TabularData_view;
 
 import org.apache.logging.log4j.LogManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,7 +50,9 @@ public class Activity_controller extends AbstractController implements ActivityL
 		ValidationRule completionRule = new ValidationRule("Activity completed", completion);
 		
 		// Set limits
-		activityNameRule.checkEmpty().checkFormat("[a-zA-Z0-9 ]+");
+//		activityNameRule.checkEmpty().checkFormat("[a-zA-Z0-9 ]+");
+		activityNameRule.checkEmpty();
+		
 		durationRule.checkFormat("[0-9]*");
 		startDateRule.checkDate();
 		finishDateRule.checkDate();
