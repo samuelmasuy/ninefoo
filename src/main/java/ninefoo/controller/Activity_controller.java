@@ -94,7 +94,10 @@ public class Activity_controller extends AbstractController implements ActivityL
 				
 			// If activity already exist
 			} else {
-
+				
+				// Set the id
+				activity.setActivityId(Integer.parseInt(activityId) );
+				
 				// Update activity
 				this.activity_model.updateActivity(activity);
 				

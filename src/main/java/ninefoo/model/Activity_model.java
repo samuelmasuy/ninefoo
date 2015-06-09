@@ -310,13 +310,12 @@ public class Activity_model {
                 "UPDATE activity " +
                 "SET    activity_label = '%s', description = '%s', " +
                 "       duration = %d, optimistic_duration = %d, likely_duration = %d, " +
-                "       pessimistic_duration = %d, update_date = '%s', project_id = %d, " +
-                "       member_id = %d", activity.getActivityLabel(), activity.getDescription(),
+                "       pessimistic_duration = %d, update_date = '%s', project_id = %d "
+                , activity.getActivityLabel(), activity.getDescription(),
                 activity.getDuration(), activity.getOptimisticDuration(),
                 activity.getLikelyDuration(), activity.getPessimisticDuration(),
                 DateHelper.format(new Date(), Config.DATE_FORMAT),
-                activity.getProject().getProjectId(), activity.getMember().getMemberId(),
-                activityId));
+                activity.getProject().getProjectId()));
 
         // Skip updating start and finish dates if either of them is NULL.
         if (activity.getStartDate() != null)
@@ -328,6 +327,7 @@ public class Activity_model {
                     DateHelper.format(activity.getFinishDate(), Config.DATE_FORMAT)));
 
         updateActivitySql.append(String.format(" WHERE activity_id = %d", activityId));
+        
         try {
 
             int updatedRows = statement.executeUpdate(updateActivitySql.toString());

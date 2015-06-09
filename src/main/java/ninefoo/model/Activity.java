@@ -209,7 +209,16 @@ public class Activity {
     }
     
     /**
+     * Added by amir
+     * @param id
+     */
+    public void setActivityId(int activityId){
+    	this.activityId = activityId;
+    }
+    
+    /**
      * Get a formatted string list
+     * Added by Amir
      * @return String
      */
     public String getPrerequisitesAsString(){

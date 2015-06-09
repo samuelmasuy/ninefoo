@@ -50,10 +50,12 @@ public class Autoload {
 	@autoload
 	public void createDB(){
 		File db_file = new File(DbManager.dbName);
-		if(!db_file.exists()){
+//		if(!db_file.exists()){
 			LOGGER.info(String.format("Database file '%s' created!", DbManager.dbName));
 			DbManager.createTables();
-		}
+//		} else {
+//			LOGGER.info(String.format("Database file '%s' already exist!", DbManager.dbName));
+//		}
 	}
 	
 	@autoload(active=true, priority = 1)
@@ -67,18 +69,22 @@ public class Autoload {
 	@autoload(active=true, priority = 1)
 	public void addRoles(){
 		Role_model role_model = new Role_model();
-		role_model.insertNewRole(new Role("Manager", ""));
-		role_model.insertNewRole(new Role("Member", ""));
+		
+		if(role_model.getRoleByName("Manager") == null)
+			role_model.insertNewRole(new Role("Manager", ""));
+		
+		if(role_model.getRoleByName("Member") == null)
+			role_model.insertNewRole(new Role("Member", ""));
 		LOGGER.info("Roles Manager and Member added to the database");
 	}
 	
 	@autoload(active=true, priority = 2)
 	public void addDummyProject(){
 		Project_model project_model = new Project_model();
-		project_model.insertNewProject(new Project("Amir", 100, null, null, null));
+		int id = project_model.insertNewProject(new Project("Amir", 100, null, null, null));
 		ProjectMember_model pm_model = new ProjectMember_model();
 		Role_model role = new Role_model();
-		pm_model.addMemberToProject(1, 1, role.getRoleByName("Manager"));
+		pm_model.addMemberToProject(id, 1, role.getRoleByName("Manager"));
 		LOGGER.info("Inserted dummy project");
 	}
 }
