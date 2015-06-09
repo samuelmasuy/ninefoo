@@ -14,7 +14,7 @@ import java.sql.Statement;
 public class DbManager {
     private static Connection dbConnection = null;
 //    private static Statement statement = null;
-    private static final String dbName = "pm_expert.db";
+    public static final String dbName = "pm_expert.db";
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**

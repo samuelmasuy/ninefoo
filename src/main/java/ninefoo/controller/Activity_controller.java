@@ -89,8 +89,6 @@ public class Activity_controller extends AbstractController implements ActivityL
 				// Fetch the insert activity
 				Activity insertedActivity = this.activity_model.getActivityById(actId);
 				
-				// Load project
-				
 				// Set it as the affected one
 				affectedActivity = insertedActivity;
 				
@@ -103,6 +101,9 @@ public class Activity_controller extends AbstractController implements ActivityL
 				// Fetch the updated activity
 				Activity updatedActivity = this.activity_model.getActivityById(Integer.parseInt(activityId));
 				
+				// Load its prerequisites
+				updatedActivity.setPrerequisites(this.activity_model.getActivityPrerequisites(updatedActivity));
+				
 				// Set it as the affected one
 				affectedActivity = updatedActivity;
 			}
@@ -110,8 +111,16 @@ public class Activity_controller extends AbstractController implements ActivityL
 			// Refresh project 
 			Project refreshedProject = this.project_model.getProjectById(project.getProjectId());
 			
-			// Load activities for this project
-			refreshedProject.setAcitivies(this.activity_model.getActivitiesByProjectId(project.getProjectId()));
+			// Load prerequisite for each activity
+			List<Activity> actList = this.activity_model.getActivitiesByProjectId(project.getProjectId());
+			for(Activity act : actList){
+				
+				// Set prerequisites
+				act.setPrerequisites(this.activity_model.getActivityPrerequisites(act));
+			}
+			
+			// Set activities for the project
+			refreshedProject.setAcitivies(actList);
 			
 			// Update view
 			this.view.updateCreateUpdateActivity(true, null, row, affectedActivity, refreshedProject);
@@ -141,8 +150,16 @@ public class Activity_controller extends AbstractController implements ActivityL
 			// Refresh project 
 			Project refreshedProject = this.project_model.getProjectById(project.getProjectId());
 			
-			// Load activities for this project
-			refreshedProject.setAcitivies(this.activity_model.getActivitiesByProjectId(project.getProjectId()));
+			// Load prerequisite for each activity
+			List<Activity> actList = this.activity_model.getActivitiesByProjectId(project.getProjectId());
+			for(Activity act : actList){
+				
+				// Set prerequisites
+				act.setPrerequisites(this.activity_model.getActivityPrerequisites(act));
+			}
+			
+			// Set activities for the project
+			refreshedProject.setAcitivies(actList);		
 			
 			// Display error
 			this.view.updateCreateUpdateActivity(false, validation.getError(), row, affectedActivity, refreshedProject);
@@ -169,7 +186,7 @@ public class Activity_controller extends AbstractController implements ActivityL
 			}
 		}
 		
-		// Insert actiity
+		// Insert activity
 		if(this.activity_model.insertActivityPrerequisites(activityIdDependent, activityDependentOn)) {
 			
 			// Reload dependency

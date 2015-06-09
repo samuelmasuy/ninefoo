@@ -1,5 +1,7 @@
 package ninefoo.config;
 
+import java.io.File;
+
 import org.apache.logging.log4j.LogManager;
 
 import ninefoo.config.Annotation.autoload;
@@ -47,7 +49,11 @@ public class Autoload {
 	
 	@autoload
 	public void createDB(){
-		DbManager.createTables();
+		File db_file = new File(DbManager.dbName);
+		if(!db_file.exists()){
+			LOGGER.info(String.format("Database file '%s' created!", DbManager.dbName));
+			DbManager.createTables();
+		}
 	}
 	
 	@autoload(active=true, priority = 1)

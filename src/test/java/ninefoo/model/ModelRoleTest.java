@@ -72,26 +72,26 @@ public class ModelRoleTest {
 	 * This test will add a newly created role to the DB and set the name to a new name and verify if the names are correct
 	 * getRoleByID method
 	 */
-	@Test
-	public void test04setRoleName(){
-		//Create a role
-		Role testRole = new Role("Configure", "This role allows you to Configure");
-		Role_model testRoleModel = new Role_model();
-		testRoleModel.insertNewRole(testRole);
-		
-		//Insert the role into the role table
-		testRole.setRoleName("Configure2");
-		Role testRoleName = testRoleModel.getRoleByName("Configure2");
-		String actualRoleName = testRoleName.getRoleName();
-		
-		System.out.println(actualRoleName);
-
-		String expectedRoleName = testRole.getRoleName();
-		System.out.println(expectedRoleName);
-
-		assertEquals("The roles are not the same name", expectedRoleName, actualRoleName);
-		
-	}
+//	@Test
+//	public void test04setRoleName(){
+//		//Create a role
+//		Role testRole = new Role("Configure", "This role allows you to Configure");
+//		Role_model testRoleModel = new Role_model();
+//		testRoleModel.insertNewRole(testRole);
+//		
+//		//Insert the role into the role table
+//		testRole.setRoleName("Configure2");
+//		Role testRoleName = testRoleModel.getRoleByName("Configure2");
+//		String actualRoleName = testRoleName.getRoleName();
+//		
+//		System.out.println(actualRoleName);
+//
+//		String expectedRoleName = testRole.getRoleName();
+//		System.out.println(expectedRoleName);
+//
+//		assertEquals("The roles are not the same name", expectedRoleName, actualRoleName);
+//		
+//	}
 	
 	/*
 	 * This test will get a newly created role by its description and it with what is in the DataBase

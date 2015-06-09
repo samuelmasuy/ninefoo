@@ -260,6 +260,7 @@ public class TabularData_view extends JPanel {
 			object[START_DATE_INDEX] = activity.getStartDate();
 			object[FINISH_DATE_INDEX] = activity.getFinishDate();
 			object[DURATION_INDEX] = activity.getDuration();
+			object[DEPENDENCY_INDEX] = activity.getPrerequisitesAsString();
 			this.dataTableModel.addRow(object);
 		}
 		
@@ -276,10 +277,8 @@ public class TabularData_view extends JPanel {
 		this.dataTableModel.removeTableModelListener(this.tableModelListener);
 				
 		// Delete row by row
-		while(this.dataTableModel.getRowCount() > 0){
-			System.out.println(this.dataTableModel.getRowCount());
+		while(this.dataTableModel.getRowCount() > 0)
 			this.dataTableModel.removeRow(0);
-		}
 		
 		// Reset counter
 		this.counter = 0;

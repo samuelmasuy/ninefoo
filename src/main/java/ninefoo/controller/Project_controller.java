@@ -8,6 +8,7 @@ import ninefoo.helper.DateHelper;
 import ninefoo.lib.LanguageText;
 import ninefoo.lib.ValidationForm;
 import ninefoo.lib.ValidationRule;
+import ninefoo.model.Activity;
 import ninefoo.model.Activity_model;
 import ninefoo.model.Project;
 import ninefoo.model.ProjectMember_model;
@@ -203,8 +204,16 @@ public class Project_controller extends AbstractController implements ProjectLis
 		// If project found
 		if(project != null){
 			
+			// Load prerequisite for each activity
+			List<Activity> actList = this.activity_model.getActivitiesByProjectId(projectId);
+			for(Activity activity : actList){
+				
+				// Set prerequisites
+				activity.setPrerequisites(this.activity_model.getActivityPrerequisites(activity));
+			}
+			
 			// Load activities for this project
-			project.setAcitivies(this.activity_model.getActivitiesByProjectId(projectId));
+			project.setAcitivies(actList);
 			
 			// Update view
 			this.view.updateLoadProject(true, String.format("Project '%s' loaded succesfully", project.getProjectName()), project);
