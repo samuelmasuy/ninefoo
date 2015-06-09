@@ -140,7 +140,6 @@ public class Project_controller extends AbstractController implements ProjectLis
 			if( !startDate.isEmpty() && (dateStart = DateHelper.parse(startDate, Config.DATE_FORMAT_SHORT)) == null)
 				LOGGER.error("Unexpected error!");
 			
-			
 			// Create a temp project
 			Project project = new Project(name, doubleBudget, dateStart, dateDeadline, description);
 			
@@ -153,7 +152,6 @@ public class Project_controller extends AbstractController implements ProjectLis
 			
 			// If insert successful
 			} else {
-				
 				
 				// Get roles
 				Role role = role_model.getRoleByName("Manager");

@@ -1,5 +1,6 @@
 package ninefoo.controller;
 
+import ninefoo.lib.LanguageText;
 import ninefoo.lib.ValidationForm;
 import ninefoo.lib.ValidationRule;
 import ninefoo.model.*;
@@ -9,6 +10,7 @@ import ninefoo.view.project.TabularData_view;
 
 import org.apache.logging.log4j.LogManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,6 +64,7 @@ public class Activity_controller extends AbstractController implements ActivityL
 		validation.setRule(finishDateRule);
 		validation.setRule(completionRule);
 		
+		// TODO When there's an error, don't apply the data entered
 		// If requirements are met
 		if(validation.validate()){
 			
@@ -86,6 +89,8 @@ public class Activity_controller extends AbstractController implements ActivityL
 				// Fetch the insert activity
 				Activity insertedActivity = this.activity_model.getActivityById(actId);
 				
+				// Load project
+				
 				// Set it as the affected one
 				affectedActivity = insertedActivity;
 				
@@ -102,10 +107,16 @@ public class Activity_controller extends AbstractController implements ActivityL
 				affectedActivity = updatedActivity;
 			}
 			
+			// Refresh project 
+			Project refreshedProject = this.project_model.getProjectById(project.getProjectId());
+			
+			// Load activities for this project
+			refreshedProject.setAcitivies(this.activity_model.getActivitiesByProjectId(project.getProjectId()));
+			
 			// Update view
-			this.view.updateCreateUpdateActivity(true, null, row, affectedActivity);
+			this.view.updateCreateUpdateActivity(true, null, row, affectedActivity, refreshedProject);
 		
-			// If requirements are not met
+		// If requirements are not met
 		} else {
 			
 			// Target activity
@@ -127,168 +138,53 @@ public class Activity_controller extends AbstractController implements ActivityL
 				affectedActivity = oldActivity;
 			}
 			
+			// Refresh project 
+			Project refreshedProject = this.project_model.getProjectById(project.getProjectId());
+			
+			// Load activities for this project
+			refreshedProject.setAcitivies(this.activity_model.getActivitiesByProjectId(project.getProjectId()));
+			
 			// Display error
-			this.view.updateCreateUpdateActivity(false, validation.getError(), row, affectedActivity);
+			this.view.updateCreateUpdateActivity(false, validation.getError(), row, affectedActivity, refreshedProject);
 		}
-		
 	}
 
-    /**
-     * Create or update activity.
-     *
-     * @param row                 row number.
-     * @param activityId          Id of the activity.
-     * @param name                Name of the activity
-     * @param description         Description of the activity.
-     * @param duration            Duration of the activity.
-     * @param optimisticDuration  Start of the activity.
-     * @param likelyDuration      End of the activity.
-     * @param pessimisticDuration End of the activity.
-     * @param projectID           project which has this activity.
-     * @param memberID            member of this activity.
-     * @param prerequisites       list of activities ID.
-     */
-//    @Override
-//    public void createUpdateActivity(int row, final String activityId, String name, String description, String duration,
-//                                     String optimisticDuration, String likelyDuration, String pessimisticDuration,
-//                                     int projectID, int memberID, final List<Integer> prerequisites) {
-//
-//        // Flag to know if we are creating an activity or updating one.
-//        boolean createActivity = false;
-//
-//        final ValidationForm validation = new ValidationForm();
-//
-//        // If ## create Activity
-//        if (activityId.equals(TabularData_view.PRE_CREATED_ID)) {
-//            createActivity = true;
-//        }
-//        // Update an Activity
-//        else {
-//            ValidationRule activityIDRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_ID"), activityId) {
-//                @Override
-//                public boolean validate() {
-//
-//                    // Keep parent validation
-//                    boolean validate = super.validate();
-//                    // check if activity is in database
-//                    if (activity_model.getActivityById(Integer.parseInt(activityId)) == null) {
-//                        setErrorMessage(String.format(LanguageText.getConstant("ACTIVITY_NOT_FOUND")));
-//                        LOGGER.info("Activity does not exist.");
-//                        return false;
-//                    }
-//                    // Return parent validation
-//                    return validate;
-//                }
-//            };
-//            validation.setRule(activityIDRule);
-//            createActivity = false;
-//        }
-//
-//        if (!name.isEmpty()) {
-//            ValidationRule activityNameRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_NAME"), name);
-//            activityNameRule.checkFormat("[a-zA-Z0-9]+").checkMaxLength(30);
-//            validation.setRule(activityNameRule);
-//        } else if (!description.isEmpty()) {
-//            ValidationRule activityDescriptionRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_DESCRIPTION"), name);
-//            activityDescriptionRule.checkFormat("[a-zA-Z0-9]+").checkMaxLength(120);
-//            validation.setRule(activityDescriptionRule);
-//        } else if (!duration.isEmpty()) {
-//            ValidationRule activityDurationRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_DURATION"), duration);
-//            activityDurationRule.checkFormat("[0-9]+").checkMaxLength(2);
-//            validation.setRule(activityDurationRule);
-//        } else if (!optimisticDuration.isEmpty()) {
-//            ValidationRule activityOptimisticDurationRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_OPTIMISTIC_DURATION"), optimisticDuration);
-//            activityOptimisticDurationRule.checkFormat("[0-9]+").checkMaxLength(2);
-//            validation.setRule(activityOptimisticDurationRule);
-//        } else if (!likelyDuration.isEmpty()) {
-//            ValidationRule activityLikelyDurationRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_LIKELY_DURATION"), likelyDuration);
-//            activityLikelyDurationRule.checkFormat("[0-9]+").checkMaxLength(2);
-//            validation.setRule(activityLikelyDurationRule);
-//        } else if (!pessimisticDuration.isEmpty()) {
-//            ValidationRule activityPessimisticDurationRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_PESSIMISTIC_DURATION"), pessimisticDuration);
-//            activityPessimisticDurationRule.checkFormat("[0-9]+").checkMaxLength(2);
-//            validation.setRule(activityPessimisticDurationRule);
-//        } else if (!prerequisites.isEmpty()) {
-//            // TODO what to pass as second argument?
-//            ValidationRule activityPrerequesitesRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_PREREQUISITES"), "prerequesites") {
-//                @Override
-//                public boolean validate() {
-//
-//                    // Keep parent validation
-//                    boolean validate = super.validate();
-//                    // Check if date is correct
-//                    for (Integer prereq : prerequisites) {
-//                        if (activity_model.getActivityById(prereq) == null) {
-//                            setErrorMessage(String.format(LanguageText.getConstant("ACTIVITY_NOT_FOUND")));
-//                            LOGGER.info("Activity does not exist.");
-//                            return false;
-//                        }
-//                    }
-//                    // Return parent validation
-//                    return validate;
-//                }
-//            };
-//            validation.setRule(activityPrerequesitesRule);
-//        } else {
-//            LOGGER.error("No value inserted!");
-//            return;
-//        }
-//
-//        // If all requirements are met
-//        if (validation.validate()) {
-//
-//            // get project
-//            Project tempProject = project_model.getProjectById(projectID);
-//            // TODO implement updateCreateActivity
-////            if (tempProject == null) this.view.updateCreateActivity(false, LanguageText.getConstant("ERROR_OCCURED"));
-//
-//            // get member
-//            Member tempMember = member_model.getMemberById(memberID);
-//            // TODO implement updateCreateActivity
-////            if (tempProject == null) this.view.updateCreateActivity(false, LanguageText.getConstant("ERROR_OCCURED"));
-//
-//            // get all prerequisites
-//            List<Activity> tempPrerequisites = null;
-//            for (Integer prereq : prerequisites) {
-//                Activity preReqActivity = activity_model.getActivityById(prereq);
-//                if (preReqActivity != null)
-//                    tempPrerequisites.add(preReqActivity);
-//            }
-//            // Create a temp activity
-//            Activity newActivity = new Activity(name, description, Integer.parseInt(duration),
-//                    Integer.parseInt(optimisticDuration), Integer.parseInt(likelyDuration),
-//                    Integer.parseInt(pessimisticDuration), tempProject, tempMember, tempPrerequisites);
-//            // get activity id
-//            // TODO where does the id of the new activity gets return
-//            // int newActivityId = newActivity.getActivityId();
-//
-//            // create new activity
-//            if (createActivity) {
-//                // If insert failed
-//                if (activity_model.insertNewActivity(newActivity) == Database.ERROR) {
-//
-//                    // Display error
-//                    // TODO implement updateCreateActivity
-//                    // this.view.updateCreateActivity(false, LanguageText.getConstant("ERROR_OCCURED"));
-//
-//                } else {
-//                    // If insert successful
-//                    // Display success
-//                    // TODO implement updateCreateActivity
-//                    //this.view.updateCreateActivity(true, LanguageText.getConstant("PROJECT_CREATED"));
-//
-//                }
-//            }
-//            // update activity
-//            else {
-//
-//            }
-//
-//            // If requirements are not met
-//        } else {
-//            // TODO implement updateCreateActivity
-//            // this.view.updateCreateActivity(false, validation.getError());
-//        }
-//    }
+	@Override
+	public void createDependentActivities(int activityIdDependent, int activityIdDependentOn, int row) {
+		
+		// Fetch activities
+		Activity activityDependentOn = this.activity_model.getActivityById(activityIdDependentOn);
+		Activity activityDependent = this.activity_model.getActivityById(activityIdDependent);
+					
+		// Check if dependency already exist
+		List<Activity> preList = this.activity_model.getActivityPrerequisites(activityDependent);
+		for(Activity activity : preList){
+			if(activity.getActivityId() == activityIdDependentOn){
 
+				// Update view
+				this.view.updateCreateDependentActivities(false, "Dependency already exists", row, null);
+
+				// Exit
+				return;
+			}
+		}
+		
+		// Insert actiity
+		if(this.activity_model.insertActivityPrerequisites(activityIdDependent, activityDependentOn)) {
+			
+			// Reload dependency
+			preList = this.activity_model.getActivityPrerequisites(activityDependent);
+			
+			// Set prerequisites
+			activityDependent.setPrerequisites(preList);
+			
+			// Update view
+			this.view.updateCreateDependentActivities(true, "Dependency created succesfully", row, activityDependent);
+		
+		} else {
+		
+			// Update view
+			this.view.updateCreateDependentActivities(false, LanguageText.getConstant("ERROR_OCCURED"), row, null);
+		}
+	}
 }

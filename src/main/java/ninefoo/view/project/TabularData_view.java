@@ -2,7 +2,11 @@ package ninefoo.view.project;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -14,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import ninefoo.helper.StringHelper;
 import ninefoo.model.Activity;
 import ninefoo.model.Project;
+import ninefoo.view.project.dialog.ActivityDependencyDialog;
 import ninefoo.view.project.listener.TabularDataListener;
 
 public class TabularData_view extends JPanel {
@@ -21,7 +26,7 @@ public class TabularData_view extends JPanel {
 	private static final long serialVersionUID = 6595729954886810500L;
 
 	// Constants
-	private final Object[] dataTableHeader = {"", "Activity ID", "Activity Name", "Start", "Finish", "Duration", "Activity % Complete", "Total Float"};
+	private final Object[] dataTableHeader = {"", "Activity ID", "Activity Name", "Start", "Finish", "Duration", "Activity % Complete", "Total Float", "Dependency"};
 	private final int COUNTER_INDEX = 0;
 	private final int ID_INDEX = COUNTER_INDEX + 1;
 	private final int ACTIVITY_NAME_INDEX = ID_INDEX + 1;
@@ -30,6 +35,7 @@ public class TabularData_view extends JPanel {
 	private final int DURATION_INDEX = FINISH_DATE_INDEX + 1;
 	private final int COMPLETION_INDEX = DURATION_INDEX + 1;
 	private final int FLOAT_INDEX = COMPLETION_INDEX + 1;
+	private final int DEPENDENCY_INDEX = FLOAT_INDEX + 1;
 	private int counter = 0;
 	private Project project;
 	
@@ -46,7 +52,7 @@ public class TabularData_view extends JPanel {
 	private TabularDataListener tabularDataListener;
 	
 	// Constructor
-	public TabularData_view() {
+	public TabularData_view(final JPanel parentPanel) {
 		
 		// Set layout
 		this.setLayout(new BorderLayout());
@@ -80,7 +86,7 @@ public class TabularData_view extends JPanel {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				
-				if(column == ID_INDEX || column == FLOAT_INDEX || column == COUNTER_INDEX) 	
+				if(column == ID_INDEX || column == FLOAT_INDEX || column == COUNTER_INDEX || column == DEPENDENCY_INDEX) 	
 					return false;
 				return true;
 			}
@@ -93,8 +99,64 @@ public class TabularData_view extends JPanel {
 		};
 		this.dataTableScrollPane = new JScrollPane(dataTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
-		// Add listener
+		// Add model listener
 		addListenerToDataModel();
+		
+		// Add table listener
+		this.dataTable.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				// On double click
+				if (e.getClickCount() == 2) {
+			      JTable target = (JTable)e.getSource();
+			      int row = target.getSelectedRow();
+			      int column = target.getSelectedColumn();
+			      
+			      // If dependency column
+			      if(column == DEPENDENCY_INDEX){
+			    	  
+			    	  // If row have an id
+			    	  if(!dataTableModel.getValueAt(row, ID_INDEX).toString().equals(PRE_CREATED_ID)){
+			    		
+			    		  // Count the real activities
+			    		  int i;
+			    		  for(i=0; i < dataTableModel.getRowCount(); i++)
+			    			  if(i != row && !dataTableModel.getValueAt(i, ID_INDEX).equals(PRE_CREATED_ID))
+			    				  break;
+			    		  
+			    		  // If no real activities found
+			    		  if(i == dataTableModel.getRowCount()){
+	
+			    			  // Display error
+			    			  JOptionPane.showMessageDialog(TabularData_view.this, "Please add more activities to be able to add dependecies", "Operation failed", JOptionPane.ERROR_MESSAGE);
+			    		  
+			    		  // If at least 2 real activities found
+			    		  }else{
+
+				    		  // If more than one row
+				    		  new ActivityDependencyDialog(parentPanel, Integer.parseInt(dataTableModel.getValueAt(row, ID_INDEX).toString()), tabularDataListener, project, row); 
+			    		  }
+			    		  
+			    	  }
+			      }
+			    }
+				
+			}
+		});
 		
 		// Customize the Table
 		this.dataTable.getTableHeader().setReorderingAllowed(false); // Disable column drag
@@ -142,6 +204,7 @@ public class TabularData_view extends JPanel {
 		this.dataTableModel.setValueAt(StringHelper.stringOrEmpty(activity.getStartDate()), row, START_DATE_INDEX);
 		this.dataTableModel.setValueAt(StringHelper.stringOrEmpty(activity.getFinishDate()), row, FINISH_DATE_INDEX);
 		this.dataTableModel.setValueAt(StringHelper.stringOrEmpty(activity.getDuration()), row, DURATION_INDEX);
+		this.dataTableModel.setValueAt(StringHelper.stringOrEmpty(activity.getPrerequisitesAsString()), row, DEPENDENCY_INDEX);
 		
 		// TODO Add activity completion
 //		this.dataTableModel.setValueAt(  , row, COMPLETION_INDEX);
@@ -154,7 +217,20 @@ public class TabularData_view extends JPanel {
 	 * Add empty row
 	 */
 	public void addEmptyRow(){
-		dataTableModel.addRow(new Object[]{++counter, PRE_CREATED_ID, "", "", "", "", "", ""});
+		Object[] object = new Object[dataTableHeader.length];
+	
+		// Set everything to empty
+		for(int i = 0; i < object.length; i++)
+			object[i] = "";
+		
+		// Special cases	
+		object[COUNTER_INDEX] = ++counter;
+		object[ID_INDEX] = PRE_CREATED_ID;
+		
+		// Add row
+		dataTableModel.addRow(object);
+		
+		// Auto scroll down
 		dataTable.changeSelection(dataTableModel.getRowCount()-1, 0, false, false);
 	}
 	
@@ -165,5 +241,50 @@ public class TabularData_view extends JPanel {
 		
 		// Add listener to table model
 		this.dataTable.getModel().addTableModelListener(this.tableModelListener);
+	}
+	
+	/**
+	 * Populate activities
+	 */
+	public void populateActivities(){
+		
+		// Remove listener to avoid recursive call
+		this.dataTableModel.removeTableModelListener(this.tableModelListener);
+		
+		List<Activity> activities = this.project.getAcitivies();
+		for(Activity activity : activities){
+			Object[] object = new Object[dataTableHeader.length];
+			object[COUNTER_INDEX] = ++counter;
+			object[ID_INDEX] = activity.getActivityId();
+			object[ACTIVITY_NAME_INDEX] = activity.getActivityLabel();
+			object[START_DATE_INDEX] = activity.getStartDate();
+			object[FINISH_DATE_INDEX] = activity.getFinishDate();
+			object[DURATION_INDEX] = activity.getDuration();
+			this.dataTableModel.addRow(object);
+		}
+		
+		// Re-add listener
+		addListenerToDataModel();
+	}
+	
+	/**
+	 * Reset table
+	 */
+	public void resetTable(){
+		
+		// Remove listener to avoid recursive call
+		this.dataTableModel.removeTableModelListener(this.tableModelListener);
+				
+		// Delete row by row
+		while(this.dataTableModel.getRowCount() > 0){
+			System.out.println(this.dataTableModel.getRowCount());
+			this.dataTableModel.removeRow(0);
+		}
+		
+		// Reset counter
+		this.counter = 0;
+		
+		// Re-add listener
+		addListenerToDataModel();
 	}
 }

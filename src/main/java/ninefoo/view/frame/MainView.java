@@ -25,6 +25,7 @@ import ninefoo.view.member.Register_view;
 import ninefoo.view.member.listeners.LoginListener;
 import ninefoo.view.member.listeners.RegisterListener;
 import ninefoo.view.project.TableChartSlider_view;
+import ninefoo.view.project.dialog.ActivityDependencyDialog;
 import ninefoo.view.project.listener.TabularDataListener;
 
 import org.apache.logging.log4j.LogManager;
@@ -49,6 +50,7 @@ public class MainView extends JFrame implements UpdatableView{
 	// Define dialogs
 	private CreateProjectDialog createProjectDialog;
 	private ViewMyProjectsDialog viewMyProjectsDialog;
+	private ActivityDependencyDialog activityDependencyDialog;
 	
 	// Define variables
 	private JPanel currentCenterPanel;
@@ -217,6 +219,18 @@ public class MainView extends JFrame implements UpdatableView{
 					activityListener.createUpdateActivity(row, activityId, activityName, duration, start, end, project, activityCompleted, Session.getInstance().getUserId());
 				
 			}
+
+			@Override
+			public void dependencyLink(ActivityDependencyDialog dialog, int activityIdDependent, int activityIdDependentOn, int row) {
+
+				LOGGER.info(String.format("Trying to create dependency: %d depends on %d", activityIdDependent, activityIdDependentOn));
+				
+				// Set dialog
+				activityDependencyDialog = dialog;
+				
+				// Create dependency
+				activityListener.createDependentActivities(activityIdDependent, activityIdDependentOn, row);
+			}
 		});
 		
 		// Configure the JFrame
@@ -371,7 +385,7 @@ public class MainView extends JFrame implements UpdatableView{
 	}
 
 	@Override
-	public void updateCreateUpdateActivity(boolean success, String message, int row, Activity activity) {
+	public void updateCreateUpdateActivity(boolean success, String message, int row, Activity activity, Project project) {
 		
 		// If activity is set
 		if(activity !=null){
@@ -381,6 +395,9 @@ public class MainView extends JFrame implements UpdatableView{
 				
 				// Update table row
 				this.tableChartPanel.updateTableRow(row, activity);
+				
+				// Set project
+				this.tableChartPanel.setProject(project);
 				
 			} else {
 				
@@ -417,6 +434,9 @@ public class MainView extends JFrame implements UpdatableView{
 				// Enable new activity button
 				this.toolsPanel.setNewActivityEnabled(true);
 				
+				// Reset data
+				this.tableChartPanel.reset();
+				
 				// Load project
 				this.tableChartPanel.loadProject(project);
 			} else {
@@ -429,6 +449,30 @@ public class MainView extends JFrame implements UpdatableView{
 			
 			// Reset pointer so it cannot be used anywhere else
 			this.viewMyProjectsDialog = null;
+		}
+	}
+
+	@Override
+	public void updateCreateDependentActivities(boolean success, String message, int row, Activity activity) {
+		
+		// if successful
+		if(success){
+			
+			// Update table row
+			this.tableChartPanel.updateTableRow(row, activity);
+			
+			// Close window
+			this.activityDependencyDialog.dispose();
+			
+			LOGGER.info("Dependency created!");
+			
+		// If not successful
+		} else {
+			
+			// Display error
+			this.tableChartPanel.setErrorMessage(message);
+			
+			LOGGER.error(message);
 		}
 	}
 }

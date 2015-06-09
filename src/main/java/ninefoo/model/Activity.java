@@ -4,6 +4,8 @@ import ninefoo.config.*;
 import ninefoo.config.Config;
 import ninefoo.helper.DateHelper;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -204,5 +206,16 @@ public class Activity {
 
     public void setFinishDate(Date finishDate) {
         this.finishDate = DateHelper.format(finishDate, Config.DATE_FORMAT);
+    }
+    
+    /**
+     * Get a formatted string list
+     * @return String
+     */
+    public String getPrerequisitesAsString(){
+    	List<Integer> preId = new ArrayList<>();
+    	for(int i=0; i<prerequisites.size(); i++)
+    		preId.add(prerequisites.get(i).getActivityId());
+    	return Arrays.toString(preId.toArray());
     }
 }

@@ -29,15 +29,15 @@ public class TableChartSlider_view extends JPanel{
 		this.setLayout(new BorderLayout());
 		
 		// Initialize panels
-		this.tabularPanel = new TabularData_view();
+		this.tabularPanel = new TabularData_view(this);
 		this.chartPanel = new GanttChart_view();
 		
 		// Add the panels to the splitter
 		this.splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tabularPanel, chartPanel);
 		
 		// Customize the splitter
-		this.splitPane.setResizeWeight(0.3);
-		this.splitPane.setDividerLocation(0.3);
+		this.splitPane.setResizeWeight(0.5);
+		this.splitPane.setDividerLocation(0.5);
 		this.splitPane.setDividerSize(4);
 		this.splitPane.setContinuousLayout(true);
 		
@@ -87,7 +87,7 @@ public class TableChartSlider_view extends JPanel{
 		this.setProject(project);
 		
 		// Populate activities
-		
+		this.tabularPanel.populateActivities();
 	}
 	
 	/**
@@ -105,5 +105,12 @@ public class TableChartSlider_view extends JPanel{
 	 */
 	public void updateTableRow(int row, Activity activity){
 		this.tabularPanel.updateRow(row, activity);
+	}
+	
+	/**
+	 * Reset table and chart
+	 */
+	public void reset(){
+		this.tabularPanel.resetTable();
 	}
 }

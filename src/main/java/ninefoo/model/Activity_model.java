@@ -84,16 +84,17 @@ public class Activity_model {
             return false;
         }
 
-        // To be safe, we first delete all the prerequisites associated with the activity and
-        //      then add them.
-        String deletePrereqsSql = "DELETE FROM activity_relation WHERE activity_id = " + activityId;
-        try {
-            statement.executeUpdate(deletePrereqsSql);
-        } catch (SQLException e) {
-            LOGGER.warn("Could not delete prerequisites for activity ID = " +
-                    activityId + " --- detailed info: " + e.getMessage());
-            return false;
-        }
+        // TODO Commented by Amir
+//        // To be safe, we first delete all the prerequisites associated with the activity and
+//        //      then add them.
+//        String deletePrereqsSql = "DELETE FROM activity_relation WHERE activity_id = " + activityId;
+//        try {
+//            statement.executeUpdate(deletePrereqsSql);
+//        } catch (SQLException e) {
+//            LOGGER.warn("Could not delete prerequisites for activity ID = " +
+//                    activityId + " --- detailed info: " + e.getMessage());
+//            return false;
+//        }
 
         String insertPrereqSql;
         for (Activity prereq : prerequisites) {
@@ -132,11 +133,17 @@ public class Activity_model {
             Date createDate = DateHelper.parse(activities.getString("create_date"), Config.DATE_FORMAT);
             Project project = projectModel.getProjectById(activities.getInt("project_id"));
             Member member = memberModel.getMemberById(activities.getInt("member_id"));
-            List<Activity> prerequisites = getActivityPrerequisites(activityId);
-
+            
+            
+            // TODO Commented by Amir
+//            List<Activity> prerequisites = getActivityPrerequisites(activityId);
+//            activity = new Activity(activityId, activityLabel, description, duration,
+//                    optimisticDuration, likelyDuration, pessimisticDuration,
+//                    createDate, project, member, prerequisites);
+            
             activity = new Activity(activityId, activityLabel, description, duration,
                     optimisticDuration, likelyDuration, pessimisticDuration,
-                    createDate, project, member, prerequisites);
+                    createDate, project, member, new ArrayList<Activity>());
         } catch (SQLException e) {
             LOGGER.error("Could not get next activity from db --- detailed info: " + e.getMessage());
         }
@@ -337,5 +344,19 @@ public class Activity_model {
         }
 
         return false;
+    }
+    
+    /**
+     * Add one Prerequisites only
+     * @param activityIdDependent
+     * @param activityIdDependentOn
+     * @return True if insert is successful
+     */
+    public boolean insertActivityPrerequisites(int activityIdDependent, Activity activityIdDependentOn){
+    	
+    	// Add one only
+    	List<Activity> list = new ArrayList<>();
+    	list.add(activityIdDependentOn);
+    	return this.insertPrereqs(activityIdDependent, list);
     }
 }
