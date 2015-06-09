@@ -146,6 +146,9 @@ public class Activity_controller extends AbstractController implements ActivityL
 				// Fetch the old activity
 				Activity oldActivity = this.activity_model.getActivityById(Integer.parseInt(activityId));
 				
+				// Load its prerequisites
+				oldActivity.setPrerequisites(this.activity_model.getActivityPrerequisites(oldActivity));
+				
 				// Set it as the affected one
 				affectedActivity = oldActivity;
 			}

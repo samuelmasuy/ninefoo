@@ -403,6 +403,9 @@ public class MainView extends JFrame implements UpdatableView{
 				
 				// Display error message
 				this.tableChartPanel.setErrorMessage(message);
+				
+				// Update table row
+				this.tableChartPanel.updateTableRow(row, activity);
 			}
 		}
 	}
