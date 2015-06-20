@@ -88,10 +88,10 @@ public class MainView extends JFrame implements UpdatableView{
 		this.setJMenuBar(menu);
 		
 		// By default, load login view
-//		Session.getInstance().open();
-//		Session.getInstance().setUserId(1);
-//		this.loadView(tableChartPanel);
-		this.loadView(loginPanel);
+		Session.getInstance().open();
+		Session.getInstance().setUserId(1);
+		this.loadView(tableChartPanel);
+//		this.loadView(loginPanel);
 		
 		// Add listener to login panel
 		this.loginPanel.setLoginListener(new LoginListener() {
@@ -187,14 +187,19 @@ public class MainView extends JFrame implements UpdatableView{
 
 			// TODO Change this and add another method for update
 			@Override
-			public List<Project> getAllMyProjectsByRole(ViewMyProjectsDialog viewMyProjectsDialog, RoleNames roleName) {
+			public void loadAllMyProjectsByRole(ViewMyProjectsDialog dialog, RoleNames roleName) {
 
 				LOGGER.info(String.format("Retreiving projects from the DB for user id %d and role %s ", Session.getInstance().getUserId(), roleName.toString()));
 				
 				// Notify to controller
-				if(projectListener != null)
-					return projectListener.getAllProjectsByMemberAndRole(Session.getInstance().getUserId(), roleName);
-				return null;
+				if(projectListener != null){
+					
+					// Set dialog
+					viewMyProjectsDialog = dialog;
+					
+					// Load projects
+					projectListener.loadAllProjectsByMemberAndRole(Session.getInstance().getUserId(), roleName);
+				}
 			}
 
 			@Override
@@ -505,8 +510,8 @@ public class MainView extends JFrame implements UpdatableView{
 			// Set success message
 			this.editProjectDialog.setSuccessMessage(message);
 			
-			// Update parent list
-			this.viewMyProjectsDialog.populateProjectList();
+			// Update project
+			this.viewMyProjectsDialog.populateProject(project);
 			
 			// Close window
 			this.editProjectDialog.dispose();
@@ -521,5 +526,15 @@ public class MainView extends JFrame implements UpdatableView{
 			// Display error
 			this.editProjectDialog.setErrorMessage(message);
 		}
+	}
+
+	@Override
+	public void updateLoadAllProjectsByMemberAndRole(List<Project> projects) {
+		
+		// Update parent list
+		this.viewMyProjectsDialog.populateProjectList(projects);
+		
+		// Reset pointer
+		this.viewMyProjectsDialog = null;
 	}
 }

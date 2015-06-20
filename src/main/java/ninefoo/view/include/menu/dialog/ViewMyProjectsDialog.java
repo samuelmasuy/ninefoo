@@ -76,6 +76,9 @@ public class ViewMyProjectsDialog extends JDialog{
 		// Initialize panels
 		this.projectPanel = new ProjectPanel();
 		
+		// Initialize projects list
+		this.projects = new ArrayList<>();
+		
 		// Set listener
 		this.toolsListener = toolsListener;
 		
@@ -89,15 +92,19 @@ public class ViewMyProjectsDialog extends JDialog{
 		// Set default role box value
 		this.roleBox.setSelectedIndex(0);
 		
-		// Populate data
-		this.populateProjectList();
+		// FIXME Change from enum to String
+		final RoleNames[] roles = {RoleNames.Manager, RoleNames.Member};
+		
+		// Load projects
+		toolsListener.loadAllMyProjectsByRole(ViewMyProjectsDialog.this, roles[roleBox.getSelectedIndex()]);
 		
 		// Add role box listener
 		this.roleBox.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				populateProjectList();
+				if(toolsListener != null)
+					toolsListener.loadAllMyProjectsByRole(ViewMyProjectsDialog.this, roles[roleBox.getSelectedIndex()]);
 			}
 		});
 		
@@ -151,21 +158,49 @@ public class ViewMyProjectsDialog extends JDialog{
 	 * Populate list
 	 * @param toolsListener
 	 */
-	public void populateProjectList(){
+	public void populateProjectList(List<Project> projects){
 		
 		// Reset array
 		this.projects = new ArrayList<>();
 		
+		// Add projects
+		this.projects.addAll(projects);
+		
+		// Refresh list
+		this.refreshList();
+	}
+	
+	/**
+	 * Populate one project only
+	 * @param project
+	 */
+	public void populateProject(Project project){
+		
+		// Search for the project
+		for(int i=0; i < projects.size(); i++){
+			
+			// Find the project
+			if(project.getProjectId() == projects.get(i).getProjectId()){
+				
+				// Replace project by the new one
+				projects.set(i, project);
+				break;
+			}
+		}
+		
+		// Refresh list
+		this.refreshList();
+	}
+	
+	/**
+	 * Refresh the list
+	 */
+	public void refreshList(){
+		
 		// Remove all elements
 		this.listModel.removeAllElements();
 		
-		// Fetch data by role
-		RoleNames[] roleNames = {RoleNames.Manager, RoleNames.Member};
-		if(toolsListener != null){
-			List<Project> loadedProjects = toolsListener.getAllMyProjectsByRole(this, roleNames[this.roleBox.getSelectedIndex()]);
-			this.projects.addAll(loadedProjects);
-		}
-		// Populate list
+		// Refresh list
 		for(int i=0; i < projects.size(); i++)
 			this.listModel.addElement(projects.get(i).getProjectName());
 	}

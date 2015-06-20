@@ -5,7 +5,8 @@ import ninefoo.view.frame.UpdatableView;
 /**
  * Every _controller must inherit this class
  */
-public class AbstractController {
+public abstract class AbstractController {
+	
 	protected UpdatableView view;
 	
 	/**

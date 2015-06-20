@@ -2,6 +2,9 @@ package ninefoo.controller;
 
 import org.apache.logging.log4j.LogManager;
 
+import ninefoo.controller.handler.Activity_controller;
+import ninefoo.controller.handler.Member_controller;
+import ninefoo.controller.handler.Project_controller;
 import ninefoo.view.frame.MainView;
 import ninefoo.view.frame.UpdatableView;
 

@@ -1,5 +1,7 @@
 package ninefoo.view.frame;
 
+import java.util.List;
+
 import ninefoo.model.Activity;
 import ninefoo.model.Project;
 import ninefoo.view.listeners.ActivityListener;
@@ -15,6 +17,7 @@ public interface UpdatableView {
 	public void updateLoadProject(boolean success, String message, Project project);
 	public void updateCreateDependentActivities(boolean success, String message, int row, Activity activity);
 	public void updateEditProject(boolean success, String message, Project project);
+	public void updateLoadAllProjectsByMemberAndRole(List<Project> projects);
 	
 	public void setMemberListener(MemberListener memberListener);
 	public void setProjectListener(ProjectListener projectListener);

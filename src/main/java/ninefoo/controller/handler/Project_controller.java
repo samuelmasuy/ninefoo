@@ -1,9 +1,10 @@
-package ninefoo.controller;
+package ninefoo.controller.handler;
 
 import ninefoo.config.Config;
 import ninefoo.config.Database;
 import ninefoo.config.RoleNames;
 import ninefoo.config.Session;
+import ninefoo.controller.AbstractController;
 import ninefoo.helper.DateHelper;
 import ninefoo.lib.LanguageText;
 import ninefoo.lib.ValidationForm;
@@ -173,7 +174,7 @@ public class Project_controller extends AbstractController implements ProjectLis
 	}
 
 	@Override
-	public List<Project> getAllProjectsByMemberAndRole(int memberId, RoleNames roleName) {
+	public void loadAllProjectsByMemberAndRole(int memberId, RoleNames roleName) {
 		
 		// Load models
 		Project_model project_model = new Project_model();
@@ -192,7 +193,13 @@ public class Project_controller extends AbstractController implements ProjectLis
 		
 		// Get projects as a list
 		List<Project> projects = project_model.getAllProjectsByMemberAndRole(memberId, role.getRoleId());
-		return projects == null ? new ArrayList<Project>() : projects;
+		
+		// Make sure the list is not null
+		if(projects == null)
+			projects = new ArrayList<>();
+		
+		// Update GUI
+		this.view.updateLoadAllProjectsByMemberAndRole(projects);
 	}
 
 	@Override
@@ -281,10 +288,11 @@ public class Project_controller extends AbstractController implements ProjectLis
 			project.setBudget(doubleBudget);
 			
 			// Update project
-			this.project_model.updateProject(project);
-			
-			// Update view
-			this.view.updateEditProject(true, "Project updated!", project);
+			if(this.project_model.updateProject(project)){
+				
+				// Update view
+				this.view.updateEditProject(true, "Project updated!", project);
+			}
 			
 		// If requirement are not met
 		} else {
