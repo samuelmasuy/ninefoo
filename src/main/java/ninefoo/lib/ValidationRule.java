@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 
 import ninefoo.config.Config;
 import ninefoo.helper.DateHelper;
+import ninefoo.lib.lang.LanguageText;
 
 /**
  * Rules for input fields.

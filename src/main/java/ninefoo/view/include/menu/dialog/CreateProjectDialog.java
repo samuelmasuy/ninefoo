@@ -19,7 +19,7 @@ import javax.swing.border.Border;
 
 import ninefoo.helper.LayoutHelper;
 import ninefoo.lib.FormDialog;
-import ninefoo.lib.LanguageText;
+import ninefoo.lib.lang.LanguageText;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
 public class CreateProjectDialog extends JDialog{

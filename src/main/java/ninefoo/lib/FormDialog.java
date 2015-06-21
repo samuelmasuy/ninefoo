@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import ninefoo.lib.lang.LanguageText;
+
 /**
  * Template for form panels.
  */

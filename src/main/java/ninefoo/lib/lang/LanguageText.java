@@ -1,12 +1,21 @@
-package ninefoo.lib;
+package ninefoo.lib.lang;
 
-import java.lang.reflect.Field;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.logging.log4j.LogManager;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ninefoo.config.Config;
+import ninefoo.lib.lang.parserObjects.LanguageObject;
 
 /**
  * Singleton class, loads all the language constants and put them in a hash map.
@@ -50,23 +59,28 @@ public class LanguageText {
 		
 		// Load class
 		for(String language : languages){
-			String classPath = String.format("%s.lang.%s.%sLang", Config.APPLICATION_PATH, language, className);
+			
+			// FIXME Make this path work in JAR as well
+			String classPath = String.format("src/main/java/%s/lang/%s/%sLang.json", Config.APPLICATION_PATH, language, className);
+			ObjectMapper mapper = new ObjectMapper();
 			try {
-				Class <?> languageClass = Class.forName(classPath);
 				
-				// Store variables in a hash map
-				for(Field field : languageClass.getFields()){
-					try {
-						phrases.put(field.getName() + "_" + language, (String)field.get(languageClass));
-					} catch (IllegalArgumentException e) {
-						LOGGER.error(String.format("Illegal language constant '%s' in %s version of %s", field.getName(), language, className));
-					} catch (IllegalAccessException e) {
-						LOGGER.error(String.format("Illegal language constant access '%s' in %s version of %s", field.getName(), language, className));
-					}
-				}
-				LOGGER.info(String.format("%s version of %s was loaded succesfully!", language, className));
-			} catch (ClassNotFoundException e) {
-				LOGGER.error(String.format("%s version of the language '%s' was not found!", language, className));
+				// Read file
+				File file = new File(classPath);
+				LanguageObject lang = mapper.readValue(file, LanguageObject.class);
+				Iterator<Map.Entry<String, String>> iter = lang.language.entrySet().iterator();
+			    while (iter.hasNext()) {
+			        Entry<String, String> entry = iter.next();
+			        phrases.put(entry.getKey() + "_" + language, entry.getValue());
+			        iter.remove();
+			    }
+			    LOGGER.info(String.format("\"%s\" version of \"%s\" was loaded succesfully!", language, lang.name));
+			} catch (JsonParseException e) {
+				LOGGER.error(String.format("Parsing error in language file: '%s'", classPath));
+			} catch (JsonMappingException e) {
+				LOGGER.error(String.format("Mapping error in language file: '%s'", classPath));
+			} catch (IOException e) {
+				LOGGER.error(String.format("Error loading language file: '%s'", classPath));
 			}
 		}
 	}

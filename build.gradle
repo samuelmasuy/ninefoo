@@ -4,13 +4,7 @@ apply plugin: 'eclipse'
 
 version = '1.0'
 mainClassName = "ninefoo.application.Application"
-jar {
-    manifest {
-        attributes 'Implementation-Title': 'ninefoo',
-                'Implementation-Version': 1.0,
-                'Main-Class': mainClassName
-    }
-}
+
 sourceSets {
  main.java.srcDir "src/main"
 }
@@ -23,6 +17,19 @@ dependencies {
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.3'
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.7.2'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+	compile 'com.fasterxml.jackson.core:jackson-databind:2.5.4'
+	compile 'com.fasterxml.jackson.core:jackson-core:2.5.4'
+	compile 'com.fasterxml.jackson.core:jackson-annotations:2.5.4'
+	testCompile group: 'junit', name: 'junit', version: '4.12'
 }
+
+jar {
+	from configurations.compile.collect { zipTree it }
+    manifest {
+        attributes 'Implementation-Title': 'ninefoo',
+                'Implementation-Version': 1.0,
+                'Main-Class': mainClassName
+    }
+}
+
 println "System's JAVA_HOME: " + System.getProperty("java.home")

@@ -1,0 +1,30 @@
+{
+	"name" : "Input form",
+	"description" : "Language for input form/dialog. E.g Firt name, Last name etc...",
+	"language" : {
+
+		"WELCOME" : "Welcome",
+		"NEW_ACCOUNT" : "New account",
+		
+		"FIRST_NAME" : "First name",
+		"LAST_NAME" : "Last name",
+		"USERNAME" : "Username",
+		"PASSWORD" : "Password",
+		
+		"REGISTRATION_LINK" : "<html>Don't have an account ? <font color=\"#000099\"><u>Register now</u></font></html>",
+		"LOGIN_LINK" : "<html>Already registered ? <font color=\"#000099\"><u>Login now</u></font></html>",
+		
+		"LOGIN" : "Login",
+		"REGISTER" : "Register",
+		
+		"CREATE_NEW_PROJECT" : "Create a new project",
+		"CREATE_PROJECT" : "Create project",
+		"PROJECT" : "Project",
+		"NAME" : "Name",
+		"BUDGET" : "Budget",
+		"DEADLINE" : "Deadline",
+		"DESCRIPTION" : "Description",
+		
+		"START_DATE" : "Start date"
+	}
+}

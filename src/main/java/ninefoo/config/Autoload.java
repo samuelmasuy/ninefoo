@@ -1,12 +1,10 @@
 package ninefoo.config;
 
-import java.io.File;
-
 import org.apache.logging.log4j.LogManager;
 
 import ninefoo.config.Annotation.autoload;
 import ninefoo.config.Annotation.autoloadConfig;
-import ninefoo.lib.LanguageText;
+import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.DbManager;
 import ninefoo.model.Member;
 import ninefoo.model.Member_model;

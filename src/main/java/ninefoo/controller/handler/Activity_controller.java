@@ -1,9 +1,9 @@
 package ninefoo.controller.handler;
 
 import ninefoo.controller.AbstractController;
-import ninefoo.lib.LanguageText;
 import ninefoo.lib.ValidationForm;
 import ninefoo.lib.ValidationRule;
+import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.*;
 import ninefoo.view.frame.UpdatableView;
 import ninefoo.view.listeners.ActivityListener;

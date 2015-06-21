@@ -27,7 +27,7 @@ import javax.swing.border.Border;
 import ninefoo.config.RoleNames;
 import ninefoo.helper.LayoutHelper;
 import ninefoo.lib.FormDialog;
-import ninefoo.lib.LanguageText;
+import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.Project;
 import ninefoo.view.include.menu.listener.ToolsListener;
 

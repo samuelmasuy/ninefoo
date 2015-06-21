@@ -17,7 +17,7 @@ import javax.swing.border.Border;
 
 import ninefoo.helper.LayoutHelper;
 import ninefoo.lib.FormPanel;
-import ninefoo.lib.LanguageText;
+import ninefoo.lib.lang.LanguageText;
 import ninefoo.view.member.listeners.RegisterListener;
 
 public class Register_view extends FormPanel{

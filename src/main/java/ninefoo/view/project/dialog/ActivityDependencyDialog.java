@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 
 import ninefoo.helper.LayoutHelper;
 import ninefoo.lib.FormDialog;
-import ninefoo.lib.LanguageText;
+import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.Project;
 import ninefoo.view.project.listener.TabularDataListener;
 

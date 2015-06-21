@@ -18,7 +18,7 @@ import javax.swing.border.Border;
 
 import ninefoo.helper.LayoutHelper;
 import ninefoo.lib.FormPanel;
-import ninefoo.lib.LanguageText;
+import ninefoo.lib.lang.LanguageText;
 import ninefoo.view.member.listeners.LoginListener;
 
 public class Login_view extends FormPanel{
