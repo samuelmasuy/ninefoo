@@ -1,6 +1,8 @@
 package ninefoo.model;
 
 import static org.junit.Assert.*;
+import ninefoo.model.object.Role;
+import ninefoo.model.sql.Role_model;
 
 import org.junit.Test;
 

@@ -4,6 +4,7 @@ import ninefoo.view.frame.UpdatableView;
 
 /**
  * Every _controller must inherit this class
+ * @author Amir El Bawab
  */
 public abstract class AbstractController {
 	

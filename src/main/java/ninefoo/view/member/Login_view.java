@@ -17,10 +17,14 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import ninefoo.helper.LayoutHelper;
-import ninefoo.lib.FormPanel;
+import ninefoo.lib.form.FormPanel;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.view.member.listeners.LoginListener;
 
+/**
+ * Login form.
+ * @author Amir El Bawab
+ */
 public class Login_view extends FormPanel{
 	
 	private static final long serialVersionUID = 1578431485931709295L;

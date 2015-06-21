@@ -9,8 +9,8 @@ import javax.swing.JPanel;
 
 import ninefoo.config.RoleNames;
 import ninefoo.config.Session;
-import ninefoo.model.Activity;
-import ninefoo.model.Project;
+import ninefoo.model.object.Activity;
+import ninefoo.model.object.Project;
 import ninefoo.view.include.footer.StatusBar;
 import ninefoo.view.include.menu.Menu;
 import ninefoo.view.include.menu.Tools;
@@ -31,6 +31,10 @@ import ninefoo.view.project.listener.TabularDataListener;
 
 import org.apache.logging.log4j.LogManager;
 
+/**
+ * Main frame for the GUI
+ * @author Amir El Bawab
+ */
 public class MainView extends JFrame implements UpdatableView{
 
 	private static final long serialVersionUID = 4320359862680051619L;

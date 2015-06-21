@@ -16,10 +16,14 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import ninefoo.helper.LayoutHelper;
-import ninefoo.lib.FormPanel;
+import ninefoo.lib.form.FormPanel;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.view.member.listeners.RegisterListener;
 
+/**
+ * Registration form.
+ * @author Amir El Bawab
+ */
 public class Register_view extends FormPanel{
 	
 	private static final long serialVersionUID = 6743725688945067304L;

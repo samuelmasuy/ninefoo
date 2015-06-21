@@ -1,8 +1,9 @@
-package ninefoo.model;
+package ninefoo.model.object;
 
 /**
  * This class represents a config entity in the database.
- * Created by Farzad on 30-May-2015.
+ * Created on 30-May-2015.
+ * @author Farzad MajidFayyaz
  */
 public class Config {
     private int configId;

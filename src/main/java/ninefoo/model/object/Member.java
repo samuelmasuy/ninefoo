@@ -1,6 +1,5 @@
-package ninefoo.model;
+package ninefoo.model.object;
 
-import ninefoo.config.*;
 import ninefoo.config.Config;
 import ninefoo.helper.DateHelper;
 
@@ -8,7 +7,8 @@ import java.util.Date;
 
 /**
  * This class represents a member entity in the database.
- * Created by Farzad on 30-May-2015.
+ * Created on 30-May-2015.
+ * @author Farzad MajidFayyaz
  */
 public class Member {
     private int memberId;
@@ -27,7 +27,7 @@ public class Member {
      * @param password Password
      * @param registerDate Date of registration
      */
-    Member(int memberId, String firstName, String lastName,
+    public Member(int memberId, String firstName, String lastName,
            String username, String password, Date registerDate) {
 
         this.memberId = memberId;

@@ -18,10 +18,14 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import ninefoo.helper.LayoutHelper;
-import ninefoo.lib.FormDialog;
+import ninefoo.lib.form.FormDialog;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
+/**
+ * Dialog that shows a form for creating a new project
+ * @author Amir El Bawab
+ */
 public class CreateProjectDialog extends JDialog{
 	
 	private static final long serialVersionUID = 216394661255136241L;

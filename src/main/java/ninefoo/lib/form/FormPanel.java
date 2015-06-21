@@ -1,4 +1,4 @@
-package ninefoo.lib;
+package ninefoo.lib.form;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -13,8 +13,9 @@ import ninefoo.lib.lang.LanguageText;
 
 /**
  * Template for form panels.
+ * @author Amir EL Bawab
  */
-public abstract class FormDialog extends JPanel{
+public abstract class FormPanel extends JPanel{
 	
 	private static final long serialVersionUID = 8991855477647061617L;
 	
@@ -24,7 +25,7 @@ public abstract class FormDialog extends JPanel{
 	protected TitledBorder titledBorder;
 	
 	// Constructor
-	public FormDialog() {
+	public FormPanel() {
 		
 		// Initialize components
 		this.fixedPanel = new JPanel();
@@ -42,6 +43,9 @@ public abstract class FormDialog extends JPanel{
 		// Default configuration gc
 		gc.fill = GridBagConstraints.NONE;
 		gc.insets = new Insets(5, 5, 5, 5); // Spacing between components
+		
+		// Configure this JPanel
+		this.setVisible(false);
 	}
 	
 	/**
@@ -50,13 +54,5 @@ public abstract class FormDialog extends JPanel{
 	 */
 	public void setErrorMessage(String msg){
 		JOptionPane.showMessageDialog(this, String .format("<html>%s</html>", msg), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
-	}
-	
-	/**
-	 * Set the success message as a prompt
-	 * @param msg Message to be displayed
-	 */
-	public void setSuccessMessage(String msg){
-		JOptionPane.showMessageDialog(this, String .format("<html>%s</html>", msg), LanguageText.getConstant("OPERATION_SUCCESSFUL"), JOptionPane.INFORMATION_MESSAGE);
 	}
 }

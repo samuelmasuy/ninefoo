@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Custom annotation for the application
+ * @author Amir EL Bawab
  */
 public class Annotation {
 	

@@ -18,11 +18,15 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import ninefoo.helper.LayoutHelper;
-import ninefoo.lib.FormDialog;
+import ninefoo.lib.form.FormDialog;
 import ninefoo.lib.lang.LanguageText;
-import ninefoo.model.Project;
+import ninefoo.model.object.Project;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
+/**
+ * Dialog for editing a project.
+ * @author Amir El Bawab
+ */
 public class EditProjectDialog extends JDialog{
 	
 	private static final long serialVersionUID = 216394661255136241L;

@@ -19,6 +19,7 @@ import ninefoo.lib.lang.parserObjects.LanguageObject;
 
 /**
  * Singleton class, loads all the language constants and put them in a hash map.
+ * @author Amir EL Bawab
  */
 public class LanguageText {
 	

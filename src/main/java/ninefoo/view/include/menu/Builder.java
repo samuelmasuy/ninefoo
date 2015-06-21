@@ -7,6 +7,11 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+/**
+ * Left panel.
+ * @author Amir
+ */
+@Deprecated
 public class Builder extends JPanel{
 	
 	private static final long serialVersionUID = -4575274768995131221L;

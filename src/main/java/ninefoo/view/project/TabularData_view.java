@@ -16,11 +16,15 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import ninefoo.helper.StringHelper;
-import ninefoo.model.Activity;
-import ninefoo.model.Project;
+import ninefoo.model.object.Activity;
+import ninefoo.model.object.Project;
 import ninefoo.view.project.dialog.ActivityDependencyDialog;
 import ninefoo.view.project.listener.TabularDataListener;
 
+/**
+ * Table showing data about activities in a project
+ * @author Amir El Bawab
+ */
 public class TabularData_view extends JPanel {
 	
 	private static final long serialVersionUID = 6595729954886810500L;

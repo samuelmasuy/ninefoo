@@ -6,10 +6,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-import ninefoo.model.Activity;
-import ninefoo.model.Project;
+import ninefoo.model.object.Activity;
+import ninefoo.model.object.Project;
 import ninefoo.view.project.listener.TabularDataListener;
 
+/**
+ * Panel container of a the table and Gantt chart
+ * @author Amir El Bawab
+ */
 public class TableChartSlider_view extends JPanel{
 	
 	private static final long serialVersionUID = 1821070698625712816L;

@@ -3,6 +3,8 @@ import static org.junit.Assert.*;
 
 import java.util.regex.Pattern;
 
+import ninefoo.lib.validationForm.ValidationRule;
+
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;

@@ -1,6 +1,5 @@
-package ninefoo.model;
+package ninefoo.model.object;
 
-import ninefoo.config.*;
 import ninefoo.config.Config;
 import ninefoo.helper.DateHelper;
 
@@ -9,7 +8,8 @@ import java.util.List;
 
 /**
  * This class represents a project entity in the database.
- * Created by Farzad on 29-May-2015.
+ * Created on 29-May-2015.
+ * @author Farzad MajidFayyaz
  */
 public class Project {
     private int projectId;
@@ -32,7 +32,7 @@ public class Project {
      * @param deadlineDate Deadline date defined for the project
      * @param description Optional description for the project
      */
-    Project(int projectId, String projectName, Date createDate, Date startDate,
+    public Project(int projectId, String projectName, Date createDate, Date startDate,
             Date updateDate, double budget, Date deadlineDate, String description) {
 
         this.projectId = projectId;

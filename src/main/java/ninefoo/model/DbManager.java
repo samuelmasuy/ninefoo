@@ -9,7 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * Created by Farzad on 26-May-2015.
+ * Created on 26-May-2015.
+ * @author Farzad MajidFayyaz
  */
 public class DbManager {
     private static Connection dbConnection = null;

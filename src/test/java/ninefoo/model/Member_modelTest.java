@@ -3,6 +3,8 @@ package ninefoo.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import ninefoo.model.object.Member;
+import ninefoo.model.sql.Member_model;
 
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;

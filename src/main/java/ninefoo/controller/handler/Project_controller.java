@@ -6,16 +6,16 @@ import ninefoo.config.RoleNames;
 import ninefoo.config.Session;
 import ninefoo.controller.AbstractController;
 import ninefoo.helper.DateHelper;
-import ninefoo.lib.ValidationForm;
-import ninefoo.lib.ValidationRule;
 import ninefoo.lib.lang.LanguageText;
-import ninefoo.model.Activity;
-import ninefoo.model.Activity_model;
-import ninefoo.model.Project;
-import ninefoo.model.ProjectMember_model;
-import ninefoo.model.Project_model;
-import ninefoo.model.Role;
-import ninefoo.model.Role_model;
+import ninefoo.lib.validationForm.ValidationForm;
+import ninefoo.lib.validationForm.ValidationRule;
+import ninefoo.model.object.Activity;
+import ninefoo.model.object.Project;
+import ninefoo.model.object.Role;
+import ninefoo.model.sql.Activity_model;
+import ninefoo.model.sql.ProjectMember_model;
+import ninefoo.model.sql.Project_model;
+import ninefoo.model.sql.Role_model;
 import ninefoo.view.frame.UpdatableView;
 import ninefoo.view.listeners.ProjectListener;
 
@@ -25,6 +25,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Controller for 'Project': Create, Update and Delete projects
+ * @author Samuel Masuy
+ * @see AbstractController, ProjectListener
+ */
 public class Project_controller extends AbstractController implements ProjectListener{
 	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 

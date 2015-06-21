@@ -26,11 +26,15 @@ import javax.swing.border.Border;
 
 import ninefoo.config.RoleNames;
 import ninefoo.helper.LayoutHelper;
-import ninefoo.lib.FormDialog;
+import ninefoo.lib.form.FormDialog;
 import ninefoo.lib.lang.LanguageText;
-import ninefoo.model.Project;
+import ninefoo.model.object.Project;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
+/**
+ * Dialog showing the list of projects for a logged in user.
+ * @author Amir El Bawab
+ */
 public class ViewMyProjectsDialog extends JDialog{
 	
 	private static final long serialVersionUID = 216394661255136241L;
@@ -41,7 +45,7 @@ public class ViewMyProjectsDialog extends JDialog{
 	private JList<String> projectList;
 	private DefaultListModel<String> listModel;
 	private JScrollPane scrollList;
-	private JLabel descriptionLabel, createdDate, startDate, deadlineDate;
+//	private JLabel descriptionLabel, createdDate, startDate, deadlineDate;
 	private ArrayList<Project> projects;
 	
 	// Define panels
@@ -68,10 +72,10 @@ public class ViewMyProjectsDialog extends JDialog{
 		this.listModel = new DefaultListModel<>();
 		this.projectList = new JList<String>(listModel);
 		this.scrollList = new JScrollPane(this.projectList);
-		this.descriptionLabel = new JLabel();
-		this.createdDate = new JLabel();
-		this.startDate = new JLabel();
-		this.deadlineDate = new JLabel();
+//		this.descriptionLabel = new JLabel();
+//		this.createdDate = new JLabel();
+//		this.startDate = new JLabel();
+//		this.deadlineDate = new JLabel();
 		
 		// Initialize panels
 		this.projectPanel = new ProjectPanel();
@@ -242,7 +246,7 @@ public class ViewMyProjectsDialog extends JDialog{
 			projectList.setBorder(BorderFactory.createCompoundBorder(projectList.getBorder(), inputPadding));
 			
 			// Create description panel
-			JPanel descriptionPanel = new JPanel();
+//			JPanel descriptionPanel = new JPanel();
 			
 			// Configure the list
 			projectList.setPreferredSize(new Dimension(550,500));

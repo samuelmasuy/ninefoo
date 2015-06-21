@@ -1,9 +1,10 @@
-package ninefoo.model;
+package ninefoo.model.object;
 
 import java.util.Date;
 
 /**
- * Created by Farzad on 30-May-2015.
+ * Created on 30-May-2015.
+ * @author Farzad MajidFayyaz
  */
 public class ActivityLog {
     private int activityLogId;
@@ -58,4 +59,12 @@ public class ActivityLog {
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
+
+	public Date getCreateDate() {
+		return create_date;
+	}
+
+	public void setCreateDate(Date create_date) {
+		this.create_date = create_date;
+	}
 }

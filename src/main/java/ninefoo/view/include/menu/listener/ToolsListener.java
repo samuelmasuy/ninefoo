@@ -5,6 +5,10 @@ import ninefoo.view.include.menu.dialog.EditProjectDialog;
 import ninefoo.view.include.menu.dialog.ViewMyProjectsDialog;
 import ninefoo.config.RoleNames;
 
+/**
+ * Listener used to communicate with Main Frame
+ * @author Amir El Bawab
+ */
 public interface ToolsListener {
 	public void newProject(CreateProjectDialog formDialog, String name, String budget, String startDate, String deadline, String description);
 	public void newActivity();

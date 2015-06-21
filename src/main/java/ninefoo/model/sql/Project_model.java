@@ -1,8 +1,11 @@
-package ninefoo.model;
+package ninefoo.model.sql;
 
 import ninefoo.config.*;
-import ninefoo.config.Config;
 import ninefoo.helper.DateHelper;
+import ninefoo.config.Config;
+import ninefoo.model.DbManager;
+import ninefoo.model.object.Project;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,7 +20,8 @@ import java.util.List;
  * This class contains methods for manipulating the projects in the database. For example,
  *      to add a new project, get the list of all projects, find a specific project by ID,
  *      or delete a project from the database.
- * Created by Farzad on 01-Jun-2015.
+ * Created on 01-Jun-2015.
+ * @author Farzad MajidFayyaz
  */
 public class Project_model {
     private static final Logger LOGGER = LogManager.getLogger();

@@ -10,6 +10,10 @@ import java.awt.RenderingHints;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+/**
+ * Chart painted showing data in the Table Chart
+ * @author Amir El Bawab
+ */
 public class GanttChart_view extends JPanel{
 	
 	private static final long serialVersionUID = 6876353610483002088L;

@@ -2,6 +2,10 @@ package ninefoo.helper;
 
 import java.awt.GridBagConstraints;
 
+/**
+ * Helper methods for manipulating GUI Layout
+ * @author Amir El Bawab
+ */
 public class LayoutHelper {
 	
 	/**

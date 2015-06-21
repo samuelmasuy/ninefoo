@@ -1,5 +1,9 @@
 package ninefoo.helper;
 
+/**
+ * Helper methods for String
+ * @author Amir EL Bawab
+ */
 public class StringHelper {
 	
 	/**

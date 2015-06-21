@@ -1,6 +1,8 @@
 package ninefoo.lib;
 
 import static org.junit.Assert.*;
+import ninefoo.lib.validationForm.ValidationForm;
+import ninefoo.lib.validationForm.ValidationRule;
 
 import org.junit.Test;
 

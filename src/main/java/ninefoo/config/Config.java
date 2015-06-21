@@ -11,6 +11,7 @@ import ninefoo.config.Annotation.autoloadConfig;
 /**
  * This class contains constants and methods that configure the application
  * @see Autoload
+ * @author Amir EL Bawab, Samuel Masuy, Farzad MajidFayyaz
  */
 public class Config {
 	

@@ -1,4 +1,4 @@
-package ninefoo.lib;
+package ninefoo.lib.validationForm;
 
 import java.util.regex.Pattern;
 
@@ -8,6 +8,7 @@ import ninefoo.lib.lang.LanguageText;
 
 /**
  * Rules for input fields.
+ * @author Amir EL Bawab
  */
 public class ValidationRule {
 	

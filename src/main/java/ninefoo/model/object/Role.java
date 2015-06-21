@@ -1,8 +1,9 @@
-package ninefoo.model;
+package ninefoo.model.object;
 
 /**
  * This class represents a role entity in the database.
- * Created by Farzad on 30-May-2015.
+ * Created on 30-May-2015.
+ * @author Farzad MajidFayyaz
  */
 public class Role {
     private int roleId;
@@ -14,7 +15,7 @@ public class Role {
      * @param roleId ID of the role
      * @param roleName Name of the role
      */
-    Role(int roleId, String roleName, String description) {
+    public Role(int roleId, String roleName, String description) {
         this.roleId = roleId;
         this.roleName = roleName;
         this.description = description;

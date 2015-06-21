@@ -4,6 +4,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+/**
+ * Top Menu bar.
+ * @author Amir El Bawab
+ */
 public class Menu extends JMenuBar{
 	
 	private static final long serialVersionUID = -481460797811819303L;

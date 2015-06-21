@@ -3,8 +3,10 @@ package ninefoo.helper;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import ninefoo.config.Config;
-
+/**
+ * Helpers methods for manipulating a Date
+ * @author Farzad MajidFayyaz, Amir El Bawab
+ */
 public class DateHelper {
 
 	/**

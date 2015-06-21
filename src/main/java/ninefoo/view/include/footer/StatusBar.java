@@ -6,6 +6,10 @@ import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Footer status bar.
+ * @author Amir El Bawab
+ */
 public class StatusBar extends JPanel{
 	
 	private static final long serialVersionUID = -5534459903549181858L;

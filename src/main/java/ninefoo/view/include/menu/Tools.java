@@ -16,6 +16,10 @@ import ninefoo.view.include.menu.dialog.CreateProjectDialog;
 import ninefoo.view.include.menu.dialog.ViewMyProjectsDialog;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
+/**
+ * Top tools menu. Shows option like create a project, etc...
+ * @author Amir El Bawab
+ */
 public class Tools extends JPanel{
 	
 	private static final long serialVersionUID = -1862085076331720213L;

@@ -1,4 +1,9 @@
-package ninefoo.model;
+package ninefoo.model.sql;
+
+import ninefoo.model.DbManager;
+import ninefoo.model.object.Member;
+import ninefoo.model.object.Project;
+import ninefoo.model.object.Role;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +18,8 @@ import java.util.List;
  * This class contains method for manipulating the records in the database where there is
  *      a relationship between project(s) and member(s). For example, to find all the
  *      projects for a member, or add a list of members to a project.
- * Created by Farzad on 02-Jun-2015.
+ * Created on 02-Jun-2015.
+ * @author Farzad MajidFayyaz
  */
 public class ProjectMember_model {
     private static final Logger LOGGER = LogManager.getLogger();

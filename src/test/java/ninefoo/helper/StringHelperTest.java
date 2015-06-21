@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import ninefoo.config.Config;
-import ninefoo.model.Project;
+import ninefoo.model.object.Project;
 
 public class StringHelperTest {
 	

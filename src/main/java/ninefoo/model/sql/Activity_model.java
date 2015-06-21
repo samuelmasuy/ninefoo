@@ -1,8 +1,13 @@
-package ninefoo.model;
+package ninefoo.model.sql;
 
 import ninefoo.config.*;
-import ninefoo.config.Config;
 import ninefoo.helper.DateHelper;
+import ninefoo.config.Config;
+import ninefoo.model.DbManager;
+import ninefoo.model.object.Activity;
+import ninefoo.model.object.Member;
+import ninefoo.model.object.Project;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,7 +21,8 @@ import java.util.List;
 /**
  * This class contains methods to manipulate the activities in the database. For example, to
  *      add a new activity, find a specific activity by ID.
- * Created by Farzad on 03-Jun-2015.
+ * @author Farzad MajidFayyaz
+ * Created on 03-Jun-2015.
  */
 public class Activity_model {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -130,7 +136,7 @@ public class Activity_model {
             int optimisticDuration = activities.getInt("optimistic_duration");
             int likelyDuration = activities.getInt("likely_duration");
             int pessimisticDuration = activities.getInt("pessimistic_duration");
-            Date createDate = DateHelper.parse(activities.getString("create_date"), Config.DATE_FORMAT);
+            Date createDate = DateHelper.parse(activities.getString("create_date"), ninefoo.config.Config.DATE_FORMAT);
             Project project = projectModel.getProjectById(activities.getInt("project_id"));
             Member member = memberModel.getMemberById(activities.getInt("member_id"));
             

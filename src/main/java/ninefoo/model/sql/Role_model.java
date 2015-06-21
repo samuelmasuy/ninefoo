@@ -1,6 +1,9 @@
-package ninefoo.model;
+package ninefoo.model.sql;
 
 import ninefoo.config.Database;
+import ninefoo.model.DbManager;
+import ninefoo.model.object.Role;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,7 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Farzad on 02-Jun-2015.
+ * Created on 02-Jun-2015.
+ * @author Farzad MajidFayyaz
  */
 public class Role_model {
     private static final Logger LOGGER = LogManager.getLogger();

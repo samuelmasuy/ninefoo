@@ -6,18 +6,19 @@ import ninefoo.config.Annotation.autoload;
 import ninefoo.config.Annotation.autoloadConfig;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.DbManager;
-import ninefoo.model.Member;
-import ninefoo.model.Member_model;
-import ninefoo.model.Project;
-import ninefoo.model.ProjectMember_model;
-import ninefoo.model.Project_model;
-import ninefoo.model.Role;
-import ninefoo.model.Role_model;
+import ninefoo.model.object.Member;
+import ninefoo.model.object.Project;
+import ninefoo.model.object.Role;
+import ninefoo.model.sql.Member_model;
+import ninefoo.model.sql.ProjectMember_model;
+import ninefoo.model.sql.Project_model;
+import ninefoo.model.sql.Role_model;
 
 /**
  * Methods in this class will be loaded automatically if they have the annotation <code>@autoload</code> and [optional] parameter <code>active = true</code> and [optional] parameter <code>priority = 0</code><br>
  * Note that the order of method execution in this class is random if priority attribute is not set (High priority = 0).<br>
  * To temporarily disable a method, make the <code>active = false</code> in the annotation.
+ * @author Amir EL Bawab
  */
 @autoloadConfig(lowestPriority = 2)
 public class Autoload {

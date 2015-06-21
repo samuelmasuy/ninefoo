@@ -1,9 +1,10 @@
-package ninefoo.lib;
+package ninefoo.lib.validationForm;
 
 import java.util.ArrayList;
 
 /**
  * Validate a form and generate automatic messages
+ * @author Amir EL Bawab
  */
 public class ValidationForm {
 	

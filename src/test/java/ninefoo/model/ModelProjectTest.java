@@ -3,6 +3,8 @@ package ninefoo.model;
 import static org.junit.Assert.*;
 import ninefoo.config.Config;
 import ninefoo.helper.DateHelper;
+import ninefoo.model.object.Project;
+import ninefoo.model.sql.Project_model;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;

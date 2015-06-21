@@ -3,24 +3,20 @@ package ninefoo.controller.handler;
 import ninefoo.config.Database;
 import ninefoo.config.Session;
 import ninefoo.controller.AbstractController;
-import ninefoo.lib.ValidationForm;
-import ninefoo.lib.ValidationRule;
 import ninefoo.lib.lang.LanguageText;
-import ninefoo.model.Member;
-import ninefoo.model.Member_model;
+import ninefoo.lib.validationForm.ValidationForm;
+import ninefoo.lib.validationForm.ValidationRule;
+import ninefoo.model.object.Member;
+import ninefoo.model.sql.Member_model;
 import ninefoo.view.frame.UpdatableView;
 import ninefoo.view.listeners.MemberListener;
 
-import org.apache.logging.log4j.LogManager;
-
 /**
- * Control the 'member' functionality.
- * @see AbstractController, MemberListener
+ * Controller for 'Member': Create, Update and Delete members
+ * @author Samuel Masuy
+ * @see AbstractController, ActivityListener
  */
 public class Member_controller extends AbstractController implements MemberListener{
-
-	// Logger
-	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 
 	// Define Models
 	private Member_model member_model;

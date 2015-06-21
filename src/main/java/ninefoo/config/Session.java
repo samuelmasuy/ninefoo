@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 /**
  * Session class follows the Singleton approach. Only one session can be create per process.
  * A session must be opened when a user login to the application, and closed on logout.
+ * @author Amir EL Bawab
  */
 public class Session {
 

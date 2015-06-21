@@ -10,6 +10,7 @@ import ninefoo.view.frame.UpdatableView;
 
 /**
  * Main controller where the _controller classes get connected to the GUI
+ * @author Amir EL Bawab, Samuel Masuy
  */
 public class MainController {
 	

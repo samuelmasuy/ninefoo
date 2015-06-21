@@ -1,24 +1,29 @@
 package ninefoo.controller.handler;
 
 import ninefoo.controller.AbstractController;
-import ninefoo.lib.ValidationForm;
-import ninefoo.lib.ValidationRule;
 import ninefoo.lib.lang.LanguageText;
-import ninefoo.model.*;
+import ninefoo.lib.validationForm.ValidationForm;
+import ninefoo.lib.validationForm.ValidationRule;
+import ninefoo.model.object.Activity;
+import ninefoo.model.object.Member;
+import ninefoo.model.object.Project;
+import ninefoo.model.sql.Activity_model;
+import ninefoo.model.sql.Member_model;
+import ninefoo.model.sql.Project_model;
 import ninefoo.view.frame.UpdatableView;
 import ninefoo.view.listeners.ActivityListener;
 import ninefoo.view.project.TabularData_view;
 
-import org.apache.logging.log4j.LogManager;
-
 import java.util.List;
 
 /**
- * Created By Sam.
+ * Controller for 'Activity': Create, Update and Delete activities
+ * @author Samuel Masuy
+ * @see AbstractController, ActivityListener
  */
 public class Activity_controller extends AbstractController implements ActivityListener {
 
-    private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
+    // Load model
     private Activity_model activity_model = new Activity_model();
     private Project_model project_model = new Project_model();
     private Member_model member_model = new Member_model();

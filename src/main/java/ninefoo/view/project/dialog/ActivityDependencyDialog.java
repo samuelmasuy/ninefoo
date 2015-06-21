@@ -13,11 +13,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import ninefoo.helper.LayoutHelper;
-import ninefoo.lib.FormDialog;
+import ninefoo.lib.form.FormDialog;
 import ninefoo.lib.lang.LanguageText;
-import ninefoo.model.Project;
+import ninefoo.model.object.Project;
 import ninefoo.view.project.listener.TabularDataListener;
 
+/**
+ * Pop up dialog showing the dependency form.
+ * @author Amir El Bawab
+ */
 public class ActivityDependencyDialog extends JDialog{
 
 	private static final long serialVersionUID = 8742892025528089478L;

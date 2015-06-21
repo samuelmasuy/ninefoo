@@ -1,6 +1,5 @@
-package ninefoo.model;
+package ninefoo.model.object;
 
-import ninefoo.config.*;
 import ninefoo.config.Config;
 import ninefoo.helper.DateHelper;
 
@@ -11,7 +10,8 @@ import java.util.List;
 
 /**
  * This class represents an activity entity in the database.
- * Created by Farzad on 30-May-2015.
+ * Created on 30-May-2015.
+ * @author Farzad MajidFayyaz
  */
 public class Activity {
     private int activityId;
