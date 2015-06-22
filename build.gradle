@@ -24,7 +24,7 @@ dependencies {
 }
 
 jar {
-	from configurations.compile.collect { zipTree it }
+	//from configurations.compile.collect { zipTree it }
     manifest {
         attributes 'Implementation-Title': 'ninefoo',
                 'Implementation-Version': 1.0,

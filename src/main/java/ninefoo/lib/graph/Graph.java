@@ -59,7 +59,7 @@ public class Graph {
 		int virtualFrom = idMapper.get(from);
 		int virtualTo = idMapper.get(to);
 		
-		try{	
+		try{
 			// Create edge
 			this.graph[virtualFrom][this.degree[virtualFrom]++] = virtualTo;
 		

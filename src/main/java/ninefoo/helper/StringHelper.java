@@ -14,4 +14,17 @@ public class StringHelper {
 	public static String stringOrEmpty(Object object){
 		return object == null ? "" : object.toString();
 	}
+	
+	/**
+	 * Join two strings with a comma
+	 * @param original Original message
+	 * @param extra Additional message
+	 * @return Concatinated message
+	 */
+	public static String join(String original, String extra){
+		String string = original;
+		if(!string.isEmpty())
+			string += ", ";
+		return string + extra;
+	}
 }
