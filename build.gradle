@@ -5,6 +5,17 @@ apply plugin: 'eclipse'
 version = '1.0'
 mainClassName = "ninefoo.application.Application"
 
+// Variables
+def applicationTitle = 'PMExpert'
+def applicationBanner	 ="\n\n\n\n"
+applicationBanner	 	+="  .########..##.....##.########.##.....##.########..########.########..########\n"
+applicationBanner	 	+="  .##.....##.###...###.##........##...##..##.....##.##.......##.....##....##...\n"
+applicationBanner	 	+="  .##.....##.####.####.##.........##.##...##.....##.##.......##.....##....##...\n"
+applicationBanner	 	+="  .########..##.###.##.######......###....########..######...########.....##...\n"
+applicationBanner	 	+="  .##........##.....##.##.........##.##...##........##.......##...##......##...\n"
+applicationBanner	 	+="  .##........##.....##.##........##...##..##........##.......##....##.....##...\n"
+applicationBanner	 	+="  .##........##.....##.########.##.....##.##........########.##.....##....##...\n"
+
 sourceSets {
  main.java.srcDir "src/main"
 }
@@ -23,13 +34,38 @@ dependencies {
 	testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
-jar {
-	//from configurations.compile.collect { zipTree it }
-    manifest {
-        attributes 'Implementation-Title': 'ninefoo',
-                'Implementation-Version': 1.0,
-                'Main-Class': mainClassName
+// Creating a jar
+task pmexpert_jar (dependsOn:['clean','build'], type: Jar) {
+	
+	description 'Export application to jar'
+
+	build.mustRunAfter(clean)
+
+	// Custom jar file name and folder
+	libsDirName = applicationTitle + '_jar'
+	archivesBaseName = applicationTitle
+	manifest {
+        attributes  'Implementation-Title': applicationTitle,
+	                'Implementation-Version': version,
+	                'Main-Class': mainClassName
     }
+
+	from sourceSets.main.runtimeClasspath
+	from configurations.compile.collect { zipTree it }
+} 	
+
+// Print and create application
+task pmexpert(dependsOn:['pmexpert_jar']) << {
+	println '\n>> Exporting ' + applicationTitle + ' to jar file...\n'
+
+	
 }
 
+// Disable task for build
+jar.enabled = false
+
+// Print banner
+println applicationBanner
+
+// Print Java path used
 println "System's JAVA_HOME: " + System.getProperty("java.home")
