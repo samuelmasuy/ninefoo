@@ -2,12 +2,11 @@ apply plugin: 'java'
 apply plugin:'application'
 apply plugin: 'eclipse'
 
-version = '1.0'
-mainClassName = "ninefoo.application.Application"
 
 // Variables
 def applicationTitle = 'PMExpert'
-def applicationBanner	 ="\n\n\n\n"
+def projectDir = 'ninefoo'
+def applicationBanner	 ="\n\n"
 applicationBanner	 	+="  .########..##.....##.########.##.....##.########..########.########..########\n"
 applicationBanner	 	+="  .##.....##.###...###.##........##...##..##.....##.##.......##.....##....##...\n"
 applicationBanner	 	+="  .##.....##.####.####.##.........##.##...##.....##.##.......##.....##....##...\n"
@@ -16,8 +15,24 @@ applicationBanner	 	+="  .##........##.....##.##.........##.##...##........##...
 applicationBanner	 	+="  .##........##.....##.##........##...##..##........##.......##....##.....##...\n"
 applicationBanner	 	+="  .##........##.....##.########.##.....##.##........########.##.....##....##...\n"
 
+version = '1.0'
+mainClassName = projectDir + ".application.Application"
+
 sourceSets {
- main.java.srcDir "src/main"
+	main{
+		java {
+			srcDir "src/main/java"
+			output.classesDir   = 'build/classes/main'
+		}
+		
+		resources{
+			
+			// TODO Include JSON files
+			
+			srcDir "src/main/resources"
+			output.resourcesDir   = 'build/resources/main'
+		}
+	}
 }
 
 repositories {
