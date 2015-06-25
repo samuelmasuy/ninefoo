@@ -24,6 +24,10 @@ repositories {
     mavenCentral()
 }
 
+// Custom jar file name and folder
+libsDirName = applicationTitle + '_jar'
+archivesBaseName = applicationTitle
+
 dependencies {
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.3'
@@ -35,34 +39,29 @@ dependencies {
 }
 
 // Creating a jar
-task pmexpert_jar (dependsOn:['clean','build'], type: Jar) {
-	
+task pmexpert_jar (type: Jar) {
 	description 'Export application to jar'
-
-	build.mustRunAfter(clean)
-
-	// Custom jar file name and folder
-	libsDirName = applicationTitle + '_jar'
-	archivesBaseName = applicationTitle
 	manifest {
-        attributes  'Implementation-Title': applicationTitle,
+	    attributes  'Implementation-Title': applicationTitle,
 	                'Implementation-Version': version,
 	                'Main-Class': mainClassName
-    }
-
+	}
 	from sourceSets.main.runtimeClasspath
 	from configurations.compile.collect { zipTree it }
 } 	
 
 // Print and create application
-task pmexpert(dependsOn:['pmexpert_jar']) << {
+task pmexpert(dependsOn:['clean', 'build']) << {
 	println '\n>> Exporting ' + applicationTitle + ' to jar file...\n'
-
-	
+	pmexpert_jar.execute()
 }
 
 // Disable task for build
 jar.enabled = false
+
+// Order of execution
+build.mustRunAfter(clean)
+run.mustRunAfter(build)
 
 // Print banner
 println applicationBanner

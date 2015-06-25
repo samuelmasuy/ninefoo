@@ -15,7 +15,7 @@ public class Application {
 	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 	
 	// Main thread
-	public static void main(String[] args) throws ClassNotFoundException {
+	public static void main(String[] args) {
 
 		// Welcome logger
 		LOGGER.info("Application started ...");
