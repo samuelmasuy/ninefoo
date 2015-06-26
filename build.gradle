@@ -70,6 +70,9 @@ task pmexpert_jar (type: Jar) {
 task pmexpert(dependsOn:['clean', 'build']) << {
 	println '\n>> Exporting ' + applicationTitle + ' to jar file...\n'
 	pmexpert_jar.execute()
+	
+	println '\n>> Creating launcher.bat\n'
+	new File('build/' + libsDirName + '/launcher.bat').write 'java -jar "' + archivesBaseName + '-' + version + '.jar"'
 }
 
 // Disable task for build
