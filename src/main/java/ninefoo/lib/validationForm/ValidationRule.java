@@ -1,5 +1,6 @@
 package ninefoo.lib.validationForm;
 
+import java.util.Date;
 import java.util.regex.Pattern;
 
 import ninefoo.config.Config;
@@ -18,12 +19,17 @@ public class ValidationRule {
 	private boolean minLengthChecker = false;
 	private boolean maxLengthChecker = false;
 	private boolean dateChecker = false;
+	private boolean doubleChecker = false;
+	private boolean dateBeforeChecker = false;
+	private boolean dateAfterChecker = false;
 	
 	// Variables
 	private String name;
 	private String value;
 	private String pattern;
 	private String errorMessage;
+	private String dateBefore;
+	private String dateAfter;
 	
 	/**
 	 * Constructor
@@ -83,8 +89,40 @@ public class ValidationRule {
 	 * Verify that the value is a date
 	 * @return ValidationRule
 	 */
+	@Deprecated
 	public ValidationRule checkDate(){
 		this.dateChecker = true;
+		return this;
+	}
+	
+	/**
+	 * Verify that the value is a double
+	 * @return ValidationRule
+	 */
+	public ValidationRule checkDouble(){
+		this.doubleChecker = true;
+		return this;
+	}
+	
+	/**
+	 * Check if current date is before passed date
+	 * @param date Future date
+	 * @return ValidationRule
+	 */
+	public ValidationRule checkDateBefore(String date){
+		this.dateBeforeChecker = true;
+		this.dateBefore = date;
+		return this;
+	}
+	
+	/**
+	 * Check if current date is after passed date
+	 * @param date History date
+	 * @return ValidationRule
+	 */
+	public ValidationRule checkDateAfter(String date){
+		this.dateAfterChecker = true;
+		this.dateAfter = date;
 		return this;
 	}
 	
@@ -131,6 +169,48 @@ public class ValidationRule {
 			if(!value.isEmpty()){
 				if(! DateHelper.isValid(value, Config.DATE_FORMAT_SHORT)){
 					errorMessage = String.format(LanguageText.getConstant("WRONG_FORMAT") + " e.g. %s", name, Config.DATE_FORMAT_SHORT.toLowerCase());
+					return false;
+				}
+			}
+		}
+		
+		// If double checker is enabled, check if is double
+		if(this.doubleChecker){
+			
+			// If value is not empty
+			if(!this.value.isEmpty()){
+				try{
+					Double.parseDouble(this.value);
+				} catch(NumberFormatException e){
+					errorMessage = String.format(LanguageText.getConstant("WRONG_FORMAT"), this.name);
+					return false;
+				}
+			}
+		}
+		
+		// If date before checker is enabled, check if current date is before target date
+		if(this.dateBeforeChecker){
+			
+			// If values are not empty
+			if(!this.value.isEmpty() && !this.dateBefore.isEmpty()){
+				Date historyDate = DateHelper.parse(this.value, Config.DATE_FORMAT_SHORT);
+				Date futureDate = DateHelper.parse(this.dateBefore, Config.DATE_FORMAT_SHORT);
+				if(historyDate.after(futureDate)){
+					errorMessage = String.format(LanguageText.getConstant("WRONG_DATE_BEFORE_DATE"), this.name, this.dateBefore);
+					return false;
+				}
+			}
+		}
+		
+		// If date after checker is enabled, check if current date is after target date
+		if(this.dateAfterChecker){
+			
+			// If values are not empty
+			if(!this.value.isEmpty() && !this.dateAfter.isEmpty()){
+				Date historyDate = DateHelper.parse(this.dateAfter, Config.DATE_FORMAT_SHORT);
+				Date futureDate = DateHelper.parse(this.value, Config.DATE_FORMAT_SHORT);
+				if(historyDate.after(futureDate)){
+					errorMessage = String.format(LanguageText.getConstant("WRONG_DATE_AFTER_DATE"), this.name, this.dateAfter);
 					return false;
 				}
 			}

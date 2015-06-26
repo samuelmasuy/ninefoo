@@ -21,7 +21,18 @@ public class DatePicker extends JDatePickerImpl {
 	private static final long serialVersionUID = 1176607692711926273L;
 	private UtilDateModel model;
 	
-	public DatePicker() {
+	/**
+	 * Constructor
+	 */
+	public DatePicker(){
+		this(10);
+	}
+	
+	/**
+	 * Constructor
+	 * @param columns
+	 */
+	public DatePicker(int columns) {
 		super(new JDatePanelImpl(new UtilDateModel()), new AbstractFormatter(){
 			private static final long serialVersionUID = -1445665019970462352L;
 			
@@ -44,10 +55,11 @@ public class DatePicker extends JDatePickerImpl {
 		});
 		
 		this.model = (UtilDateModel) this.getModel();
+		this.getJFormattedTextField().setColumns(columns);
 	}
 	
 	/**
-	 * Set today as the date
+	 * Set today
 	 */
 	public void setToday(){
 		Calendar c = Calendar.getInstance();
@@ -56,10 +68,18 @@ public class DatePicker extends JDatePickerImpl {
 	}
 	
 	/**
-	 * Set today as the date
+	 * Set date
 	 */
 	public void setDate(int year, int month, int day){
 		this.model.setDate(year, month, day);
 		this.model.setSelected(true);
+	}
+	
+	/**
+	 * Get text value
+	 * @return field value
+	 */
+	public String getText(){
+		return this.getJFormattedTextField().getText();
 	}
 }

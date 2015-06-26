@@ -55,76 +55,16 @@ public class Project_controller extends AbstractController implements ProjectLis
 		
 		// Create rules
 		ValidationRule nameRule = new ValidationRule(LanguageText.getConstant("NAME"), name);
-		ValidationRule budgetRule = new ValidationRule(LanguageText.getConstant("BUDGET"), budget){
-			
-			@Override
-			public boolean validate() {
-				
-				// Keep parent validation
-				boolean validate = super.validate();
-				
-				// Parse budget to double, if not empty
-				if(!budget.isEmpty()){
-					try{
-						Double.parseDouble(budget);
-						
-					// If not a double
-					} catch(IllegalArgumentException e){
-						setErrorMessage(String.format(LanguageText.getConstant("WRONG_FORMAT"), LanguageText.getConstant("BUDGET")));
-						LOGGER.error("Bugdet must be of type double");
-						return false;
-					}
-				}
-				
-				// Return parent validation
-				return validate;
-			}
-		};
-		ValidationRule deadlineRule = new ValidationRule(LanguageText.getConstant("DEADLINE"), deadline){
-			@Override
-			public boolean validate() {
-				
-				// Keep parent validation
-				boolean validate = super.validate();
-				
-				// Check if date is correct, if not empty
-				if(!deadline.isEmpty()){
-					if(! DateHelper.isValid(deadline, Config.DATE_FORMAT_SHORT)){
-						setErrorMessage(String.format(LanguageText.getConstant("WRONG_FORMAT") + " e.g. %s", LanguageText.getConstant("DEADLINE"), Config.DATE_FORMAT_SHORT.toLowerCase()));
-						LOGGER.info("Invalid Date format.");
-						return false;
-					}
-				}
-				
-				// Return parent validation
-				return validate;
-			}
-		};
-		ValidationRule startDateRule = new ValidationRule(LanguageText.getConstant("START_DATE"), startDate){
-			@Override
-			public boolean validate() {
-				
-				// Keep parent validation
-				boolean validate = super.validate();
-				
-				// Check if date is correct, if not empty
-				if(!startDate.isEmpty()){
-					if(! DateHelper.isValid(startDate, Config.DATE_FORMAT_SHORT)){
-						setErrorMessage(String.format(LanguageText.getConstant("WRONG_FORMAT") + " e.g. %s", LanguageText.getConstant("START_DATE"), Config.DATE_FORMAT_SHORT.toLowerCase()));
-						LOGGER.info("Invalid Date format.");
-						return false;
-					}
-				}
-				
-				// Return parent validation
-				return validate;
-			}
-		};
+		ValidationRule budgetRule = new ValidationRule(LanguageText.getConstant("BUDGET"), budget);
+		ValidationRule deadlineRule = new ValidationRule(LanguageText.getConstant("DEADLINE"), deadline);
+		ValidationRule startDateRule = new ValidationRule(LanguageText.getConstant("START_DATE"), startDate);
 		ValidationRule descriptionRule = new ValidationRule(LanguageText.getConstant("DESCRIPTION"), description);
 		
 		// Set restrictions
 		nameRule.checkEmpty();
 		descriptionRule.checkMaxLength(150);
+		budgetRule.checkDouble();
+		startDateRule.checkDateBefore(deadline);
 		
 		// Set rules
 		validation.setRule(nameRule);
