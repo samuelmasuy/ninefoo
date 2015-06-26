@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import ninefoo.helper.LayoutHelper;
+import ninefoo.lib.datePicker.DatePicker;
 import ninefoo.lib.form.FormDialog;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.view.include.menu.listener.ToolsListener;
@@ -32,8 +33,9 @@ public class CreateProjectDialog extends JDialog{
 	
 	// Create components
 	private JButton createButton;
-	private JTextField name, budget, deadline, start;
+	private JTextField name, budget;
 	private JTextArea description;
+	private DatePicker deadline, start;
 	
 	// Create panels
 	private InputPanel inputPanel;
@@ -47,8 +49,8 @@ public class CreateProjectDialog extends JDialog{
 		this.createButton = new JButton(LanguageText.getConstant("CREATE_PROJECT"));
 		this.name = new JTextField(10);
 		this.budget= new JTextField(10);
-		this.deadline = new JTextField(10);
-		this.start = new JTextField(10);
+		this.deadline = new DatePicker(8);
+		this.start = new DatePicker(8);
 		this.description = new JTextArea(3,10);
 		
 		// Set title

@@ -1,5 +1,6 @@
 package ninefoo.helper;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -30,6 +31,7 @@ public class DateHelper {
 	 * Parse to date
 	 * @param date
 	 * @param dateFormat
+	 * @throws ParseException
 	 * @return Date or null
 	 */
 	public static Date parse(String date, String dateFormat){
@@ -37,7 +39,7 @@ public class DateHelper {
 		sdf.setLenient(false);
 		try {
 			return sdf.parse(date);
-		} catch (Exception e) {
+		} catch (ParseException e) {
 			return null;
 		}
 	}
