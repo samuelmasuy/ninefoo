@@ -1,4 +1,4 @@
-package ninefoo.lib.layout;
+package ninefoo.lib.layout.panel;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -7,7 +7,6 @@ import java.awt.Insets;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import ninefoo.lib.lang.LanguageText;
@@ -16,7 +15,7 @@ import ninefoo.lib.lang.LanguageText;
  * Template for form panels.
  * @author Amir EL Bawab
  */
-public abstract class FormDialog extends JPanel{
+public abstract class FormPanel extends JPanel{
 	
 	private static final long serialVersionUID = 8991855477647061617L;
 	
@@ -24,17 +23,13 @@ public abstract class FormDialog extends JPanel{
 	protected JPanel fixedPanel;
 	protected GridBagConstraints gc;
 	protected TitledBorder titledBorder;
-	protected Border inputPadding;
-	protected int row;
 	
 	// Constructor
-	public FormDialog() {
+	public FormPanel() {
 		
 		// Initialize components
 		this.fixedPanel = new JPanel();
 		this.gc = new GridBagConstraints();
-		this.inputPadding = BorderFactory.createEmptyBorder(3, 3, 3, 3);
-		this.row = 0;
 		
 		// Set layout
 		this.setLayout(new GridBagLayout());
@@ -42,11 +37,15 @@ public abstract class FormDialog extends JPanel{
 		
 		// Set Border for fixedPanel
 		titledBorder = BorderFactory.createTitledBorder("");
+//		titledBorder.setTitleFont(new Font(titledBorder.getTitleFont().getFontName(),Font.PLAIN, 20));
 		fixedPanel.setBorder(BorderFactory.createCompoundBorder(titledBorder, BorderFactory.createEmptyBorder(10,10,10,10)));
 		
 		// Default configuration gc
 		gc.fill = GridBagConstraints.NONE;
 		gc.insets = new Insets(5, 5, 5, 5); // Spacing between components
+		
+		// Configure this JPanel
+		this.setVisible(false);
 	}
 	
 	/**
@@ -56,17 +55,4 @@ public abstract class FormDialog extends JPanel{
 	public void setErrorMessage(String msg){
 		JOptionPane.showMessageDialog(this, String .format("<html>%s</html>", msg), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
 	}
-	
-	/**
-	 * Set the success message as a prompt
-	 * @param msg Message to be displayed
-	 */
-	public void setSuccessMessage(String msg){
-		JOptionPane.showMessageDialog(this, String .format("<html>%s</html>", msg), LanguageText.getConstant("OPERATION_SUCCESSFUL"), JOptionPane.INFORMATION_MESSAGE);
-	}
-	
-	/**
-	 * The class that implements this method must add the form components here inside the grid bag layout
-	 */
-	public abstract void placeForm();
 }

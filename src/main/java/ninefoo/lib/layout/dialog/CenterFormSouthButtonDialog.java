@@ -1,4 +1,4 @@
-package ninefoo.lib.layout;
+package ninefoo.lib.layout.dialog;
 
 import java.awt.BorderLayout;
 import java.awt.Dialog;
@@ -25,7 +25,7 @@ import javax.swing.JPanel;
  *  
  * @author Amir El Bawab
  */
-public abstract class CommonDialog extends JDialog{
+public abstract class CenterFormSouthButtonDialog extends JDialog{
 
 	private static final long serialVersionUID = 6124363441606459436L;
 	
@@ -35,7 +35,7 @@ public abstract class CommonDialog extends JDialog{
 	/**
 	 * Constructor
 	 */
-	public CommonDialog() {
+	public CenterFormSouthButtonDialog() {
 		
 		// Set layout
 		this.setLayout(new BorderLayout());

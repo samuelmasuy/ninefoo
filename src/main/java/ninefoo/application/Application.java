@@ -1,9 +1,5 @@
 package ninefoo.application;
 
-import java.awt.AWTEvent;
-import java.awt.Toolkit;
-import java.awt.event.AWTEventListener;
-
 import ninefoo.config.Config;
 import ninefoo.controller.MainController;
 
