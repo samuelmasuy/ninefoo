@@ -62,7 +62,7 @@ public class LanguageText {
 		for(String language : languages){
 			
 			// FIXME Make this path work in JAR as well
-			String classPath = String.format("src/main/java/%s/lang/%s/%sLang.json", Config.APPLICATION_PATH, language, className);
+			String classPath = String.format("resources/lang/%s/%sLang.json", language, className);
 			ObjectMapper mapper = new ObjectMapper();
 			try {
 				
