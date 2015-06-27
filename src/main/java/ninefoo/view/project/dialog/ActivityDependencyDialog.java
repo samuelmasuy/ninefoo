@@ -9,9 +9,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import ninefoo.helper.LayoutHelper;
-import ninefoo.lib.layout.CommonDialog;
-import ninefoo.lib.layout.FormDialog;
+import ninefoo.lib.layout.dialog.CenterFormSouthButtonDialog;
+import ninefoo.lib.layout.dialog.FormDialog;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.object.Project;
 import ninefoo.view.project.listener.TabularDataListener;
@@ -20,7 +19,7 @@ import ninefoo.view.project.listener.TabularDataListener;
  * Pop up dialog showing the dependency form.
  * @author Amir El Bawab
  */
-public class ActivityDependencyDialog extends CommonDialog{
+public class ActivityDependencyDialog extends CenterFormSouthButtonDialog{
 
 	private static final long serialVersionUID = 8742892025528089478L;
 
@@ -62,14 +61,8 @@ public class ActivityDependencyDialog extends CommonDialog{
 				this.titledBorder.setTitle(LanguageText.getConstant("PROJECT"));
 				
 				// Add components
-				LayoutHelper.gcGrid(gc, row, 0, 1);
-				this.fixedPanel.add(new JLabel(String.format(LanguageText.getConstant("ACTIVITY_DEPENDS_ACT"), activityId)), gc);
-				
-				LayoutHelper.gcGrid(gc, row, 1, 1);
-				this.fixedPanel.add(dependsOnBox, gc);
-				
-				// Add panel
-				this.add(fixedPanel);
+				this.table.put(new JLabel(String.format(LanguageText.getConstant("ACTIVITY_DEPENDS_ACT"), activityId)));
+				this.table.put(dependsOnBox);
 				
 				// Set size
 				this.setPreferredSize(new Dimension(300, 100));

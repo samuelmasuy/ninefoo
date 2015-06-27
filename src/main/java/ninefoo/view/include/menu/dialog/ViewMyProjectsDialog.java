@@ -1,10 +1,7 @@
 package ninefoo.view.include.menu.dialog;
 
-import java.awt.Dialog;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -24,14 +21,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.Border;
 
 import ninefoo.config.RoleNames;
 import ninefoo.helper.DateHelper;
-import ninefoo.helper.LayoutHelper;
 import ninefoo.lib.lang.LanguageText;
-import ninefoo.lib.layout.CommonDialog;
-import ninefoo.lib.layout.FormDialog;
+import ninefoo.lib.layout.dialog.CenterFormSouthButtonDialog;
+import ninefoo.lib.layout.dialog.FormDialog;
+import ninefoo.lib.layout.table.GridTable;
 import ninefoo.model.object.Project;
 import ninefoo.view.include.menu.listener.ToolsListener;
 import ninefoo.config.Config;
@@ -40,7 +36,7 @@ import ninefoo.config.Config;
  * Dialog showing the list of projects for a logged in user.
  * @author Amir El Bawab
  */
-public class ViewMyProjectsDialog extends CommonDialog{
+public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 	
 	private static final long serialVersionUID = 216394661255136241L;
 	
@@ -94,7 +90,6 @@ public class ViewMyProjectsDialog extends CommonDialog{
 				this.titledBorder.setTitle(LanguageText.getConstant("PROJECT"));
 				
 				// Set input border
-				Border inputPadding = BorderFactory.createEmptyBorder(3, 3, 3, 3);
 				projectList.setBorder(BorderFactory.createCompoundBorder(projectList.getBorder(), inputPadding));
 				
 				// Initialize description panel
@@ -106,22 +101,15 @@ public class ViewMyProjectsDialog extends CommonDialog{
 				projectList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				
 				// Add components
-				int row = 0;
-				gc.anchor = GridBagConstraints.LINE_START;
-				gc.insets = new Insets(5, 5, 5, 10);
-				LayoutHelper.gcGrid(gc, row, 0, 1);
-				this.fixedPanel.add(new JLabel("Role"), gc);
-				LayoutHelper.gcGrid(gc, row++, 1, 1);
-				this.fixedPanel.add(roleBox, gc);
+				this.table.placeCenterLeft();
+				this.table.paddingCell(5, 5, 5, 10);
+				this.table.put(new JLabel("Role"));
+				this.table.put(roleBox);
 
-				gc.anchor = GridBagConstraints.FIRST_LINE_START;
-				LayoutHelper.gcGrid(gc, row, 0, 2);
-				this.fixedPanel.add(scrollList, gc);
-				LayoutHelper.gcGrid(gc, row++, 2, 1);
-				this.fixedPanel.add(descriptionPanel, gc);
-				
-				// Add panel
-				this.add(fixedPanel);
+				this.table.newRow();
+				this.table.placeTopLeft();;
+				this.table.put(scrollList, 2);
+				this.table.put(descriptionPanel);
 			}
 		});
 		
@@ -314,6 +302,9 @@ public class ViewMyProjectsDialog extends CommonDialog{
 			// Set layout
 			this.setLayout(new GridBagLayout());
 			
+			// Add table
+			GridTable table = new GridTable(this);
+			
 			// Add scroll pane for description
 			JScrollPane descriptionScroll = new JScrollPane(descriptionInfo);
 			
@@ -321,42 +312,35 @@ public class ViewMyProjectsDialog extends CommonDialog{
 			descriptionScroll.setPreferredSize(new Dimension(200,150));
 			descriptionScroll.setBorder(null);
 			
+			// Configure table
+			table.paddingCell(5, 5, 5, 5);
+			table.placeTopLeft();
+			
 			// Add components
-			int row = 0;
-			GridBagConstraints gc = new GridBagConstraints();
+			table.put(new JLabel(LanguageText.getConstant("PROJECT")));
+			table.put(nameInfo);
 			
-			gc.anchor = GridBagConstraints.FIRST_LINE_START;
-			gc.insets = new Insets(5, 5, 5, 10);
+			table.newRow();
+			table.put(new JLabel(LanguageText.getConstant("BUDGET")));
+			table.put(budgetInfo);
 			
-			LayoutHelper.gcGrid(gc, row, 0, 1);
-			this.add(new JLabel(LanguageText.getConstant("PROJECT")), gc);
-			LayoutHelper.gcGrid(gc, row++, 1, 1);
-			this.add(nameInfo, gc);
+			table.newRow();
+			table.put(new JLabel(LanguageText.getConstant("DATE_CREATED")));
+			table.put(createdDateInfo);
 			
-			LayoutHelper.gcGrid(gc, row, 0, 1);
-			this.add(new JLabel(LanguageText.getConstant("BUDGET")), gc);
-			LayoutHelper.gcGrid(gc, row++, 1, 1);
-			this.add(budgetInfo, gc);
+			table.newRow();
+			table.put(new JLabel(LanguageText.getConstant("START_DATE")));
+			table.put(startDateInfo);
 			
-			LayoutHelper.gcGrid(gc, row, 0, 1);
-			this.add(new JLabel(LanguageText.getConstant("DATE_CREATED")), gc);
-			LayoutHelper.gcGrid(gc, row++, 1, 1);
-			this.add(createdDateInfo, gc);
+			table.newRow();
+			table.put(new JLabel(LanguageText.getConstant("DEADLINE")));
+			table.put(deadlineDateInfo);
 			
-			LayoutHelper.gcGrid(gc, row, 0, 1);
-			this.add(new JLabel(LanguageText.getConstant("START_DATE")), gc);
-			LayoutHelper.gcGrid(gc, row++, 1, 1);
-			this.add(startDateInfo, gc);
+			table.newRow();
+			table.put(new JLabel(LanguageText.getConstant("DESCRIPTION")));
 			
-			LayoutHelper.gcGrid(gc, row, 0, 1);
-			this.add(new JLabel(LanguageText.getConstant("DEADLINE")), gc);
-			LayoutHelper.gcGrid(gc, row++, 1, 1);
-			this.add(deadlineDateInfo, gc);
-			
-			LayoutHelper.gcGrid(gc, row++, 0, 1);
-			this.add(new JLabel(LanguageText.getConstant("DESCRIPTION")), gc);
-			LayoutHelper.gcGrid(gc, row, 0, 2);
-			this.add(descriptionScroll, gc);
+			table.newRow();
+			table.put(descriptionScroll);
 			
 			// Set size
 			this.setPreferredSize(new Dimension(200,300));

@@ -1,6 +1,5 @@
 package ninefoo.view.include.menu.dialog;
 
-import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,20 +11,18 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 
-import ninefoo.helper.LayoutHelper;
 import ninefoo.lib.datePicker.DatePicker;
 import ninefoo.lib.lang.LanguageText;
-import ninefoo.lib.layout.CommonDialog;
-import ninefoo.lib.layout.FormDialog;
+import ninefoo.lib.layout.dialog.CenterFormSouthButtonDialog;
+import ninefoo.lib.layout.dialog.FormDialog;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
 /**
  * Dialog that shows a form for creating a new project
  * @author Amir El Bawab
  */
-public class CreateProjectDialog extends CommonDialog{
+public class CreateProjectDialog extends CenterFormSouthButtonDialog{
 	
 	private static final long serialVersionUID = 216394661255136241L;
 	
@@ -69,33 +66,24 @@ public class CreateProjectDialog extends CommonDialog{
 				start.setBorder(BorderFactory.createCompoundBorder(start.getBorder(), inputPadding));
 				
 				// Add components
-				LayoutHelper.gcGrid(gc, row, 0, 1);
-				this.fixedPanel.add(new JLabel(LanguageText.getConstant("NAME")), gc);
-				LayoutHelper.gcGrid(gc, row++, 1, 1);
-				this.fixedPanel.add(name, gc);
+				this.table.put(new JLabel(LanguageText.getConstant("NAME")));
+				this.table.put(name);
 				
-				LayoutHelper.gcGrid(gc, row, 0, 1);
-				this.fixedPanel.add(new JLabel(LanguageText.getConstant("BUDGET")), gc);
-				LayoutHelper.gcGrid(gc, row++, 1, 1);
-				this.fixedPanel.add(budget,gc);
+				this.table.newRow();
+				this.table.put(new JLabel(LanguageText.getConstant("BUDGET")));
+				this.table.put(budget);
 				
-				LayoutHelper.gcGrid(gc, row, 0, 1);
-				this.fixedPanel.add(new JLabel(LanguageText.getConstant("START_DATE")), gc);
-				LayoutHelper.gcGrid(gc, row++, 1, 1);
-				this.fixedPanel.add(start,gc);
+				this.table.newRow();
+				this.table.put(new JLabel(LanguageText.getConstant("START_DATE")));
+				this.table.put(start);
 				
-				LayoutHelper.gcGrid(gc, row, 0, 1);
-				this.fixedPanel.add(new JLabel(LanguageText.getConstant("DEADLINE")), gc);
-				LayoutHelper.gcGrid(gc, row++, 1, 1);
-				this.fixedPanel.add(deadline, gc);
+				this.table.newRow();
+				this.table.put(new JLabel(LanguageText.getConstant("DEADLINE")));
+				this.table.put(deadline);
 				
-				LayoutHelper.gcGrid(gc, row, 0, 1);
-				this.fixedPanel.add(new JLabel(LanguageText.getConstant("DESCRIPTION")), gc);
-				LayoutHelper.gcGrid(gc, row++, 1, 1);
-				this.fixedPanel.add(new JScrollPane(description), gc);
-				
-				// Add panel
-				this.add(fixedPanel);
+				this.table.newRow();
+				this.table.put(new JLabel(LanguageText.getConstant("DESCRIPTION")));
+				this.table.put(new JScrollPane(description));
 			}
 		});
 		
