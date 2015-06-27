@@ -2,6 +2,8 @@ package ninefoo.config;
 
 import java.util.ArrayList;
 
+import javax.swing.UIManager;
+
 import org.apache.logging.log4j.LogManager;
 
 import ninefoo.config.Annotation.autoload;
@@ -33,6 +35,19 @@ public class Autoload {
 	public void loadEngLanguage(){
 		LanguageText.setLanguage(LanguageText.ENGLISH);
 		LOGGER.info("Auto loaded language is: English");
+	}
+	
+	@autoload
+	public void setLookAndFeel(){
+		
+		//Look and feel for the cross platform 
+		try {
+			// Set cross-platform Java L&F
+			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+			LOGGER.error("Cross platform F&L applied to the GUI successfully");
+		} catch (Exception e) {
+			LOGGER.error("GUI Look and Feel error!");
+		}
 	}
 	
 	@autoload(active = false)
