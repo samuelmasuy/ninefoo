@@ -47,6 +47,7 @@ public class Autoload {
 		// Add language classes - Exclude the Lang from the class name
 		LanguageText.addLanguage("ValidationForm");
 		LanguageText.addLanguage("InputForm");
+		LanguageText.addLanguage("Activity");
 	}
 	
 	@autoload

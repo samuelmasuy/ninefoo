@@ -1,4 +1,4 @@
-package ninefoo.lib.form;
+package ninefoo.lib.layout;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -7,6 +7,7 @@ import java.awt.Insets;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import ninefoo.lib.lang.LanguageText;
@@ -23,6 +24,8 @@ public abstract class FormDialog extends JPanel{
 	protected JPanel fixedPanel;
 	protected GridBagConstraints gc;
 	protected TitledBorder titledBorder;
+	protected Border inputPadding;
+	protected int row;
 	
 	// Constructor
 	public FormDialog() {
@@ -30,6 +33,8 @@ public abstract class FormDialog extends JPanel{
 		// Initialize components
 		this.fixedPanel = new JPanel();
 		this.gc = new GridBagConstraints();
+		this.inputPadding = BorderFactory.createEmptyBorder(3, 3, 3, 3);
+		this.row = 0;
 		
 		// Set layout
 		this.setLayout(new GridBagLayout());
@@ -37,7 +42,6 @@ public abstract class FormDialog extends JPanel{
 		
 		// Set Border for fixedPanel
 		titledBorder = BorderFactory.createTitledBorder("");
-//		titledBorder.setTitleFont(new Font(titledBorder.getTitleFont().getFontName(),Font.PLAIN, 20));
 		fixedPanel.setBorder(BorderFactory.createCompoundBorder(titledBorder, BorderFactory.createEmptyBorder(10,10,10,10)));
 		
 		// Default configuration gc
@@ -60,4 +64,9 @@ public abstract class FormDialog extends JPanel{
 	public void setSuccessMessage(String msg){
 		JOptionPane.showMessageDialog(this, String .format("<html>%s</html>", msg), LanguageText.getConstant("OPERATION_SUCCESSFUL"), JOptionPane.INFORMATION_MESSAGE);
 	}
+	
+	/**
+	 * The class that implements this method must add the form components here inside the grid bag layout
+	 */
+	public abstract void placeForm();
 }

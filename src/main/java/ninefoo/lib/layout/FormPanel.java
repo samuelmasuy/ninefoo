@@ -1,4 +1,4 @@
-package ninefoo.lib.form;
+package ninefoo.lib.layout;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

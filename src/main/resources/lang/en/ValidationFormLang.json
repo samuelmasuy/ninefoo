@@ -7,14 +7,16 @@
 		"WRONG_USERNAME_PASSWORD" : "Wrong username or password.",
 		"WRONG_DATE_BEFORE_DATE" : "%s should be at most %s",
 		"WRONG_DATE_AFTER_DATE" : "%s should be at least %s",
-		"MIN_LENGTH" : "%s must be at least %d.",
-		"MAX_LENGTH" : "%s must be at most %d.",
+		"MIN_LENGTH" : "%s length must be at least %d.",
+		"MAX_LENGTH" : "%s length must be at most %d.",
 		"REGISTRATION_SUCCESS" : "Registration successful! Please login.",
 		"UNIQUE" : "%s must be unique",
 
 		"OPERATION_FAILED" : "Operation failed",
 		"OPERATION_SUCCESSFUL" : "Operation successful",
 		"ERROR_OCCURED" : "An error occured",
+		"MISSING_OPEN" : "Please select a %s to open",
+		"MISSING_EDIT" : "Please select a %s to edit",
 		
 		"UPDATED" : "%s updated successfully!",
 		"DELETED" : "%s deleted successfully!",

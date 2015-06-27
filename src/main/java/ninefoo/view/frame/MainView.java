@@ -7,7 +7,6 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import ninefoo.config.RoleNames;
 import ninefoo.config.Session;
 import ninefoo.model.object.Activity;
 import ninefoo.model.object.Project;

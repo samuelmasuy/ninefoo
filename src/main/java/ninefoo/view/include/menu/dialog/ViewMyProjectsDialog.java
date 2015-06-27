@@ -1,9 +1,9 @@
 package ninefoo.view.include.menu.dialog;
 
-import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +16,6 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -30,8 +29,9 @@ import javax.swing.border.Border;
 import ninefoo.config.RoleNames;
 import ninefoo.helper.DateHelper;
 import ninefoo.helper.LayoutHelper;
-import ninefoo.lib.form.FormDialog;
 import ninefoo.lib.lang.LanguageText;
+import ninefoo.lib.layout.CommonDialog;
+import ninefoo.lib.layout.FormDialog;
 import ninefoo.model.object.Project;
 import ninefoo.view.include.menu.listener.ToolsListener;
 import ninefoo.config.Config;
@@ -40,7 +40,7 @@ import ninefoo.config.Config;
  * Dialog showing the list of projects for a logged in user.
  * @author Amir El Bawab
  */
-public class ViewMyProjectsDialog extends JDialog{
+public class ViewMyProjectsDialog extends CommonDialog{
 	
 	private static final long serialVersionUID = 216394661255136241L;
 	
@@ -55,11 +55,10 @@ public class ViewMyProjectsDialog extends JDialog{
 	private ArrayList<Project> projects;
 	
 	// Define panels
-	private ProjectPanel projectPanel;
 	private DescriptionPanel descriptionPanel;
 	
 	// Constants
-	private String onEmpty = " ---";
+	private final String onEmpty = " ---";
 	
 	/**
 	 * Constructor
@@ -68,9 +67,6 @@ public class ViewMyProjectsDialog extends JDialog{
 		
 		// Set title
 		this.setTitle("View my projects");
-		
-		// Set layout
-		this.setLayout(new BorderLayout());
 		
 		// Initialize components
 		this.openButton = new JButton("Open");
@@ -87,17 +83,54 @@ public class ViewMyProjectsDialog extends JDialog{
 		this.deadlineDateInfo = new JLabel();
 		
 		// Initialize panels
-		this.projectPanel = new ProjectPanel();
+		this.setCenterPanel(new FormDialog() {
+			
+			private static final long serialVersionUID = 8802269677151999153L;
+
+			@Override
+			public void placeForm() {
+				
+				// Set border title
+				this.titledBorder.setTitle(LanguageText.getConstant("PROJECT"));
+				
+				// Set input border
+				Border inputPadding = BorderFactory.createEmptyBorder(3, 3, 3, 3);
+				projectList.setBorder(BorderFactory.createCompoundBorder(projectList.getBorder(), inputPadding));
+				
+				// Initialize description panel
+				descriptionPanel = new DescriptionPanel();
+				
+				// Configure the list
+				scrollList.setPreferredSize(new Dimension(400,300));
+				projectList.setVisibleRowCount(-1); // Display max possible
+				projectList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				
+				// Add components
+				int row = 0;
+				gc.anchor = GridBagConstraints.LINE_START;
+				gc.insets = new Insets(5, 5, 5, 10);
+				LayoutHelper.gcGrid(gc, row, 0, 1);
+				this.fixedPanel.add(new JLabel("Role"), gc);
+				LayoutHelper.gcGrid(gc, row++, 1, 1);
+				this.fixedPanel.add(roleBox, gc);
+
+				gc.anchor = GridBagConstraints.FIRST_LINE_START;
+				LayoutHelper.gcGrid(gc, row, 0, 2);
+				this.fixedPanel.add(scrollList, gc);
+				LayoutHelper.gcGrid(gc, row++, 2, 1);
+				this.fixedPanel.add(descriptionPanel, gc);
+				
+				// Add panel
+				this.add(fixedPanel);
+			}
+		});
 		
 		// Initialize projects list
 		this.projects = new ArrayList<>();
 		
-		// Create components
-		JPanel buttonContainer = new JPanel();
-		
 		// Add components to panels
-		buttonContainer.add(openButton);
-		buttonContainer.add(editButton);
+		this.southPanel.add(openButton);
+		this.southPanel.add(editButton);
 		
 		// Empty the fields
 		this.resetDescriptionPanel();
@@ -130,10 +163,9 @@ public class ViewMyProjectsDialog extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				// TODO Change text to read form library
 				// If no project selected, show error
 				if(projectList.getSelectedIndex() < 0)
-					JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, "Please select a project to open", "Opeartion failed", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("MISSING_OPEN"), LanguageText.getConstant("PROJECT")), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
 				
 				// If project selected
 				else if(toolsListener != null)
@@ -149,7 +181,7 @@ public class ViewMyProjectsDialog extends JDialog{
 				
 				// If no project selected, show error
 				if(projectList.getSelectedIndex() < 0)
-					JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, "Please select a project to edit", "Opeartion failed", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("MISSING_EDIT"),LanguageText.getConstant("PROJECT")), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
 				
 				// If project selected
 				else if(toolsListener != null){
@@ -182,12 +214,7 @@ public class ViewMyProjectsDialog extends JDialog{
 			}
 		});
 		
-		// Add components to dialog
-		this.add(buttonContainer, BorderLayout.SOUTH);
-		this.add(projectPanel, BorderLayout.CENTER);
-		
 		// Configure dialog
-		this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		this.setSize(new Dimension(800,550));
 		this.setLocationRelativeTo(parentFrame);
 		this.setResizable(false);
@@ -251,22 +278,6 @@ public class ViewMyProjectsDialog extends JDialog{
 	}
 	
 	/**
-	 * Set error message
-	 * @param msg
-	 */
-	public void setErrorMessage(String msg){
-		projectPanel.setErrorMessage(msg);
-	}
-	
-	/**
-	 * Set success message
-	 * @param msg
-	 */
-	public void setSuccessMessage(String msg){
-		projectPanel.setSuccessMessage(msg);
-	}
-	
-	/**
 	 * Populate description panel
 	 */
 	private void populateDescriptionPanel(Project project){
@@ -291,58 +302,17 @@ public class ViewMyProjectsDialog extends JDialog{
 	}
 	
 	/**
-	 * Private class for the project list
-	 * @see FormDialog
+	 * Description panel for the projects
+	 * @author Amir El Bawab
 	 */
-	private class ProjectPanel extends FormDialog{
-
-		private static final long serialVersionUID = -9050498399402050988L;
-
-		/**
-		 * Constructor
-		 */
-		public ProjectPanel() {
-			
-			// Set border title
-			this.titledBorder.setTitle(LanguageText.getConstant("PROJECT"));
-			
-			// Set input border
-			Border inputPadding = BorderFactory.createEmptyBorder(3, 3, 3, 3);
-			projectList.setBorder(BorderFactory.createCompoundBorder(projectList.getBorder(), inputPadding));
-			
-			// Initialize description panel
-			descriptionPanel = new DescriptionPanel();
-			
-			// Configure the list
-			scrollList.setPreferredSize(new Dimension(400,300));
-			projectList.setVisibleRowCount(-1); // Display max possible
-			projectList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			
-			// Add components
-			int row = 0;
-			gc.anchor = GridBagConstraints.LINE_START;
-			gc.insets = new Insets(5, 5, 5, 10);
-			LayoutHelper.gcGrid(gc, row, 0, 1);
-			this.fixedPanel.add(new JLabel("Role"), gc);
-			LayoutHelper.gcGrid(gc, row++, 1, 1);
-			this.fixedPanel.add(roleBox, gc);
-
-			gc.anchor = GridBagConstraints.FIRST_LINE_START;
-			LayoutHelper.gcGrid(gc, row, 0, 2);
-			this.fixedPanel.add(scrollList, gc);
-			LayoutHelper.gcGrid(gc, row++, 2, 1);
-			this.fixedPanel.add(descriptionPanel, gc);
-			
-			// Add panel
-			this.add(fixedPanel);
-		}
-	}
-	
-	private class DescriptionPanel extends FormDialog{
+	private class DescriptionPanel extends JPanel{
 		
 		private static final long serialVersionUID = -137495661786196964L;
 
 		public DescriptionPanel() {
+			
+			// Set layout
+			this.setLayout(new GridBagLayout());
 			
 			// Add scroll pane for description
 			JScrollPane descriptionScroll = new JScrollPane(descriptionInfo);
@@ -351,46 +321,45 @@ public class ViewMyProjectsDialog extends JDialog{
 			descriptionScroll.setPreferredSize(new Dimension(200,150));
 			descriptionScroll.setBorder(null);
 			
-			fixedPanel.setBorder(null);
-			
 			// Add components
 			int row = 0;
-			gc.anchor = GridBagConstraints.LINE_START;
+			GridBagConstraints gc = new GridBagConstraints();
+			
+			gc.anchor = GridBagConstraints.FIRST_LINE_START;
 			gc.insets = new Insets(5, 5, 5, 10);
 			
 			LayoutHelper.gcGrid(gc, row, 0, 1);
-			this.fixedPanel.add(new JLabel(LanguageText.getConstant("PROJECT")), gc);
+			this.add(new JLabel(LanguageText.getConstant("PROJECT")), gc);
 			LayoutHelper.gcGrid(gc, row++, 1, 1);
-			this.fixedPanel.add(nameInfo, gc);
-			
-			
-			LayoutHelper.gcGrid(gc, row, 0, 1);
-			this.fixedPanel.add(new JLabel(LanguageText.getConstant("BUDGET")), gc);
-			LayoutHelper.gcGrid(gc, row++, 1, 1);
-			this.fixedPanel.add(budgetInfo, gc);
+			this.add(nameInfo, gc);
 			
 			LayoutHelper.gcGrid(gc, row, 0, 1);
-			this.fixedPanel.add(new JLabel(LanguageText.getConstant("DATE_CREATED")), gc);
+			this.add(new JLabel(LanguageText.getConstant("BUDGET")), gc);
 			LayoutHelper.gcGrid(gc, row++, 1, 1);
-			this.fixedPanel.add(createdDateInfo, gc);
+			this.add(budgetInfo, gc);
 			
 			LayoutHelper.gcGrid(gc, row, 0, 1);
-			this.fixedPanel.add(new JLabel(LanguageText.getConstant("START_DATE")), gc);
+			this.add(new JLabel(LanguageText.getConstant("DATE_CREATED")), gc);
 			LayoutHelper.gcGrid(gc, row++, 1, 1);
-			this.fixedPanel.add(startDateInfo, gc);
+			this.add(createdDateInfo, gc);
 			
 			LayoutHelper.gcGrid(gc, row, 0, 1);
-			this.fixedPanel.add(new JLabel(LanguageText.getConstant("DEADLINE")), gc);
+			this.add(new JLabel(LanguageText.getConstant("START_DATE")), gc);
 			LayoutHelper.gcGrid(gc, row++, 1, 1);
-			this.fixedPanel.add(deadlineDateInfo, gc);
+			this.add(startDateInfo, gc);
+			
+			LayoutHelper.gcGrid(gc, row, 0, 1);
+			this.add(new JLabel(LanguageText.getConstant("DEADLINE")), gc);
+			LayoutHelper.gcGrid(gc, row++, 1, 1);
+			this.add(deadlineDateInfo, gc);
 			
 			LayoutHelper.gcGrid(gc, row++, 0, 1);
-			this.fixedPanel.add(new JLabel(LanguageText.getConstant("DESCRIPTION")), gc);
+			this.add(new JLabel(LanguageText.getConstant("DESCRIPTION")), gc);
 			LayoutHelper.gcGrid(gc, row, 0, 2);
-			this.fixedPanel.add(descriptionScroll, gc);
+			this.add(descriptionScroll, gc);
 			
-			// Add fixed panel
-			this.add(fixedPanel);
+			// Set size
+			this.setPreferredSize(new Dimension(200,300));
 		}
 	}
 }

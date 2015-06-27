@@ -7,8 +7,8 @@
 		"WRONG_USERNAME_PASSWORD" : "Nom d'utilisateur ou mot de passe incorrect.",
 		"WRONG_DATE_BEFORE_DATE" : "%s devrait etre au plus %s",
 		"WRONG_DATE_AFTER_DATE" : "%s devrait etre au moins %s",
-		"MIN_LENGTH" : "%s doit etre au moins %d.",
-		"MAX_LENGTH" : "%s doit etre au plus %d.",
+		"MIN_LENGTH" : "%s longueur doit etre au moins %d.",
+		"MAX_LENGTH" : "%s longueur doit etre au plus %d.",
 		"REGISTRATION_SUCCESS" : "Inscription reussie! Connecter vous.",
 		"UNIQUE" : "%s doit etre unique",
 		
