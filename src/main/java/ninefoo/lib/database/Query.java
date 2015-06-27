@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 import ninefoo.helper.StringHelper;
 import ninefoo.model.DbManager;
+import ninefoo.config.Database;
 
 /**
  * Dynamic database query generator
@@ -35,6 +36,9 @@ public class Query implements QueryCustom, QueryDelete, QueryInsert, QuerySelect
 	public static final String AND = "AND";
 	public static final String OR = "OR";
 
+	// Create connection
+	Statement statement;
+	
 	// Query type
 	private enum Query_type { SELECT, UPDATE, INSERT, DELETE, CUSTOM };
 	
@@ -46,6 +50,7 @@ public class Query implements QueryCustom, QueryDelete, QueryInsert, QuerySelect
 		this.select = "";
 		this.table = "";
 		this.where = "";
+		this.statement = DbManager.createConnectionStatement();
 	}
 	
 	/**
@@ -53,6 +58,7 @@ public class Query implements QueryCustom, QueryDelete, QueryInsert, QuerySelect
 	 * @param select
 	 * @return Current database object (this)
 	 */
+	@Override
 	public Query select(String select){
 		
 		// Set type
@@ -66,6 +72,7 @@ public class Query implements QueryCustom, QueryDelete, QueryInsert, QuerySelect
 	 * @param from
 	 * @return Current database object (this)
 	 */
+	@Override
 	public Query from(String from){
 		this.table = StringHelper.join(this.table, from);
 		return this;
@@ -77,6 +84,7 @@ public class Query implements QueryCustom, QueryDelete, QueryInsert, QuerySelect
 	 * @param option <code>AND</code> <code>OR</code>
 	 * @return Current database object (this)
 	 */
+	@Override
 	public Query where(String where, String option){
 		switch(option){
 		case AND:
@@ -96,6 +104,7 @@ public class Query implements QueryCustom, QueryDelete, QueryInsert, QuerySelect
 	 * @param where
 	 * @return Current database object (this)
 	 */
+	@Override
 	public Query where(String where){
 		return this.where(where, AND);
 	}
@@ -104,6 +113,7 @@ public class Query implements QueryCustom, QueryDelete, QueryInsert, QuerySelect
 	 * Get query
 	 * @return query as a string
 	 */
+	@Override
 	public String getQuery(){
 		return this.query;
 	}
@@ -114,6 +124,7 @@ public class Query implements QueryCustom, QueryDelete, QueryInsert, QuerySelect
 	 * @param value
 	 * @return Current database object (this)
 	 */
+	@Override
 	public Query set(String attribute, String value){
 		
 		// If not defined
@@ -135,6 +146,7 @@ public class Query implements QueryCustom, QueryDelete, QueryInsert, QuerySelect
 	 * @param table
 	 * @return Current database object (this)
 	 */
+	@Override
 	public Query insert(String table){
 		
 		// Set type
@@ -148,6 +160,7 @@ public class Query implements QueryCustom, QueryDelete, QueryInsert, QuerySelect
 	 * @param table
 	 * @return Current database object (this)
 	 */
+	@Override
 	public Query update(String table){
 		
 		// Set type
@@ -155,7 +168,11 @@ public class Query implements QueryCustom, QueryDelete, QueryInsert, QuerySelect
 		this.table = table;
 		return this;
 	}
-	
+	/**
+	 * Delete query
+	 * @param table
+	 */
+	@Override
 	public Query delete(String table){
 		
 		// Set type
@@ -168,6 +185,7 @@ public class Query implements QueryCustom, QueryDelete, QueryInsert, QuerySelect
 	 * Get result
 	 * @return result
 	 */
+	@Override
 	public ResultSet getResult(){
 		return this.result;
 	}
@@ -176,6 +194,7 @@ public class Query implements QueryCustom, QueryDelete, QueryInsert, QuerySelect
 	 * Get the number of affected rows for update, insert and delete
 	 * @return number of affected rows
 	 */
+	@Override
 	public int getAffectedRows(){
 		return this.affectedRows;
 	}
@@ -185,6 +204,7 @@ public class Query implements QueryCustom, QueryDelete, QueryInsert, QuerySelect
 	 * @param query
 	 * @return true if the query was executed successfully
 	 */
+	@Override
 	public boolean run(String query){
 		this.type = Query_type.CUSTOM;
 		this.query = query.trim();
@@ -195,9 +215,9 @@ public class Query implements QueryCustom, QueryDelete, QueryInsert, QuerySelect
 	 * Run custom query based on the type
 	 * @return true if the query was executed successfully
 	 */
+	@Override
 	public boolean run(){
-		Statement statement = DbManager.createConnectionStatement();
-
+		
         if (statement == null) {
             LOGGER.warn("Could not get a connection statement to DB");
             return false;
@@ -252,5 +272,22 @@ public class Query implements QueryCustom, QueryDelete, QueryInsert, QuerySelect
 		}
         
         return false;
+	}
+
+	/**
+	 * Get last insert id
+	 */
+	@Override
+	public int getLastInsertId() {
+		
+		ResultSet rs;
+		try {
+			rs = statement.executeQuery("SELECT last_insert_rowid()");
+			if (rs.next())
+				return rs.getInt("last_insert_rowid()");
+		} catch (SQLException e) {
+			LOGGER.error("Could not run query: " + e.getMessage());
+		}
+        return Database.ERROR;
 	}
 }
