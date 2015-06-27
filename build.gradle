@@ -24,11 +24,8 @@ sourceSets {
 			srcDir "src/main/java"
 			output.classesDir   = 'build/classes/main'
 		}
-		
+
 		resources{
-			
-			// TODO Include JSON files
-			
 			srcDir "src/main/resources"
 			output.resourcesDir   = 'build/resources/main'
 		}
@@ -64,13 +61,13 @@ task pmexpert_jar (type: Jar) {
 	}
 	from sourceSets.main.runtimeClasspath
 	from configurations.compile.collect { zipTree it }
-} 	
+}
 
 // Print and create application
 task pmexpert(dependsOn:['clean', 'build']) << {
 	println '\n>> Exporting ' + applicationTitle + ' to jar file...\n'
 	pmexpert_jar.execute()
-	
+
 	println '\n>> Creating launcher.bat\n'
 	new File('build/' + libsDirName + '/launcher.bat').write 'java -jar "' + archivesBaseName + '-' + version + '.jar"'
 }
