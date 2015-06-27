@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * Controller for 'Project': Create, Update and Delete projects
- * @author Samuel Masuy
+ * @author Samuel Masuy, Amir El Bawab
  * @see AbstractController, ProjectListener
  */
 public class Project_controller extends AbstractController implements ProjectListener{
@@ -55,10 +55,10 @@ public class Project_controller extends AbstractController implements ProjectLis
 		ValidationRule startDateRule = new ValidationRule(LanguageText.getConstant("START_DATE"), startDate);
 		ValidationRule descriptionRule = new ValidationRule(LanguageText.getConstant("DESCRIPTION"), description);
 		
-		// Set restrictions
-		nameRule.checkEmpty();
+		// Set restrictions - should be the same as edit
+		nameRule.checkEmpty().checkMaxLength(25);
 		descriptionRule.checkMaxLength(150);
-		budgetRule.checkDouble();
+		budgetRule.checkDouble().checkMaxLength(15);
 		startDateRule.checkDateBefore(deadline);
 		
 		// Set rules
@@ -118,10 +118,10 @@ public class Project_controller extends AbstractController implements ProjectLis
 		ValidationRule startDateRule = new ValidationRule(LanguageText.getConstant("START_DATE"), startDate);
 		ValidationRule descriptionRule = new ValidationRule(LanguageText.getConstant("DESCRIPTION"), description);
 		
-		// Set restrictions
-		nameRule.checkEmpty();
+		// Set restrictions - Should be the same as create
+		nameRule.checkEmpty().checkMaxLength(25);
 		descriptionRule.checkMaxLength(150);
-		budgetRule.checkDouble();
+		budgetRule.checkDouble().checkMaxLength(15);
 		startDateRule.checkDateBefore(deadline);
 		
 		// Set rules

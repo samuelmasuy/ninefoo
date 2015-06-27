@@ -19,6 +19,7 @@
 		
 		"CREATE_NEW_PROJECT" : "Creer un nouveau projet",
 		"CREATE_PROJECT" : "Creer un projet",
+		"DATE_CREATED" : "Date de creation",
 		"PROJECT" : "Projet",
 		"NAME" : "Nom",
 		"BUDGET" : "Budget",

@@ -127,6 +127,15 @@ public class ValidationRule {
 	}
 	
 	/**
+	 * Trim value
+	 * @return ValidationRule
+	 */
+	public ValidationRule doTrim(){
+		this.value.trim();
+		return this;
+	}
+	
+	/**
 	 * Run validation test
 	 * @return boolean
 	 */
