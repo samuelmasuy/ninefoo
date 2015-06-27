@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import ninefoo.helper.LayoutHelper;
+import ninefoo.lib.datePicker.DatePicker;
 import ninefoo.lib.form.FormDialog;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.object.Project;
@@ -33,8 +34,9 @@ public class EditProjectDialog extends JDialog{
 	
 	// Create components
 	private JButton saveButton;
-	private JTextField name, budget, deadline, start;
+	private JTextField name, budget;
 	private JTextArea description;
+	private DatePicker deadline, start;
 	
 	// Create panels
 	private InputPanel inputPanel;
@@ -48,8 +50,8 @@ public class EditProjectDialog extends JDialog{
 		this.saveButton = new JButton("Update project");
 		this.name = new JTextField(10);
 		this.budget= new JTextField(10);
-		this.deadline = new JTextField(10);
-		this.start = new JTextField(10);
+		this.deadline = new DatePicker(8);
+		this.start = new DatePicker(8);
 		this.description = new JTextArea(3,10);
 		
 		// Set title
@@ -70,7 +72,7 @@ public class EditProjectDialog extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(toolsListener != null)
-					toolsListener.updateProject(parentPanel, EditProjectDialog.this, projectId, name.getText(), budget.getText(), description.getText());
+					toolsListener.updateProject(parentPanel, EditProjectDialog.this, projectId, name.getText(), budget.getText(), start.getText(), deadline.getText(), description.getText());
 			}
 		});
 		
@@ -104,9 +106,9 @@ public class EditProjectDialog extends JDialog{
 	public void populateFields(Project project){
 		this.name.setText(project.getProjectName());
 		this.budget.setText(project.getBudget() + "");
-		this.start.setText(project.getStartDate() + "");
-		this.deadline.setText(project.getDeadlineDate() + "");
 		this.description.setText(project.getDescription());
+		this.start.setDate(project.getStartDate());
+		this.deadline.setDate(project.getDeadlineDate());
 	}
 	
 	/**

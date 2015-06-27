@@ -84,7 +84,7 @@ public class CreateProjectDialog extends JDialog{
 		
 		// Configure dialog
 		this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-		this.setSize(new Dimension(350,350));
+		this.setSize(new Dimension(300,350));
 		this.setLocationRelativeTo(parentFrame);
 		this.setResizable(false);
 		this.setVisible(true);

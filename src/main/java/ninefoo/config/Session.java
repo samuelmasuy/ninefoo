@@ -40,7 +40,7 @@ public class Session {
 	 * @return int
 	 */
 	public int getUserId(){
-		return this.userId;
+		return Session.instance.userId;
 	}
 	
 	/**

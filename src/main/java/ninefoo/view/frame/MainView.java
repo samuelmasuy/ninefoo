@@ -191,7 +191,7 @@ public class MainView extends JFrame implements UpdatableView{
 
 			// TODO Change this and add another method for update
 			@Override
-			public void loadAllMyProjectsByRole(ViewMyProjectsDialog dialog, RoleNames roleName) {
+			public void loadAllMyProjectsByRole(ViewMyProjectsDialog dialog, String roleName) {
 
 				LOGGER.info(String.format("Retreiving projects from the DB for user id %d and role %s ", Session.getInstance().getUserId(), roleName.toString()));
 				
@@ -217,7 +217,7 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
-			public void updateProject(ViewMyProjectsDialog parentDialog, EditProjectDialog dialog, int projectId, String name, String budget, String description) {
+			public void updateProject(ViewMyProjectsDialog parentDialog, EditProjectDialog dialog, int projectId, String name, String budget, String startDate, String deadline, String description) {
 				
 				// Store dialog
 				viewMyProjectsDialog = parentDialog;
@@ -225,7 +225,7 @@ public class MainView extends JFrame implements UpdatableView{
 				
 				// If not null
 				if(projectListener != null)
-					projectListener.editProject(projectId, name, budget, description);
+					projectListener.editProject(projectId, name, budget, startDate, deadline, description);
 			}
 		});
 		

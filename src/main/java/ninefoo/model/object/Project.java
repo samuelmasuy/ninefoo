@@ -106,6 +106,10 @@ public class Project {
         return description;
     }
     
+    public void setDescription(String description){
+    	this.description = description;
+    }
+    
     public Date getStartDate() {
 		return DateHelper.parse(startDate, Config.DATE_FORMAT);
 	}

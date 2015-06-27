@@ -1,9 +1,12 @@
 package ninefoo.config;
 
+import java.util.ArrayList;
+
 import org.apache.logging.log4j.LogManager;
 
 import ninefoo.config.Annotation.autoload;
 import ninefoo.config.Annotation.autoloadConfig;
+import ninefoo.helper.StringHelper;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.DbManager;
 import ninefoo.model.object.Member;
@@ -68,13 +71,18 @@ public class Autoload {
 	@autoload(active=true, priority = 1)
 	public void addRoles(){
 		Role_model role_model = new Role_model();
+		ArrayList<Role> roles = new ArrayList<>(2);
+		roles.add(new Role(RoleNames.MANAGER, "Full privileges"));
+		roles.add(new Role(RoleNames.MEMBER, "Limited privileges"));
 		
-		if(role_model.getRoleByName("Manager") == null)
-			role_model.insertNewRole(new Role("Manager", ""));
-		
-		if(role_model.getRoleByName("Member") == null)
-			role_model.insertNewRole(new Role("Member", ""));
-		LOGGER.info("Roles Manager and Member added to the database");
+		String rolesCreated = "";
+		for(Role role : roles){
+			if(role_model.getRoleByName(role.getRoleName()) == null){
+				rolesCreated = StringHelper.join(rolesCreated, role.getRoleName());
+				role_model.insertNewRole(role);
+			}
+		}
+		LOGGER.info(String.format("Roles %s added to the database", rolesCreated));
 	}
 	
 	@autoload(active=false, priority = 2)

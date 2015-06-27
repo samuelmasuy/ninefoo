@@ -68,7 +68,7 @@ public class ViewMyProjectsDialog extends JDialog{
 		// Initialize components
 		this.openButton = new JButton("Open");
 		this.editButton = new JButton("Edit");
-		this.roleBox = new JComboBox<String>(new String[]{"Manager", "Member"});
+		this.roleBox = new JComboBox<String>(RoleNames.ROLES);
 		this.listModel = new DefaultListModel<>();
 		this.projectList = new JList<String>(listModel);
 		this.scrollList = new JScrollPane(this.projectList);
@@ -96,11 +96,8 @@ public class ViewMyProjectsDialog extends JDialog{
 		// Set default role box value
 		this.roleBox.setSelectedIndex(0);
 		
-		// FIXME Change from enum to String
-		final RoleNames[] roles = {RoleNames.Manager, RoleNames.Member};
-		
 		// Load projects
-		toolsListener.loadAllMyProjectsByRole(ViewMyProjectsDialog.this, roles[roleBox.getSelectedIndex()]);
+		toolsListener.loadAllMyProjectsByRole(ViewMyProjectsDialog.this, roleBox.getSelectedItem().toString());
 		
 		// Add role box listener
 		this.roleBox.addActionListener(new ActionListener() {
@@ -108,7 +105,7 @@ public class ViewMyProjectsDialog extends JDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(toolsListener != null)
-					toolsListener.loadAllMyProjectsByRole(ViewMyProjectsDialog.this, roles[roleBox.getSelectedIndex()]);
+					toolsListener.loadAllMyProjectsByRole(ViewMyProjectsDialog.this, roleBox.getSelectedItem().toString());
 			}
 		});
 		
@@ -167,8 +164,12 @@ public class ViewMyProjectsDialog extends JDialog{
 		// Reset array
 		this.projects = new ArrayList<>();
 		
-		// Add projects
-		this.projects.addAll(projects);
+		// If a list was returned
+		if(projects != null){
+			
+			// Add projects
+			this.projects.addAll(projects);
+		}
 		
 		// Refresh list
 		this.refreshList();

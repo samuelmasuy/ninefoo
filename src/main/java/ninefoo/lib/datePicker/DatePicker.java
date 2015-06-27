@@ -3,6 +3,7 @@ package ninefoo.lib.datePicker;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import ninefoo.config.Config;
 
@@ -69,9 +70,21 @@ public class DatePicker extends JDatePickerImpl {
 	
 	/**
 	 * Set date
+	 * @param year
+	 * @param month
+	 * @param day
 	 */
 	public void setDate(int year, int month, int day){
 		this.model.setDate(year, month, day);
+		this.model.setSelected(true);
+	}
+	
+	/**
+	 * Set date
+	 * @param date
+	 */
+	public void setDate(Date date){
+		this.model.setValue(date);
 		this.model.setSelected(true);
 	}
 	

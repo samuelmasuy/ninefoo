@@ -4,27 +4,34 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Helpers methods for manipulating a Date
  * @author Farzad MajidFayyaz, Amir El Bawab
  */
 public class DateHelper {
 
+	 private static final Logger LOGGER = LogManager.getLogger();
+	
 	/**
 	 * Validate date, and check if it exists
 	 * @param date
 	 * @return boolean
 	 */
 	public static boolean isValid(String date, String dateFormat){
-		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-		sdf.setLenient(false);
-		try {
-			sdf.parse(date);
-		} catch (Exception e) {
-			return false;
+		if(date != null){
+			SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+			sdf.setLenient(false);
+			try {
+				sdf.parse(date);
+				return true;
+			} catch (ParseException e) {
+				LOGGER.error("Error parsing date: " + date);
+			}
 		}
-		
-		return true;
+		return false;
 	}
 	
 	/**
@@ -35,13 +42,16 @@ public class DateHelper {
 	 * @return Date or null
 	 */
 	public static Date parse(String date, String dateFormat){
-		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-		sdf.setLenient(false);
-		try {
-			return sdf.parse(date);
-		} catch (ParseException e) {
-			return null;
+		if(date != null){
+			SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+			sdf.setLenient(false);
+			try {
+				return sdf.parse(date);
+			} catch (ParseException e) {
+				LOGGER.error("Error parsing date: " + date);
+			}
 		}
+		return null;
 	}
 
 	/**

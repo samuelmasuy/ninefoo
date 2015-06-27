@@ -22,6 +22,12 @@ public class StringHelper {
 	 * @return Concatinated message
 	 */
 	public static String join(String original, String extra){
+		if(original == null)
+			return extra;
+		
+		if(extra == null)
+			return original;
+		
 		String string = original;
 		if(!string.isEmpty())
 			string += ", ";
