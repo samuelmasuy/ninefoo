@@ -44,7 +44,7 @@ public class Autoload {
 		try {
 			// Set cross-platform Java L&F
 			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-			LOGGER.error("Cross platform F&L applied to the GUI successfully");
+			LOGGER.info("Cross platform F&L applied to the GUI successfully");
 		} catch (Exception e) {
 			LOGGER.error("GUI Look and Feel error!");
 		}
@@ -63,6 +63,7 @@ public class Autoload {
 		LanguageText.addLanguage("ValidationForm");
 		LanguageText.addLanguage("InputForm");
 		LanguageText.addLanguage("Activity");
+		LanguageText.addLanguage("Project");
 	}
 	
 	@autoload

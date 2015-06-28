@@ -11,8 +11,12 @@ import ninefoo.view.include.menu.dialog.ViewMyProjectsDialog;
 public interface ToolsListener {
 	public void newProject(CreateProjectDialog formDialog, String name, String budget, String startDate, String deadline, String description);
 	public void newActivity();
+	
 	public void loadAllMyProjectsByRole(ViewMyProjectsDialog viewMyProjectsDialog, String roleName);
 	public void loadProject(ViewMyProjectsDialog viewMyProjectsDialog, int projectId);
-	public void logout();
 	public void updateProject(ViewMyProjectsDialog parentDialog, EditProjectDialog dialog, int projectId, String name, String budget, String startDate, String deadline, String description);
+	public void loadEditProjectFields(EditProjectDialog editProjectDialog, int projectId);
+	
+	public void logout();
+	
 }

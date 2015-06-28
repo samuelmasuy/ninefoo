@@ -204,4 +204,24 @@ public class Project_controller extends AbstractController implements ProjectLis
 			this.view.updateLoadProject(false, LanguageText.getConstant("ERROR_OCCURED"), null);
 		}
 	}
+
+	@Override
+	public void loadEditProjectFields(int projectId) {
+		
+		// Get project 
+		Project project = this.project_model.getProjectById(projectId);
+		
+		// If project found
+		if(project != null) {
+			
+			// Update view
+			this.view.updateLoadEditProjectFields(true, null, project);
+			
+		// If project not found
+		} else {
+			
+			// Update view
+			this.view.updateLoadEditProjectFields(false, LanguageText.getConstant("ERROR_OCCURED"), null);
+		}
+	}
 }

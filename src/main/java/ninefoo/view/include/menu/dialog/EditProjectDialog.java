@@ -47,7 +47,11 @@ public class EditProjectDialog extends CenterFormSouthButtonDialog{
 		this.description = new JTextArea(3,10);
 		
 		// Set title
-		this.setTitle("Update project");
+		this.setTitle(LanguageText.getConstant("UPDATE_PROJECT"));
+		
+		// Load project
+		if(toolsListener != null)
+			toolsListener.loadEditProjectFields(this, projectId);
 		
 		// Add button listener
 		this.saveButton.addActionListener(new ActionListener() {
@@ -94,8 +98,8 @@ public class EditProjectDialog extends CenterFormSouthButtonDialog{
 				this.table.put(deadline);
 				
 				this.table.newRow();
-				this.fixedPanel.add(new JLabel(LanguageText.getConstant("DESCRIPTION")));
-				this.fixedPanel.add(new JScrollPane(description));
+				this.table.put(new JLabel(LanguageText.getConstant("DESCRIPTION")));
+				this.table.put(new JScrollPane(description));
 			}
 		});
 		
@@ -103,7 +107,7 @@ public class EditProjectDialog extends CenterFormSouthButtonDialog{
 		this.southPanel.add(saveButton);
 		
 		// Configure dialog
-		this.setSize(new Dimension(350,350));
+		this.setSize(new Dimension(300,350));
 		this.setLocationRelativeTo(parentFrame);
 		this.setResizable(false);
 		this.setVisible(true);

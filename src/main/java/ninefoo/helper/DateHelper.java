@@ -42,7 +42,9 @@ public class DateHelper {
 	 * @return Date or null
 	 */
 	public static Date parse(String date, String dateFormat){
-		if(date != null){
+		System.out.println(date);
+		System.out.println(date == null);
+		if(date != null && !date.trim().isEmpty()){
 			SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 			sdf.setLenient(false);
 			try {

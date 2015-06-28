@@ -226,6 +226,17 @@ public class MainView extends JFrame implements UpdatableView{
 				if(projectListener != null)
 					projectListener.editProject(projectId, name, budget, startDate, deadline, description);
 			}
+
+			@Override
+			public void loadEditProjectFields(EditProjectDialog dialog, int projectId) {
+				
+				// Store dialog
+				editProjectDialog = dialog;
+				
+				// Pass it to controller
+				if(projectListener != null)
+					projectListener.loadEditProjectFields(projectId);
+			}
 		});
 		
 		// Add listener to table
@@ -539,5 +550,22 @@ public class MainView extends JFrame implements UpdatableView{
 		
 		// Reset pointer
 		this.viewMyProjectsDialog = null;
+	}
+
+	@Override
+	public void updateLoadEditProjectFields(boolean success, String message, Project project) {
+		
+		// If success
+		if(success) {
+			
+			// Populate fields
+			this.editProjectDialog.populateFields(project);
+			
+		// If error occurred
+		} else {
+			
+			// Display error message
+			this.editProjectDialog.setErrorMessage(message);
+		}
 	}
 }

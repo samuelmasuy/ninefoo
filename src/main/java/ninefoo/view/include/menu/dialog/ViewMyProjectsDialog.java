@@ -203,7 +203,7 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 		});
 		
 		// Configure dialog
-		this.setSize(new Dimension(800,550));
+		this.setSize(new Dimension(700,500));
 		this.setLocationRelativeTo(parentFrame);
 		this.setResizable(false);
 		this.setVisible(true);
@@ -269,7 +269,7 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 	 * Populate description panel
 	 */
 	private void populateDescriptionPanel(Project project){
-		this.nameInfo.setText(String.format("<html><div WIDTH=20>%s</div></html>", project.getProjectName()));
+		this.nameInfo.setText(String.format("<html><div>%s</div></html>", project.getProjectName()));
 		this.descriptionInfo.setText(project.getDescription());
 		this.budgetInfo.setText(project.getBudget() + "");
 		this.createdDateInfo.setText(DateHelper.format(project.getCreateDate(), Config.DATE_FORMAT_SHORT));

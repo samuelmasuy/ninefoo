@@ -1,0 +1,7 @@
+{
+	"name" : "Project language",
+	"description" : "Language related to Project. Include the suffix _PRO for each key",
+	"language" : {
+		"UPDATE_PROJECT" : "Update project"
+	}
+}
