@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import ninefoo.view.include.menu.dialog.AssignMemberToActivityDialog;
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
 import ninefoo.view.include.menu.dialog.ViewMyProjectsDialog;
 import ninefoo.view.include.menu.listener.ToolsListener;
@@ -140,6 +141,15 @@ public class Tools extends JPanel{
 				// Logout
 				if(toolsListener != null)
 					toolsListener.logout();
+			}
+		});
+		
+		this.assign.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (toolsListener != null)
+					new AssignMemberToActivityDialog(parentFrame, toolsListener);
 			}
 		});
 		

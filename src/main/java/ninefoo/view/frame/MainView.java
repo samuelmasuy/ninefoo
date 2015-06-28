@@ -237,6 +237,12 @@ public class MainView extends JFrame implements UpdatableView{
 				if(projectListener != null)
 					projectListener.loadEditProjectFields(projectId);
 			}
+
+			@Override
+			public void assignMemberToActivity() {
+				// TODO Auto-generated method stub
+				System.out.println("Assign clicked...");
+			}
 		});
 		
 		// Add listener to table
