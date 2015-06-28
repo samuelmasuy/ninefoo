@@ -240,9 +240,15 @@ public class MainView extends JFrame implements UpdatableView{
 
 			@Override
 			public void assignMemberToActivity() {
-				// TODO Auto-generated method stub
-				System.out.println("Assign clicked...");
+				System.out.println("Assign member clicked...");
 			}
+
+			@Override
+			public void createUser() {
+				System.out.println("Create user clicked...");
+			}
+			
+			
 		});
 		
 		// Add listener to table

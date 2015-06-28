@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 
 import ninefoo.view.include.menu.dialog.AssignMemberToActivityDialog;
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
+import ninefoo.view.include.menu.dialog.CreateUserDialog;
 import ninefoo.view.include.menu.dialog.ViewMyProjectsDialog;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
@@ -150,6 +151,15 @@ public class Tools extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				if (toolsListener != null)
 					new AssignMemberToActivityDialog(parentFrame, toolsListener);
+			}
+		});
+		
+		this.newMember.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (toolsListener != null)
+					new CreateUserDialog(parentFrame, toolsListener);
 			}
 		});
 		

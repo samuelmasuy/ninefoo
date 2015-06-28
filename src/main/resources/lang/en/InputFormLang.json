@@ -16,6 +16,7 @@
 		
 		"LOGIN" : "Login",
 		"REGISTER" : "Register",
+		"CREATE" : "Create",
 		
 		"CREATE_NEW_PROJECT" : "Create a new project",
 		"CREATE_PROJECT" : "Create project",
