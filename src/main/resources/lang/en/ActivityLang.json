@@ -3,6 +3,8 @@
 	"description" : "Language related to Activity. Include the suffix _ACT for each key",
 	"language" : {
 		"NEW_DEPENDENCY_ACT" : "New dependency",
-		"ACTIVITY_DEPENDS_ACT" : "Activity '%s' depends on"
+		"ACTIVITY_DEPENDS_ACT" : "Activity '%s' depends on",
+		"ASSIGN_MEMBER_ACTIVITY_ACT" : "Assign member to activity",
+		"ACTIVITY" : "Activity"
 	}
 }

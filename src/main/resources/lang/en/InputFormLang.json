@@ -21,6 +21,7 @@
 		"CREATE_PROJECT" : "Create project",
 		"DATE_CREATED" : "Date created",
 		"PROJECT" : "Project",
+		"MEMBER" : "Member",
 		"NAME" : "Name",
 		"BUDGET" : "Budget",
 		"DEADLINE" : "Deadline",
