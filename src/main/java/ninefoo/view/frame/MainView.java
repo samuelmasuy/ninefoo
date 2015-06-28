@@ -567,5 +567,8 @@ public class MainView extends JFrame implements UpdatableView{
 			// Display error message
 			this.editProjectDialog.setErrorMessage(message);
 		}
+		
+		// Reset dialog
+		this.editProjectDialog = null;
 	}
 }
