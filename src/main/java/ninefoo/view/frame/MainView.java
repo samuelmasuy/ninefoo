@@ -33,6 +33,7 @@ import org.apache.logging.log4j.LogManager;
 /**
  * Main frame for the GUI
  * @author Amir El Bawab
+ * @author Sebouh Bardakjian
  */
 public class MainView extends JFrame implements UpdatableView{
 
@@ -247,6 +248,12 @@ public class MainView extends JFrame implements UpdatableView{
 			public void createUser() {
 				System.out.println("Create user clicked...");
 			}
+
+			@Override
+			public void addUserToProject() {
+				System.out.println("Added user to project clicked...");
+			}
+			
 			
 			
 		});

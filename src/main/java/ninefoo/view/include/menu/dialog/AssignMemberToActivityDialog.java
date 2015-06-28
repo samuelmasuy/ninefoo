@@ -3,6 +3,8 @@ package ninefoo.view.include.menu.dialog;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,6 +16,8 @@ import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.layout.dialog.CenterFormSouthButtonDialog;
 import ninefoo.lib.layout.dialog.FormDialog;
 import ninefoo.view.include.menu.listener.ToolsListener;
+import ninefoo.model.object.Member;
+import ninefoo.model.object.Activity;
 
 /**
  * Dialog that shows lists of activities and members in order to assign one another
@@ -26,6 +30,8 @@ public class AssignMemberToActivityDialog extends CenterFormSouthButtonDialog{
 	private JButton assignButton;
 	private JComboBox<String> activityBox;
 	private JComboBox<String> memberBox;
+	private ArrayList<Member> users;
+	private ArrayList<Activity> activities;
 	
 	/** 
 	 *  Constructor
@@ -79,6 +85,48 @@ public class AssignMemberToActivityDialog extends CenterFormSouthButtonDialog{
 		this.setLocationRelativeTo(parentFrame);
 		this.setResizable(false);
 		this.setVisible(true);
+	}
+	
+	//TODO Add refresh
+	/**
+	 * Populate list
+	 * @param users
+	 */
+	public void populateUserList(List<Member> users){
+		
+		// Reset array
+		this.users = new ArrayList<>();
+		
+		// If a list was returned
+		if(users != null){
+			
+			// Add projects
+			this.users.addAll(users);
+		}
+		
+		// Refresh list
+		//this.refreshList();
+	}
+	
+	//TODO Add refresh
+	/**
+	 * Populate list
+	 * @param activities
+	 */
+	public void populateActivityList(List<Activity> activities){
+		
+		// Reset array
+		this.activities = new ArrayList<>();
+		
+		// If a list was returned
+		if(activities != null){
+			
+			// Add projects
+			this.activities.addAll(activities);
+		}
+		
+		// Refresh list
+		//this.refreshList();
 	}
 	
 }

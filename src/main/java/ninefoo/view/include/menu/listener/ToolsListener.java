@@ -7,6 +7,7 @@ import ninefoo.view.include.menu.dialog.ViewMyProjectsDialog;
 /**
  * Listener used to communicate with Main Frame
  * @author Amir El Bawab
+ * @author Sebouh Bardakjian
  */
 public interface ToolsListener {
 	public void newProject(CreateProjectDialog formDialog, String name, String budget, String startDate, String deadline, String description);
@@ -14,6 +15,7 @@ public interface ToolsListener {
 	
 	public void createUser();
 	public void assignMemberToActivity();
+	public void addUserToProject();
 	public void loadAllMyProjectsByRole(ViewMyProjectsDialog viewMyProjectsDialog, String roleName);
 	public void loadProject(ViewMyProjectsDialog viewMyProjectsDialog, int projectId);
 	public void updateProject(ViewMyProjectsDialog parentDialog, EditProjectDialog dialog, int projectId, String name, String budget, String startDate, String deadline, String description);
