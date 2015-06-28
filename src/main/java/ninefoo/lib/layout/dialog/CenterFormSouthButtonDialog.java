@@ -3,6 +3,7 @@ package ninefoo.lib.layout.dialog;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
 
+import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
@@ -42,6 +43,9 @@ public abstract class CenterFormSouthButtonDialog extends JDialog{
 				
 		// Initialize components
 		this.southPanel = new JPanel();
+		
+		// Configure south panel
+		this.southPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
 		
 		// Add components to dialog
 		this.add(southPanel, BorderLayout.SOUTH);

@@ -30,12 +30,14 @@ public abstract class FormDialog extends JPanel{
 		
 		// Initialize components
 		this.fixedPanel = new JPanel();
-		this.table = new GridTable(fixedPanel);
 		this.inputPadding = BorderFactory.createEmptyBorder(3, 3, 3, 3);
 		
 		// Set layout
 		this.setLayout(new GridBagLayout());
 		fixedPanel.setLayout(new GridBagLayout());
+		
+		// Set table
+		this.table = new GridTable(fixedPanel);
 		
 		// Set Border for fixedPanel
 		titledBorder = BorderFactory.createTitledBorder("");
