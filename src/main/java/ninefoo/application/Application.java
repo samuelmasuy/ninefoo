@@ -8,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 /**
  * Application driver
  * @author Amir EL Bawab, Samuel Masuy
- */
+ */ 
 public class Application {
 
 	// Logger
