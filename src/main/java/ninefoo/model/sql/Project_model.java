@@ -3,7 +3,6 @@ package ninefoo.model.sql;
 import ninefoo.config.*;
 import ninefoo.helper.DateHelper;
 import ninefoo.config.Config;
-import ninefoo.model.DbManager;
 import ninefoo.model.object.Project;
 
 import org.apache.logging.log4j.LogManager;
@@ -33,7 +32,7 @@ public class Project_model {
      *         was not successful.
      */
     public int insertNewProject(Project project) {
-        Statement statement = DbManager.createConnectionStatement();
+        Statement statement = Database.createConnectionStatement();
 
         if (statement == null) {
             LOGGER.warn("Could not get a connection statement to DB");
@@ -93,7 +92,7 @@ public class Project_model {
      * @return Project object if it exists in the DB, NULL otherwise.
      */
     public Project getProjectById(int projectId) {
-        Statement statement = DbManager.createConnectionStatement();
+        Statement statement = Database.createConnectionStatement();
 
         if (statement == null)
             return null;
@@ -127,7 +126,7 @@ public class Project_model {
      */
     public List<Project> getAllProjects() {
         List<Project> allProjects = new ArrayList<>();
-        Statement statement = DbManager.createConnectionStatement();
+        Statement statement = Database.createConnectionStatement();
 
         if (statement == null)
             return null;
@@ -161,7 +160,7 @@ public class Project_model {
      */
     public List<Project> getAllProjectsByMemberAndRole(int memberId, int roleId){
     	List<Project> allProjects = new ArrayList<>();
-        Statement statement = DbManager.createConnectionStatement();
+        Statement statement = Database.createConnectionStatement();
 
         if (statement == null)
             return null;
@@ -210,7 +209,7 @@ public class Project_model {
      * @return True if a record was deleted; False otherwise.
      */
     public boolean deleteProjectById(int projectId) {
-        Statement statement = DbManager.createConnectionStatement();
+        Statement statement = Database.createConnectionStatement();
 
         if (statement == null) {
             LOGGER.warn("Could not get a connection statement to DB");
@@ -244,7 +243,7 @@ public class Project_model {
         if (projectId == 0)
             return false;
 
-        Statement statement = DbManager.createConnectionStatement();
+        Statement statement = Database.createConnectionStatement();
 
         if (statement == null) {
             LOGGER.warn("Could not get a connection statement to DB");

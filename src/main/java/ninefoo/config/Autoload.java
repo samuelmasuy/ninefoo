@@ -10,7 +10,6 @@ import ninefoo.config.Annotation.autoload;
 import ninefoo.config.Annotation.autoloadConfig;
 import ninefoo.helper.StringHelper;
 import ninefoo.lib.lang.LanguageText;
-import ninefoo.model.DbManager;
 import ninefoo.model.object.Member;
 import ninefoo.model.object.Project;
 import ninefoo.model.object.Role;
@@ -70,8 +69,8 @@ public class Autoload {
 	public void createDB(){
 //		File db_file = new File(DbManager.dbName);
 //		if(!db_file.exists()){
-			LOGGER.info(String.format("Database file '%s' created!", DbManager.dbName));
-			DbManager.createTables();
+			LOGGER.info(String.format("Database file '%s' created!", Database.DB_NAME));
+			Database.getInstance().createTables();
 //		} else {
 //			LOGGER.info(String.format("Database file '%s' already exist!", DbManager.dbName));
 //		}

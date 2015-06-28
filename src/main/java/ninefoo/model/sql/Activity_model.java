@@ -3,7 +3,6 @@ package ninefoo.model.sql;
 import ninefoo.config.*;
 import ninefoo.helper.DateHelper;
 import ninefoo.config.Config;
-import ninefoo.model.DbManager;
 import ninefoo.model.object.Activity;
 import ninefoo.model.object.Member;
 import ninefoo.model.object.Project;

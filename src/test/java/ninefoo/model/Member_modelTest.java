@@ -3,6 +3,7 @@ package ninefoo.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import ninefoo.config.Database;
 import ninefoo.model.object.Member;
 import ninefoo.model.sql.Member_model;
 
@@ -17,7 +18,7 @@ public class Member_modelTest
 {
 	@BeforeClass
 	static public void dbCreator(){
-		DbManager.createTables();
+		Database.createTables();
 		
 	}
 	
