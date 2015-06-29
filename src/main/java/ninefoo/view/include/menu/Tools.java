@@ -16,6 +16,7 @@ import ninefoo.view.include.menu.dialog.AddUserToProjectDialog;
 import ninefoo.view.include.menu.dialog.AssignMemberToActivityDialog;
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
 import ninefoo.view.include.menu.dialog.CreateUserDialog;
+import ninefoo.view.include.menu.dialog.ViewAssignedActivitiesDialog;
 import ninefoo.view.include.menu.dialog.ViewMyProjectsDialog;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
@@ -29,7 +30,7 @@ public class Tools extends JPanel{
 	private static final long serialVersionUID = -1862085076331720213L;
 
 	// Create components
-	private JButton newProject, newMember, newActivity, assign, logout, viewProject, refreshProject, addUser;
+	private JButton newProject, newMember, newActivity, assign, logout, viewProject, refreshProject, addUser, viewAssigned;
 	
 	// Create listener
 	private ToolsListener toolsListener;
@@ -49,6 +50,7 @@ public class Tools extends JPanel{
 		this.viewProject = new JButton(new ImageIcon(getClass().getResource("/images/view_project.png")));
 		this.refreshProject = new JButton(new ImageIcon(getClass().getResource("/images/refresh_project.png")));
 		this.addUser = new JButton(new ImageIcon(getClass().getResource("/images/assign.png")));
+		this.viewAssigned = new JButton(new ImageIcon(getClass().getResource("/images/view_project.png")));
 		
 		// Customize buttons
 		this.newProject.setContentAreaFilled(false);
@@ -105,6 +107,13 @@ public class Tools extends JPanel{
 		this.addUser.setHorizontalTextPosition(SwingConstants.CENTER);
 		this.addUser.setText("Add User");
 		this.addUser.setToolTipText("Assign users to the project");
+		
+		this.viewAssigned.setContentAreaFilled(false);
+		this.viewAssigned.setBorder(null);
+		this.viewAssigned.setVerticalTextPosition(SwingConstants.BOTTOM);
+		this.viewAssigned.setHorizontalTextPosition(SwingConstants.CENTER);
+		this.viewAssigned.setText("View Assigned");
+		this.viewAssigned.setToolTipText("View my assigned tasks");
 		
 		// Disable buttons at start
 		this.newActivity.setEnabled(false);
@@ -182,12 +191,23 @@ public class Tools extends JPanel{
 			}
 		});
 		
+		this.viewAssigned.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (toolsListener != null)
+					new ViewAssignedActivitiesDialog(parentFrame, toolsListener);
+			}
+		});
+		
 		// Add components
 		int spacing = 20;
 		this.add(Box.createRigidArea(new Dimension(10,0)));
 		this.add(this.newProject);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
 		this.add(this.viewProject);
+		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
+		this.add(this.viewAssigned);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
 		this.add(this.newActivity);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));

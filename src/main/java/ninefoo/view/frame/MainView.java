@@ -253,6 +253,11 @@ public class MainView extends JFrame implements UpdatableView{
 			public void addUserToProject() {
 				System.out.println("Added user to project clicked...");
 			}
+
+			@Override
+			public void viewAssignedActivitiesProject() {
+				System.out.println("View assigned activities project clicked...");
+			}
 			
 			
 			
