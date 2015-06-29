@@ -75,6 +75,9 @@ task pmexpert(dependsOn:['clean', 'build']) << {
 // Disable task for build
 jar.enabled = false
 
+// TESTING Enabled/Disabled
+//test.enabled = false;
+
 // Order of execution
 build.mustRunAfter(clean)
 run.mustRunAfter(build)
