@@ -1,4 +1,4 @@
-package ninefoo.controller;
+package ninefoo.controller.handler.template;
 
 import ninefoo.view.frame.UpdatableView;
 

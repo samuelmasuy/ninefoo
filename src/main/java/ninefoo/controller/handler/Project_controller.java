@@ -4,7 +4,7 @@ import ninefoo.config.Config;
 import ninefoo.config.Database;
 import ninefoo.config.RoleNames;
 import ninefoo.config.Session;
-import ninefoo.controller.AbstractController;
+import ninefoo.controller.handler.template.AbstractController;
 import ninefoo.helper.DateHelper;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.validationForm.ValidationForm;

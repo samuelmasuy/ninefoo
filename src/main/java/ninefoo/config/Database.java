@@ -40,7 +40,7 @@ public class Database {
     /**
      * Create connection
      */
-    public void openConnection(){
+    public Connection openConnection(){
     	if(dbConnection == null){
     		try {
                 Class.forName("org.sqlite.JDBC");
@@ -55,6 +55,7 @@ public class Database {
                         e.getMessage());
             }
     	}
+    	return dbConnection;
     }
 
     
