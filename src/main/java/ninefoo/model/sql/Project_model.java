@@ -286,12 +286,6 @@ public class Project_model extends AbstractModel{
                 "       description = ?, start_date = ?, deadline_date = ?" +
                 " WHERE project_id = ?";
         
-       
-
-                
-
-                
-
         try {
         	
         	// Prepare
