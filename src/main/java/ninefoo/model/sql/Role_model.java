@@ -1,15 +1,10 @@
 package ninefoo.model.sql;
 
 import ninefoo.config.Database;
-import ninefoo.model.DbManager;
 import ninefoo.model.object.Role;
+import ninefoo.model.sql.template.AbstractModel;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +12,7 @@ import java.util.List;
  * Created on 02-Jun-2015.
  * @author Farzad MajidFayyaz
  */
-public class Role_model {
-    private static final Logger LOGGER = LogManager.getLogger();
+public class Role_model extends AbstractModel{
 
     /**
      * Inserts a new role into the database.
@@ -26,51 +20,42 @@ public class Role_model {
      * @return True if successful, false otherwise.
      */
     public int insertNewRole(Role role) {
-        Statement statement = DbManager.createConnectionStatement();
+    	
+    	// Open
+    	this.open();
 
-        if (statement == null) {
-            LOGGER.warn("Could not get a connection statement to DB");
-            return Database.ERROR;
-        }
-
-        String insertRoleSql = String.format("INSERT INTO " +
-                "role(role_name, description) VALUES('%s', '%s')",
-                role.getRoleName(), role.getDescription());
+    	// Query
+        sql = "INSERT INTO " +
+              "role(role_name, description) VALUES(?, ?)";
 
         try {
-            int updatedRows = statement.executeUpdate(insertRoleSql);
+        	
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+        	ps.setString(1, role.getRoleName());
+        	ps.setString(2, role.getDescription());
+        	
+        	// Run
+            affectedRows = ps.executeUpdate();
 
-            if (updatedRows == 1) {
-                ResultSet rs = statement.executeQuery("SELECT last_insert_rowid()");
-
-                if (rs.next())
-                    return rs.getInt("last_insert_rowid()");
-            }
+            // If inserted
+            if (affectedRows == 1) 
+            	return this.getLastInsertId();
 
             LOGGER.warn("Updated row count was not equal to 1");
 
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not add member to db --- detailed info: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
         }
 
         return Database.ERROR;
-    }
-
-    // Helper method to get the next Role object from the DB ResultSet object.
-    private Role getNextRole(ResultSet roles) {
-        try {
-            int roleId = roles.getInt("role_id");
-            String roleName = roles.getString("role_name");
-            String description = roles.getString("description");
-
-            return new Role(roleId, roleName, description);
-
-        } catch (SQLException e) {
-            LOGGER.error("Could not get next role from db --- detailed info: " + e.getMessage());
-        }
-
-        return null;
-
     }
 
     /**
@@ -79,26 +64,40 @@ public class Role_model {
      * @return Role object corresponding to the ID, NULL if no role can be found for the specified ID.
      */
     public Role getRoleById(int roleId) {
-        Statement statement = DbManager.createConnectionStatement();
+    	
+    	// Open
+    	this.open();
 
-        if (statement == null)
-            return null;
-
-        String getRoleByIdSql = "SELECT * FROM role WHERE role_id = " + roleId;
+    	// Query
+        sql = "SELECT * FROM role WHERE role_id = ?";
 
         try {
-            ResultSet roles = statement.executeQuery(getRoleByIdSql);
+        	
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+        	ps.setInt(1, roleId);
+        	
+        	// Run
+            result = ps.executeQuery();
 
-            if (roles.next()) {
-                Role role = getNextRole(roles);
+            // Get role
+            if (result.next()) {
+                Role role = getNextRole(result);
 
                 if (role != null)
                     return role;
             }
 
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not get role for id " + roleId + " from db --- " +
                     "detailed info: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
         }
 
         return null;
@@ -110,27 +109,40 @@ public class Role_model {
      * @return Role object corresponding to the name, NULL if no role can be found for the specified name.
      */
     public Role getRoleByName(String roleName) {
-        Statement statement = DbManager.createConnectionStatement();
-
-        if (statement == null)
-            return null;
-
-        String getRoleByNameSql = String.format("SELECT * FROM role WHERE role_name = '%s'",
-                roleName);
+    	
+    	// Open
+    	this.open();
+    	
+    	// Query
+        sql = "SELECT * FROM role WHERE role_name = ?";
 
         try {
-            ResultSet roles = statement.executeQuery(getRoleByNameSql);
+        	
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+        	ps.setString(1, roleName);
+        	
+        	// Run
+            result = ps.executeQuery();
 
-            if (roles.next()) {
-                Role role = getNextRole(roles);
+            // Get role
+            if (result.next()) {
+                Role role = getNextRole(result);
 
                 if (role != null)
                     return role;
             }
 
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not get role for name '" + roleName + "' from db --- " +
                     "detailed info: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
         }
 
         return null;
@@ -142,20 +154,24 @@ public class Role_model {
      *         if there is an error connecting to the database.
      */
     public List<Role> getAllRoles() {
+    	
+    	// Open
+    	this.open();
+    	
         List<Role> allRoles = new ArrayList<>();
-        Statement statement = DbManager.createConnectionStatement();
 
-        if (statement == null) {
-            LOGGER.warn("Could not get a connection statement to DB");
-            return null;
-        }
-
-        String getAllMembersSql = "SELECT * FROM Role";
+        // Query
+        sql = "SELECT * FROM Role";
         try {
-            ResultSet allRolesFromDb = statement.executeQuery(getAllMembersSql);
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Run
+            result = ps.executeQuery();
 
-            while (allRolesFromDb.next()) {
-                Role nextRole = getNextRole(allRolesFromDb);
+            // Get all
+            while (result.next()) {
+                Role nextRole = getNextRole(result);
 
                 if (nextRole != null)
                     allRoles.add(nextRole);
@@ -163,8 +179,13 @@ public class Role_model {
 
             return allRoles;
 
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not get members from db --- detailed info: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
         }
 
         return null;

@@ -18,7 +18,7 @@ public class Member_modelTest
 {
 	@BeforeClass
 	static public void dbCreator(){
-		Database.createTables();
+		Database.getInstance().createTables();
 		
 	}
 	

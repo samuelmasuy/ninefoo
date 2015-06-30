@@ -371,33 +371,4 @@ public class Activity_model extends AbstractModel{
     	list.add(activityIdDependentOn);
     	return this.insertPrereqs(activityIdDependent, list);
     }
-    
- // Helper function to read the next Activity object from the specified ResultSet object.
-    private Activity getNextActivity(ResultSet activities) {
-        Activity activity = null;
-
-        try {
-            Project_model projectModel = new Project_model();
-            Member_model memberModel = new Member_model();
-
-            int activityId = activities.getInt("activity_id");
-            String activityLabel = activities.getString("activity_label");
-            String description = activities.getString("description");
-            int duration = activities.getInt("duration");
-            int optimisticDuration = activities.getInt("optimistic_duration");
-            int likelyDuration = activities.getInt("likely_duration");
-            int pessimisticDuration = activities.getInt("pessimistic_duration");
-            Date createDate = DateHelper.parse(activities.getString("create_date"), ninefoo.config.Config.DATE_FORMAT);
-            Project project = projectModel.getProjectById(activities.getInt("project_id"));
-            Member member = memberModel.getMemberById(activities.getInt("member_id"));
-            
-            activity = new Activity(activityId, activityLabel, description, duration,
-                    optimisticDuration, likelyDuration, pessimisticDuration,
-                    createDate, project, member, null);
-        } catch (SQLException e) {
-            LOGGER.error("Could not get next activity from db --- detailed info: " + e.getMessage());
-        }
-
-        return activity;
-    }
 }

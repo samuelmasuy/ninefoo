@@ -1,17 +1,13 @@
 package ninefoo.model.sql;
 
-import ninefoo.config.*;
 import ninefoo.helper.DateHelper;
 import ninefoo.config.Config;
-import ninefoo.model.DbManager;
+import ninefoo.config.Database;
 import ninefoo.model.object.Member;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import ninefoo.model.sql.template.AbstractModel;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,8 +18,7 @@ import java.util.List;
  * Created on 30-May-2015.
  * @author Farzad MajidFayyaz
  */
-public class Member_model {
-    private static final Logger LOGGER = LogManager.getLogger();
+public class Member_model extends AbstractModel{
 
     /**
      * Inserts a new member into the database.
@@ -49,56 +44,44 @@ public class Member_model {
     //  4. Try to add the user again using this method.
     //  5. The return value should be 0.
     public int insertNewMember(Member member) {
-        Statement statement = DbManager.createConnectionStatement();
+    	
+    	// Open
+    	this.open();
 
-        if (statement == null) {
-            LOGGER.warn("Could not get a connection statement to DB");
-            return Database.ERROR;
-        }
-
-        String insertMemberSql = String.format("INSERT INTO " +
+    	// Query
+        sql = "INSERT INTO " +
                 "member(first_name, last_name, username, password) " +
-                "VALUES ('%s', '%s', '%s', '%s')", member.getFirstName(), member.getLastName(),
-                member.getUsername(), member.getPassword());
-
+                "VALUES (?, ?, ?, ?)";
+        
         try {
-            int updatedRows = statement.executeUpdate(insertMemberSql);
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+        	ps.setString(1, member.getFirstName());
+        	ps.setString(2, member.getLastName());
+        	ps.setString(3, member.getUsername());
+        	ps.setString(4, member.getPassword());
+        	
+        	// Run
+            affectedRows = ps.executeUpdate();
 
-            if (updatedRows == 1) {
-                ResultSet rs = statement.executeQuery("SELECT last_insert_rowid()");
-
-                if (rs.next())
-                    return rs.getInt("last_insert_rowid()");
-            }
+            // Check insert
+            if (affectedRows == 1)
+            	return this.getLastInsertId();
 
             LOGGER.warn("Updated row count was not equal to 1");
 
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not add member to db --- detailed info: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
         }
 
         return Database.ERROR;
-    }
-
-    // Utility method used to get the next member from the DB ResultSet object.
-    // ------------------------------------ Testing notes ------------------------------
-    // No need to test this method because it's not "public".
-    private Member getNextMember(ResultSet members) {
-
-        try {
-            int memberId = members.getInt("member_id");
-            String firstName = members.getString("first_name");
-            String lastName = members.getString("last_name");
-            String username = members.getString("username");
-            String password = members.getString("password");
-            Date registerDate = DateHelper.parse(members.getString("register_date"), Config.DATE_FORMAT);
-
-            return new Member(memberId, firstName, lastName, username, password, registerDate);
-        } catch (SQLException e) {
-            LOGGER.error("Problem reading next member from db --- detailed info: " + e.getMessage());
-        }
-
-        return null;
     }
 
     /**
@@ -114,20 +97,25 @@ public class Member_model {
     //  5. The difference between the new List's size and the old one should be equal
     //     to the number of users you created in step 2.
     public List<Member> getAllMembers() {
+    	
+    	// Open
+    	this.open();
+    	
         List<Member> allMembers = new ArrayList<>();
-        Statement statement = DbManager.createConnectionStatement();
-
-        if (statement == null) {
-            LOGGER.warn("Could not get a connection statement to DB");
-            return null;
-        }
-
-        String getAllMembersSql = "SELECT * FROM member";
+        
+        // Query
+        sql = "SELECT * FROM member";
         try {
-            ResultSet allMembersFromDb = statement.executeQuery(getAllMembersSql);
-
-            while (allMembersFromDb.next()) {
-                Member nextMember = getNextMember(allMembersFromDb);
+        	
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Run
+            result = ps.executeQuery();
+            
+            // Get all
+            while (result.next()) {
+                Member nextMember = getNextMember(result);
 
                 if (nextMember != null)
                     allMembers.add(nextMember);
@@ -135,8 +123,13 @@ public class Member_model {
 
             return allMembers;
 
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not get members from db --- detailed info: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
         }
 
         return null;
@@ -153,27 +146,41 @@ public class Member_model {
     //  2. (Assuming the returned value of insertNewMember is not zero) Run this method
     //     to make sure the returned value is not NULL.
     public Member getMemberById(int memberId) {
-        Statement statement = DbManager.createConnectionStatement();
+    	
+    	// Open
+    	this.open();
 
-        if (statement == null) {
-            LOGGER.warn("Could not get a connection statement to DB");
-            return null;
-        }
-
-        String getMemberByIdSql = "SELECT * FROM member " + "WHERE member_id = " + memberId;
+    	// Query
+        sql = "	SELECT * FROM member " + 
+        		"WHERE member_id = ?";
 
         try {
-            ResultSet members = statement.executeQuery(getMemberByIdSql);
-
-            if (members.next()) {
-                Member member = getNextMember(members);
+        	
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+        	ps.setInt(1, memberId);
+        	
+        	// Run
+            result = ps.executeQuery();
+            
+            // Get single
+            if (result.next()) {
+                Member member = getNextMember(result);
 
                 if (member != null)
                     return member;
             }
+            
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not get member with member_id = " + memberId + " --- " +
                          "detailed info: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
         }
 
         return null;
@@ -188,28 +195,39 @@ public class Member_model {
     // Suggested test case:
     //  I think exactly the same as the first suggested one for insertNewMember.
     public Member getMemberByUsername(String username) {
-        Statement statement = DbManager.createConnectionStatement();
+    	
+    	// Open
+    	this.open();
 
-        if (statement == null) {
-            LOGGER.warn("Could not get a connection statement to DB");
-            return null;
-        }
-
-        String getMemberByUsernameSql = String.format("SELECT * FROM member WHERE " +
-                "username = '%s'", username);
+    	// Query
+        sql = "SELECT * FROM member WHERE username = ?";
 
         try {
-            ResultSet members = statement.executeQuery(getMemberByUsernameSql);
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+        	ps.setString(1, username);;
+        	
+        	// Run
+            result = ps.executeQuery();
 
-            if (members.next()) {
-                Member member = getNextMember(members);
+            // Get single
+            if (result.next()) {
+                Member member = getNextMember(result);
 
                 if (member != null)
                     return member;
             }
+            
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not get member with username = '" + username + "' --- " +
                     "detailed info: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
         }
 
         return null;
@@ -249,21 +267,32 @@ public class Member_model {
     //  2. Use this method to delete that member.
     //  3. Query again to make sure the result is NULL.
     public boolean deleteMemberById(int memberId) {
-        Statement statement = DbManager.createConnectionStatement();
-
-        if (statement == null) {
-            LOGGER.warn("Could not get a connection statement to DB");
-            return false;
-        }
-
-        String deleteMemberSql = "DELETE FROM member WHERE member_id = " + memberId;
+    	
+    	// Open
+    	this.open();
+    	
+    	// Query
+        sql = "DELETE FROM member WHERE member_id = ?";
 
         try {
-            int updatedRows = statement.executeUpdate(deleteMemberSql);
-            return (updatedRows == 1);
+        	
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+        	ps.setInt(1, memberId);
+        	
+        	// Run
+            affectedRows = ps.executeUpdate();
+            return (affectedRows == 1);
 
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not delete member --- detailed info: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
         }
 
         return false;
@@ -278,23 +307,54 @@ public class Member_model {
     // Suggested test case:
     //  Same as deleteMemberById, but considering username instead of the ID.
     public boolean deleteMemberByUsername(String username) {
-        Statement statement = DbManager.createConnectionStatement();
+    	
+    	// Open
+    	this.open();
 
-        if (statement == null) {
-            LOGGER.warn("Could not get a connection statement to DB");
-            return false;
-        }
-
-        String deleteMemberSql = String.format("DELETE FROM member WHERE username LIKE '%s'", username);
+    	// Query
+        sql = "DELETE FROM member WHERE username LIKE ?";
         
         try {
-            int updatedRows = statement.executeUpdate(deleteMemberSql);
-            return (updatedRows == 1);
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+        	ps.setString(1, username);
+        	
+        	// Run
+            affectedRows = ps.executeUpdate();
+            return (affectedRows == 1);
 
+        // Error
         } catch (SQLException e) {
             LOGGER.error("MELISSA Could not delete member --- detailed info: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
         }
 
         return false;
+    }
+    
+ // Utility method used to get the next member from the DB ResultSet object.
+    // ------------------------------------ Testing notes ------------------------------
+    // No need to test this method because it's not "public".
+    private Member getNextMember(ResultSet members) {
+
+        try {
+            int memberId = members.getInt("member_id");
+            String firstName = members.getString("first_name");
+            String lastName = members.getString("last_name");
+            String username = members.getString("username");
+            String password = members.getString("password");
+            Date registerDate = DateHelper.parse(members.getString("register_date"), Config.DATE_FORMAT);
+
+            return new Member(memberId, firstName, lastName, username, password, registerDate);
+        } catch (SQLException e) {
+            LOGGER.error("Problem reading next member from db --- detailed info: " + e.getMessage());
+        }
+
+        return null;
     }
 }

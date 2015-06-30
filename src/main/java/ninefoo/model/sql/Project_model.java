@@ -6,14 +6,7 @@ import ninefoo.config.Config;
 import ninefoo.model.object.Project;
 import ninefoo.model.sql.template.AbstractModel;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -317,27 +310,5 @@ public class Project_model extends AbstractModel{
         }
 
         return false;
-    }
-    
-    // Helper method to get the next Project object from the DB ResultSet object.
-    private Project getNextProject(ResultSet projects) {
-
-        try {
-            int projectId = projects.getInt("project_id");
-            String projectName = projects.getString("project_name");
-            Date createDate = DateHelper.parse(projects.getString("create_date"), Config.DATE_FORMAT);
-            Date updateDate = DateHelper.parse(projects.getString("update_date"), Config.DATE_FORMAT);
-            double budget = projects.getDouble("budget");
-            Date deadlineDate = DateHelper.parse(projects.getString("deadline_date"), Config.DATE_FORMAT);
-            String description = projects.getString("description");
-            Date startDate = DateHelper.parse(projects.getString("start_date"), Config.DATE_FORMAT);
-            
-            return new Project(projectId, projectName, createDate, startDate, updateDate, budget, deadlineDate, description);
-
-        } catch (SQLException e) {
-            LOGGER.error("Could not get next project from db --- detailed info: " + e.getMessage());
-        }
-
-        return null;
     }
 }
