@@ -68,8 +68,16 @@ task pmexpert(dependsOn:['clean', 'build']) << {
 	println '\n>> Exporting ' + applicationTitle + ' to jar file...\n'
 	pmexpert_jar.execute()
 
+	println '\n>> Generating Javadoc...\n'
+	myJavadocs.execute()
+
 	println '\n>> Creating launcher.bat\n'
 	new File('build/' + libsDirName + '/launcher.bat').write 'java -jar "' + archivesBaseName + '-' + version + '.jar"'
+}
+
+// Generate Javadoc
+task myJavadocs(type: Javadoc) {
+  source = sourceSets.main.allJava
 }
 
 // Disable task for build
