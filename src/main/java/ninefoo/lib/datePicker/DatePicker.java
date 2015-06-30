@@ -84,8 +84,12 @@ public class DatePicker extends JDatePickerImpl {
 	 * @param date
 	 */
 	public void setDate(Date date){
-		this.model.setValue(date);
-		this.model.setSelected(true);
+		
+		// If date is not null
+		if(date != null){
+			this.model.setValue(date);
+			this.model.setSelected(true);
+		}
 	}
 	
 	/**

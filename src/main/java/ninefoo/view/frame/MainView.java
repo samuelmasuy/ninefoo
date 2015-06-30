@@ -516,7 +516,7 @@ public class MainView extends JFrame implements UpdatableView{
 	}
 
 	@Override
-	public void updateEditProject(boolean success, String message, Project project) {
+	public void updateEditProject(boolean success, String message) {
 		
 		// If successful
 		if(success){
@@ -525,7 +525,7 @@ public class MainView extends JFrame implements UpdatableView{
 			this.editProjectDialog.setSuccessMessage(message);
 			
 			// Update project
-			this.viewMyProjectsDialog.populateProject(project);
+			this.viewMyProjectsDialog.reloadProjectListByRole();
 			
 			// Close window
 			this.editProjectDialog.dispose();

@@ -138,7 +138,7 @@ public class Project_controller extends AbstractController implements ProjectLis
 			Project project = this.project_model.getProjectById(projectId);
 			
 			// Adjust the values type
-			double doubleBudget = budget.isEmpty() ? null : Double.parseDouble(budget);
+			double doubleBudget = budget.isEmpty() ? 0 : Double.parseDouble(budget);
 						
 			// Update object
 			project.setProjectName(name);
@@ -151,14 +151,14 @@ public class Project_controller extends AbstractController implements ProjectLis
 			if(this.project_model.updateProject(project)){
 				
 				// Update view
-				this.view.updateEditProject(true, String.format(LanguageText.getConstant("UPDATED"), LanguageText.getConstant("PROJECT")), project);
+				this.view.updateEditProject(true, String.format(LanguageText.getConstant("UPDATED"), LanguageText.getConstant("PROJECT")));
 			}
 			
 		// If requirement are not met
 		} else {
 			
 			// Update view
-			this.view.updateEditProject(false, validation.getError(), null);
+			this.view.updateEditProject(false, validation.getError());
 		}
 	}
 

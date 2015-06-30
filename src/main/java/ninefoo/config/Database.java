@@ -45,7 +45,7 @@ public class Database {
     		try {
                 Class.forName("org.sqlite.JDBC");
                 dbConnection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
-                LOGGER.info("Database connection opened...");
+                LOGGER.debug("Database connection opened...");
                 
             } catch (ClassNotFoundException e) {
                 LOGGER.error("Could not find org.sqlite.JDBC class --- detailed info: " +
@@ -68,7 +68,7 @@ public class Database {
             try {
                 dbConnection.close();
                 dbConnection = null;
-                LOGGER.info("Database connection closed");
+                LOGGER.debug("Database connection closed");
                 
             } catch (SQLException e) {
                 LOGGER.warn("Could not close db connection --- detailed info: " +
@@ -85,7 +85,7 @@ public class Database {
     	// Open connection
     	openConnection();
     	
-    	LOGGER.info("Start creating the database: " + DB_NAME);
+    	LOGGER.debug("Start creating the database: " + DB_NAME);
     	
     	// Load SQL File
 		ScriptRunner runner = new ScriptRunner(this.dbConnection, false, true);
@@ -102,7 +102,7 @@ public class Database {
 			LOGGER.error("SQL null pointer: " + e.getMessage());
 		}
 		
-    	LOGGER.info("Database created succesfully!");
+    	LOGGER.debug("Database created succesfully!");
 		
 		// Close connection
 		closeConnection();

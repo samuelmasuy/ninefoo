@@ -1,6 +1,8 @@
 package ninefoo.view.include.menu.dialog;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,6 +58,9 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 	// Constants
 	private final String onEmpty = " ---";
 	
+	// Listeners
+	ToolsListener toolsListener;
+	
 	/**
 	 * Constructor
 	 */
@@ -77,6 +82,9 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 		this.createdDateInfo = new JLabel();
 		this.startDateInfo = new JLabel();
 		this.deadlineDateInfo = new JLabel();
+		
+		// Set listeners
+		this.toolsListener = toolsListener;
 		
 		// Initialize panels
 		this.setCenterPanel(new FormDialog() {
@@ -120,9 +128,6 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 		this.southPanel.add(openButton);
 		this.southPanel.add(editButton);
 		
-		// Empty the fields
-		this.resetDescriptionPanel();
-		
 		// Configure label
 		this.descriptionInfo.setEditable(false);
 		this.descriptionInfo.setBackground(null);
@@ -130,8 +135,8 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 		// Set default role box value
 		this.roleBox.setSelectedIndex(0);
 		
-		// Load projects
-		toolsListener.loadAllMyProjectsByRole(ViewMyProjectsDialog.this, roleBox.getSelectedItem().toString());
+		// Load the list
+		this.reloadProjectListByRole();
 		
 		// Add role box listener
 		this.roleBox.addActionListener(new ActionListener() {
@@ -139,8 +144,7 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(toolsListener != null){
-					toolsListener.loadAllMyProjectsByRole(ViewMyProjectsDialog.this, roleBox.getSelectedItem().toString());
-					resetDescriptionPanel();
+					reloadProjectListByRole();
 				}
 			}
 		});
@@ -207,6 +211,18 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 		this.setLocationRelativeTo(parentFrame);
 		this.setResizable(false);
 		this.setVisible(true);
+	}
+	
+	/**
+	 * Load the list of projects by role
+	 */
+	public void reloadProjectListByRole(){
+		
+		// Load the list
+		if(this.toolsListener != null){
+			toolsListener.loadAllMyProjectsByRole(ViewMyProjectsDialog.this, roleBox.getSelectedItem().toString());
+			resetDescriptionPanel();
+		}
 	}
 	
 	/**
@@ -278,6 +294,14 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 	}
 	
 	/**
+	 * Refresh description panel
+	 */
+	public void refreshDescriptionPanel(){
+		if(projectList.getSelectedIndex() >= 0)
+			this.populateDescriptionPanel(projects.get(projectList.getSelectedIndex()));
+	}
+	
+	/**
 	 * Empty the fields
 	 */
 	private void resetDescriptionPanel(){
@@ -304,6 +328,9 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 			
 			// Add table
 			GridTable table = new GridTable(this);
+			
+			// Configure table
+			table.getGridBagConstraints().fill = GridBagConstraints.BOTH;
 			
 			// Add scroll pane for description
 			JScrollPane descriptionScroll = new JScrollPane(descriptionInfo);
@@ -340,10 +367,7 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 			table.put(new JLabel(LanguageText.getConstant("DESCRIPTION")));
 			
 			table.newRow();
-			table.put(descriptionScroll);
-			
-			// Set size
-			this.setPreferredSize(new Dimension(200,300));
+			table.put(descriptionScroll, 2);
 		}
 	}
 }

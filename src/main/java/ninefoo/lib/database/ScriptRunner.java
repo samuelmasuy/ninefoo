@@ -206,11 +206,11 @@ public class ScriptRunner {
 	}
 
 	private void print(Object o) {
-		LOGGER.info(o.toString().trim().replaceAll(" +", " "));
+		LOGGER.debug(o.toString().trim().replaceAll(" +", " "));
 	}
 
 	private void println(Object o) {
-		LOGGER.info(o.toString().trim().replaceAll(" +", " "));
+		LOGGER.debug(o.toString().trim().replaceAll(" +", " "));
 	}
 
 	private void printlnError(Object o) {
