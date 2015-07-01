@@ -1,6 +1,5 @@
 package ninefoo.view.include.menu.dialog;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
