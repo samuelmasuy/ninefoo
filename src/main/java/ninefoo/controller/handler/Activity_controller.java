@@ -12,7 +12,7 @@ import ninefoo.model.sql.Member_model;
 import ninefoo.model.sql.Project_model;
 import ninefoo.view.frame.UpdatableView;
 import ninefoo.view.listeners.ActivityListener;
-import ninefoo.view.project.TabularData_view;
+import ninefoo.view.project.table.TabularData_view;
 
 import java.util.List;
 

@@ -13,7 +13,7 @@ import ninefoo.lib.layout.dialog.CenterFormSouthButtonDialog;
 import ninefoo.lib.layout.dialog.FormDialog;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.object.Project;
-import ninefoo.view.project.listener.TabularDataListener;
+import ninefoo.view.project.table.listener.TabularDataListener;
 
 /**
  * Pop up dialog showing the dependency form.

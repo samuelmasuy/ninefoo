@@ -1,4 +1,4 @@
-package ninefoo.view.project;
+package ninefoo.view.project.chart;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

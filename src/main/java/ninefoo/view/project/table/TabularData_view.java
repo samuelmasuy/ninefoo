@@ -1,4 +1,4 @@
-package ninefoo.view.project;
+package ninefoo.view.project.table;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -19,7 +19,7 @@ import ninefoo.helper.StringHelper;
 import ninefoo.model.object.Activity;
 import ninefoo.model.object.Project;
 import ninefoo.view.project.dialog.ActivityDependencyDialog;
-import ninefoo.view.project.listener.TabularDataListener;
+import ninefoo.view.project.table.listener.TabularDataListener;
 
 /**
  * Table showing data about activities in a project
