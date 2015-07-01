@@ -8,10 +8,10 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import ninefoo.lib.autocompleteComboBox.AutocompleteComboBox;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.layout.dialog.CenterFormSouthButtonDialog;
 import ninefoo.lib.layout.dialog.FormDialog;
@@ -26,10 +26,12 @@ import ninefoo.model.object.Activity;
 
 public class AssignMemberToActivityDialog extends CenterFormSouthButtonDialog{
 
+	private static final long serialVersionUID = -5201591507213738168L;
+	
 	// Define components
 	private JButton assignButton;
-	private JComboBox<String> activityBox;
-	private JComboBox<String> memberBox;
+	private AutocompleteComboBox activityBox;
+	private AutocompleteComboBox memberBox;
 	private ArrayList<Member> users;
 	private ArrayList<Activity> activities;
 	
@@ -38,10 +40,14 @@ public class AssignMemberToActivityDialog extends CenterFormSouthButtonDialog{
 	 */
 	public AssignMemberToActivityDialog(JFrame parentFrame, final ToolsListener toolsListener) {
 		
+		// Dummy data
+		String[] activities_data = new String[] {"Activity1", "Activity2","Activity3", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2"};
+		String[] members_data = new String[] {"Mem1", "Member2BlaBlaBla"};
+		
 		// Initialize components
 		this.assignButton = new JButton(LanguageText.getConstant("ASSIGN_ACT"));
-		this.activityBox = new JComboBox<>(new String[] {"Activity1", "Activity2","Activity3", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2"});
-		this.memberBox = new JComboBox<>(new String[] {"Mem1", "Member2BlaBlaBla"});
+		this.activityBox = new AutocompleteComboBox(activities_data);
+		this.memberBox = new AutocompleteComboBox(members_data);
 		
 		this.setTitle(LanguageText.getConstant("ASSIGN_MEMBER_ACTIVITY_ACT"));
 		
@@ -58,6 +64,8 @@ public class AssignMemberToActivityDialog extends CenterFormSouthButtonDialog{
 		// Add center form
 		this.setCenterPanel(new FormDialog() {
 			
+			private static final long serialVersionUID = 873337676902693739L;
+
 			@Override
 			public void placeForm() {
 				// Set border title
