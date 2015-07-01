@@ -11,7 +11,7 @@ import ninefoo.config.Annotation.autoloadConfig;
 /**
  * This class contains constants and methods that configure the application
  * @see Autoload
- * @author Amir EL Bawab, Samuel Masuy, Farzad MajidFayyaz
+ * @author Amir EL Bawab, Samuel Masuy, Farzad MajidFayyaz, Sebouh Bardakjian
  */
 public class Config {
 	
@@ -32,6 +32,9 @@ public class Config {
 	
 	// Date format short version
 	public final static String DATE_FORMAT_SHORT = "dd/MM/yyyy";
+	
+	// Date format alpha version
+	public final static String DATE_FORMAT_ALPHA = "MMMMM d, yyyy";
 
 	/**
 	 * Auto load methods

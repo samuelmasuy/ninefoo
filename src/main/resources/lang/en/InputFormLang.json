@@ -1,6 +1,6 @@
 {
 	"name" : "Input form",
-	"description" : "Language for input form/dialog. E.g Firt name, Last name etc...",
+	"description" : "Language for input form/dialog. E.g First name, Last name etc...",
 	"language" : {
 
 		"WELCOME" : "Welcome",
@@ -16,11 +16,17 @@
 		
 		"LOGIN" : "Login",
 		"REGISTER" : "Register",
+		"CREATE" : "Create",
+		"ADD" : "Add",
 		
 		"CREATE_NEW_PROJECT" : "Create a new project",
 		"CREATE_PROJECT" : "Create project",
 		"DATE_CREATED" : "Date created",
 		"PROJECT" : "Project",
+		"USER": "User",
+		"MEMBER" : "Member",
+		"MANAGER" : "Manager",
+		"ROLE" : "Role",
 		"NAME" : "Name",
 		"BUDGET" : "Budget",
 		"DEADLINE" : "Deadline",

@@ -33,6 +33,7 @@ import org.apache.logging.log4j.LogManager;
 /**
  * Main frame for the GUI
  * @author Amir El Bawab
+ * @author Sebouh Bardakjian
  */
 public class MainView extends JFrame implements UpdatableView{
 
@@ -237,6 +238,29 @@ public class MainView extends JFrame implements UpdatableView{
 				if(projectListener != null)
 					projectListener.loadEditProjectFields(projectId);
 			}
+
+			@Override
+			public void assignMemberToActivity() {
+				System.out.println("Assign member clicked...");
+			}
+
+			@Override
+			public void createUser() {
+				System.out.println("Create user clicked...");
+			}
+
+			@Override
+			public void addUserToProject() {
+				System.out.println("Added user to project clicked...");
+			}
+
+			@Override
+			public void viewAssignedActivitiesProject() {
+				System.out.println("View assigned activities project clicked...");
+			}
+			
+			
+			
 		});
 		
 		// Add listener to table
