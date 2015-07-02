@@ -19,6 +19,7 @@ import ninefoo.model.sql.Role_model;
 import ninefoo.view.frame.UpdatableView;
 import ninefoo.view.listeners.ProjectListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -82,7 +83,7 @@ public class Project_controller extends AbstractController implements ProjectLis
 			if( (projectId = project_model.insertNewProject(project)) == Database.ERROR){
 				
 				// Display error
-				this.view.updateCreateProject(false, LanguageText.getConstant("ERROR_OCCURED"));
+				this.view.updateCreateProject(false, LanguageText.getConstant("ERROR_OCCURED"), null);
 			
 			// If insert successful
 			} else {
@@ -93,15 +94,21 @@ public class Project_controller extends AbstractController implements ProjectLis
 				// Add member to database as manager
 				this.projectMember_model.addMemberToProject(projectId, Session.getInstance().getUserId(), role);
 				
+				// Load the project
+				Project insertedProject = project_model.getProjectById(projectId);
+				
+				// Empty list of activities on create
+				insertedProject.setAcitivies(new ArrayList<Activity>());
+				
 				// Display success
-				this.view.updateCreateProject(true, String.format(LanguageText.getConstant("CREATED"), LanguageText.getConstant("PROJECT")));
+				this.view.updateCreateProject(true, String.format(LanguageText.getConstant("CREATED"), LanguageText.getConstant("PROJECT")), insertedProject);
 			}
 		
 		// If requirements are not met
 		} else {
 			
 			// Display error
-			this.view.updateCreateProject(false, validation.getError());
+			this.view.updateCreateProject(false, validation.getError(), null);
 		}
 	}
 	
@@ -184,7 +191,7 @@ public class Project_controller extends AbstractController implements ProjectLis
 		// If project found
 		if(project != null){
 			
-			// Load prerequisite for each activity
+			// Load activities and all their prerequisite
 			List<Activity> actList = this.activity_model.getActivitiesByProjectId(projectId);
 			for(Activity activity : actList)
 				

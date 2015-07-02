@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.object.Activity;
 import ninefoo.model.object.Project;
 import ninefoo.view.project.listener.TabularDataListener;
@@ -99,7 +100,7 @@ public class TableChartSlider_view extends JPanel{
 	 * @param message
 	 */
 	public void setErrorMessage(String message){
-		JOptionPane.showMessageDialog(this, String.format("<html>%s</html>", message), "Operation failed", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(this, String.format("<html>%s</html>", message), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
 	}
 	
 	/**

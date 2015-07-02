@@ -411,7 +411,7 @@ public class MainView extends JFrame implements UpdatableView{
 	 * @param message
 	 */
 	@Override
-	public void updateCreateProject(boolean success, String message){
+	public void updateCreateProject(boolean success, String message, Project project){
 		
 		// If dialog exists
 		if(createProjectDialog != null){
@@ -426,6 +426,12 @@ public class MainView extends JFrame implements UpdatableView{
 				
 				// Close dialog
 				createProjectDialog.dispose();
+				
+				// Load project
+				this.tableChartPanel.loadProject(project);
+				
+				// Enable creating activities
+				this.toolsPanel.setNewActivityEnabled(true);
 			
 			// If project not created
 			} else {

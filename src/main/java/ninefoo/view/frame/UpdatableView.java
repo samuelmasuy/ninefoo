@@ -17,7 +17,7 @@ public interface UpdatableView {
 	// Update GUI. Start methods with prefix: update
 	public void updateLogin(boolean success, String message);
 	public void updateRegister(boolean success, String message);
-	public void updateCreateProject(boolean success, String message);
+	public void updateCreateProject(boolean success, String message, Project project);
 	public void updateCreateUpdateActivity(boolean success, String message, int row, Activity activity, Project project);
 	public void updateLogout();
 	public void updateLoadProject(boolean success, String message, Project project);
