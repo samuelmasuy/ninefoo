@@ -1,4 +1,4 @@
-package ninefoo.view.project;
+package ninefoo.view.project.chart;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -7,12 +7,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import ninefoo.helper.DateHelper;
 import ninefoo.config.Config;
+import ninefoo.model.object.Activity;
 
 /**
  * Chart painted showing data in the Table Chart
@@ -32,6 +34,7 @@ public class GanttChart_view extends JPanel{
 	
 	// Define components
 	private JPanel panel;
+	private List<Activity> activities;
 	
 	/**
 	 * Constructor
@@ -71,6 +74,15 @@ public class GanttChart_view extends JPanel{
 		// Add components
 		this.add(scrollPane, BorderLayout.CENTER);
 	}
+	
+	
+	/** 
+	 * Setter for list of activities
+	 */
+	public void setActivitiesGantt(List<Activity> activities){
+		this.activities = activities;
+	}
+	
 	
 	/**
 	 * Draw activity

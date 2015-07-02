@@ -3,6 +3,9 @@ package ninefoo.helper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
+import ninefoo.model.object.Activity;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -68,4 +71,56 @@ public class DateHelper {
 
 		return null;
 	}
+	
+	/**
+	 * Get Min Activity Date
+	 */
+	public static Date getMinDate(List<Activity> activities){
+		Date minDate = null;
+		if (activities != null){
+			if (activities.size() == 1)
+				return activities.get(0).getStartDate();
+			
+			for (int i = 0; i < activities.size() - 1; i++){
+				if (activities.get(i).getStartDate().compareTo(activities.get(i + 1).getStartDate()) < 0){
+					minDate = activities.get(i).getStartDate();
+				} else {
+					minDate = activities.get(i + 1).getStartDate();
+				}
+			}
+		}
+		return minDate;
+		
+	}
+	
+	/**
+	 * Get Max Activity Date
+	 */
+	public static Date getMaxDate(List<Activity> activities){
+		Date maxDate = null;
+		if (activities != null){
+			if (activities.size() == 1)
+				return activities.get(0).getFinishDate();
+			
+			for (int i = 0; i < activities.size() - 1; i++){
+				if (activities.get(i).getFinishDate().compareTo(activities.get(i + 1).getFinishDate()) > 0){
+					maxDate = activities.get(i).getFinishDate();
+				} else {
+					maxDate = activities.get(i + 1).getFinishDate();
+				}
+			}
+		}
+		return maxDate;
+		
+	}
+	
+	/**
+	 * Get Difference of Max - Min Dates in int Number of days
+	 */
+	public static int getDifferenceDates(Date minDate, Date maxDate){
+		long diff = maxDate.getTime() - minDate.getTime();
+		return (int)(diff / (24 * 60 * 60 * 1000));
+	}
+	
+	
 }

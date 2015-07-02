@@ -26,7 +26,7 @@ import ninefoo.view.member.listeners.LoginListener;
 import ninefoo.view.member.listeners.RegisterListener;
 import ninefoo.view.project.TableChartSlider_view;
 import ninefoo.view.project.dialog.ActivityDependencyDialog;
-import ninefoo.view.project.listener.TabularDataListener;
+import ninefoo.view.project.table.listener.TabularDataListener;
 
 import org.apache.logging.log4j.LogManager;
 

@@ -9,7 +9,9 @@ import javax.swing.JSplitPane;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.object.Activity;
 import ninefoo.model.object.Project;
-import ninefoo.view.project.listener.TabularDataListener;
+import ninefoo.view.project.chart.GanttChart_view;
+import ninefoo.view.project.table.TabularData_view;
+import ninefoo.view.project.table.listener.TabularDataListener;
 
 /**
  * Panel container of a the table and Gantt chart

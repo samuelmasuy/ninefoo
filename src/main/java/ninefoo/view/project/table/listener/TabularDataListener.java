@@ -1,4 +1,4 @@
-package ninefoo.view.project.listener;
+package ninefoo.view.project.table.listener;
 
 import ninefoo.model.object.Project;
 import ninefoo.view.project.dialog.ActivityDependencyDialog;
