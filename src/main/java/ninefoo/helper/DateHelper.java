@@ -74,19 +74,22 @@ public class DateHelper {
 	
 	/**
 	 * Get Min Activity Date
+	 * @param activities
 	 */
-	public static Date getMinDate(List<Activity> activities){
+	public static Date getMinDate(List<Date> dates){
 		Date minDate = null;
-		if (activities != null){
-			if (activities.size() == 1)
-				return activities.get(0).getStartDate();
+		if (dates != null){
+			if (dates.size() == 1)
+				return dates.get(0);
 			
-			for (int i = 0; i < activities.size() - 1; i++){
-				if (activities.get(i).getStartDate().compareTo(activities.get(i + 1).getStartDate()) < 0){
-					minDate = activities.get(i).getStartDate();
-				} else {
-					minDate = activities.get(i + 1).getStartDate();
-				}
+			for (int i = 0; i < dates.size(); i++){
+				System.out.println(minDate);
+				System.out.println(dates.get(i));
+				if (minDate == null || minDate.after(dates.get(i)))
+					minDate = dates.get(i);
+				System.out.println("Min: " + minDate);
+				System.out.println();
+				
 			}
 		}
 		return minDate;
@@ -118,6 +121,8 @@ public class DateHelper {
 	 * Get Difference of Max - Min Dates in int Number of days
 	 */
 	public static int getDifferenceDates(Date minDate, Date maxDate){
+		if (minDate.after(maxDate))
+			throw new IllegalArgumentException("Min date should be at most the same as Max date!");
 		long diff = maxDate.getTime() - minDate.getTime();
 		return (int)(diff / (24 * 60 * 60 * 1000));
 	}

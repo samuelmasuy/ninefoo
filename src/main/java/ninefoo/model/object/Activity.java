@@ -100,6 +100,8 @@ public class Activity {
      */
     public Activity(String activityLabel, int duration, String startDate, String finishDate, Project project, Member member){
          this(0,activityLabel, null, duration, 0, 0, 0, null, project, member, null);
+         this.startDate = startDate;
+         this.finishDate = finishDate;
     }
 
     public int getActivityId() {
