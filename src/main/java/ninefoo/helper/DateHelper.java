@@ -83,12 +83,8 @@ public class DateHelper {
 				return dates.get(0);
 			
 			for (int i = 0; i < dates.size(); i++){
-				System.out.println(minDate);
-				System.out.println(dates.get(i));
 				if (minDate == null || minDate.after(dates.get(i)))
 					minDate = dates.get(i);
-				System.out.println("Min: " + minDate);
-				System.out.println();
 				
 			}
 		}
@@ -98,19 +94,17 @@ public class DateHelper {
 	
 	/**
 	 * Get Max Activity Date
+	 * @param activities
 	 */
-	public static Date getMaxDate(List<Activity> activities){
+	public static Date getMaxDate(List<Date> dates){
 		Date maxDate = null;
-		if (activities != null){
-			if (activities.size() == 1)
-				return activities.get(0).getFinishDate();
+		if (dates != null){
+			if (dates.size() == 1)
+				return dates.get(0);
 			
-			for (int i = 0; i < activities.size() - 1; i++){
-				if (activities.get(i).getFinishDate().compareTo(activities.get(i + 1).getFinishDate()) > 0){
-					maxDate = activities.get(i).getFinishDate();
-				} else {
-					maxDate = activities.get(i + 1).getFinishDate();
-				}
+			for (int i = 0; i < dates.size(); i++){
+				if (maxDate == null || maxDate.before(dates.get(i)))
+					maxDate = dates.get(i);
 			}
 		}
 		return maxDate;
