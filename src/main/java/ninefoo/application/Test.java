@@ -13,10 +13,12 @@ public class Test {
         Date maxDate =  DateHelper.parse("01/01/2012", Config.DATE_FORMAT_SHORT);
 		Date between = DateHelper.parse("01/01/2013", Config.DATE_FORMAT_SHORT);
 		
+
 		Date[] dates = {minDate, maxDate, between};
         
         System.out.println(DateHelper.getMinDate(Arrays.asList(dates)).toString());
 //        System.out.println(DateHelper.getMaxDate(activities).toString());
+
         System.out.println(DateHelper.getDifferenceDates(minDate, maxDate));
 	}
 

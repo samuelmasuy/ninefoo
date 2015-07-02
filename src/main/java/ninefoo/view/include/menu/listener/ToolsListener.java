@@ -17,6 +17,7 @@ public interface ToolsListener {
 	public void assignMemberToActivity();
 	public void addUserToProject();
 	public void viewAssignedActivitiesProject();
+	public void createActivity();
 	public void loadAllMyProjectsByRole(ViewMyProjectsDialog viewMyProjectsDialog, String roleName);
 	public void loadProject(ViewMyProjectsDialog viewMyProjectsDialog, int projectId);
 	public void updateProject(ViewMyProjectsDialog parentDialog, EditProjectDialog dialog, int projectId, String name, String budget, String startDate, String deadline, String description);
@@ -24,5 +25,6 @@ public interface ToolsListener {
 
 	
 	public void logout();
+	
 	
 }
