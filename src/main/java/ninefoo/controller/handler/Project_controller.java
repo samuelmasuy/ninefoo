@@ -195,7 +195,7 @@ public class Project_controller extends AbstractController implements ProjectLis
 			project.setAcitivies(actList);
 			
 			// Update view
-			this.view.updateLoadProject(true, String.format(LanguageText.getConstant("ERROR_OCCURED"), String.format("%s '%s'", LanguageText.getConstant("PROJECT"), project.getProjectName())), project);
+			this.view.updateLoadProject(true, String.format(LanguageText.getConstant("LOADED"), String.format("%s '%s'", LanguageText.getConstant("PROJECT"), project.getProjectName())), project);
 		
 		// If project not found
 		} else{
