@@ -258,6 +258,11 @@ public class MainView extends JFrame implements UpdatableView{
 			public void viewAssignedActivitiesProject() {
 				System.out.println("View assigned activities project clicked...");
 			}
+
+			@Override
+			public void createActivity() {
+				System.out.println("Create new activity clicked...");
+			}
 			
 			
 			
