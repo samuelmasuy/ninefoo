@@ -18,6 +18,7 @@
 		"REGISTER" : "Register",
 		"CREATE" : "Create",
 		"ADD" : "Add",
+		"CLOSE" : "Close",
 		
 		"CREATE_NEW_PROJECT" : "Create a new project",
 		"CREATE_PROJECT" : "Create project",

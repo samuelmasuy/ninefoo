@@ -231,4 +231,10 @@ public class Project_controller extends AbstractController implements ProjectLis
 			this.view.updateLoadEditProjectFields(false, LanguageText.getConstant("ERROR_OCCURED"), null);
 		}
 	}
+
+	@Override
+	public void loadAssignedActivitiesProject() {
+		// TODO loadAssignedActivitiesProject
+		// Load all my activities with their projects using one query
+	}
 }

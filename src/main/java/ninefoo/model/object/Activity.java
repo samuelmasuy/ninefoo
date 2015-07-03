@@ -225,8 +225,9 @@ public class Activity {
      */
     public String getPrerequisitesAsString(){
     	List<Integer> preId = new ArrayList<>();
-    	for(int i=0; i<prerequisites.size(); i++)
-    		preId.add(prerequisites.get(i).getActivityId());
+    	if(this.prerequisites != null)
+    		for(int i=0; i<prerequisites.size(); i++)
+        		preId.add(prerequisites.get(i).getActivityId());
     	return Arrays.toString(preId.toArray());
     }
 }

@@ -15,6 +15,7 @@ import ninefoo.view.include.menu.Menu;
 import ninefoo.view.include.menu.Tools;
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
 import ninefoo.view.include.menu.dialog.EditProjectDialog;
+import ninefoo.view.include.menu.dialog.ViewAssignedActivitiesDialog;
 import ninefoo.view.include.menu.dialog.ViewMyProjectsDialog;
 import ninefoo.view.include.menu.listener.ToolsListener;
 import ninefoo.view.listeners.ActivityListener;
@@ -54,6 +55,7 @@ public class MainView extends JFrame implements UpdatableView{
 	private CreateProjectDialog createProjectDialog;
 	private ViewMyProjectsDialog viewMyProjectsDialog;
 	private EditProjectDialog editProjectDialog;
+	private ViewAssignedActivitiesDialog viewAssignedActivitiesDialog;
 	
 	// Define variables
 	private JPanel currentCenterPanel;
@@ -246,9 +248,14 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
-			public void viewAssignedActivitiesProject() {
-				// TODO viewAssignedActivitiesProject
-				System.out.println("View assigned activities project clicked...");
+			public void loadAssignedActivitiesProject(ViewAssignedActivitiesDialog dialog) {
+				
+				// Set dialog
+				viewAssignedActivitiesDialog = dialog;
+				
+				// Pass it to controller
+				if(projectListener != null)
+					projectListener.loadAssignedActivitiesProject();
 			}
 
 			@Override
@@ -530,6 +537,28 @@ public class MainView extends JFrame implements UpdatableView{
 		
 		// Reset dialog
 		this.editProjectDialog = null;
+	}
+	
+	@Override
+	public void updateLoadAssignedActivitiesProject(boolean success, String message, List<Project> projects) {
+		
+		// If load successful
+		if(success) {
+			
+			// Set projects
+			this.viewAssignedActivitiesDialog.setProjects(projects);
+			
+		} else {
+			
+			// Display error
+			this.viewAssignedActivitiesDialog.setErrorMessage(message);
+			
+			// Close dialog
+			this.viewAssignedActivitiesDialog.dispose();
+			
+			// Reset pointer
+			this.viewAssignedActivitiesDialog = null;
+		}
 	}
 	
 	/************************************************************

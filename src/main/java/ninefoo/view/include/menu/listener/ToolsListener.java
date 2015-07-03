@@ -2,6 +2,7 @@ package ninefoo.view.include.menu.listener;
 
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
 import ninefoo.view.include.menu.dialog.EditProjectDialog;
+import ninefoo.view.include.menu.dialog.ViewAssignedActivitiesDialog;
 import ninefoo.view.include.menu.dialog.ViewMyProjectsDialog;
 
 /**
@@ -16,14 +17,14 @@ public interface ToolsListener {
 	public void createUser();
 	public void assignMemberToActivity();
 	public void addUserToProject();
-	public void viewAssignedActivitiesProject();
 	public void createActivity();
 	
 	// Load
 	public void loadAllMyProjectsByRole(ViewMyProjectsDialog viewMyProjectsDialog, String roleName);
 	public void loadProject(ViewMyProjectsDialog viewMyProjectsDialog, int projectId);
 	public void loadEditProjectFields(EditProjectDialog editProjectDialog, int projectId);
-
+	public void loadAssignedActivitiesProject(ViewAssignedActivitiesDialog dialog);
+	
 	// Update
 	public void updateProject(ViewMyProjectsDialog parentDialog, EditProjectDialog dialog, int projectId, String name, String budget, String startDate, String deadline, String description);
 	
