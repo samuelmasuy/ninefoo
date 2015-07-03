@@ -1,4 +1,4 @@
-package ninefoo.lib.layout.table;
+package ninefoo.lib.layout.grid;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;

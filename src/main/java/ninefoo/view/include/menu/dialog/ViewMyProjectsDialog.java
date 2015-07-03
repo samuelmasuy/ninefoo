@@ -28,7 +28,7 @@ import ninefoo.helper.DateHelper;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.layout.dialog.CenterFormSouthButtonDialog;
 import ninefoo.lib.layout.dialog.FormDialog;
-import ninefoo.lib.layout.table.GridTable;
+import ninefoo.lib.layout.grid.GridTable;
 import ninefoo.model.object.Project;
 import ninefoo.view.include.menu.listener.ToolsListener;
 import ninefoo.config.Config;

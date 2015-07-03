@@ -9,7 +9,7 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import ninefoo.lib.lang.LanguageText;
-import ninefoo.lib.layout.table.GridTable;
+import ninefoo.lib.layout.grid.GridTable;
 
 /**
  * Template for form panels.

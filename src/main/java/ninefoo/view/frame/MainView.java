@@ -25,8 +25,6 @@ import ninefoo.view.member.Register_view;
 import ninefoo.view.member.listeners.LoginListener;
 import ninefoo.view.member.listeners.RegisterListener;
 import ninefoo.view.project.TableChartSlider_view;
-import ninefoo.view.project.dialog.ActivityDependencyDialog;
-import ninefoo.view.project.table.listener.TabularDataListener;
 
 import org.apache.logging.log4j.LogManager;
 
@@ -55,7 +53,6 @@ public class MainView extends JFrame implements UpdatableView{
 	// Define dialogs
 	private CreateProjectDialog createProjectDialog;
 	private ViewMyProjectsDialog viewMyProjectsDialog;
-	private ActivityDependencyDialog activityDependencyDialog;
 	private EditProjectDialog editProjectDialog;
 	
 	// Define variables
@@ -174,14 +171,6 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
-			public void newActivity() {
-				LOGGER.info("Activity added");
-				
-				// Add empty row
-				tableChartPanel.addEmptyRow();
-			}
-
-			@Override
 			public void logout() {
 				
 				// Logout
@@ -189,7 +178,6 @@ public class MainView extends JFrame implements UpdatableView{
 					memberListener.logout();
 			}
 
-			// TODO Change this and add another method for update
 			@Override
 			public void loadAllMyProjectsByRole(ViewMyProjectsDialog dialog, String roleName) {
 
@@ -241,57 +229,32 @@ public class MainView extends JFrame implements UpdatableView{
 
 			@Override
 			public void assignMemberToActivity() {
+				// TODO assignMemberToActivity
 				System.out.println("Assign member clicked...");
 			}
 
 			@Override
 			public void createUser() {
+				// TODO createUser
 				System.out.println("Create user clicked...");
 			}
 
 			@Override
 			public void addUserToProject() {
+				// TODO addUserToProject
 				System.out.println("Added user to project clicked...");
 			}
 
 			@Override
 			public void viewAssignedActivitiesProject() {
+				// TODO viewAssignedActivitiesProject
 				System.out.println("View assigned activities project clicked...");
 			}
 
 			@Override
 			public void createActivity() {
+				// TODO createActivity
 				System.out.println("Create new activity clicked...");
-			}
-			
-			
-			
-		});
-		
-		// Add listener to table
-		this.tableChartPanel.setTabularDataListener(new TabularDataListener() {
-			
-			@Override
-			public void tableUpdated(int row, Project project, String activityId, String activityName, String start, String end, String duration, String activityCompleted) {
-
-				LOGGER.info(String.format("Table updated at row %d: Project Id: %s, Activity Id: %s, duration: %s, start: %s, finish: %s, user Id: %d", row, project.getProjectId(), activityId, duration, start, end, Session.getInstance().getUserId()));
-	
-				// Create or update listener
-				if(activityListener != null)
-					activityListener.createUpdateActivity(row, activityId, activityName, duration, start, end, project, activityCompleted, Session.getInstance().getUserId());
-				
-			}
-
-			@Override
-			public void dependencyLink(ActivityDependencyDialog dialog, int activityIdDependent, int activityIdDependentOn, int row) {
-
-				LOGGER.info(String.format("Trying to create dependency: %d depends on %d", activityIdDependent, activityIdDependentOn));
-				
-				// Set dialog
-				activityDependencyDialog = dialog;
-				
-				// Create dependency
-				activityListener.createDependentActivities(activityIdDependent, activityIdDependentOn, row);
 			}
 		});
 		
@@ -362,6 +325,12 @@ public class MainView extends JFrame implements UpdatableView{
 		this.activityListener = activityListener;
 	}
 	
+	/************************************************************
+	*                                                           *
+	*     					MEMBER                              *
+	*                                                           *
+	*************************************************************/
+	
 	/**
 	 * Try login (Information sent from Controller)
 	 * @param success
@@ -410,6 +379,22 @@ public class MainView extends JFrame implements UpdatableView{
 		}
 	}
 	
+	@Override
+	public void updateLogout() {
+		this.loginPanel.reset();
+		this.loadView(loginPanel);
+		this.tableChartPanel.reset();
+		this.toolsPanel.setNewActivityEnabled(false);
+		this.tableChartPanel.setProject(null);
+		LOGGER.info("Logout successful");
+	}
+
+	/************************************************************
+	*                                                           *
+	*     					PROJECT                             *
+	*                                                           *
+	*************************************************************/
+	
 	/**
 	 * Try to create the project
 	 * @param success
@@ -451,43 +436,7 @@ public class MainView extends JFrame implements UpdatableView{
 			createProjectDialog = null;
 		}
 	}
-
-	@Override
-	public void updateCreateUpdateActivity(boolean success, String message, int row, Activity activity, Project project) {
-		
-		// If activity is set
-		if(activity !=null){
-
-			// If table was updated
-			if(success) {
-				
-				// Update table row
-				this.tableChartPanel.updateTableRow(row, activity);
-				
-				// Set project
-				this.tableChartPanel.setProject(project);
-				
-			} else {
-				
-				// Display error message
-				this.tableChartPanel.setErrorMessage(message);
-				
-				// Update table row
-				this.tableChartPanel.updateTableRow(row, activity);
-			}
-		}
-	}
-
-	@Override
-	public void updateLogout() {
-		this.loginPanel.reset();
-		this.loadView(loginPanel);
-		this.tableChartPanel.reset();
-		this.toolsPanel.setNewActivityEnabled(false);
-		this.tableChartPanel.setProject(null);
-		LOGGER.info("Logout successful");
-	}
-
+	
 	@Override
 	public void updateLoadProject(boolean success, String message, Project project) {
 		
@@ -523,30 +472,6 @@ public class MainView extends JFrame implements UpdatableView{
 			
 			// Reset pointer so it cannot be used anywhere else
 			this.viewMyProjectsDialog = null;
-		}
-	}
-
-	@Override
-	public void updateCreateDependentActivities(boolean success, String message, int row, Activity activity) {
-		
-		// if successful
-		if(success){
-			
-			// Update table row
-			this.tableChartPanel.updateTableRow(row, activity);
-			
-			// Close window
-			this.activityDependencyDialog.dispose();
-			
-			LOGGER.info("Dependency created!");
-			
-		// If not successful
-		} else {
-			
-			// Display error
-			this.tableChartPanel.setErrorMessage(message);
-			
-			LOGGER.error(message);
 		}
 	}
 
@@ -605,5 +530,28 @@ public class MainView extends JFrame implements UpdatableView{
 		
 		// Reset dialog
 		this.editProjectDialog = null;
+	}
+	
+	/************************************************************
+	*                                                           *
+	*     					ACITIVITY                           *
+	*                                                           *
+	*************************************************************/
+	
+	@Override
+	public void updateCreateActivity(boolean success, String message, Project project) {
+		
+		// TODO updateCreateActivity
+	}
+	
+	@Override
+	public void updateCreateDependentActivities(boolean success, String message, int row, Activity activity) {
+		// TODO updateCreateDependentActivities
+	}
+
+	@Override
+	public void updateEditActivity(boolean success, String message, Project project) {
+		// TODO Auto-generated method stub
+		
 	}
 }
