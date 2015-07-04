@@ -11,7 +11,10 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
+import ninefoo.lib.datePicker.DatePicker;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.layout.dialog.CenterFormSouthButtonDialog;
 import ninefoo.lib.layout.dialog.FormDialog;
@@ -20,8 +23,19 @@ import ninefoo.model.object.Member;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
 public class CreateActivityDialog extends CenterFormSouthButtonDialog {
+	
 	// Define components
 	private JButton createButton;
+	private JTextField activityLabel;
+	private JTextArea description;
+	private JTextField duration;
+	private JTextField optimisticDuration;
+	private JTextField likelyDuration;
+	private JTextField pessimisticDuration;
+	private DatePicker startDate;
+	private DatePicker finishDate;
+	private String[] member_data = new String [] {};
+	private String[] prerequisite_data = new String [] {};
 	
 	/** 
 	 *  Constructor
@@ -29,7 +43,7 @@ public class CreateActivityDialog extends CenterFormSouthButtonDialog {
 	public CreateActivityDialog(JFrame parentFrame, final ToolsListener toolsListener) {
 		
 		// Initialize components
-		this.createButton = new JButton(LanguageText.getConstant("ASSIGN_ACT"));
+		this.createButton = new JButton(LanguageText.getConstant("CREATE"));
 		
 		this.setTitle(LanguageText.getConstant(""));
 		
