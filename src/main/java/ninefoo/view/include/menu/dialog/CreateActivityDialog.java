@@ -11,18 +11,19 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import ninefoo.lib.datePicker.DatePicker;
 import ninefoo.lib.lang.LanguageText;
-import ninefoo.lib.layout.dialog.CenterFormSouthButtonDialog;
+import ninefoo.lib.layout.dialog.CenterScrollSouthButtonDialog;
 import ninefoo.lib.layout.dialog.FormDialog;
 import ninefoo.model.object.Activity;
 import ninefoo.model.object.Member;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
-public class CreateActivityDialog extends CenterFormSouthButtonDialog {
+public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 	
 	// Define components
 	private JButton createButton;
@@ -34,8 +35,8 @@ public class CreateActivityDialog extends CenterFormSouthButtonDialog {
 	private JTextField pessimisticDuration;
 	private DatePicker startDate;
 	private DatePicker finishDate;
-	private String[] member_data = new String [] {};
-	private String[] prerequisite_data = new String [] {};
+	private String[] member_data = new String [] {"Member1", "Member2"};
+	private String[] prerequisite_data = new String [] {"Prereq1", "Prereq2"};
 	
 	/** 
 	 *  Constructor
@@ -44,8 +45,16 @@ public class CreateActivityDialog extends CenterFormSouthButtonDialog {
 		
 		// Initialize components
 		this.createButton = new JButton(LanguageText.getConstant("CREATE"));
+		this.activityLabel = new JTextField(10);
+		this.description = new JTextArea(3,10);
+		this.duration = new JTextField(10);
+		this.optimisticDuration = new JTextField(10);
+		this.likelyDuration = new JTextField(10);
+		this.pessimisticDuration = new JTextField(10);
+		this.startDate = new DatePicker(8);
+		this.finishDate = new DatePicker(8);
 		
-		this.setTitle(LanguageText.getConstant(""));
+		this.setTitle(LanguageText.getConstant("CREATE_ACTIVITY_ACT"));
 		
 		// Add button listener
 		this.createButton.addActionListener(new ActionListener() {
@@ -57,23 +66,9 @@ public class CreateActivityDialog extends CenterFormSouthButtonDialog {
 			}
 		});
 		
-		// Add center form
-		this.setCenterPanel(new FormDialog() {
-			
-			@Override
-			public void placeForm() {
-				// Set border title
-				this.titledBorder.setTitle(String.format(LanguageText.getConstant("")));
-				
-				// Set input border
-			
-				// Add components
-				this.table.put(new JLabel(LanguageText.getConstant("")));
-				
-				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("")));
-			}
-		});
+		// Add center scroll
+		
+		//this.setCenterPanel();
 		
 		// Add component to south panel
 		this.southPanel.add(createButton);
@@ -85,6 +80,6 @@ public class CreateActivityDialog extends CenterFormSouthButtonDialog {
 		this.setVisible(true);
 	}
 	
-	
+	// Create Wrapper class panel
 	
 }
