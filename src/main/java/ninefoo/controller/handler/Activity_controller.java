@@ -1,6 +1,7 @@
 package ninefoo.controller.handler;
 
 import ninefoo.controller.handler.template.AbstractController;
+import ninefoo.lib.validationForm.ValidationForm;
 import ninefoo.model.object.Project;
 import ninefoo.model.sql.Activity_model;
 import ninefoo.model.sql.Member_model;
@@ -31,6 +32,10 @@ public class Activity_controller extends AbstractController implements ActivityL
 
 	@Override
 	public void createActivity(int row, String activityId, String activityLabel, String duration, String startDate, String finishDate, Project project, String completion, int memberId) {
+		ValidationForm validation = new ValidationForm();
+		
+		//check if empty
+		
 		
 	}
 
