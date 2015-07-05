@@ -64,7 +64,7 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 		});
 
 		// Add center form
-		this.setCenterPanel(new JScrollPane(getAllProjectActivityWrapperPanel()));
+		this.setCenterPanel(getAllProjectActivityWrapperPanel());
 		
 		// Add component to south panel
 		this.southPanel.add(this.close);
