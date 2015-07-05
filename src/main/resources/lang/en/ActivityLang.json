@@ -2,11 +2,23 @@
 	"name" : "Activity language",
 	"description" : "Language related to Activity. Include the suffix _ACT for each key",
 	"language" : {
-		"NEW_DEPENDENCY_ACT" : "New dependency",
-		"ACTIVITY_DEPENDS_ACT" : "Activity '%s' depends on",
-		"ASSIGN_MEMBER_ACTIVITY_ACT" : "Assign member to activity",
-		"ACTIVITY_ACT" : "Activity",
-		"ASSIGN_ACT" : "Assign",
-		"MY_ASSIGNED_ACTIVITIES_ACT" : "My assigned activities"
+		"NEW_DEPENDENCY_ACT"        : "New dependency",
+		"ACTIVITY_DEPENDS_ACT"      : "Activity '%s' depends on",
+		"ASSIGN_MEMBER_ACTIVITY_ACT": "Assign member to activity",
+		"ACTIVITY_ACT"              : "Activity",
+		"ASSIGN_ACT"                : "Assign",
+		"MY_ASSIGNED_ACTIVITIES_ACT": "My assigned activities",
+		
+		"ACTIVITY_ID_ACT"           : "Activity ID",
+		"ACTIVITY_NAME_ACT"         : "Activity Name",
+		"START_ACT"                 : "Start",
+		"FINISH_ACT"                : "Finish",
+		"DURATION_ACT"              : "Duration",
+		"PLANNED_PERCENTAGE_ACT"    : "Plan. %",
+		"OPTIMISTIC_ACT"            : "Optimistic",
+		"LIKELY_ACT"                : "Likely",
+		"PESSIMISTIC_ACT"           : "Pessimistic",
+		"MEMBER_ACT"                : "Member",
+		"PREREQ_ACT"                : "Prereq."
 	}
 }
