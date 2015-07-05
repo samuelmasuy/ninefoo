@@ -10,6 +10,7 @@ import ninefoo.lib.lang.LanguageText;
 /**
  * Rules for input fields.
  * @author Amir EL Bawab
+ * @author Melissa
  */
 public class ValidationRule {
 	
@@ -22,6 +23,7 @@ public class ValidationRule {
 	private boolean doubleChecker = false;
 	private boolean dateBeforeChecker = false;
 	private boolean dateAfterChecker = false;
+	private boolean maxNumChecker = false;
 	
 	// Variables
 	private String name;
@@ -135,6 +137,21 @@ public class ValidationRule {
 		return this;
 	}
 	
+	
+	/**
+	 * Melissa added this July-04-2015
+	 * @param maxValue maximum value
+	 * @return ValidationRule
+	 */
+	private int maxValue;
+	public ValidationRule checkMaxNumValue(int maxValue) {
+		maxNumChecker=true;
+		this.maxValue=maxValue;
+		return this;
+	}
+
+	
+	
 	/**
 	 * Run validation test
 	 * @return boolean
@@ -224,6 +241,22 @@ public class ValidationRule {
 				}
 			}
 		}
+		
+		
+		//melissa added this July-04-2015
+		if (this.maxNumChecker) {
+
+			// If values are not empty
+			if (!this.value.isEmpty()) {
+				
+				if (Integer.parseInt(this.value) > this.maxValue)
+					errorMessage = String.format(LanguageText.getConstant("MAX_NUM_VALUE"), this.name);
+				return false;
+			}
+			
+		}
+		
+		
 		
 		return true;
 	}

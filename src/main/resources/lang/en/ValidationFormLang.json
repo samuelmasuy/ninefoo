@@ -11,6 +11,7 @@
 		"MAX_LENGTH" : "%s length must be at most %d.",
 		"REGISTRATION_SUCCESS" : "Registration successful! Please login.",
 		"UNIQUE" : "%s must be unique",
+		"MAX_NUM_VALUE": "%s number exceeds maximum value of ___"
 
 		"OPERATION_FAILED" : "Operation failed",
 		"OPERATION_SUCCESSFUL" : "Operation successful",
