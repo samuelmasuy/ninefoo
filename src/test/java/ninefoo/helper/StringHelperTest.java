@@ -27,4 +27,14 @@ public class StringHelperTest {
 		assertEquals("The testProject is not an object", expected, actual);
 	}
 
+	@Test
+	public void testJoin() {
+		String first = "foo";
+		String second = "bar";
+
+		assertEquals("should give foo", first, StringHelper.join(first, null));
+		assertEquals("should give bar", second, StringHelper.join(second, null));
+		assertEquals("should give foobar", first + ", " + second, StringHelper.join(first, second));
+	}
+
 }
