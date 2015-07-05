@@ -35,7 +35,7 @@ public abstract class CenterScrollSouthButtonDialog extends JDialog{
 	private static final long serialVersionUID = 6124363441606459436L;
 	
 	protected JPanel southPanel;
-	protected JPanel centerPanel;
+	protected FormDialog centerPanel;
 	protected JScrollPane centerPanelScroll;
 	
 	/**
@@ -63,10 +63,13 @@ public abstract class CenterScrollSouthButtonDialog extends JDialog{
 	 * Set center panel
 	 * @param centerPanel
 	 */
-	public void setCenterPanel(JPanel centerPanel){
+	public void setCenterPanel(FormDialog centerPanel){
 		
 		// Set center panel
 		this.centerPanel = centerPanel;
+		
+		// Call place form
+		this.centerPanel.placeForm();
 		
 		// Configure scroll panel
 		this.centerPanel.setBorder(null);
