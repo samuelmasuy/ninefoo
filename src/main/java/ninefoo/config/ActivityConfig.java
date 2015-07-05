@@ -1,5 +1,7 @@
 package ninefoo.config;
 
+import java.util.ArrayList;
+
 import ninefoo.lib.lang.LanguageText;
 
 /**
@@ -40,15 +42,6 @@ public class ActivityConfig {
 	public static final int PREREQ = getIndexOfTitle(LanguageText.getConstant("PREREQ_ACT"));
 	
 	/**
-	 * Get header at a position
-	 * @param i
-	 * @return header title
-	 */
-	public static String getHeaderAtIndex(int i){
-		return TABLE_HEADER[i];
-	}
-	
-	/**
 	 * Get index of a title in the header
 	 * @param title
 	 * @return index
@@ -58,5 +51,26 @@ public class ActivityConfig {
 			if(TABLE_HEADER[i].equalsIgnoreCase(title))
 				return i;
 		return -1;
+	}
+	
+	/**
+	 * Get the list of active columns
+	 * @return String array of active columns
+	 */
+	public static String[] getFilteredHeader(){
+		ArrayList<String> header = new ArrayList<>(TABLE_HEADER.length);
+		for(int i = 0; i < TABLE_HEADER_TOGGLER.length; i++)
+			if(TABLE_HEADER_TOGGLER[i] == false) 
+				header.add(TABLE_HEADER[i]);
+		return header.toArray(new String[header.size()]);
+	}
+	
+	/**
+	 * Check if it's enabled
+	 * @param index
+	 * @return boolean
+	 */
+	public static boolean isEnabled(int index){
+		return ActivityConfig.TABLE_HEADER_TOGGLER[index] == false;
 	}
 }

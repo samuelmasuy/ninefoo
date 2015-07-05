@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import ninefoo.config.ActivityConfig;
+import ninefoo.helper.ActivityHelper;
 import ninefoo.lib.excelTable.NumberedExcelTable;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.layout.dialog.CenterScrollSouthButtonDialog;
@@ -148,7 +149,7 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 			// Add rows
 			List<Activity> activities = project.getAcitivies();
 			for(Activity activity : activities)
-				table.addRow(activity.getActivityId(), activity.getActivityLabel(), activity.getStartDate(), activity.getFinishDate(), activity.getDuration(), activity.getPrerequisitesAsString());
+				table.addRow(ActivityHelper.getRow(activity));
 			
 			// Add components
 			this.add(this.tableScrollPane, BorderLayout.CENTER);
