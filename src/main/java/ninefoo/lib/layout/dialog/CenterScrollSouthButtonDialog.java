@@ -1,7 +1,6 @@
 package ninefoo.lib.layout.dialog;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dialog;
 
 import javax.swing.BorderFactory;
@@ -9,7 +8,6 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.border.TitledBorder;
 
 import ninefoo.lib.lang.LanguageText;
 
