@@ -5,11 +5,8 @@ import java.awt.Dialog;
 
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
-import ninefoo.lib.lang.LanguageText;
 
 /**
  * This class must be inherited by dialog boxes that are composed of two parts:
@@ -105,7 +102,7 @@ public abstract class CenterScrollSouthButtonDialog extends JDialog{
 	 * @param msg Message to be displayed
 	 */
 	public void setErrorMessage(String msg){
-		JOptionPane.showMessageDialog(this, String .format("<html>%s</html>", msg), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
+		this.centerPanel.setErrorMessage(msg);
 	}
 	
 	/**
@@ -113,6 +110,6 @@ public abstract class CenterScrollSouthButtonDialog extends JDialog{
 	 * @param msg Message to be displayed
 	 */
 	public void setSuccessMessage(String msg){
-		JOptionPane.showMessageDialog(this, String .format("<html>%s</html>", msg), LanguageText.getConstant("OPERATION_SUCCESSFUL"), JOptionPane.INFORMATION_MESSAGE);
+		this.centerPanel.setSuccessMessage(msg);
 	}
 }
