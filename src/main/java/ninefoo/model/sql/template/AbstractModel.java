@@ -144,10 +144,11 @@ public abstract class AbstractModel {
             Date createDate = DateHelper.parse(activities.getString("create_date"), ninefoo.config.Config.DATE_FORMAT);
             Project project = projectModel.getProjectById(activities.getInt("project_id"));
             Member member = memberModel.getMemberById(activities.getInt("member_id"));
+            double cost = activities.getDouble("cost");
             
             activity = new Activity(activityId, activityLabel, description, duration,
                     optimisticDuration, likelyDuration, pessimisticDuration,
-                    createDate, project, member, null);
+                    createDate, project, member, null, cost);
         } catch (SQLException e) {
             LOGGER.error("Could not get next activity from db --- detailed info: " + e.getMessage());
         }

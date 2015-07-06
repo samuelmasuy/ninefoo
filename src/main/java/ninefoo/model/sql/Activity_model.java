@@ -40,7 +40,7 @@ public class Activity_model extends AbstractModel{
     	// Query
         sql = "INSERT INTO activity(activity_label, description, duration, " +
         "optimistic_duration, likely_duration, pessimistic_duration, " +
-        "project_id, member_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        "project_id, member_id, start_date, finish_date, cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         try {
         	
@@ -56,6 +56,9 @@ public class Activity_model extends AbstractModel{
         	ps.setInt(6, activity.getPessimisticDuration());
         	ps.setInt(7, activity.getProject().getProjectId());
         	ps.setInt(8, activity.getMember().getMemberId());
+        	ps.setString(9, DateHelper.format(activity.getStartDate(), Config.DATE_FORMAT));
+        	ps.setString(10, DateHelper.format(activity.getFinishDate(), Config.DATE_FORMAT));
+        	ps.setDouble(11, activity.getCost());
         	
         	// Run 
             affectedRows = ps.executeUpdate();
@@ -318,7 +321,7 @@ public class Activity_model extends AbstractModel{
 		        "SET    activity_label = ?, description = ?, " +
 		        "       duration = ?, optimistic_duration = ?, likely_duration = ?, " +
 		        "       pessimistic_duration = ?, update_date = ?, project_id = ?, " +
-		        "		start_date = ?, , finish_date = ?" +
+		        "		start_date = ?, finish_date = ?, cost = ?" +
 		        " 		WHERE activity_id = ?";
         
         try {
@@ -337,7 +340,8 @@ public class Activity_model extends AbstractModel{
         	ps.setInt(8, activity.getProject().getProjectId());
         	ps.setString(9, DateHelper.format(activity.getStartDate(), Config.DATE_FORMAT));
         	ps.setString(10, DateHelper.format(activity.getFinishDate(), Config.DATE_FORMAT));
-        	ps.setInt(11, activityId);
+        	ps.setDouble(11, activity.getCost());
+        	ps.setInt(12, activityId);
         	
         	// Run
             affectedRows = ps.executeUpdate();

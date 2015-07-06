@@ -69,6 +69,7 @@ CREATE TABLE activity(
         finish_date            DATETIME,
         project_id             INT         NOT NULL,
         member_id              INT,
+        cost				   DOUBLE,
 
         FOREIGN KEY (project_id)       REFERENCES project(project_id)   ON UPDATE CASCADE ON DELETE CASCADE,
         FOREIGN KEY (member_id)        REFERENCES member(member_id)     ON UPDATE CASCADE ON DELETE CASCADE 
