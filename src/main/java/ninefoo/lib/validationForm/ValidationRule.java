@@ -24,6 +24,7 @@ public class ValidationRule {
 	private boolean dateBeforeChecker = false;
 	private boolean dateAfterChecker = false;
 	private boolean maxNumChecker = false;
+	private boolean intChecker = false;
 	
 	// Variables
 	private String name;
@@ -137,9 +138,20 @@ public class ValidationRule {
 		return this;
 	}
 	
+	/**
+	 * Verify that the value is an int
+	 * @author melissa
+	 * @return ValidationRule
+	 */
+	public ValidationRule checkInt(){
+		this.intChecker = true;
+		return this;
+	}
+		
 	
 	/**
-	 * Melissa added this July-04-2015
+	 * Checks if value is lower than maxValue
+	 * @author Melissa 
 	 * @param maxValue maximum value
 	 * @return ValidationRule
 	 */
@@ -228,6 +240,8 @@ public class ValidationRule {
 			}
 		}
 		
+	
+		
 		// If date after checker is enabled, check if current date is after target date
 		if(this.dateAfterChecker){
 			
@@ -243,15 +257,34 @@ public class ValidationRule {
 		}
 		
 		
-		//melissa added this July-04-2015
+		
+		
+	//catch error if argument entered is not an integer
+		if(this.intChecker){
+			if(!this.value.isEmpty()){
+				try{
+					Integer.parseInt(this.value);
+				} catch(NumberFormatException e){
+					errorMessage = String.format(LanguageText.getConstant("WRONG_FORMAT"), this.name);
+					return false;
+				}
+				
+			}
+			
+			
+		}
+		
+		//Using maxNumChecker implies that an integer form has been entered,
+		//if the entered argument is a string ex. 'dog' then, the previous if statement
+		//will catch the error, return false, and never reach this if statement
 		if (this.maxNumChecker) {
 
 			// If values are not empty
 			if (!this.value.isEmpty()) {
-				
-				if (Integer.parseInt(this.value) > this.maxValue)
-					errorMessage = String.format(LanguageText.getConstant("MAX_NUM_VALUE"), this.name);
+				if (Integer.parseInt(this.value) > this.maxValue){
+				errorMessage = String.format(LanguageText.getConstant("MAX_NUM_VALUE"), this.name);
 				return false;
+				}
 			}
 			
 		}

@@ -1,6 +1,11 @@
 package ninefoo.controller.handler;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ninefoo.config.Database;
 import ninefoo.controller.handler.template.AbstractController;
+import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.validationForm.ValidationForm;
 import ninefoo.lib.validationForm.ValidationRule;
 import ninefoo.model.object.Activity;
@@ -37,7 +42,10 @@ public class Activity_controller extends AbstractController implements
 	}
 
 	/**
-	 * Completed by Melissa Duong on July-04-2015 ValidationFormLang.json
+	 * This method creates an activity and inserts it into the db 
+	 * It returns an error message when the activity cannot be created
+	 * @author Melissa Duong 
+	 * 
 	 * 
 	 */
 	@Override
@@ -45,19 +53,28 @@ public class Activity_controller extends AbstractController implements
 			String activityLabel, String duration, String startDate,
 			String finishDate, Project project, String completion, int memberId) {
 
-		// set individual rules for each passed parameter
-		ValidationRule activityLabelRule = new ValidationRule("acitivtyLabel",activityLabel);
-		ValidationRule activityDurationRule = new ValidationRule("duration",duration);
-		ValidationRule activityStartDateRule = new ValidationRule("startDate",startDate);
-		ValidationRule activityFinishDateRule = new ValidationRule("finishDate", finishDate);
-		ValidationRule activityCompletionRule = new ValidationRule("completion", completion);
-		
+		// set individual rules for each passed parameter json file
+		ValidationRule activityLabelRule = new ValidationRule(
+				LanguageText.getConstant("ACTIVITY_LABEL_ACT"), activityLabel);
+		ValidationRule activityDurationRule = new ValidationRule(
+				LanguageText.getConstant("DURATION_ACT"), duration);
+		ValidationRule activityStartDateRule = new ValidationRule(
+				LanguageText.getConstant("START_ACT"), startDate);
+		ValidationRule activityFinishDateRule = new ValidationRule(
+				LanguageText.getConstant("FINISH_ACT"), finishDate);
+
+		// ********************************************
+		// NOT SURE ABOUT THIS ONE activity completion??
+		ValidationRule activityCompletionRule = new ValidationRule(
+				LanguageText.getConstant("PLANNED_PERCENTAGE_ACT"), completion);
+
 		// set restrictions for those rules
 		activityLabelRule.checkEmpty().checkMaxLength(25);
-		activityDurationRule.checkEmpty().checkMaxLength(200).checkFormat("[0-9]+");
+		activityDurationRule.checkEmpty().checkMaxNumValue(100000)
+				.checkFormat("[0-9]+");
 		activityStartDateRule.checkEmpty().checkDateBefore(finishDate);
-		activityFinishDateRule.checkEmpty().checkDateAfter(startDate);
-		activityCompletionRule.checkEmpty().checkFormat("[0-9]+").checkMaxNumValue(100);
+
+		// activityCompletionRule.checkEmpty().checkFormat("[0-9]+").checkMaxNumValue(100);
 
 		// add a validation form which takes multiple validation rules
 		ValidationForm activityValidation = new ValidationForm();
@@ -77,40 +94,79 @@ public class Activity_controller extends AbstractController implements
 			// the activity constructor that needs a member object
 			Member member = this.member_model.getMemberById(memberId);
 
-			// TODO add a completion (% completion) parameter for the activity constructor used right here below
-			
+			// TODO add a completion (% completion) parameter for the activity
+			// constructor used right here below
+
 			// create activity
-			Activity activity = new Activity(activityLabel,Integer.parseInt(duration), startDate, finishDate, project,member);
-			
+			Activity activity = new Activity(activityLabel,
+					Integer.parseInt(duration), startDate, finishDate, project,
+					member);
+
 			// add a new activity to the activity model
-			this.activity_model.insertNewActivity(activity);
+			// if insert failed
+			if (this.activity_model.insertNewActivity(activity) == Database.ERROR) {
+
+				// display error message
+				this.view.updateCreateActivity(false,LanguageText.getConstant("ERROR_OCCURED"), null);
+			}// if
+				// if activity added successfully, update the view because a new activity has been added to a project
+			else {
+				// get the new list of activities including the new activity and  update the project object
+
+				List<Activity> activitiesList = new ArrayList<>();
+
+				// if unable to retrieve list of activities return an error message
+				if ((activitiesList = this.activity_model
+						.getActivitiesByProject(project)) == null) {
+					this.view.updateCreateActivity(false,LanguageText.getConstant("ERROR_OCCURED"), null);
+				}
+
+				// else assign the list to the project object
+				else {
+					project.setAcitivies(activitiesList);
+				}
+
+				// update the view with the new project object and display successful activity creation message
+				this.view.updateCreateActivity(true,LanguageText.getConstant("CREATED"), project);
+
+			}// else
 
 		}
+		// Display error when validation error
+		this.view.updateCreateActivity(false, activityValidation.getError(),null);
 
-		// this.view.updateEditActivity(success, message, project); not
-		// implemented yet
-		// this.view.updateCreateActivity(true, "activity successfully created",
-		// project);
 	}
 
 	/**
-	 * Completed by Melissa Duong on July-05-2015
-	 * 
+	 * This method updates the activity information when user edits it.
+	 * Update is done in the view and in the db
+	 * This method is very similar to insertActivity. The only difference is when we update the view
+	 * we call updateEditActivity instead of updateCreateActivity method and pass different error messages
+	 * @author Melissa Duong 
+	 * @date July-05-2015
 	 */
 	public void editActivity(int row, String activityId, String activityLabel, String duration, String startDate, String finishDate, Project project, String completion, int memberId) {
-		// set individual rules for each passed parameter
-		ValidationRule activityLabelRule = new ValidationRule("acitivtyLabel",activityLabel);
-		ValidationRule activityDurationRule = new ValidationRule("duration",duration);
-		ValidationRule activityStartDateRule = new ValidationRule("startDate",startDate);
-		ValidationRule activityFinishDateRule = new ValidationRule("finishDate", finishDate);
-		ValidationRule activityCompletionRule = new ValidationRule("completion", completion);
+		// set individual rules for each passed parameter json file
+		ValidationRule activityLabelRule = new ValidationRule(
+				LanguageText.getConstant("ACTIVITY_LABEL_ACT"), activityLabel);
+		ValidationRule activityDurationRule = new ValidationRule(
+				LanguageText.getConstant("DURATION_ACT"), duration);
+		ValidationRule activityStartDateRule = new ValidationRule(
+				LanguageText.getConstant("START_ACT"), startDate);
+		ValidationRule activityFinishDateRule = new ValidationRule(
+				LanguageText.getConstant("FINISH_ACT"), finishDate);
+		
+		
+		// ********************************************
+		// NOT SURE ABOUT THIS ONE activity completion??
+		ValidationRule activityCompletionRule = new ValidationRule(
+				LanguageText.getConstant("PLANNED_PERCENTAGE_ACT"), completion);
 		
 		// set restrictions for those rules
 		activityLabelRule.checkEmpty().checkMaxLength(25);
-		activityDurationRule.checkEmpty().checkMaxLength(200).checkFormat("[0-9]+");
+		activityDurationRule.checkEmpty().checkMaxNumValue(100000)
+				.checkFormat("[0-9]+");
 		activityStartDateRule.checkEmpty().checkDateBefore(finishDate);
-		activityFinishDateRule.checkEmpty().checkDateAfter(startDate);
-		activityCompletionRule.checkEmpty().checkFormat("[0-9]+").checkMaxNumValue(100);
 		
 		// add a validation form which takes multiple validation rules
 		ValidationForm activityValidation = new ValidationForm();
@@ -130,24 +186,46 @@ public class Activity_controller extends AbstractController implements
 			// the activity constructor that needs a member object
 			Member member = this.member_model.getMemberById(memberId);
 
-			// edit activity in the db
-			Activity activity = new Activity(activityLabel,Integer.parseInt(duration), startDate, finishDate, project,member);
-			
-			
-			//update the activity content in the db
-			this.activity_model.updateActivity(activity);
+			// TODO add a completion (% completion) parameter for the activity
+			// constructor used right here below
+
+			// create activity object
+			Activity activity = new Activity(activityLabel,
+					Integer.parseInt(duration), startDate, finishDate, project,
+					member);
+
+			// update activity in the activity model
+			// if update failed
+			if (this.activity_model.updateActivity(activity) == false) {
+
+				// display error message
+				this.view.updateCreateActivity(false,LanguageText.getConstant("ERROR_OCCURED"), null);
+			}// if
+				// if activity updated successfully, update the view 
+			else {
+				// get the new list of activities including the updated activity and  update the project object
+
+				List<Activity> activitiesList = new ArrayList<>();
+
+				// if unable to retrieve list of activities return an error message
+				if ((activitiesList = this.activity_model
+						.getActivitiesByProject(project)) == null) {
+					this.view.updateEditActivity(false,LanguageText.getConstant("ERROR_OCCURED"), null);
+				}
+
+				// else assign the list to the project object
+				else {
+					project.setAcitivies(activitiesList);
+				}
+
+				// update the view with the new project object and display successful activity update message
+				this.view.updateEditActivity(true,LanguageText.getConstant("UPDATED"), project);
+
+			}// else
 
 		}
-
-		// this.view.updateEditActivity(success, message, project); not
-		// implemented yet
-		// this.view.updateCreateActivity(true, "activity successfully created",
-		// project);
-
-
-		
-	//	this.view.updateEditActivity(success, message, project); not implemented yet
-	//		this.view.updateCreateActivity(true, "activity successfully created, project);		
+		// Display error when validation error
+		this.view.updateEditActivity(false, activityValidation.getError(),null);
 	}
 
 	@Override
