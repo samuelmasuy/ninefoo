@@ -16,7 +16,7 @@ public class Member {
     private String lastName;
     private String username;
     private String password;
-    private String registerDate;
+    private Date registerDate;
 
     /**
      * This constructor is only used when we want to convert db entities to Java classes
@@ -35,7 +35,7 @@ public class Member {
         this.lastName = lastName;
         this.username = username;
         this.password = password;
-        this.registerDate = DateHelper.format(registerDate, Config.DATE_FORMAT);
+        this.registerDate = (Date)registerDate.clone();
     }
 
     /**
@@ -92,7 +92,7 @@ public class Member {
     }
 
     public Date getRegisterDate() {
-        return DateHelper.parse(registerDate, Config.DATE_FORMAT);
+        return registerDate;
     }
 
     public String toString() {
