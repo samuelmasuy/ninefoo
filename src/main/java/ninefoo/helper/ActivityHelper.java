@@ -3,7 +3,6 @@ package ninefoo.helper;
 import java.util.ArrayList;
 
 import ninefoo.config.ActivityConfig;
-import ninefoo.lib.excelTable.NumberedExcelTable;
 import ninefoo.model.object.Activity;
 
 /**
@@ -49,17 +48,17 @@ public class ActivityHelper {
 		
 		Object[] data = new String[ActivityConfig.TABLE_HEADER.length];
 		
-		data[ActivityConfig.ACTIVITY_ID] = String.valueOf(activity.getActivityId());
-		data[ActivityConfig.ACTIVITY_NAME] = String.valueOf(activity.getActivityLabel());
+		data[ActivityConfig.ACTIVITY_ID] = String.format("ACT%d", activity.getActivityId());
+		data[ActivityConfig.ACTIVITY_NAME] = activity.getActivityLabel();
 		data[ActivityConfig.DURATION] = String.valueOf(activity.getDuration());
-		data[ActivityConfig.FINISH] = String.valueOf(activity.getFinishDate());
+		data[ActivityConfig.FINISH] = activity.getFinishDate();
 		data[ActivityConfig.LIKELY] = String.valueOf(activity.getLikelyDuration());
-		data[ActivityConfig.MEMBER] = String.valueOf(activity.getMember().getFirstName() + " " + activity.getMember().getLastName());
+		data[ActivityConfig.MEMBER] = activity.getMember().getFirstName() + " " + activity.getMember().getLastName();
 		data[ActivityConfig.OPTIMISTIC] = String.valueOf(activity.getOptimisticDuration());
 		data[ActivityConfig.PESSIMISTIC] = String.valueOf(activity.getPessimisticDuration());
 		data[ActivityConfig.PLANNED_PERCENTAGE] = "???";
-		data[ActivityConfig.START] = String.valueOf(activity.getStartDate());
-		data[ActivityConfig.PREREQ] = String.valueOf(activity.getPrerequisitesAsString());
+		data[ActivityConfig.START] = activity.getStartDate();
+		data[ActivityConfig.PREREQ] = activity.getPrerequisitesAsString();
 		
 		return data;
 	}

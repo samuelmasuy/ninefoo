@@ -220,7 +220,6 @@ public class Activity {
     
     /**
      * Get a formatted string list
-     * Added by Amir
      * @return String
      */
     public String getPrerequisitesAsString(){
