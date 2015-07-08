@@ -14,12 +14,12 @@ import java.util.List;
 public class Project {
     private int projectId;
     private String projectName;
-    private String createDate;
-    private String startDate;
-    private String updateDate;
-    private String finishDate;
-    private double budget;
-    private String deadlineDate;
+    private Date createDate;
+    private Date startDate;
+    private Date updateDate;
+    private Date finishDate;
+    private Double budget;
+    private Date deadlineDate;
     private String description;
     private List<Activity> acitivies;
 
@@ -33,15 +33,15 @@ public class Project {
      * @param description Optional description for the project
      */
     public Project(int projectId, String projectName, Date createDate, Date startDate,
-            Date updateDate, double budget, Date deadlineDate, String description) {
+            Date updateDate, Double budget, Date deadlineDate, String description) {
 
         this.projectId = projectId;
         this.projectName = projectName;
-        this.startDate = DateHelper.format(startDate, Config.DATE_FORMAT);
-        this.createDate = DateHelper.format(createDate, Config.DATE_FORMAT);
-        this.updateDate = DateHelper.format(updateDate, Config.DATE_FORMAT);
+        this.startDate = (Date)startDate.clone();
+        this.createDate = (Date)createDate.clone();
+        this.updateDate = (Date)updateDate.clone();
         this.budget = budget;
-        this.deadlineDate = DateHelper.format(deadlineDate, Config.DATE_FORMAT);
+        this.deadlineDate = (Date)deadlineDate.clone();
         this.description = description;
     }
 
@@ -53,12 +53,12 @@ public class Project {
      * @param deadlineDate Deadline date defined for the project
      * @param description Optional description for the project
      */
-    public Project(String projectName, double budget, Date startDate, Date deadlineDate, String description) {
+    public Project(String projectName, Double budget, Date startDate, Date deadlineDate, String description) {
 
         this.projectName = projectName;
         this.budget = budget;
-        this.startDate = DateHelper.format(startDate, Config.DATE_FORMAT);
-        this.deadlineDate = DateHelper.format(deadlineDate, Config.DATE_FORMAT);
+        this.startDate = (Date)startDate.clone();
+        this.deadlineDate = (Date)deadlineDate.clone();
         this.description = description;
     }
     
@@ -75,31 +75,31 @@ public class Project {
     }
 
     public Date getCreateDate() {
-        return DateHelper.parse(createDate, Config.DATE_FORMAT);
+        return createDate;
     }
 
     public Date getUpdateDate() {
-        return DateHelper.parse(updateDate, Config.DATE_FORMAT);
+        return updateDate;
     }
 
     public void setUpdateDate(Date updateDate) {
-        this.updateDate = DateHelper.format(updateDate, Config.DATE_FORMAT);
+        this.updateDate = (Date)updateDate.clone();
     }
 
-    public double getBudget() {
+    public Double getBudget() {
         return budget;
     }
 
-    public void setBudget(double budget) {
-        this.budget = budget;
+    public void setBudget(Double budget) {
+    	this.budget = budget;
     }
 
     public Date getDeadlineDate() {
-        return DateHelper.parse(deadlineDate, Config.DATE_FORMAT);
+        return (Date)deadlineDate.clone();
     }
 
     public void setDeadlineDate(Date deadlineDate) {
-        this.deadlineDate = DateHelper.format(deadlineDate, Config.DATE_FORMAT);
+        this.deadlineDate = (Date)deadlineDate.clone();
     }
 
     public String getDescription() {
@@ -111,17 +111,20 @@ public class Project {
     }
     
     public Date getStartDate() {
-		return DateHelper.parse(startDate, Config.DATE_FORMAT);
+		return startDate;
 	}
 
 	public void setStartDate(Date startDate) {
-		this.startDate = DateHelper.format(startDate, Config.DATE_FORMAT);
+		this.startDate = (Date)startDate.clone();
 	}
 
 	public String toString() {
         return String.format("Project [ID: %d, Name: '%s', Create: '%s', " +
                         "Update: '%s', Budget: %.2f, Deadline: '%s']", projectId, projectName,
-                createDate, updateDate, budget, deadlineDate);
+                        DateHelper.format(createDate, Config.DATE_FORMAT),
+                        DateHelper.format(updateDate, Config.DATE_FORMAT),
+                        budget,
+                        DateHelper.format(deadlineDate, Config.DATE_FORMAT));
     }
 
 	public List<Activity> getAcitivies() {
@@ -133,10 +136,10 @@ public class Project {
 	}
 
     public Date getFinishDate() {
-        return DateHelper.parse(finishDate, Config.DATE_FORMAT);
+        return finishDate;
     }
 
     public void setFinishDate(Date finishDate) {
-        this.finishDate = DateHelper.format(finishDate, Config.DATE_FORMAT);
+        this.finishDate = (Date)finishDate.clone();
     }
 }
