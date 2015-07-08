@@ -99,8 +99,8 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 		Member member = new Member("Hello", "World", "", "");
 		
 		// Dummy activities
-		Activity activity1 = new Activity(1, "Act1", "Desc", 10, 10, 10, 10, null, project1, member, null, 10);
-		Activity activity2 = new Activity(2, "Act2", "Desc", 10, 10, 10, 10, null, project1, member, null, 10);
+		Activity activity1 = new Activity(1, "Act1", "Desc", 10, 10, 10, 10, null, project1, member, null);
+		Activity activity2 = new Activity(2, "Act2", "Desc", 10, 10, 10, 10, null, project1, member, null);
 		
 		List<Activity> acts = new ArrayList<>();
 		acts.add(activity1);

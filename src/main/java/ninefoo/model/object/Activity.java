@@ -47,8 +47,7 @@ public class Activity {
     public Activity(int activityId, String activityLabel, String description,
                     int duration, int optimisticDuration, int likelyDuration,
                     int pessimisticDuration, Date createDate, Project project,
-                    Member member, List<Activity> prerequisites,
-                    double cost) {
+                    Member member, List<Activity> prerequisites) {
 
         this.activityId = activityId;
         this.activityLabel = activityLabel;
@@ -61,7 +60,6 @@ public class Activity {
         this.project = project;
         this.member = member;
         this.prerequisites = prerequisites;
-        this.cost = cost;
     }
 
     /**
@@ -78,7 +76,7 @@ public class Activity {
      */
     public Activity(String activityLabel, String description, int duration,
                     int optimisticDuration, int likelyDuration, int pessimisticDuration,
-                    Project project, Member member, List<Activity> prerequisites, double cost) {
+                    Project project, Member member, List<Activity> prerequisites) {
 
         this.activityLabel = activityLabel;
         this.description = description;
@@ -89,7 +87,6 @@ public class Activity {
         this.project = project;
         this.member = member;
         this.prerequisites = prerequisites;
-        this.cost = cost;
     }
     
     /**
@@ -103,7 +100,7 @@ public class Activity {
      * @param member
      */
     public Activity(String activityLabel, int duration, Date startDate, Date finishDate, Project project, Member member, double cost){
-         this(0,activityLabel, null, duration, 0, 0, 0, null, project, member, null, cost);
+         this(0,activityLabel, null, duration, 0, 0, 0, null, project, member, null);
          this.startDate = (Date)startDate.clone();
          this.finishDate = (Date)finishDate.clone();
     }

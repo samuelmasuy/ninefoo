@@ -1,3 +1,4 @@
+/*
 package ninefoo.model.object;
 
 import org.junit.Test;
@@ -10,6 +11,7 @@ import static org.junit.Assert.*;
 /**
  * Created by samuel on 2015-07-05.
  */
+/*
 public class ActivityLogTest {
     private Project project = new Project("projectName", 0.0, new Date(), new Date(), "description");
     private Member member = new Member(0, "firstname", "lastname", "username", "password", new Date());
@@ -83,3 +85,4 @@ public class ActivityLogTest {
         assertEquals("set date", today, activityLog.getCreateDate());
     }
 }
+*/
