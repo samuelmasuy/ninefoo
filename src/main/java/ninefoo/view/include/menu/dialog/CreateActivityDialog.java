@@ -12,9 +12,11 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import ninefoo.lib.autocompleteComboBox.AutocompleteComboBox;
 import ninefoo.lib.datePicker.DatePicker;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.layout.dialog.CenterScrollSouthButtonDialog;
@@ -35,13 +37,20 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 	private JTextField pessimisticDuration;
 	private DatePicker startDate;
 	private DatePicker finishDate;
-	private String[] member_data = new String [] {"Member1", "Member2"};
-	private String[] prerequisite_data = new String [] {"Prereq1", "Prereq2"};
+	private ArrayList<Member> members_data;
+	private ArrayList<Activity> activities_data;
+	private AutocompleteComboBox activityBox;
+	private AutocompleteComboBox memberBox;
 	
 	/** 
 	 *  Constructor
 	 */
 	public CreateActivityDialog(JFrame parentFrame, final ToolsListener toolsListener) {
+		
+		// Dummy data
+		String[] activities_dummy = new String[] {"Activity1", "Activity2","Activity3", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2"};
+		String[] members_dummy = new String[] {"Mem1", "Member2BlaBlaBla"};
+				
 		
 		// Initialize components
 		this.createButton = new JButton(LanguageText.getConstant("CREATE"));
@@ -53,6 +62,8 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 		this.pessimisticDuration = new JTextField(10);
 		this.startDate = new DatePicker(8);
 		this.finishDate = new DatePicker(8);
+		this.activityBox = new AutocompleteComboBox(activities_dummy);
+		this.memberBox = new AutocompleteComboBox(members_dummy);
 		
 		this.setTitle(LanguageText.getConstant("CREATE_ACTIVITY_ACT"));
 		
@@ -67,19 +78,122 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 		});
 		
 		// Add center scroll
-		
-		//this.setCenterPanel();
+		this.setCenterPanel(new FormDialog() {
+			
+			private static final long serialVersionUID = -2943549344497607196L;
+			
+			@Override
+			public void placeForm() {
+				
+				// Set border title
+				this.titledBorder.setTitle(LanguageText.getConstant("CREATE_ACTIVITY_ACT"));
+				
+				// Set input border
+				createButton.setBorder(BorderFactory.createCompoundBorder(createButton.getBorder(), inputPadding));
+				activityLabel.setBorder(BorderFactory.createCompoundBorder(activityLabel.getBorder(), inputPadding));
+				description.setBorder(BorderFactory.createCompoundBorder(description.getBorder(), inputPadding));
+				duration.setBorder(BorderFactory.createCompoundBorder(duration.getBorder(), inputPadding));
+				optimisticDuration.setBorder(BorderFactory.createCompoundBorder(optimisticDuration.getBorder(), inputPadding));
+				likelyDuration.setBorder(BorderFactory.createCompoundBorder(likelyDuration.getBorder(), inputPadding));
+				pessimisticDuration.setBorder(BorderFactory.createCompoundBorder(pessimisticDuration.getBorder(), inputPadding));
+				startDate.setBorder(BorderFactory.createCompoundBorder(startDate.getBorder(), inputPadding));
+				finishDate.setBorder(BorderFactory.createCompoundBorder(finishDate.getBorder(), inputPadding));
+				activityBox.setBorder(BorderFactory.createCompoundBorder(activityBox.getBorder(), inputPadding));
+				memberBox.setBorder(BorderFactory.createCompoundBorder(memberBox.getBorder(), inputPadding));
+				
+				// Add components
+				this.table.put(new JLabel(LanguageText.getConstant("NAME")));
+				this.table.put(activityLabel);
+				
+				this.table.newRow();
+				this.table.put(new JLabel(LanguageText.getConstant("DESCRIPTION")));
+				this.table.put(new JScrollPane(description));
+				
+				this.table.newRow();
+				this.table.put(new JLabel(LanguageText.getConstant("DURATION_ACT")));
+				this.table.put(duration);
+				
+				this.table.newRow();
+				this.table.put(new JLabel(LanguageText.getConstant("OPTIMISTIC_ACT")));
+				this.table.put(optimisticDuration);
+				
+				this.table.newRow();
+				this.table.put(new JLabel(LanguageText.getConstant("LIKELY_ACT")));
+				this.table.put(likelyDuration);
+				
+				this.table.newRow();
+				this.table.put(new JLabel(LanguageText.getConstant("PESSIMISTIC_ACT")));
+				this.table.put(pessimisticDuration);
+				
+				this.table.newRow();
+				this.table.put(new JLabel(LanguageText.getConstant("START_ACT")));
+				this.table.put(startDate);
+				
+				this.table.newRow();
+				this.table.put(new JLabel(LanguageText.getConstant("FINISH_ACT")));
+				this.table.put(finishDate);
+				
+				this.table.newRow();
+				this.table.put(new JLabel(LanguageText.getConstant("MEMBER_ACT")));
+				this.table.put(memberBox);
+				
+				this.table.newRow();
+				this.table.put(new JLabel(LanguageText.getConstant("PREREQ_ACT")));
+				this.table.put(activityBox);
+				
+				
+			}
+		});
 		
 		// Add component to south panel
-		this.southPanel.add(createButton);
+		this.southPanel.add(this.createButton);
 		
 		// Configure dialog
-		this.setSize(new Dimension(300,350));
+		this.setSize(new Dimension(320,500));
 		this.setLocationRelativeTo(parentFrame);
 		this.setResizable(false);
 		this.setVisible(true);
 	}
 	
-	// Create Wrapper class panel
-	
+	//TODO Add refresh
+		/**
+		 * Populate list
+		 * @param users
+		 */
+		public void populateMemberList(List<Member> members){
+			
+			// Reset array
+			this.members_data = new ArrayList<>();
+			
+			// If a list was returned
+			if(members != null){
+				
+				// Add projects
+				this.members_data.addAll(members);
+			}
+			
+			// Refresh list
+			//this.refreshList();
+		}
+		
+		//TODO Add refresh
+		/**
+		 * Populate list
+		 * @param activities
+		 */
+		public void populateActivityList(List<Activity> activities){
+			
+			// Reset array
+			this.activities_data = new ArrayList<>();
+			
+			// If a list was returned
+			if(activities != null){
+				
+				// Add projects
+				this.activities_data.addAll(activities);
+			}
+			
+			// Refresh list
+			//this.refreshList();
+		}
 }
