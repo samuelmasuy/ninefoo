@@ -104,7 +104,7 @@ izpack {
 jar.enabled = false
 
 // TESTING Enabled/Disabled
-test.enabled = false;
+// test.enabled = false;
 
 // Order of execution
 build.mustRunAfter(clean)

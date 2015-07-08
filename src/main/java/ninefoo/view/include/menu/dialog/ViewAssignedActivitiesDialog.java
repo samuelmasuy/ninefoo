@@ -2,7 +2,6 @@ package ninefoo.view.include.menu.dialog;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -15,10 +14,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import ninefoo.config.ActivityConfig;
+import ninefoo.helper.ActivityHelper;
 import ninefoo.lib.excelTable.NumberedExcelTable;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.layout.dialog.CenterScrollSouthButtonDialog;
-import ninefoo.lib.layout.grid.GridTable;
+import ninefoo.lib.layout.dialog.FormDialog;
 import ninefoo.model.object.Activity;
 import ninefoo.model.object.Member;
 import ninefoo.model.object.Project;
@@ -64,7 +64,18 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 		});
 
 		// Add center form
-		this.setCenterPanel(getAllProjectActivityWrapperPanel());
+		this.setCenterPanel(new FormDialog() {
+			
+			private static final long serialVersionUID = 2612872642334096656L;
+
+			@Override
+			public void placeForm() {
+				for(Project project : projects){
+					this.table.newRow();
+					this.table.put(new ProjectActivityWrapper(project));
+				}
+			}
+		});
 		
 		// Add component to south panel
 		this.southPanel.add(this.close);
@@ -105,23 +116,6 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 	}
 	
 	/**
-	 * Group all Project Activity Wrapper
-	 * @return panel of all Project Activity Wrapper
-	 */
-	private JPanel getAllProjectActivityWrapperPanel(){
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridBagLayout());
-		GridTable table = new GridTable(panel);
-		
-		for(Project project : projects){
-			table.newRow();
-			table.put(new ProjectActivityWrapper(project));
-		}
-		
-		return panel;
-	}
-	
-	/**
 	 * Set the projects that the users is involved in
 	 * @param projects
 	 */
@@ -155,7 +149,7 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 			// Add rows
 			List<Activity> activities = project.getAcitivies();
 			for(Activity activity : activities)
-				table.addRow(activity.getActivityId(), activity.getActivityLabel(), activity.getStartDate(), activity.getFinishDate(), activity.getDuration(), activity.getPrerequisitesAsString());
+				table.addRow(ActivityHelper.getRow(activity));
 			
 			// Add components
 			this.add(this.tableScrollPane, BorderLayout.CENTER);

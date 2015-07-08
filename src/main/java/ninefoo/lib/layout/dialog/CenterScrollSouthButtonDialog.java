@@ -1,17 +1,12 @@
 package ninefoo.lib.layout.dialog;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dialog;
 
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.border.TitledBorder;
-
-import ninefoo.lib.lang.LanguageText;
 
 /**
  * This class must be inherited by dialog boxes that are composed of two parts:
@@ -37,7 +32,7 @@ public abstract class CenterScrollSouthButtonDialog extends JDialog{
 	private static final long serialVersionUID = 6124363441606459436L;
 	
 	protected JPanel southPanel;
-	protected JPanel centerPanel;
+	protected FormDialog centerPanel;
 	protected JScrollPane centerPanelScroll;
 	
 	/**
@@ -65,10 +60,13 @@ public abstract class CenterScrollSouthButtonDialog extends JDialog{
 	 * Set center panel
 	 * @param centerPanel
 	 */
-	public void setCenterPanel(JPanel centerPanel){
+	public void setCenterPanel(FormDialog centerPanel){
 		
 		// Set center panel
 		this.centerPanel = centerPanel;
+		
+		// Call place form
+		this.centerPanel.placeForm();
 		
 		// Configure scroll panel
 		this.centerPanel.setBorder(null);
@@ -104,7 +102,7 @@ public abstract class CenterScrollSouthButtonDialog extends JDialog{
 	 * @param msg Message to be displayed
 	 */
 	public void setErrorMessage(String msg){
-		JOptionPane.showMessageDialog(this, String .format("<html>%s</html>", msg), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
+		this.centerPanel.setErrorMessage(msg);
 	}
 	
 	/**
@@ -112,6 +110,6 @@ public abstract class CenterScrollSouthButtonDialog extends JDialog{
 	 * @param msg Message to be displayed
 	 */
 	public void setSuccessMessage(String msg){
-		JOptionPane.showMessageDialog(this, String .format("<html>%s</html>", msg), LanguageText.getConstant("OPERATION_SUCCESSFUL"), JOptionPane.INFORMATION_MESSAGE);
+		this.centerPanel.setSuccessMessage(msg);
 	}
 }

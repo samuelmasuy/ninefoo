@@ -227,6 +227,30 @@ public class Project_modelTests {
                 newProjectCount == currentProjectCount + 2);
     }
 
+    @Test
+    public void test12_Project_DeleteProject_ProjectReturnsNull() {
+        // Add a project to the database.
+        Project newProject = createProject("deleted_project", 1000.00,
+                "08/08/2016", "09/09/2016", "deleted_project description");
+        int newProjectId = project_model.insertNewProject(newProject);
+
+        // Now, delete a project (we first retrieve the project)
+        Project project = project_model.getProjectById(newProjectId);
+        boolean success = project_model.deleteProject(project);
+        assertTrue("deleteProject should return true", success);
+
+        // Now, make sure if you query for the project, it returns null.
+        project = project_model.getProjectById(newProjectId);
+        assertNull("A deleted project should be null when querying the DB", project);
+    }
+
+    @Test
+    public void test13_Project_DeleteProject_NullProjectShouldReturnFalse() {
+        Project project = null;
+        boolean success = project_model.deleteProject(project);
+        assertFalse("When passed null, DeleteProject should return false", success);
+    }
+
     private Project createProject(String name, double budget,
                                   String startDate, String deadlineDate, String description) {
         return new Project(name, budget, DateHelper.parse(startDate, Config.DATE_FORMAT),
