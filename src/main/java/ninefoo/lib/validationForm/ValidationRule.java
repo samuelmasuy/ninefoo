@@ -24,6 +24,7 @@ public class ValidationRule {
 	private boolean dateBeforeChecker = false;
 	private boolean dateAfterChecker = false;
 	private boolean maxNumChecker = false;
+	private boolean minNumChecker = false;
 	private boolean intChecker = false;
 	
 	// Variables
@@ -150,7 +151,7 @@ public class ValidationRule {
 		
 	
 	/**
-	 * Checks if value is lower than maxValue
+	 * Checks if value is lower or equal to maxValue
 	 * @author Melissa 
 	 * @param maxValue maximum value
 	 * @return ValidationRule
@@ -162,6 +163,19 @@ public class ValidationRule {
 		return this;
 	}
 
+	
+	/**
+	 * Checks if value is higher or equal to minValue
+	 * @author Melissa 
+	 * @param minValue minimum value
+	 * @return ValidationRule
+	 */
+	private int minValue;
+	public ValidationRule checkMinNumValue(int minValue) {
+		minNumChecker=true;
+		this.minValue=minValue;
+		return this;
+	}
 	
 	
 	/**
@@ -256,10 +270,7 @@ public class ValidationRule {
 			}
 		}
 		
-		
-		
-		
-	//catch error if argument entered is not an integer
+		//catch error if argument entered is not an integer
 		if(this.intChecker){
 			if(!this.value.isEmpty()){
 				try{
@@ -282,13 +293,24 @@ public class ValidationRule {
 			// If values are not empty
 			if (!this.value.isEmpty()) {
 				if (Integer.parseInt(this.value) > this.maxValue){
-				errorMessage = String.format(LanguageText.getConstant("MAX_NUM_VALUE"), this.name);
-				return false;
+					errorMessage = String.format(LanguageText.getConstant("MAX_NUM_VALUE"), this.name, Integer.parseInt(this.value));
+					return false;
 				}
 			}
 			
 		}
 		
+		if (this.minNumChecker) {
+
+			// If values are not empty
+			if (!this.value.isEmpty()) {
+				if (Integer.parseInt(this.value) < this.minValue){
+					errorMessage = String.format(LanguageText.getConstant("MIN_NUM_VALUE"), this.name, Integer.parseInt(this.value));
+					return false;
+				}
+			}
+			
+		}		
 		
 		
 		return true;

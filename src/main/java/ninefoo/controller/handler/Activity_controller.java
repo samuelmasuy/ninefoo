@@ -54,14 +54,10 @@ public class Activity_controller extends AbstractController implements
 			String finishDate, Project project, String completion, int memberId) {
 
 		// set individual rules for each passed parameter json file
-		ValidationRule activityLabelRule = new ValidationRule(
-				LanguageText.getConstant("ACTIVITY_LABEL_ACT"), activityLabel);
-		ValidationRule activityDurationRule = new ValidationRule(
-				LanguageText.getConstant("DURATION_ACT"), duration);
-		ValidationRule activityStartDateRule = new ValidationRule(
-				LanguageText.getConstant("START_ACT"), startDate);
-		ValidationRule activityFinishDateRule = new ValidationRule(
-				LanguageText.getConstant("FINISH_ACT"), finishDate);
+		ValidationRule activityLabelRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_LABEL_ACT"), activityLabel);
+		ValidationRule activityDurationRule = new ValidationRule(LanguageText.getConstant("DURATION_ACT"), duration);
+		ValidationRule activityStartDateRule = new ValidationRule(LanguageText.getConstant("START_ACT"), startDate);
+		ValidationRule activityFinishDateRule = new ValidationRule(LanguageText.getConstant("FINISH_ACT"), finishDate);
 
 		// ********************************************
 		// NOT SURE ABOUT THIS ONE activity completion??
@@ -70,8 +66,8 @@ public class Activity_controller extends AbstractController implements
 
 		// set restrictions for those rules
 		activityLabelRule.checkEmpty().checkMaxLength(25);
-		activityDurationRule.checkEmpty().checkMaxNumValue(100000)
-				.checkFormat("[0-9]+");
+		activityDurationRule.checkEmpty().checkMaxNumValue(100000).checkInt();
+				//.checkFormat("[0-9]+");
 		activityStartDateRule.checkEmpty().checkDateBefore(finishDate);
 
 		// activityCompletionRule.checkEmpty().checkFormat("[0-9]+").checkMaxNumValue(100);
@@ -164,8 +160,8 @@ public class Activity_controller extends AbstractController implements
 		
 		// set restrictions for those rules
 		activityLabelRule.checkEmpty().checkMaxLength(25);
-		activityDurationRule.checkEmpty().checkMaxNumValue(100000)
-				.checkFormat("[0-9]+");
+		activityDurationRule.checkEmpty().checkMaxNumValue(100000).checkInt();
+			//	.checkFormat("[0-9]+");
 		activityStartDateRule.checkEmpty().checkDateBefore(finishDate);
 		
 		// add a validation form which takes multiple validation rules
