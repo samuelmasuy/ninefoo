@@ -42,7 +42,7 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 	private static final long serialVersionUID = 216394661255136241L;
 	
 	// Create components
-	private JButton openButton, editButton;
+	private JButton openButton, editButton, deleteButton;
 	private JComboBox<String> roleBox;
 	private JList<String> projectList;
 	private DefaultListModel<String> listModel;
@@ -66,11 +66,12 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 	public ViewMyProjectsDialog(final JFrame parentFrame, final ToolsListener toolsListener) {
 		
 		// Set title
-		this.setTitle("View my projects");
+		this.setTitle(LanguageText.getConstant("VIEW_MY_PROJECTS_PRO"));
 		
 		// Initialize components
-		this.openButton = new JButton("Open");
-		this.editButton = new JButton("Edit");
+		this.openButton = new JButton(LanguageText.getConstant("OPEN_PRO"));
+		this.editButton = new JButton(LanguageText.getConstant("EDIT_PRO"));
+		this.deleteButton = new JButton(LanguageText.getConstant("DELETE_PRO"));
 		this.roleBox = new JComboBox<String>(RoleNames.ROLES);
 		this.listModel = new DefaultListModel<>();
 		this.projectList = new JList<String>(listModel);
@@ -126,6 +127,7 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 		// Add components to panels
 		this.southPanel.add(openButton);
 		this.southPanel.add(editButton);
+		this.southPanel.add(deleteButton);
 		
 		// Configure label
 		this.descriptionInfo.setEditable(false);
@@ -177,6 +179,27 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 				// If project selected
 				else if(toolsListener != null){
 					new EditProjectDialog(parentFrame, ViewMyProjectsDialog.this, toolsListener, projects.get(projectList.getSelectedIndex()).getProjectId());
+				}
+			}
+		});
+		
+		// Add edit listener
+		this.deleteButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				// If no project selected, show error
+				if(projectList.getSelectedIndex() < 0)
+					JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("MISSING_DELETE"),LanguageText.getConstant("PROJECT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
+				
+				// If project selected
+				else if(toolsListener != null){
+					String projectName = "'" + projectList.getSelectedValue() + "'";
+					int reply = JOptionPane.showConfirmDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("DELETE_CONFIRMATION_TEXT"), LanguageText.getConstant("PROJECT").toLowerCase(), projectName) , LanguageText.getConstant("DELETE_CONFIRMATION"), JOptionPane.YES_NO_OPTION);
+					if (reply == JOptionPane.YES_OPTION){
+					    toolsListener.deleteProject(ViewMyProjectsDialog.this, projects.get(projectList.getSelectedIndex()));
+					}
 				}
 			}
 		});
