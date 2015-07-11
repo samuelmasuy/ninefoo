@@ -21,6 +21,7 @@ import ninefoo.lib.datePicker.DatePicker;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.layout.dialog.CenterScrollSouthButtonDialog;
 import ninefoo.lib.layout.dialog.FormDialog;
+import ninefoo.lib.multiDropdown.MultiDropdown;
 import ninefoo.model.object.Activity;
 import ninefoo.model.object.Member;
 import ninefoo.view.include.menu.listener.ToolsListener;
@@ -35,12 +36,14 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 	private JTextField optimisticDuration;
 	private JTextField likelyDuration;
 	private JTextField pessimisticDuration;
+	private JTextField cost;
 	private DatePicker startDate;
 	private DatePicker finishDate;
 	private ArrayList<Member> members_data;
 	private ArrayList<Activity> activities_data;
-	private AutocompleteComboBox activityBox;
 	private AutocompleteComboBox memberBox;
+	private MultiDropdown prerequisiteDropdown;
+	
 	
 	/** 
 	 *  Constructor
@@ -48,7 +51,6 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 	public CreateActivityDialog(JFrame parentFrame, final ToolsListener toolsListener) {
 		
 		// Dummy data
-		String[] activities_dummy = new String[] {"Activity1", "Activity2","Activity3", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2","Activity1BlaBla", "Act2"};
 		String[] members_dummy = new String[] {"Mem1", "Member2BlaBlaBla"};
 				
 		
@@ -60,10 +62,11 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 		this.optimisticDuration = new JTextField(10);
 		this.likelyDuration = new JTextField(10);
 		this.pessimisticDuration = new JTextField(10);
+		this.cost = new JTextField(10);
 		this.startDate = new DatePicker(8);
 		this.finishDate = new DatePicker(8);
-		this.activityBox = new AutocompleteComboBox(activities_dummy);
 		this.memberBox = new AutocompleteComboBox(members_dummy);
+		this.prerequisiteDropdown = new MultiDropdown("Add dependency", new String[]{"One", "Two"});
 		
 		this.setTitle(LanguageText.getConstant("CREATE_ACTIVITY_ACT"));
 		
@@ -96,10 +99,11 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 				optimisticDuration.setBorder(BorderFactory.createCompoundBorder(optimisticDuration.getBorder(), inputPadding));
 				likelyDuration.setBorder(BorderFactory.createCompoundBorder(likelyDuration.getBorder(), inputPadding));
 				pessimisticDuration.setBorder(BorderFactory.createCompoundBorder(pessimisticDuration.getBorder(), inputPadding));
+				cost.setBorder(BorderFactory.createCompoundBorder(pessimisticDuration.getBorder(), inputPadding));
 				startDate.setBorder(BorderFactory.createCompoundBorder(startDate.getBorder(), inputPadding));
 				finishDate.setBorder(BorderFactory.createCompoundBorder(finishDate.getBorder(), inputPadding));
-				activityBox.setBorder(BorderFactory.createCompoundBorder(activityBox.getBorder(), inputPadding));
 				memberBox.setBorder(BorderFactory.createCompoundBorder(memberBox.getBorder(), inputPadding));
+				prerequisiteDropdown.setBorder(BorderFactory.createCompoundBorder(memberBox.getBorder(), inputPadding));
 				
 				// Add components
 				this.table.put(new JLabel(LanguageText.getConstant("NAME")));
@@ -126,6 +130,10 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 				this.table.put(pessimisticDuration);
 				
 				this.table.newRow();
+				this.table.put(new JLabel(LanguageText.getConstant("COST_ACT")));
+				this.table.put(cost);
+				
+				this.table.newRow();
 				this.table.put(new JLabel(LanguageText.getConstant("START_ACT")));
 				this.table.put(startDate);
 				
@@ -138,10 +146,9 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 				this.table.put(memberBox);
 				
 				this.table.newRow();
+				this.table.placeCenterTop();
 				this.table.put(new JLabel(LanguageText.getConstant("PREREQ_ACT")));
-				this.table.put(activityBox);
-				
-				
+				this.table.put(prerequisiteDropdown);
 			}
 		});
 		
@@ -149,7 +156,7 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 		this.southPanel.add(this.createButton);
 		
 		// Configure dialog
-		this.setSize(new Dimension(320,500));
+		this.setSize(new Dimension(360,500));
 		this.setLocationRelativeTo(parentFrame);
 		this.setResizable(false);
 		this.setVisible(true);

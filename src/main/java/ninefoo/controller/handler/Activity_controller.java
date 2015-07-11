@@ -228,6 +228,7 @@ public class Activity_controller extends AbstractController implements ActivityL
 
 	@Override
 	public void loadActivitiesByProject(Project project) {
+
 		//gets the list of prerequisites, when creating an act. (new activity)
 		//when new activity is pressed, we must pupolate the prereq act
 		//similar one for memebrs dropdown
@@ -235,4 +236,5 @@ public class Activity_controller extends AbstractController implements ActivityL
 	/*	this.view.updateLoadActivitiesByProject
 		//loading the values and pushing them back to the view
 */	}
+
 }
