@@ -1,7 +1,12 @@
 package ninefoo.controller.handler;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import ninefoo.config.Config;
 import ninefoo.config.Database;
@@ -26,8 +31,7 @@ import ninefoo.view.listeners.ActivityListener;
  * @author Melissa Duong
  * @see AbstractController, ActivityListener
  */
-public class Activity_controller extends AbstractController implements
-		ActivityListener {
+public class Activity_controller extends AbstractController implements ActivityListener {
 
 	// Load model
 	private Activity_model activity_model = new Activity_model();
@@ -47,42 +51,42 @@ public class Activity_controller extends AbstractController implements
 	 * This method creates an activity and inserts it into the db 
 	 * It returns an error message when the activity cannot be created
 	 * @author Melissa Duong 
-	 * 
-	 * 
 	 */
 	@Override
-	public void createActivity(int row, String activityId,
-			String activityLabel, String duration, String startDate,
-			String finishDate, String cost, Project project, String completion, int memberId) {
+	public void createActivity(int row, String activityId, String activityLabel, String duration, String startDate, String finishDate, String cost, Project project, int memberId, String[] prerequisite) {
 
 		// set individual rules for each passed parameter json file
 		ValidationRule activityLabelRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_LABEL_ACT"), activityLabel);
 		ValidationRule activityDurationRule = new ValidationRule(LanguageText.getConstant("DURATION_ACT"), duration);
 		ValidationRule activityStartDateRule = new ValidationRule(LanguageText.getConstant("START_ACT"), startDate);
 		ValidationRule activityFinishDateRule = new ValidationRule(LanguageText.getConstant("FINISH_ACT"), finishDate);
-
-		// ********************************************
-		// NOT SURE ABOUT THIS ONE activity completion??
-		ValidationRule activityCompletionRule = new ValidationRule(
-				LanguageText.getConstant("PLANNED_PERCENTAGE_ACT"), completion);
-
+		ValidationRule activityCostRule = new ValidationRule(LanguageText.getConstant("COST_ACT"), cost);
+		
 		// set restrictions for those rules
-		activityLabelRule.checkEmpty().checkMaxLength(25);
-		activityDurationRule.checkEmpty().checkMaxNumValue(100000).checkInt();
-				//.checkFormat("[0-9]+");
+		activityLabelRule.checkEmpty().checkMaxLength(25).checkFormat("[a-zA-Z0-9]+");
+		activityDurationRule.checkEmpty().checkMaxNumValue(100000).checkMinNumValue(0).checkInt();
 		activityStartDateRule.checkEmpty().checkDateBefore(finishDate);
-
-		// activityCompletionRule.checkEmpty().checkFormat("[0-9]+").checkMaxNumValue(100);
 
 		// add a validation form which takes multiple validation rules
 		ValidationForm activityValidation = new ValidationForm();
 
 		// add the validation rules to the validation form
 		activityValidation.setRule(activityLabelRule);
-		activityValidation.setRule(activityCompletionRule);
 		activityValidation.setRule(activityDurationRule);
 		activityValidation.setRule(activityStartDateRule);
 		activityValidation.setRule(activityFinishDateRule);
+		activityValidation.setRule(activityCostRule);
+		
+		// Condition for the prerequisite
+		Set<String> prereqSet = new HashSet<>(Arrays.asList(prerequisite));
+		
+		// Run redundancy test
+		if(prereqSet.size() != prerequisite.length){
+			this.view.updateCreateActivity(false, LanguageText.getConstant("ERROR_OCCURED"), null);
+			return;
+		}
+		
+		// TODO Check cycle test
 
 		// if all the parameters passed respect the restrictions, add a new
 		// activity object in this if statement
@@ -91,9 +95,6 @@ public class Activity_controller extends AbstractController implements
 			// retrieve member object from db by memberId, this is useful for
 			// the activity constructor that needs a member object
 			Member member = this.member_model.getMemberById(memberId);
-
-			// TODO add a completion (% completion) parameter for the activity
-			// constructor used right here below
 
 			// Make cost Double | null
 			Double doubleCost = cost.isEmpty() ? null : new Double(Double.parseDouble(cost));
@@ -115,25 +116,22 @@ public class Activity_controller extends AbstractController implements
 				List<Activity> activitiesList = new ArrayList<>();
 
 				// if unable to retrieve list of activities return an error message
-				if ((activitiesList = this.activity_model
-						.getActivitiesByProject(project)) == null) {
+				if ((activitiesList = this.activity_model.getActivitiesByProject(project)) == null) {
 					this.view.updateCreateActivity(false,LanguageText.getConstant("ERROR_OCCURED"), null);
-				}
 
-				// else assign the list to the project object
-				else {
+					// else assign the list to the project object
+				} else {
 					project.setAcitivies(activitiesList);
+
+					// update the view with the new project object and display successful activity creation message
+					this.view.updateCreateActivity(true,LanguageText.getConstant("CREATED"), project);
 				}
-
-				// update the view with the new project object and display successful activity creation message
-				this.view.updateCreateActivity(true,LanguageText.getConstant("CREATED"), project);
-
 			}// else
-
+		} else {
+			
+			// Display error when validation error
+			this.view.updateCreateActivity(false, activityValidation.getError(),null);
 		}
-		// Display error when validation error
-		this.view.updateCreateActivity(false, activityValidation.getError(),null);
-
 	}
 
 	/**
@@ -144,38 +142,38 @@ public class Activity_controller extends AbstractController implements
 	 * @author Melissa Duong 
 	 * @date July-05-2015
 	 */
-	public void editActivity(int row, String activityId, String activityLabel, String duration, String startDate, String finishDate, String cost, Project project, String completion, int memberId) {
+	@Override
+	public void editActivity(int row, String activityId, String activityLabel, String duration, String startDate, String finishDate, String cost, Project project, int memberId, String[] prerequisite) {
 		// set individual rules for each passed parameter json file
-		ValidationRule activityLabelRule = new ValidationRule(
-				LanguageText.getConstant("ACTIVITY_LABEL_ACT"), activityLabel);
-		ValidationRule activityDurationRule = new ValidationRule(
-				LanguageText.getConstant("DURATION_ACT"), duration);
-		ValidationRule activityStartDateRule = new ValidationRule(
-				LanguageText.getConstant("START_ACT"), startDate);
-		ValidationRule activityFinishDateRule = new ValidationRule(
-				LanguageText.getConstant("FINISH_ACT"), finishDate);
-		
-		
-		// ********************************************
-		// NOT SURE ABOUT THIS ONE activity completion??
-		ValidationRule activityCompletionRule = new ValidationRule(
-				LanguageText.getConstant("PLANNED_PERCENTAGE_ACT"), completion);
+		ValidationRule activityLabelRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_LABEL_ACT"), activityLabel);
+		ValidationRule activityDurationRule = new ValidationRule(LanguageText.getConstant("DURATION_ACT"), duration);
+		ValidationRule activityStartDateRule = new ValidationRule(LanguageText.getConstant("START_ACT"), startDate);
+		ValidationRule activityFinishDateRule = new ValidationRule(LanguageText.getConstant("FINISH_ACT"), finishDate);
+		ValidationRule activityCostRule = new ValidationRule(LanguageText.getConstant("COST_ACT"), cost);
 		
 		// set restrictions for those rules
-		activityLabelRule.checkEmpty().checkMaxLength(25);
-		activityDurationRule.checkEmpty().checkMaxNumValue(100000).checkInt();
-			//	.checkFormat("[0-9]+");
+		activityLabelRule.checkEmpty().checkMaxLength(25).checkFormat("[a-zA-Z0-9]+");
+		activityDurationRule.checkEmpty().checkMaxNumValue(100000).checkMinNumValue(0).checkInt();
 		activityStartDateRule.checkEmpty().checkDateBefore(finishDate);
-		
+
 		// add a validation form which takes multiple validation rules
 		ValidationForm activityValidation = new ValidationForm();
 
 		// add the validation rules to the validation form
 		activityValidation.setRule(activityLabelRule);
-		activityValidation.setRule(activityCompletionRule);
 		activityValidation.setRule(activityDurationRule);
 		activityValidation.setRule(activityStartDateRule);
 		activityValidation.setRule(activityFinishDateRule);
+		activityValidation.setRule(activityCostRule);
+		
+		// Condition for the prerequisite
+		Set<String> prereqSet = new HashSet<>(Arrays.asList(prerequisite));
+		
+		// Run redundancy test
+		if(prereqSet.size() != prerequisite.length){
+			this.view.updateCreateActivity(false, LanguageText.getConstant("ERROR_OCCURED"), null);
+			return;
+		}
 
 		// if all the parameters passed respect the restrictions, add a new
 		// activity object in this if statement
@@ -208,42 +206,29 @@ public class Activity_controller extends AbstractController implements
 				List<Activity> activitiesList = new ArrayList<>();
 
 				// if unable to retrieve list of activities return an error message
-				if ((activitiesList = this.activity_model
-						.getActivitiesByProject(project)) == null) {
+				if ((activitiesList = this.activity_model.getActivitiesByProject(project)) == null) {
 					this.view.updateEditActivity(false,LanguageText.getConstant("ERROR_OCCURED"), null);
 				}
 
 				// else assign the list to the project object
 				else {
 					project.setAcitivies(activitiesList);
+					
+					// update the view with the new project object and display successful activity update message
+					this.view.updateEditActivity(true,LanguageText.getConstant("UPDATED"), project);
+
 				}
-
-				// update the view with the new project object and display successful activity update message
-				this.view.updateEditActivity(true,LanguageText.getConstant("UPDATED"), project);
-
 			}// else
-
+		} else {
+			
+			// Display error when validation error
+			this.view.updateEditActivity(false, activityValidation.getError(),null);
 		}
-		// Display error when validation error
-		this.view.updateEditActivity(false, activityValidation.getError(),null);
 	}
 
 	@Override
-	public void createDependentActivities(int activityIdDependent, int activityIdDependentOn, int row) {
-	/*	ValidationForm dependantActivityValidation = new ValidationForm();
-		ValidationRule activityLabelRule =new ValidationRule ("acitivtyLabel" , activityLabel );
-		
-		activityLabelRule.checkEmpty().checkMaxLength(25);
-		activityDurationRule.checkEmpty().checkMaxLength(200).checkFormat("[0-9]+");
-		activityStartDateRule.checkEmpty().checkDateBefore(finishDate);
-		activityFinishDateRule.checkEmpty().checkDateAfter(startDate);
-		activityCompletionRule.checkEmpty().checkFormat("[0-9]+").checkMaxNumValue(100);
-		
-	//	this.view.updateEditActivity(success, message, project); not implemented yet
-			this.view.updateCreateActivity(true, "activity successfully created, project);		
-		
-	*/	
-		
+	public void loadActivitiesByProject(Project project) {
+		// TODO Auto-generated method stub
 		
 	}
 }

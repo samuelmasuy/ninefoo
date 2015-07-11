@@ -21,6 +21,7 @@
 		"PESSIMISTIC_ACT"           : "Pessimistic",
 		"COST_ACT"				 : "Cost",
 		"MEMBER_ACT"                : "Member",
+		"COST_ACT"                  : "Cost",
 		"PREREQ_ACT"                : "Prereq."
 	}
 }
