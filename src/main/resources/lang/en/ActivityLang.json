@@ -11,6 +11,7 @@
 		"CREATE_ACTIVITY_ACT" 	: "Create activity",
 		"ACTIVITY_ID_ACT"           : "Activity ID",
 		"ACTIVITY_NAME_ACT"         : "Activity Name",
+		"ACTIVITY_LABEL_ACT"		: "Activity label",
 		"START_ACT"                 : "Start",
 		"FINISH_ACT"                : "Finish",
 		"DURATION_ACT"              : "Duration",

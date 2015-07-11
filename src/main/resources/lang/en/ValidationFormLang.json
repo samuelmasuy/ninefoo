@@ -11,10 +11,12 @@
 		"MAX_LENGTH" : "%s length must be at most %d.",
 		"REGISTRATION_SUCCESS" : "Registration successful! Please login.",
 		"UNIQUE" : "%s must be unique",
+		"MAX_NUM_VALUE": "%s number exceeds maximum value of %d",
+		"MIN_NUM_VALUE": "%s number is smaller than minimum value of %d",
 
 		"OPERATION_FAILED" : "Operation failed",
 		"OPERATION_SUCCESSFUL" : "Operation successful",
-		"ERROR_OCCURED" : "An error occured",
+		"ERROR_OCCURED" : "An error occurred",
 		"MISSING_OPEN" : "Please select a %s to open",
 		"MISSING_EDIT" : "Please select a %s to edit",
 		

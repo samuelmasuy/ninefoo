@@ -10,6 +10,7 @@ import ninefoo.lib.lang.LanguageText;
 /**
  * Rules for input fields.
  * @author Amir EL Bawab
+ * @author Melissa
  */
 public class ValidationRule {
 	
@@ -22,6 +23,9 @@ public class ValidationRule {
 	private boolean doubleChecker = false;
 	private boolean dateBeforeChecker = false;
 	private boolean dateAfterChecker = false;
+	private boolean maxNumChecker = false;
+	private boolean minNumChecker = false;
+	private boolean intChecker = false;
 	
 	// Variables
 	private String name;
@@ -136,6 +140,45 @@ public class ValidationRule {
 	}
 	
 	/**
+	 * Verify that the value is an int
+	 * @author melissa
+	 * @return ValidationRule
+	 */
+	public ValidationRule checkInt(){
+		this.intChecker = true;
+		return this;
+	}
+		
+	
+	/**
+	 * Checks if value is lower or equal to maxValue
+	 * @author Melissa 
+	 * @param maxValue maximum value
+	 * @return ValidationRule
+	 */
+	private int maxValue;
+	public ValidationRule checkMaxNumValue(int maxValue) {
+		maxNumChecker=true;
+		this.maxValue=maxValue;
+		return this;
+	}
+
+	
+	/**
+	 * Checks if value is higher or equal to minValue
+	 * @author Melissa 
+	 * @param minValue minimum value
+	 * @return ValidationRule
+	 */
+	private int minValue;
+	public ValidationRule checkMinNumValue(int minValue) {
+		minNumChecker=true;
+		this.minValue=minValue;
+		return this;
+	}
+	
+	
+	/**
 	 * Run validation test
 	 * @return boolean
 	 */
@@ -211,6 +254,8 @@ public class ValidationRule {
 			}
 		}
 		
+	
+		
 		// If date after checker is enabled, check if current date is after target date
 		if(this.dateAfterChecker){
 			
@@ -224,6 +269,49 @@ public class ValidationRule {
 				}
 			}
 		}
+		
+		//catch error if argument entered is not an integer
+		if(this.intChecker){
+			if(!this.value.isEmpty()){
+				try{
+					Integer.parseInt(this.value);
+				} catch(NumberFormatException e){
+					errorMessage = String.format(LanguageText.getConstant("WRONG_FORMAT"), this.name);
+					return false;
+				}
+				
+			}
+			
+			
+		}
+		
+		//Using maxNumChecker implies that an integer form has been entered,
+		//if the entered argument is a string ex. 'dog' then, the previous if statement
+		//will catch the error, return false, and never reach this if statement
+		if (this.maxNumChecker) {
+
+			// If values are not empty
+			if (!this.value.isEmpty()) {
+				if (Integer.parseInt(this.value) > this.maxValue){
+					errorMessage = String.format(LanguageText.getConstant("MAX_NUM_VALUE"), this.name, Integer.parseInt(this.value));
+					return false;
+				}
+			}
+			
+		}
+		
+		if (this.minNumChecker) {
+
+			// If values are not empty
+			if (!this.value.isEmpty()) {
+				if (Integer.parseInt(this.value) < this.minValue){
+					errorMessage = String.format(LanguageText.getConstant("MIN_NUM_VALUE"), this.name, Integer.parseInt(this.value));
+					return false;
+				}
+			}
+			
+		}		
+		
 		
 		return true;
 	}
