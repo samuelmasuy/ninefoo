@@ -230,12 +230,6 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
-			public void assignMemberToActivity() {
-				// TODO assignMemberToActivity
-				System.out.println("Assign member clicked...");
-			}
-
-			@Override
 			public void createUser() {
 				// TODO createUser
 				System.out.println("Create user clicked...");

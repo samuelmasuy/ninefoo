@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import ninefoo.view.include.menu.dialog.AddUserToProjectDialog;
-import ninefoo.view.include.menu.dialog.AssignMemberToActivityDialog;
 import ninefoo.view.include.menu.dialog.CreateActivityDialog;
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
 import ninefoo.view.include.menu.dialog.CreateUserDialog;
@@ -31,7 +30,7 @@ public class Tools extends JPanel{
 	private static final long serialVersionUID = -1862085076331720213L;
 
 	// Create components
-	private JButton newProject, newMember, newActivity, assign, logout, viewProject, refreshProject, addUser, viewAssigned;
+	private JButton newProject, newMember, newActivity, logout, viewProject, refreshProject, addUser, viewAssigned;
 	
 	// Create listener
 	private ToolsListener toolsListener;
@@ -47,7 +46,6 @@ public class Tools extends JPanel{
 		this.newMember = new JButton(new ImageIcon(getClass().getResource("/images/new_user.png")));
 		this.newActivity = new JButton(new ImageIcon(getClass().getResource("/images/new_activity.png")));
 		this.logout = new JButton(new ImageIcon(getClass().getResource("/images/logout.png")));
-		this.assign = new JButton(new ImageIcon(getClass().getResource("/images/assign.png")));
 		this.viewProject = new JButton(new ImageIcon(getClass().getResource("/images/view_project.png")));
 		this.refreshProject = new JButton(new ImageIcon(getClass().getResource("/images/refresh_project.png")));
 		this.addUser = new JButton(new ImageIcon(getClass().getResource("/images/assign.png")));
@@ -74,13 +72,6 @@ public class Tools extends JPanel{
 		this.newMember.setHorizontalTextPosition(SwingConstants.CENTER);
 		this.newMember.setText("New Member");
 		this.newMember.setToolTipText("Register a new member");
-		
-		this.assign.setContentAreaFilled(false);
-		this.assign.setBorder(null);
-		this.assign.setVerticalTextPosition(SwingConstants.BOTTOM);
-		this.assign.setHorizontalTextPosition(SwingConstants.CENTER);
-		this.assign.setText("Assign");
-		this.assign.setToolTipText("Assign member to a task");
 		
 		this.viewProject.setContentAreaFilled(false);
 		this.viewProject.setBorder(null);
@@ -165,15 +156,6 @@ public class Tools extends JPanel{
 			}
 		});
 		
-		this.assign.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (toolsListener != null)
-					new AssignMemberToActivityDialog(parentFrame, toolsListener);
-			}
-		});
-		
 		this.newMember.addActionListener(new ActionListener() {
 			
 			@Override
@@ -213,8 +195,6 @@ public class Tools extends JPanel{
 		this.add(this.newActivity);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
 		this.add(this.newMember);
-		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
-		this.add(this.assign);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
 		this.add(this.addUser);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
