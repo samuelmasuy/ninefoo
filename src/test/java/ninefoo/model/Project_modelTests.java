@@ -6,6 +6,7 @@ import ninefoo.helper.DateHelper;
 import ninefoo.model.object.Project;
 import ninefoo.model.sql.Project_model;
 
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -17,7 +18,19 @@ import java.util.List;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class Project_modelTests {
     //Create the project model that is used to manipulate the project objects
-    private Project_model project_model = new Project_model();
+    private static Project_model project_model = new Project_model();
+
+    // This ID is used when testing project update functionality.
+    private static int updatableProjectId;
+
+    // Delete all the existing projects to make sure we have no conflicts.
+    @BeforeClass
+    public static void deleteAllProjects() {
+        List<Project> allProjects = project_model.getAllProjects();
+
+        for (Project project : allProjects)
+            project_model.deleteProject(project);
+    }
 
 	/*This test creates a new project with the constructor
 	 * 
@@ -245,15 +258,65 @@ public class Project_modelTests {
     }
 
     @Test
-    public void test13_Project_DeleteProject_NullProjectShouldReturnFalse() {
+    public void test13_Project_DeleteProject_ProjectIsDeletedById() {
+        // Add a project to the database.
+        Project newProject = createProject("deleted_project", 1000.00,
+                "08/08/2016", "09/09/2016", "deleted_project description");
+        int newProjectId = project_model.insertNewProject(newProject);
+
+        // Now, delete a project (we first retrieve the project)
+        Project project = project_model.getProjectById(newProjectId);
+        boolean success = project_model.deleteProjectById(project.getProjectId());
+        assertTrue("deleteProject should return true", success);
+
+        // Now, make sure if you query for the project, it returns null.
+        project = project_model.getProjectById(newProjectId);
+        assertNull("A deleted project should be null when querying the DB", project);
+    }
+
+    @Test
+    public void test14_Project_DeleteProject_NullProjectShouldReturnFalse() {
         Project project = null;
         boolean success = project_model.deleteProject(project);
         assertFalse("When passed null, DeleteProject should return false", success);
     }
 
+    @Test
+    public void test15_Project_UpdateProject_ProjectNameIsUpdated() {
+        Project project = createProject("updatable_project", 1000, "08/08/2016", "09/09/2016",
+                "updatable_project description");
+
+        updatableProjectId = project_model.insertNewProject(project);
+
+        // Get the project from the database.
+        project = project_model.getProjectById(updatableProjectId);
+
+        String newProjectName = "updated_project";
+        project.setProjectName(newProjectName);
+        boolean success = project_model.updateProject(project);
+        assertTrue("updateProject should return true", success);
+
+        project = project_model.getProjectById(updatableProjectId);
+        assertEquals("Project name should be updated", newProjectName, project.getProjectName());
+    }
+
+    @Test
+    public void test16_Project_UpdateProject_BudgetIsUpdated() {
+        Project project = project_model.getProjectById(updatableProjectId);
+
+        double newBudget = 123456;
+        project.setBudget(newBudget);
+        boolean success = project_model.updateProject(project);
+        assertTrue("updateProject should return true", success);
+
+        project = project_model.getProjectById(updatableProjectId);
+        assertEquals("Project budget should be updated", newBudget, project.getBudget(), 0.00001);
+    }
+
     private Project createProject(String name, double budget,
                                   String startDate, String deadlineDate, String description) {
-        return new Project(name, budget, DateHelper.parse(startDate, Config.DATE_FORMAT),
-                DateHelper.parse(deadlineDate, Config.DATE_FORMAT), description);
+
+        return new Project(name, budget, DateHelper.parse(startDate, Config.DATE_FORMAT_SHORT),
+                DateHelper.parse(deadlineDate, Config.DATE_FORMAT_SHORT), description);
     }
 }

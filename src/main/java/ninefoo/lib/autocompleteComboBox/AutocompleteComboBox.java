@@ -22,6 +22,7 @@ public class AutocompleteComboBox extends JComboBox<String>{
 	 */
 	public AutocompleteComboBox(String[] text) {
 		
+		// Add new items
 		if(text != null)
 			for(String str : text)
 				this.addItem(str);
@@ -34,5 +35,25 @@ public class AutocompleteComboBox extends JComboBox<String>{
 		
 		// Set size
 		setPreferredSize(new Dimension(150, 30));
+	}
+	
+	/**
+	 * Get text component
+	 * @return text component
+	 */
+	public JTextComponent getTextComponent(){
+		return (JTextComponent) getEditor().getEditorComponent();
+	}
+	
+	/**
+	 * Check that the data entered exist in the list and returns it
+	 * @return string if the input exists in the list, <code>NULL</code> if the input is not in the list
+	 */
+	public String checkAndGetText(){
+		for(int i = 0; i < getModel().getSize(); i++){
+			if(getTextComponent().getText().equals(getModel().getElementAt(i)))
+				return getTextComponent().getText();
+		}
+		return null;
 	}
 }

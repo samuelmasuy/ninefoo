@@ -190,4 +190,38 @@ public class Role_model extends AbstractModel{
 
         return null;
     }
+
+    public boolean deleteRoleById(int roleId) {
+        // Open
+        this.open();
+
+        // Query
+        sql = "DELETE FROM role WHERE role_id = ?";
+
+        try {
+
+            // Prepare
+            this.prepareStatement();
+
+            // Data
+            ps.setInt(1, roleId);
+
+            // Run
+            affectedRows = ps.executeUpdate();
+
+            // Check if deleted
+            return (affectedRows == 1);
+
+            // Error
+        } catch (SQLException e) {
+            LOGGER.error("Could not delete role --- detailed info: " + e.getMessage());
+
+            // Close
+        } finally {
+            this.close();
+        }
+
+        return false;
+
+    }
 }
