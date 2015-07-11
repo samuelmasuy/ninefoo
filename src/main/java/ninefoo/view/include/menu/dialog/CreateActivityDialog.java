@@ -35,6 +35,7 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 	private JTextField optimisticDuration;
 	private JTextField likelyDuration;
 	private JTextField pessimisticDuration;
+	private JTextField cost;
 	private DatePicker startDate;
 	private DatePicker finishDate;
 	private ArrayList<Member> members_data;
@@ -60,6 +61,7 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 		this.optimisticDuration = new JTextField(10);
 		this.likelyDuration = new JTextField(10);
 		this.pessimisticDuration = new JTextField(10);
+		this.cost = new JTextField(10);
 		this.startDate = new DatePicker(8);
 		this.finishDate = new DatePicker(8);
 		this.activityBox = new AutocompleteComboBox(activities_dummy);
@@ -96,6 +98,7 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 				optimisticDuration.setBorder(BorderFactory.createCompoundBorder(optimisticDuration.getBorder(), inputPadding));
 				likelyDuration.setBorder(BorderFactory.createCompoundBorder(likelyDuration.getBorder(), inputPadding));
 				pessimisticDuration.setBorder(BorderFactory.createCompoundBorder(pessimisticDuration.getBorder(), inputPadding));
+				cost.setBorder(BorderFactory.createCompoundBorder(pessimisticDuration.getBorder(), inputPadding));
 				startDate.setBorder(BorderFactory.createCompoundBorder(startDate.getBorder(), inputPadding));
 				finishDate.setBorder(BorderFactory.createCompoundBorder(finishDate.getBorder(), inputPadding));
 				activityBox.setBorder(BorderFactory.createCompoundBorder(activityBox.getBorder(), inputPadding));
@@ -124,6 +127,10 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 				this.table.newRow();
 				this.table.put(new JLabel(LanguageText.getConstant("PESSIMISTIC_ACT")));
 				this.table.put(pessimisticDuration);
+				
+				this.table.newRow();
+				this.table.put(new JLabel(LanguageText.getConstant("COST_ACT")));
+				this.table.put(cost);
 				
 				this.table.newRow();
 				this.table.put(new JLabel(LanguageText.getConstant("START_ACT")));
