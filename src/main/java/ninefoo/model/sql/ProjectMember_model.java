@@ -57,7 +57,7 @@ public class ProjectMember_model extends AbstractModel{
         List<Project> projects = new ArrayList<>();
 
         // Query
-        sql = "SELECT * FROM project_member pm, project p " +
+        sql = "SELECT p.* FROM project_member pm, project p " +
               "WHERE member_id = ? AND role_id = ? AND p.project_id = pm.project_id";
 
         try {
@@ -93,67 +93,6 @@ public class ProjectMember_model extends AbstractModel{
         return projects;
     }
 
-    /**
-     * Adds the specified list of members to the specified project with. Members will have
-     *      the specified role in the project.
-     * @param project Project object corresponding to the target project.
-     * @param members List of members to be added to the project.
-     * @param role Role object representing the role of the members.
-     * @return True if successful, False otherwise.
-     */
-    @Deprecated
-    public boolean addMembersToProject(Project project, List<Member> members, Role role) {
-
-        if (project == null || members == null || role == null)
-            return false;
-
-        List<Integer> memberIds = new ArrayList<>();
-        for (Member member : members)
-            memberIds.add(member.getMemberId());
-
-        return addMembersToProject(project.getProjectId(), memberIds, role.getRoleId());
-    }
-
-    /**
-     * Adds the members corresponding to the specified list of memberIds to the project
-     *      corresponding to projectId with the role corresponding to roleId.
-     * @param projectId Id of the project to add members.
-     * @param memberIds Ids of the members to be added to the project.
-     * @param roleId Id of the role of all the members in the list in the specified project.
-     * @return True if successful, False otherwise.
-     */
-    @Deprecated
-    public boolean addMembersToProject(int projectId, List<Integer> memberIds, int roleId) {
-
-    	// No need to update because it's not used
-    	return false;
-    	
-//        if (projectId == 0 || roleId == 0)
-//            return false;
-//
-//        // Open
-//        this.open();
-//        
-//        String insertNewProjectMemberSql;
-//        boolean success = true;
-//
-//        for (int memberId : memberIds) {
-//
-//            insertNewProjectMemberSql = String.format(
-//                    "INSERT INTO project_member VALUES(%d, %d, %d)", projectId, memberId, roleId);
-//
-//            try {
-//                statement.executeUpdate(insertNewProjectMemberSql);
-//            } catch (SQLException e) {
-//                LOGGER.error("Could not add members to project with ID: " +
-//                        projectId + " --- detailed info: " + e.getMessage());
-//                success = false;
-//            }
-//        }
-//
-//        return success;
-    }
-    
     /**
      * Adds the specified member to the specified project with. Member will have
      *      the specified role in the project.
