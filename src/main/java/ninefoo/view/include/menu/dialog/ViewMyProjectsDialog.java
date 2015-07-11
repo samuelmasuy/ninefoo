@@ -158,7 +158,7 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 				
 				// If no project selected, show error
 				if(projectList.getSelectedIndex() < 0)
-					JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("MISSING_OPEN"), LanguageText.getConstant("PROJECT")), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("MISSING_OPEN"), LanguageText.getConstant("PROJECT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
 				
 				// If project selected
 				else if(toolsListener != null)
@@ -174,7 +174,7 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 				
 				// If no project selected, show error
 				if(projectList.getSelectedIndex() < 0)
-					JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("MISSING_EDIT"),LanguageText.getConstant("PROJECT")), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("MISSING_EDIT"),LanguageText.getConstant("PROJECT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
 				
 				// If project selected
 				else if(toolsListener != null){
