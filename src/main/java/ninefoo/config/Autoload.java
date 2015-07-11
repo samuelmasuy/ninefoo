@@ -104,7 +104,7 @@ public class Autoload {
 	@autoload(active=false, priority = 2)
 	public void addDummyProject(){
 		Project_model project_model = new Project_model();
-		int id = project_model.insertNewProject(new Project("Amir", 100, null, null, null));
+		int id = project_model.insertNewProject(new Project("Amir", Double.valueOf(100), null, null, null));
 		ProjectMember_model pm_model = new ProjectMember_model();
 		Role_model role = new Role_model();
 		pm_model.addMemberToProject(id, 1, role.getRoleByName("Manager"));
