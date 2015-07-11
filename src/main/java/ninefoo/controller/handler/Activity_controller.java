@@ -1,6 +1,10 @@
 package ninefoo.controller.handler;
 
-import ninefoo.controller.AbstractController;
+import java.util.ArrayList;
+import java.util.List;
+
+import ninefoo.config.Database;
+import ninefoo.controller.handler.template.AbstractController;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.validationForm.ValidationForm;
 import ninefoo.lib.validationForm.ValidationRule;
@@ -12,209 +16,230 @@ import ninefoo.model.sql.Member_model;
 import ninefoo.model.sql.Project_model;
 import ninefoo.view.frame.UpdatableView;
 import ninefoo.view.listeners.ActivityListener;
-import ninefoo.view.project.TabularData_view;
-
-import java.util.List;
 
 /**
  * Controller for 'Activity': Create, Update and Delete activities
+ * 
  * @author Samuel Masuy
+ * @author Melissa Duong
  * @see AbstractController, ActivityListener
  */
-public class Activity_controller extends AbstractController implements ActivityListener {
+public class Activity_controller extends AbstractController implements
+		ActivityListener {
 
-    // Load model
-    private Activity_model activity_model = new Activity_model();
-    private Project_model project_model = new Project_model();
-    private Member_model member_model = new Member_model();
+	// Load model
+	private Activity_model activity_model = new Activity_model();
+	private Project_model project_model = new Project_model();
+	private Member_model member_model = new Member_model();
 
-    /**
-     * Constructor
-     *
-     * @param view
-     */
-    public Activity_controller(UpdatableView view) {
-        super(view);
-    }
+	/**
+	 * Constructor
+	 *
+	 * @param view
+	 */
+	Activity_controller(UpdatableView view) {
+		super(view);
+	}
 
+	/**
+	 * This method creates an activity and inserts it into the db 
+	 * It returns an error message when the activity cannot be created
+	 * @author Melissa Duong 
+	 * 
+	 * 
+	 */
 	@Override
-	public void createUpdateActivity(int row, String activityId, String activityLabel, String duration, String startDate, String finishDate, Project project, String completion, int memberId) {
-		
-		// If activity has just been added, don't do anything
-		if(activityId.equals(TabularData_view.PRE_CREATED_ID) && activityLabel.isEmpty() && duration.isEmpty() && startDate.isEmpty() && finishDate.isEmpty())
-			return;
-		
-		// Validation form
-		ValidationForm validation = new ValidationForm();
-		
-		// TODO Put name in the language folder
-		// Create rules
-		ValidationRule durationRule = new ValidationRule("Duration", duration);
-		ValidationRule activityNameRule = new ValidationRule("Activity name", activityLabel);
-		ValidationRule startDateRule = new ValidationRule("Start date", startDate);
-		ValidationRule finishDateRule = new ValidationRule("Finish date", finishDate);
-		ValidationRule completionRule = new ValidationRule("Activity completed", completion);
-		
-		// Set limits
-//		activityNameRule.checkEmpty().checkFormat("[a-zA-Z0-9 ]+");
-		activityNameRule.checkEmpty();
-		
-		durationRule.checkFormat("[0-9]*");
-		startDateRule.checkDate();
-		finishDateRule.checkDate();
-		completionRule.checkFormat("[0-9]*");
-		
-		// Set rules
-		validation.setRule(activityNameRule);
-		validation.setRule(durationRule);
-		validation.setRule(startDateRule);
-		validation.setRule(finishDateRule);
-		validation.setRule(completionRule);
-		
-		// TODO When there's an error, don't apply the data entered
-		// If requirements are met
-		if(validation.validate()){
-			
-			// Get current member
+	public void createActivity(int row, String activityId,
+			String activityLabel, String duration, String startDate,
+			String finishDate, Project project, String completion, int memberId) {
+
+		// set individual rules for each passed parameter json file
+		ValidationRule activityLabelRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_LABEL_ACT"), activityLabel);
+		ValidationRule activityDurationRule = new ValidationRule(LanguageText.getConstant("DURATION_ACT"), duration);
+		ValidationRule activityStartDateRule = new ValidationRule(LanguageText.getConstant("START_ACT"), startDate);
+		ValidationRule activityFinishDateRule = new ValidationRule(LanguageText.getConstant("FINISH_ACT"), finishDate);
+
+		// ********************************************
+		// NOT SURE ABOUT THIS ONE activity completion??
+		ValidationRule activityCompletionRule = new ValidationRule(
+				LanguageText.getConstant("PLANNED_PERCENTAGE_ACT"), completion);
+
+		// set restrictions for those rules
+		activityLabelRule.checkEmpty().checkMaxLength(25);
+		activityDurationRule.checkEmpty().checkMaxNumValue(100000).checkInt();
+				//.checkFormat("[0-9]+");
+		activityStartDateRule.checkEmpty().checkDateBefore(finishDate);
+
+		// activityCompletionRule.checkEmpty().checkFormat("[0-9]+").checkMaxNumValue(100);
+
+		// add a validation form which takes multiple validation rules
+		ValidationForm activityValidation = new ValidationForm();
+
+		// add the validation rules to the validation form
+		activityValidation.setRule(activityLabelRule);
+		activityValidation.setRule(activityCompletionRule);
+		activityValidation.setRule(activityDurationRule);
+		activityValidation.setRule(activityStartDateRule);
+		activityValidation.setRule(activityFinishDateRule);
+
+		// if all the parameters passed respect the restrictions, add a new
+		// activity object in this if statement
+		if (activityValidation.validate()) {
+
+			// retrieve member object from db by memberId, this is useful for
+			// the activity constructor that needs a member object
 			Member member = this.member_model.getMemberById(memberId);
-			
-			// Target activity
-			Activity affectedActivity = null;
-			
-			// Adjust values
-			int intDuration = duration.isEmpty() ? 0 : Integer.parseInt(duration);
-			
-			// Create temporary instance
-			Activity activity = new Activity(activityLabel, intDuration, startDate, finishDate, project, member);
-			
-			// If new activity
-			if(activityId.equals(TabularData_view.PRE_CREATED_ID)){
-				
-				// Insert it into the DB
-				int actId = this.activity_model.insertNewActivity(activity);
-				
-				// Fetch the insert activity
-				Activity insertedActivity = this.activity_model.getActivityById(actId);
-				
-				// Set it as the affected one
-				affectedActivity = insertedActivity;
-				
-			// If activity already exist
-			} else {
-				
-				// Set the id
-				activity.setActivityId(Integer.parseInt(activityId) );
-				
-				// Update activity
-				this.activity_model.updateActivity(activity);
-				
-				// Fetch the updated activity
-				Activity updatedActivity = this.activity_model.getActivityById(Integer.parseInt(activityId));
-				
-				// Load its prerequisites
-				updatedActivity.setPrerequisites(this.activity_model.getActivityPrerequisites(updatedActivity));
-				
-				// Set it as the affected one
-				affectedActivity = updatedActivity;
-			}
-			
-			// Refresh project 
-			Project refreshedProject = this.project_model.getProjectById(project.getProjectId());
-			
-			// Load prerequisite for each activity
-			List<Activity> actList = this.activity_model.getActivitiesByProjectId(project.getProjectId());
-			for(Activity act : actList){
-				
-				// Set prerequisites
-				act.setPrerequisites(this.activity_model.getActivityPrerequisites(act));
-			}
-			
-			// Set activities for the project
-			refreshedProject.setAcitivies(actList);
-			
-			// Update view
-			this.view.updateCreateUpdateActivity(true, null, row, affectedActivity, refreshedProject);
-		
-		// If requirements are not met
-		} else {
-			
-			// Target activity
-			Activity affectedActivity = null;
-			
-			// If new activity
-			if(activityId.equals(TabularData_view.PRE_CREATED_ID)){
-				
-				// Create an empty activity
-				affectedActivity = new Activity(null, 0, null, null, null, null);
-				
-			// If not a new activity, return old info
-			} else {
-				
-				// Fetch the old activity
-				Activity oldActivity = this.activity_model.getActivityById(Integer.parseInt(activityId));
-				
-				// Load its prerequisites
-				oldActivity.setPrerequisites(this.activity_model.getActivityPrerequisites(oldActivity));
-				
-				// Set it as the affected one
-				affectedActivity = oldActivity;
-			}
-			
-			// Refresh project 
-			Project refreshedProject = this.project_model.getProjectById(project.getProjectId());
-			
-			// Load prerequisite for each activity
-			List<Activity> actList = this.activity_model.getActivitiesByProjectId(project.getProjectId());
-			for(Activity act : actList){
-				
-				// Set prerequisites
-				act.setPrerequisites(this.activity_model.getActivityPrerequisites(act));
-			}
-			
-			// Set activities for the project
-			refreshedProject.setAcitivies(actList);		
-			
-			// Display error
-			this.view.updateCreateUpdateActivity(false, validation.getError(), row, affectedActivity, refreshedProject);
+
+			// TODO add a completion (% completion) parameter for the activity
+			// constructor used right here below
+
+			// create activity
+			Activity activity = new Activity(activityLabel,
+					Integer.parseInt(duration), startDate, finishDate, project,
+					member);
+
+			// add a new activity to the activity model
+			// if insert failed
+			if (this.activity_model.insertNewActivity(activity) == Database.ERROR) {
+
+				// display error message
+				this.view.updateCreateActivity(false,LanguageText.getConstant("ERROR_OCCURED"), null);
+			}// if
+				// if activity added successfully, update the view because a new activity has been added to a project
+			else {
+				// get the new list of activities including the new activity and  update the project object
+
+				List<Activity> activitiesList = new ArrayList<>();
+
+				// if unable to retrieve list of activities return an error message
+				if ((activitiesList = this.activity_model
+						.getActivitiesByProject(project)) == null) {
+					this.view.updateCreateActivity(false,LanguageText.getConstant("ERROR_OCCURED"), null);
+				}
+
+				// else assign the list to the project object
+				else {
+					project.setAcitivies(activitiesList);
+				}
+
+				// update the view with the new project object and display successful activity creation message
+				this.view.updateCreateActivity(true,LanguageText.getConstant("CREATED"), project);
+
+			}// else
+
 		}
+		// Display error when validation error
+		this.view.updateCreateActivity(false, activityValidation.getError(),null);
+
+	}
+
+	/**
+	 * This method updates the activity information when user edits it.
+	 * Update is done in the view and in the db
+	 * This method is very similar to insertActivity. The only difference is when we update the view
+	 * we call updateEditActivity instead of updateCreateActivity method and pass different error messages
+	 * @author Melissa Duong 
+	 * @date July-05-2015
+	 */
+	public void editActivity(int row, String activityId, String activityLabel, String duration, String startDate, String finishDate, Project project, String completion, int memberId) {
+		// set individual rules for each passed parameter json file
+		ValidationRule activityLabelRule = new ValidationRule(
+				LanguageText.getConstant("ACTIVITY_LABEL_ACT"), activityLabel);
+		ValidationRule activityDurationRule = new ValidationRule(
+				LanguageText.getConstant("DURATION_ACT"), duration);
+		ValidationRule activityStartDateRule = new ValidationRule(
+				LanguageText.getConstant("START_ACT"), startDate);
+		ValidationRule activityFinishDateRule = new ValidationRule(
+				LanguageText.getConstant("FINISH_ACT"), finishDate);
+		
+		
+		// ********************************************
+		// NOT SURE ABOUT THIS ONE activity completion??
+		ValidationRule activityCompletionRule = new ValidationRule(
+				LanguageText.getConstant("PLANNED_PERCENTAGE_ACT"), completion);
+		
+		// set restrictions for those rules
+		activityLabelRule.checkEmpty().checkMaxLength(25);
+		activityDurationRule.checkEmpty().checkMaxNumValue(100000).checkInt();
+			//	.checkFormat("[0-9]+");
+		activityStartDateRule.checkEmpty().checkDateBefore(finishDate);
+		
+		// add a validation form which takes multiple validation rules
+		ValidationForm activityValidation = new ValidationForm();
+
+		// add the validation rules to the validation form
+		activityValidation.setRule(activityLabelRule);
+		activityValidation.setRule(activityCompletionRule);
+		activityValidation.setRule(activityDurationRule);
+		activityValidation.setRule(activityStartDateRule);
+		activityValidation.setRule(activityFinishDateRule);
+
+		// if all the parameters passed respect the restrictions, add a new
+		// activity object in this if statement
+		if (activityValidation.validate()) {
+
+			// retrieve member object from db by memberId, this is useful for
+			// the activity constructor that needs a member object
+			Member member = this.member_model.getMemberById(memberId);
+
+			// TODO add a completion (% completion) parameter for the activity
+			// constructor used right here below
+
+			// create activity object
+			Activity activity = new Activity(activityLabel,
+					Integer.parseInt(duration), startDate, finishDate, project,
+					member);
+
+			// update activity in the activity model
+			// if update failed
+			if (this.activity_model.updateActivity(activity) == false) {
+
+				// display error message
+				this.view.updateCreateActivity(false,LanguageText.getConstant("ERROR_OCCURED"), null);
+			}// if
+				// if activity updated successfully, update the view 
+			else {
+				// get the new list of activities including the updated activity and  update the project object
+
+				List<Activity> activitiesList = new ArrayList<>();
+
+				// if unable to retrieve list of activities return an error message
+				if ((activitiesList = this.activity_model
+						.getActivitiesByProject(project)) == null) {
+					this.view.updateEditActivity(false,LanguageText.getConstant("ERROR_OCCURED"), null);
+				}
+
+				// else assign the list to the project object
+				else {
+					project.setAcitivies(activitiesList);
+				}
+
+				// update the view with the new project object and display successful activity update message
+				this.view.updateEditActivity(true,LanguageText.getConstant("UPDATED"), project);
+
+			}// else
+
+		}
+		// Display error when validation error
+		this.view.updateEditActivity(false, activityValidation.getError(),null);
 	}
 
 	@Override
 	public void createDependentActivities(int activityIdDependent, int activityIdDependentOn, int row) {
+	/*	ValidationForm dependantActivityValidation = new ValidationForm();
+		ValidationRule activityLabelRule =new ValidationRule ("acitivtyLabel" , activityLabel );
 		
-		// Fetch activities
-		Activity activityDependentOn = this.activity_model.getActivityById(activityIdDependentOn);
-		Activity activityDependent = this.activity_model.getActivityById(activityIdDependent);
-					
-		// Check if dependency already exist
-		List<Activity> preList = this.activity_model.getActivityPrerequisites(activityDependent);
-		for(Activity activity : preList){
-			if(activity.getActivityId() == activityIdDependentOn){
-
-				// Update view
-				this.view.updateCreateDependentActivities(false, "Dependency already exists", row, null);
-
-				// Exit
-				return;
-			}
-		}
+		activityLabelRule.checkEmpty().checkMaxLength(25);
+		activityDurationRule.checkEmpty().checkMaxLength(200).checkFormat("[0-9]+");
+		activityStartDateRule.checkEmpty().checkDateBefore(finishDate);
+		activityFinishDateRule.checkEmpty().checkDateAfter(startDate);
+		activityCompletionRule.checkEmpty().checkFormat("[0-9]+").checkMaxNumValue(100);
 		
-		// Insert activity
-		if(this.activity_model.insertActivityPrerequisites(activityIdDependent, activityDependentOn)) {
-			
-			// Reload dependency
-			preList = this.activity_model.getActivityPrerequisites(activityDependent);
-			
-			// Set prerequisites
-			activityDependent.setPrerequisites(preList);
-			
-			// Update view
-			this.view.updateCreateDependentActivities(true, "Dependency created succesfully", row, activityDependent);
+	//	this.view.updateEditActivity(success, message, project); not implemented yet
+			this.view.updateCreateActivity(true, "activity successfully created, project);		
 		
-		} else {
+	*/	
 		
-			// Update view
-			this.view.updateCreateDependentActivities(false, LanguageText.getConstant("ERROR_OCCURED"), row, null);
-		}
+		
 	}
 }

@@ -1,11 +1,11 @@
 package ninefoo.helper;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 import ninefoo.config.Config;
 
@@ -45,4 +45,57 @@ public class DateHelperTest {
 
 			assertEquals("Date Formatting does not work",testparam,expected);
 		}
+
+        @Test
+        public void testGetMinDate() throws Exception {
+			Calendar cal = Calendar.getInstance();
+			cal.set(2014, Calendar.JANUARY, 9);
+			Date old_date = cal.getTime();
+			cal.set(2018, Calendar.JANUARY, 9);
+			Date new_date = cal.getTime();
+			List<Date> dl = Arrays.asList(new_date, old_date);
+			assertEquals("minimum date 2014", old_date, DateHelper.getMinDate(dl));
+        }
+
+        @Test
+        public void testGetMaxDate() throws Exception {
+			Calendar cal = Calendar.getInstance();
+			cal.set(2014, Calendar.JANUARY, 9);
+			Date old_date = cal.getTime();
+			cal.set(2018, Calendar.JANUARY, 9);
+			Date new_date = cal.getTime();
+			List<Date> dl = Arrays.asList(new_date, old_date);
+			assertEquals("maximum date 2018", new_date, DateHelper.getMaxDate(dl));
+        }
+
+        @Test
+        public void testGetDifferenceDatesException() throws Exception {
+			Calendar cal = Calendar.getInstance();
+			cal.set(2014, Calendar.JANUARY, 9);
+			Date old_date = cal.getTime();
+			cal.set(2018, Calendar.JANUARY, 9);
+			Date new_date = cal.getTime();
+
+            Throwable e = null;
+
+			try {
+				DateHelper.getDifferenceDates(new_date, old_date);
+			} catch (Throwable ex) {
+				e = ex;
+			}
+
+			assertTrue("Should be illegal", e instanceof IllegalArgumentException);
+        }
+
+        @Test
+        public void testGetDifferenceDates() throws Exception {
+            Calendar cal = Calendar.getInstance();
+            cal.set(2014, Calendar.JANUARY, 9);
+            Date old_date = cal.getTime();
+            cal.set(2014, Calendar.JANUARY, 10);
+            Date new_date = cal.getTime();
+
+			assertEquals(1, DateHelper.getDifferenceDates(old_date, new_date));
+
+        }
 }

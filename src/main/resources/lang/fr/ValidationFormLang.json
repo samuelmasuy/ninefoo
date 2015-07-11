@@ -1,0 +1,24 @@
+{
+	"name" : "Validation form",
+	"description" : "Error, warning and success messages",
+	"language" : {
+		"REQUIRED" : "%s est requis.",
+		"WRONG_FORMAT" : "%s est invalide.",
+		"WRONG_USERNAME_PASSWORD" : "Nom d'utilisateur ou mot de passe incorrect.",
+		"WRONG_DATE_BEFORE_DATE" : "%s devrait etre au plus %s",
+		"WRONG_DATE_AFTER_DATE" : "%s devrait etre au moins %s",
+		"MIN_LENGTH" : "%s longueur doit etre au moins %d.",
+		"MAX_LENGTH" : "%s longueur doit etre au plus %d.",
+		"REGISTRATION_SUCCESS" : "Inscription reussie! Connecter vous.",
+		"UNIQUE" : "%s doit etre unique",
+		
+		"OPERATION_FAILED" : "L'operation a echoue",
+		"OPERATION_SUCCESSFUL" : "Operation reussie",
+		"ERROR_OCCURED" : "Une erreur s'est produite",
+		
+		"UPDATED" : "%s mis a jour avec succes!",
+		"DELETED" : "%s supprime avec succes!",
+		"LOADED" : "%s charge avec succes!",
+		"CREATED" : "%s cree avec succes!"
+	}	
+}

@@ -2,18 +2,34 @@ package ninefoo.view.include.menu.listener;
 
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
 import ninefoo.view.include.menu.dialog.EditProjectDialog;
+import ninefoo.view.include.menu.dialog.ViewAssignedActivitiesDialog;
 import ninefoo.view.include.menu.dialog.ViewMyProjectsDialog;
-import ninefoo.config.RoleNames;
 
 /**
  * Listener used to communicate with Main Frame
  * @author Amir El Bawab
+ * @author Sebouh Bardakjian
  */
 public interface ToolsListener {
+	
+	// Create
 	public void newProject(CreateProjectDialog formDialog, String name, String budget, String startDate, String deadline, String description);
-	public void newActivity();
-	public void loadAllMyProjectsByRole(ViewMyProjectsDialog viewMyProjectsDialog, RoleNames roleName);
+	public void createUser();
+	public void assignMemberToActivity();
+	public void addUserToProject();
+	public void createActivity();
+	
+	// Load
+	public void loadAllMyProjectsByRole(ViewMyProjectsDialog viewMyProjectsDialog, String roleName);
 	public void loadProject(ViewMyProjectsDialog viewMyProjectsDialog, int projectId);
+	public void loadEditProjectFields(EditProjectDialog editProjectDialog, int projectId);
+	public void loadAssignedActivitiesProject(ViewAssignedActivitiesDialog dialog);
+	
+	// Update
+	public void updateProject(ViewMyProjectsDialog parentDialog, EditProjectDialog dialog, int projectId, String name, String budget, String startDate, String deadline, String description);
+	
+	// Logout
 	public void logout();
-	public void updateProject(ViewMyProjectsDialog parentDialog, EditProjectDialog dialog, int projectId, String name, String budget, String description);
+	
+	
 }

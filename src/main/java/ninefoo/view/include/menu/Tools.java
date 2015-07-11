@@ -12,20 +12,26 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import ninefoo.view.include.menu.dialog.AddUserToProjectDialog;
+import ninefoo.view.include.menu.dialog.AssignMemberToActivityDialog;
+import ninefoo.view.include.menu.dialog.CreateActivityDialog;
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
+import ninefoo.view.include.menu.dialog.CreateUserDialog;
+import ninefoo.view.include.menu.dialog.ViewAssignedActivitiesDialog;
 import ninefoo.view.include.menu.dialog.ViewMyProjectsDialog;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
 /**
  * Top tools menu. Shows option like create a project, etc...
  * @author Amir El Bawab
+ * @author Sebouh Bardakjian
  */
 public class Tools extends JPanel{
 	
 	private static final long serialVersionUID = -1862085076331720213L;
 
 	// Create components
-	private JButton newProject, newMember, newActivity, assign, logout, viewProject, refreshProject;
+	private JButton newProject, newMember, newActivity, assign, logout, viewProject, refreshProject, addUser, viewAssigned;
 	
 	// Create listener
 	private ToolsListener toolsListener;
@@ -44,6 +50,8 @@ public class Tools extends JPanel{
 		this.assign = new JButton(new ImageIcon(getClass().getResource("/images/assign.png")));
 		this.viewProject = new JButton(new ImageIcon(getClass().getResource("/images/view_project.png")));
 		this.refreshProject = new JButton(new ImageIcon(getClass().getResource("/images/refresh_project.png")));
+		this.addUser = new JButton(new ImageIcon(getClass().getResource("/images/assign.png")));
+		this.viewAssigned = new JButton(new ImageIcon(getClass().getResource("/images/view_project.png")));
 		
 		// Customize buttons
 		this.newProject.setContentAreaFilled(false);
@@ -94,6 +102,20 @@ public class Tools extends JPanel{
 		this.refreshProject.setText("Refresh");
 		this.refreshProject.setToolTipText("Refresh project");
 		
+		this.addUser.setContentAreaFilled(false);
+		this.addUser.setBorder(null);
+		this.addUser.setVerticalTextPosition(SwingConstants.BOTTOM);
+		this.addUser.setHorizontalTextPosition(SwingConstants.CENTER);
+		this.addUser.setText("Add User");
+		this.addUser.setToolTipText("Assign users to the project");
+		
+		this.viewAssigned.setContentAreaFilled(false);
+		this.viewAssigned.setBorder(null);
+		this.viewAssigned.setVerticalTextPosition(SwingConstants.BOTTOM);
+		this.viewAssigned.setHorizontalTextPosition(SwingConstants.CENTER);
+		this.viewAssigned.setText("View Assigned");
+		this.viewAssigned.setToolTipText("View my assigned tasks");
+		
 		// Disable buttons at start
 		this.newActivity.setEnabled(false);
 		
@@ -117,7 +139,7 @@ public class Tools extends JPanel{
 				
 				// Create new activity
 				if(toolsListener != null)
-					toolsListener.newActivity();
+					new CreateActivityDialog(parentFrame, toolsListener);
 			}
 		});
 		
@@ -143,6 +165,42 @@ public class Tools extends JPanel{
 			}
 		});
 		
+		this.assign.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (toolsListener != null)
+					new AssignMemberToActivityDialog(parentFrame, toolsListener);
+			}
+		});
+		
+		this.newMember.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (toolsListener != null)
+					new CreateUserDialog(parentFrame, toolsListener);
+			}
+		});
+		
+		this.addUser.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (toolsListener != null)
+					new AddUserToProjectDialog(parentFrame, toolsListener);
+			}
+		});
+		
+		this.viewAssigned.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (toolsListener != null)
+					new ViewAssignedActivitiesDialog(parentFrame, toolsListener);
+			}
+		});
+		
 		// Add components
 		int spacing = 20;
 		this.add(Box.createRigidArea(new Dimension(10,0)));
@@ -150,11 +208,15 @@ public class Tools extends JPanel{
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
 		this.add(this.viewProject);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
+		this.add(this.viewAssigned);
+		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
 		this.add(this.newActivity);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
 		this.add(this.newMember);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
 		this.add(this.assign);
+		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
+		this.add(this.addUser);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
 		this.add(this.refreshProject);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));

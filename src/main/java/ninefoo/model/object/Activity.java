@@ -21,13 +21,14 @@ public class Activity {
     private int optimisticDuration;
     private int likelyDuration;
     private int pessimisticDuration;
-    private String createDate;
-    private String startDate;
-    private String updateDate;
-    private String finishDate;
+    private Date createDate;
+    private Date startDate;
+    private Date updateDate;
+    private Date finishDate;
     private Project project;
     private Member member;
     private List<Activity> prerequisites;
+    private double cost;
 
     /**
      * This constructor is used when converting DB entities to Java classes.
@@ -55,7 +56,7 @@ public class Activity {
         this.optimisticDuration = optimisticDuration;
         this.likelyDuration = likelyDuration;
         this.pessimisticDuration = pessimisticDuration;
-        this.createDate = DateHelper.format(createDate, Config.DATE_FORMAT);
+        this.createDate = createDate;
         this.project = project;
         this.member = member;
         this.prerequisites = prerequisites;
@@ -98,8 +99,10 @@ public class Activity {
      * @param project
      * @param member
      */
-    public Activity(String activityLabel, int duration, String startDate, String finishDate, Project project, Member member){
+    public Activity(String activityLabel, int duration, Date startDate, Date finishDate, Project project, Member member, double cost){
          this(0,activityLabel, null, duration, 0, 0, 0, null, project, member, null);
+         this.startDate = startDate;
+         this.finishDate = finishDate;
     }
 
     public int getActivityId() {
@@ -155,7 +158,7 @@ public class Activity {
     }
 
     public Date getCreateDate() {
-        return DateHelper.parse(createDate, Config.DATE_FORMAT);
+        return createDate;
     }
 
     public Project getProject() { return project; }
@@ -185,27 +188,27 @@ public class Activity {
     }
 
     public Date getStartDate() {
-        return DateHelper.parse(startDate, Config.DATE_FORMAT);
+        return startDate;
     }
 
     public void setStartDate(Date startDate) {
-        this.startDate = DateHelper.format(startDate, Config.DATE_FORMAT);
+        this.startDate = startDate;
     }
 
     public Date getUpdateDate() {
-        return DateHelper.parse(updateDate, Config.DATE_FORMAT);
+        return updateDate;
     }
 
     public void setUpdateDate(Date updateDate) {
-        this.updateDate = DateHelper.format(updateDate, Config.DATE_FORMAT);
+        this.updateDate = updateDate;
     }
 
     public Date getFinishDate() {
-        return DateHelper.parse(finishDate, Config.DATE_FORMAT);
+        return finishDate;
     }
 
     public void setFinishDate(Date finishDate) {
-        this.finishDate = DateHelper.format(finishDate, Config.DATE_FORMAT);
+        this.finishDate = finishDate;
     }
     
     /**
@@ -218,13 +221,21 @@ public class Activity {
     
     /**
      * Get a formatted string list
-     * Added by Amir
      * @return String
      */
     public String getPrerequisitesAsString(){
     	List<Integer> preId = new ArrayList<>();
-    	for(int i=0; i<prerequisites.size(); i++)
-    		preId.add(prerequisites.get(i).getActivityId());
+    	if(this.prerequisites != null)
+    		for(int i=0; i<prerequisites.size(); i++)
+        		preId.add(prerequisites.get(i).getActivityId());
     	return Arrays.toString(preId.toArray());
     }
+
+	public double getCost() {
+		return cost;
+	}
+
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
 }

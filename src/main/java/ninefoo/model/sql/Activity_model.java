@@ -3,17 +3,13 @@ package ninefoo.model.sql;
 import ninefoo.config.*;
 import ninefoo.helper.DateHelper;
 import ninefoo.config.Config;
-import ninefoo.model.DbManager;
 import ninefoo.model.object.Activity;
 import ninefoo.model.object.Member;
 import ninefoo.model.object.Project;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import ninefoo.model.sql.template.AbstractModel;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,8 +20,7 @@ import java.util.List;
  * @author Farzad MajidFayyaz
  * Created on 03-Jun-2015.
  */
-public class Activity_model {
-    private static final Logger LOGGER = LogManager.getLogger();
+public class Activity_model extends AbstractModel{
 
     /**
      * TODO method to be tested
@@ -73,61 +68,62 @@ public class Activity_model {
      *         was not successful.
      */
     public int insertNewActivity(Activity activity) {
-        Statement statement = DbManager.createConnectionStatement();
-
-        if (statement == null) {
-            LOGGER.warn("Could not get a connection statement to DB");
-            return Database.ERROR;
-        }
-
+    	
+    	// Condition
         if (activity.getProject() == null || activity.getMember() == null)
             return Database.ERROR;
 
-        String insertActivitySql = String.format(
-                "INSERT INTO activity(activity_label, description, duration, " +
-                "optimistic_duration, likely_duration, pessimistic_duration, " +
-                "project_id, member_id) VALUES ('%s', '%s', %d, %d, %d, %d, %d, %d)",
-                activity.getActivityLabel(), activity.getDescription(),
-                activity.getDuration(), activity.getOptimisticDuration(),
-                activity.getLikelyDuration(), activity.getPessimisticDuration(),
-                activity.getProject().getProjectId(),
-                activity.getMember().getMemberId());
+    	// Open
+    	this.open();
 
+    	// Query
+        sql = "INSERT INTO activity(activity_label, description, duration, " +
+        "optimistic_duration, likely_duration, pessimistic_duration, " +
+        "project_id, member_id, start_date, finish_date, cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        
         try {
-            int updatedRows = statement.executeUpdate(insertActivitySql);
+        	
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+        	ps.setString(1, activity.getActivityLabel());
+        	ps.setString(2, activity.getDescription());
+        	ps.setInt(3, activity.getDuration());
+        	ps.setInt(4, activity.getOptimisticDuration());
+        	ps.setInt(5, activity.getLikelyDuration());
+        	ps.setInt(6, activity.getPessimisticDuration());
+        	ps.setInt(7, activity.getProject().getProjectId());
+        	ps.setInt(8, activity.getMember().getMemberId());
+        	ps.setString(9, DateHelper.format(activity.getStartDate(), Config.DATE_FORMAT));
+        	ps.setString(10, DateHelper.format(activity.getFinishDate(), Config.DATE_FORMAT));
+        	ps.setDouble(11, activity.getCost());
+        	
+        	// Run 
+            affectedRows = ps.executeUpdate();
 
-            if (updatedRows == 1) {
-                ResultSet rs = statement.executeQuery("SELECT last_insert_rowid()");
+            // Get id
+            if (affectedRows == 1)
+            	return this.getLastInsertId();
 
-                int newActivityId = 0;
-                if (rs.next())
-                    newActivityId = rs.getInt("last_insert_rowid()");
-
-                List<Activity> prerequisites = activity.getPrerequisites();
-                if (prerequisites != null && !insertPrereqs(newActivityId, prerequisites))
-                    LOGGER.warn("There was a problem when adding prerequisites for activity " +
-                            "with ID = " + activity.getActivityId());
-
-                return newActivityId;
-            }
-
-            LOGGER.warn("Updated row count was not equal to 1");
-
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not insert new activity into db --- detailed info: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
         }
 
         return Database.ERROR;
     }
 
     // Helper function to insert the prerequisites for a given activity.
+    @Deprecated
     private boolean insertPrereqs(int activityId, List<Activity> prerequisites) {
-        Statement statement = DbManager.createConnectionStatement();
-
-        if (statement == null) {
-            LOGGER.warn("Could not get a connection statement to DB");
-            return false;
-        }
+    	
+    	// Open
+    	this.open();
 
         // TODO Commented by Amir
 //        // To be safe, we first delete all the prerequisites associated with the activity and
@@ -140,60 +136,37 @@ public class Activity_model {
 //                    activityId + " --- detailed info: " + e.getMessage());
 //            return false;
 //        }
-
-        String insertPrereqSql;
+    	
         for (Activity prereq : prerequisites) {
-            insertPrereqSql = String.format(
-                    "INSERT INTO activity_relation VALUES(%d, %d)",
-                    activityId, prereq.getActivityId()
-            );
+            
+        	// Query
+        	sql = "INSERT INTO activity_relation VALUES(?, ?)";
 
             try {
-                statement.executeUpdate(insertPrereqSql);
+            	
+            	// Prepare
+            	this.prepareStatement();
+            	
+            	// Data
+            	ps.setInt(1, activityId);
+            	ps.setInt(2, prereq.getActivityId());
+            	
+            	// Run
+                ps.executeUpdate();
+                
+            // Error
             } catch (SQLException e) {
                 LOGGER.error("Could not insert prerequisites for activity with ID = " +
                         activityId + " --- detailed info: " + e.getMessage());
                 return false;
+            
+            // Close
+            } finally {
+            	this.close();
             }
         }
 
         return true;
-    }
-
-    // Helper function to read the next Activity object from the specified ResultSet object.
-    private Activity getNextActivity(ResultSet activities) {
-        Activity activity = null;
-
-        try {
-            Project_model projectModel = new Project_model();
-            Member_model memberModel = new Member_model();
-
-            int activityId = activities.getInt("activity_id");
-            String activityLabel = activities.getString("activity_label");
-            String description = activities.getString("description");
-            int duration = activities.getInt("duration");
-            int optimisticDuration = activities.getInt("optimistic_duration");
-            int likelyDuration = activities.getInt("likely_duration");
-            int pessimisticDuration = activities.getInt("pessimistic_duration");
-            Date createDate = DateHelper.parse(activities.getString("create_date"), ninefoo.config.Config.DATE_FORMAT);
-            Project project = projectModel.getProjectById(activities.getInt("project_id"));
-            Member member = memberModel.getMemberById(activities.getInt("member_id"));
-            
-            
-            // TODO Commented by Amir
-//            List<Activity> prerequisites = getActivityPrerequisites(activityId);
-//            activity = new Activity(activityId, activityLabel, description, duration,
-//                    optimisticDuration, likelyDuration, pessimisticDuration,
-//                    createDate, project, member, prerequisites);
-            
-            activity = new Activity(activityId, activityLabel, description, duration,
-                    optimisticDuration, likelyDuration, pessimisticDuration,
-                    createDate, project, member, new ArrayList<Activity>());
-        } catch (SQLException e) {
-            LOGGER.error("Could not get next activity from db --- detailed info: " + e.getMessage());
-        }
-
-        return activity;
     }
 
     /**
@@ -217,27 +190,39 @@ public class Activity_model {
      *         activity; NULL if there is a problem connecting to the DB.
      */
     public List<Activity> getActivityPrerequisites(int activityId) {
-        Statement statement = DbManager.createConnectionStatement();
-
-        if (statement == null) {
-            LOGGER.warn("Could not get a connection statement to DB");
-            return null;
-        }
+    	
+    	// Open
+    	this.open();
 
         List<Activity> prerequisites = new ArrayList<>();
-        String getPrereqSql =
-                "SELECT prereq_activity_id FROM activity_relation " +
-                "WHERE activity_id = " + activityId;
+        
+        // Query
+        sql = "SELECT prereq_activity_id FROM activity_relation " +
+        "WHERE activity_id = ?";
 
         try {
-            ResultSet activityIds = statement.executeQuery(getPrereqSql);
+        	
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+        	ps.setInt(1, activityId);
+        	
+        	// Run
+            result = ps.executeQuery();
 
-            while (activityIds.next())
-                prerequisites.add(getActivityById(activityIds.getInt("prereq_activity_id")));
-
+            // Get all
+            while (result.next())
+                prerequisites.add(getActivityById(result.getInt("prereq_activity_id")));
+         
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not prerequisites for activity ID = " + activityId +
                     " --- detailed message: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
         }
 
         return prerequisites;
@@ -250,27 +235,40 @@ public class Activity_model {
      *         is found for the ID.
      */
     public Activity getActivityById(int activityId) {
-        Statement statement = DbManager.createConnectionStatement();
+    	
+    	// Open
+    	this.open();
 
-        if (statement == null) {
-            LOGGER.warn("Could not get a connection statement to DB");
-            return null;
-        }
-
-        String getActivityByIdSql = "SELECT * FROM activity " + "WHERE activity_id = " + activityId;
+    	// Query
+        sql = "SELECT * FROM activity " + "WHERE activity_id = ?";
 
         try {
-            ResultSet activities = statement.executeQuery(getActivityByIdSql);
+        	
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+        	ps.setInt(1, activityId);
+        	
+        	// Run
+            result = ps.executeQuery();
 
-            if (activities.next()) {
-                Activity activity = getNextActivity(activities);
+            // Get all
+            if (result.next()) {
+                Activity activity = getNextActivity(result);
 
                 if (activity != null)
                     return activity;
             }
+            
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not get activity with activity_id = " + activityId + " --- " +
                     "detailed info: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
         }
 
         return null;
@@ -291,39 +289,53 @@ public class Activity_model {
     }
 
     /**
+     * TODO Use one query to fetch activities and project
+     * 
      * Gets the activities for the project corresponding to the project ID.
      * @param projectId ID of the project for which to get the activities.
      * @return List of Activity objects for the project, empty ArrayList if no activity
      *         is found; NULL if there is a problem connecting to the database.
      */
     public List<Activity> getActivitiesByProjectId(int projectId) {
-        Statement statement = DbManager.createConnectionStatement();
 
-        if (statement == null) {
-            LOGGER.warn("Could not get a connection statement to DB");
-            return null;
-        }
+    	// Open
+    	this.open();
 
         List<Activity> projectActivities = new ArrayList<>();
-        String getProjectActivitiesSql =
-                "SELECT activity_id FROM activity WHERE project_id = " + projectId;
+        
+        // Query
+        sql = "SELECT activity_id FROM activity WHERE project_id = ?";
 
         try {
-            ResultSet activities = statement.executeQuery(getProjectActivitiesSql);
+        	
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+        	ps.setInt(1, projectId);
+        	
+        	// Run
+            result = ps.executeQuery();
 
             int activityId;
             Activity activity;
-            while (activities.next()) {
-                activityId = activities.getInt("activity_id");
+            while (result.next()) {
+                activityId = result.getInt("activity_id");
                 activity = getActivityById(activityId);
 
                 if (activity != null)
                     projectActivities.add(activity);
             }
+            
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not get activities for project with ID = " + projectId +
                     " --- detailed info: " + e.getMessage());
             projectActivities = null;
+        
+        // Close
+        } finally {
+        	this.close();
         }
 
         return projectActivities;
@@ -335,57 +347,54 @@ public class Activity_model {
      * @return True if the update was successful; False otherwise.
      */
     public boolean updateActivity(Activity activity) {
-
-        if (activity == null)
+    	
+    	int activityId;
+        if (activity == null || (activityId = activity.getActivityId()) == 0 )
             return false;
 
-        int activityId = activity.getActivityId();
-        if (activityId == 0)
-            return false;
-
-        Statement statement = DbManager.createConnectionStatement();
-
-        if (statement == null) {
-            LOGGER.warn("Could not get a connection statement to DB");
-            return false;
-        }
-
-        StringBuilder updateActivitySql = new StringBuilder();
-        updateActivitySql.append(String.format(
-                "UPDATE activity " +
-                "SET    activity_label = '%s', description = '%s', " +
-                "       duration = %d, optimistic_duration = %d, likely_duration = %d, " +
-                "       pessimistic_duration = %d, update_date = '%s', project_id = %d "
-                , activity.getActivityLabel(), activity.getDescription(),
-                activity.getDuration(), activity.getOptimisticDuration(),
-                activity.getLikelyDuration(), activity.getPessimisticDuration(),
-                DateHelper.format(new Date(), Config.DATE_FORMAT),
-                activity.getProject().getProjectId()));
-
-        // Skip updating start and finish dates if either of them is NULL.
-        if (activity.getStartDate() != null)
-            updateActivitySql.append(String.format(", start_date = '%s'",
-                    DateHelper.format(activity.getStartDate(), Config.DATE_FORMAT)));
-
-        if (activity.getFinishDate() != null)
-            updateActivitySql.append(String.format(", finish_date = '%s'",
-                    DateHelper.format(activity.getFinishDate(), Config.DATE_FORMAT)));
-
-        updateActivitySql.append(String.format(" WHERE activity_id = %d", activityId));
+    	// Open
+    	this.open();
+    	
+    	// Query
+        sql = 	"UPDATE activity " +
+		        "SET    activity_label = ?, description = ?, " +
+		        "       duration = ?, optimistic_duration = ?, likely_duration = ?, " +
+		        "       pessimistic_duration = ?, update_date = ?, project_id = ?, " +
+		        "		start_date = ?, finish_date = ?, cost = ?" +
+		        " 		WHERE activity_id = ?";
         
         try {
 
-            int updatedRows = statement.executeUpdate(updateActivitySql.toString());
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+        	ps.setString(1, activity.getActivityLabel());
+        	ps.setString(2, activity.getDescription());
+        	ps.setInt(3, activity.getDuration());
+        	ps.setInt(4, activity.getOptimisticDuration());
+        	ps.setInt(5, activity.getLikelyDuration());
+        	ps.setInt(6, activity.getPessimisticDuration());
+        	ps.setString(7, DateHelper.format(new Date(), Config.DATE_FORMAT));
+        	ps.setInt(8, activity.getProject().getProjectId());
+        	ps.setString(9, DateHelper.format(activity.getStartDate(), Config.DATE_FORMAT));
+        	ps.setString(10, DateHelper.format(activity.getFinishDate(), Config.DATE_FORMAT));
+        	ps.setDouble(11, activity.getCost());
+        	ps.setInt(12, activityId);
+        	
+        	// Run
+            affectedRows = ps.executeUpdate();
 
-            if (updatedRows == 1) {
-                List<Activity> prerequisites = activity.getPrerequisites();
-                if (prerequisites != null)
-                    return insertPrereqs(activityId, activity.getPrerequisites());
-            }
+            return affectedRows == 1;
 
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not update activity with ID = " + activity.getActivityId() +
                     " --- detailed info: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
         }
 
         return false;
@@ -397,6 +406,7 @@ public class Activity_model {
      * @param activityIdDependentOn
      * @return True if insert is successful
      */
+    @Deprecated
     public boolean insertActivityPrerequisites(int activityIdDependent, Activity activityIdDependentOn){
     	
     	// Add one only

@@ -1,7 +1,7 @@
 package ninefoo.lib.lang;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -14,7 +14,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ninefoo.config.Config;
 import ninefoo.lib.lang.parserObjects.LanguageObject;
 
 /**
@@ -61,13 +60,12 @@ public class LanguageText {
 		// Load class
 		for(String language : languages){
 			
-			// FIXME Make this path work in JAR as well
-			String classPath = String.format("src/main/java/%s/lang/%s/%sLang.json", Config.APPLICATION_PATH, language, className);
+			String classPath = String.format( "/lang/%s/%sLang.json", language, className);
 			ObjectMapper mapper = new ObjectMapper();
 			try {
 				
 				// Read file
-				File file = new File(classPath);
+				InputStream file = getClass().getResourceAsStream(classPath);
 				LanguageObject lang = mapper.readValue(file, LanguageObject.class);
 				Iterator<Map.Entry<String, String>> iter = lang.language.entrySet().iterator();
 			    while (iter.hasNext()) {

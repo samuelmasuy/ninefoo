@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import ninefoo.helper.LayoutHelper;
-import ninefoo.lib.form.FormPanel;
+import ninefoo.lib.layout.panel.FormPanel;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.view.member.listeners.LoginListener;
 

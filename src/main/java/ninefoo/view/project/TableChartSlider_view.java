@@ -6,9 +6,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-import ninefoo.model.object.Activity;
+import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.object.Project;
-import ninefoo.view.project.listener.TabularDataListener;
+import ninefoo.view.project.chart.GanttChart_view;
+import ninefoo.view.project.table.TabularData_view;
 
 /**
  * Panel container of a the table and Gantt chart
@@ -50,21 +51,6 @@ public class TableChartSlider_view extends JPanel{
 	}
 	
 	/**
-	 * Set tabular listener
-	 * @param tabularDataListener
-	 */
-	public void setTabularDataListener(TabularDataListener tabularDataListener){
-		this.tabularPanel.setTabularDataListener(tabularDataListener);
-	}
-
-	/**
-	 * Add empty row to the table
-	 */
-	public void addEmptyRow(){
-		this.tabularPanel.addEmptyRow();
-	}
-	
-	/**
 	 * Set project
 	 * @param project
 	 */
@@ -91,7 +77,7 @@ public class TableChartSlider_view extends JPanel{
 		this.setProject(project);
 		
 		// Populate activities
-		this.tabularPanel.populateActivities();
+		this.tabularPanel.populateTable();
 	}
 	
 	/**
@@ -99,16 +85,7 @@ public class TableChartSlider_view extends JPanel{
 	 * @param message
 	 */
 	public void setErrorMessage(String message){
-		JOptionPane.showMessageDialog(this, String.format("<html>%s</html>", message), "Operation failed", JOptionPane.ERROR_MESSAGE);
-	}
-	
-	/**
-	 * Update row
-	 * @param row
-	 * @param activity
-	 */
-	public void updateTableRow(int row, Activity activity){
-		this.tabularPanel.updateRow(row, activity);
+		JOptionPane.showMessageDialog(this, String.format("<html>%s</html>", message), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
 	}
 	
 	/**

@@ -3,15 +3,10 @@ package ninefoo.model.sql;
 import ninefoo.config.*;
 import ninefoo.helper.DateHelper;
 import ninefoo.config.Config;
-import ninefoo.model.DbManager;
 import ninefoo.model.object.Project;
+import ninefoo.model.sql.template.AbstractModel;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,9 +18,8 @@ import java.util.List;
  * Created on 01-Jun-2015.
  * @author Farzad MajidFayyaz
  */
-public class Project_model {
-    private static final Logger LOGGER = LogManager.getLogger();
-
+public class Project_model extends AbstractModel{
+    
     /**
      * Inserts a new project into the database.
      * @param project the Project object to be stored in the DB.
@@ -33,58 +27,44 @@ public class Project_model {
      *         was not successful.
      */
     public int insertNewProject(Project project) {
-        Statement statement = DbManager.createConnectionStatement();
-
-        if (statement == null) {
-            LOGGER.warn("Could not get a connection statement to DB");
-            return Database.ERROR;
-        }
-
-        String insertProjectSql = String.format(
-                "INSERT INTO project(project_name, budget, start_date, deadline_date, description) " +
-                "VALUES ('%s', %f, '%s', '%s', '%s')", project.getProjectName(), project.getBudget(),
-                DateHelper.format(project.getStartDate(), Config.DATE_FORMAT),
-                DateHelper.format(project.getDeadlineDate(), Config.DATE_FORMAT), project.getDescription());
-
-        try {
-            int updatedRows = statement.executeUpdate(insertProjectSql);
-
-            if (updatedRows == 1) {
-                ResultSet rs = statement.executeQuery("SELECT last_insert_rowid()");
-
-                if (rs.next())
-                    return rs.getInt("last_insert_rowid()");
-            }
-
-            LOGGER.warn("Updated row count was not equal to 1");
-
-        } catch (SQLException e) {
-            LOGGER.error("Could not insert new project into db --- detailed info: " + e.getMessage());
-        }
-
+    	
+    	// Open
+    	this.open();
+    	
+    	// Query
+    	sql = 		"INSERT INTO project(project_name, budget, start_date, deadline_date, description) "
+    			+ 	"VALUES (?, ?, ?, ?, ?)";
+    	
+    	// Prepared statement
+		try {
+			
+			// Prepare
+			this.prepareStatement();
+		
+			// Data
+	        ps.setString(1, project.getProjectName());
+	        ps.setDouble(2, project.getBudget());
+	        ps.setString(3, DateHelper.format(project.getStartDate(), Config.DATE_FORMAT));
+	        ps.setString(4, DateHelper.format(project.getDeadlineDate(), Config.DATE_FORMAT));
+	        ps.setString(5, project.getDescription());
+	        
+	        // Run
+	        affectedRows = ps.executeUpdate();
+	        
+	        // If row inserted
+	        if(affectedRows == 1)
+	        	return this.getLastInsertId();
+	       
+	    // Error 
+		} catch (SQLException e) {
+			LOGGER.error("Could not insert new project into db --- detailed info: " + e.getMessage());
+		
+		// Close
+		} finally{
+			this.close();
+		}
+        
         return Database.ERROR;
-    }
-
-    // Helper method to get the next Project object from the DB ResultSet object.
-    private Project getNextProject(ResultSet projects) {
-
-        try {
-            int projectId = projects.getInt("project_id");
-            String projectName = projects.getString("project_name");
-            Date createDate = DateHelper.parse(projects.getString("create_date"), Config.DATE_FORMAT);
-            Date updateDate = DateHelper.parse(projects.getString("update_date"), Config.DATE_FORMAT);
-            double budget = projects.getDouble("budget");
-            Date deadlineDate = DateHelper.parse(projects.getString("deadline_date"), Config.DATE_FORMAT);
-            String description = projects.getString("description");
-            Date startDate = DateHelper.parse(projects.getString("start_date"), Config.DATE_FORMAT);
-            
-            return new Project(projectId, projectName, createDate, startDate, updateDate, budget, deadlineDate, description);
-
-        } catch (SQLException e) {
-            LOGGER.error("Could not get next project from db --- detailed info: " + e.getMessage());
-        }
-
-        return null;
     }
 
     /**
@@ -93,30 +73,39 @@ public class Project_model {
      * @return Project object if it exists in the DB, NULL otherwise.
      */
     public Project getProjectById(int projectId) {
-        Statement statement = DbManager.createConnectionStatement();
-
-        if (statement == null)
-            return null;
-
-        String getProjectByIdSql = "SELECT * FROM project WHERE project_id = " + projectId;
+    	
+    	// Open
+    	this.open();
+    	
+    	// Query
+        sql = "SELECT * FROM project WHERE project_id = ?";
 
         try {
-            ResultSet projects = statement.executeQuery(getProjectByIdSql);
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+        	ps.setInt(1, projectId);
+        	
+        	// Select
+        	result = ps.executeQuery();
 
-            if (projects.next()) {
-                Project project = getNextProject(projects);
+           if (result.next()) {
+               Project project = getNextProject(result);
 
-                if (project != null)
-                    return project;
-            }
+               if (project != null)
+            	   return project;
+           }
 
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not get project for id " + projectId + " from db --- " +
                     "detailed info: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
         }
-//        } finally {
-//            DbManager.closeConnection();
-//        }
 
         return null;
     }
@@ -126,18 +115,25 @@ public class Project_model {
      * @return a List of Project objects (it would be empty if the table is empty).
      */
     public List<Project> getAllProjects() {
+    	
+    	// Open
+    	this.open();
+    	
         List<Project> allProjects = new ArrayList<>();
-        Statement statement = DbManager.createConnectionStatement();
-
-        if (statement == null)
-            return null;
-
-        String getAllProjectsSql = "SELECT * FROM Project";
+        
+        // Query
+        sql = "SELECT * FROM Project";
         try {
-            ResultSet allProjectsFromDb = statement.executeQuery(getAllProjectsSql);
+        	
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Run
+            result = ps.executeQuery();
 
-            while (allProjectsFromDb.next()) {
-                Project nextProject = getNextProject(allProjectsFromDb);
+            // Get all
+            while (result.next()) {
+                Project nextProject = getNextProject(result);
 
                 if (nextProject != null)
                     allProjects.add(nextProject);
@@ -145,8 +141,13 @@ public class Project_model {
 
             return allProjects;
 
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not get projects from db --- detailed info: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
         }
 
         return null;
@@ -160,32 +161,47 @@ public class Project_model {
      * @return List of projects
      */
     public List<Project> getAllProjectsByMemberAndRole(int memberId, int roleId){
+    	
+    	// Open
+    	this.open();
+    	
     	List<Project> allProjects = new ArrayList<>();
-        Statement statement = DbManager.createConnectionStatement();
-
-        if (statement == null)
-            return null;
-
-        String getAllProjectsSql = String.format(
-        		"SELECT P.project_id, P.project_name, P.create_date, P.start_date, P.update_date, P.budget, P.deadline_date, P.description "
+    	
+    	// Query
+        sql =  	  "SELECT P.project_id, P.project_name, P.create_date, P.start_date, P.update_date, P.budget, P.deadline_date, P.description "
         		+ "FROM Project P, Project_member PM "
         		+ "WHERE PM.project_id = P.project_id "
-        		+ "AND PM.member_id = %d "
-        		+ "AND PM.role_id = %d", memberId, roleId);
+        		+ "AND PM.member_id = ? "
+        		+ "AND PM.role_id = ?";
         try {
-            ResultSet allProjectsFromDb = statement.executeQuery(getAllProjectsSql);
+        	
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+        	ps.setInt(1, memberId);
+        	ps.setInt(2, roleId);
+        	
+        	// Run
+            result = ps.executeQuery();
 
-            while (allProjectsFromDb.next()) {
-                Project nextProject = getNextProject(allProjectsFromDb);
+            // Get all
+            while (result.next()) {
+                Project nextProject = getNextProject(result);
 
                 if (nextProject != null)
                     allProjects.add(nextProject);
             }
 
             return allProjects;
-
+        
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not get projects from db --- detailed info: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
         }
 
         return null;
@@ -210,21 +226,34 @@ public class Project_model {
      * @return True if a record was deleted; False otherwise.
      */
     public boolean deleteProjectById(int projectId) {
-        Statement statement = DbManager.createConnectionStatement();
+    	
+    	// Open
+    	this.open();
 
-        if (statement == null) {
-            LOGGER.warn("Could not get a connection statement to DB");
-            return false;
-        }
-
-        String deleteProjectSql = "DELETE FROM project WHERE project_id = " + projectId;
+        // Query
+    	sql = "DELETE FROM project WHERE project_id = ?";
 
         try {
-            int updatedRows = statement.executeUpdate(deleteProjectSql);
-            return (updatedRows == 1);
+        	
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+        	ps.setInt(1, projectId);
+        	
+        	// Run
+            affectedRows = ps.executeUpdate();
+            
+            // Check if deleted
+            return (affectedRows == 1);
 
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not delete project --- detailed info: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
         }
 
         return false;
@@ -237,48 +266,47 @@ public class Project_model {
      */
     public boolean updateProject(Project project) {
 
-        if (project == null)
+    	// Conditions
+    	int projectId;
+    	if (project == null || (projectId = project.getProjectId() ) == 0)
             return false;
 
-        int projectId = project.getProjectId();
-        if (projectId == 0)
-            return false;
-
-        Statement statement = DbManager.createConnectionStatement();
-
-        if (statement == null) {
-            LOGGER.warn("Could not get a connection statement to DB");
-            return false;
-        }
-
-        StringBuilder updateProjectSql = new StringBuilder();
-        updateProjectSql.append(String.format(
-                "UPDATE project " +
-                "SET    project_name = '%s', update_date = '%s', budget = %f, " +
-                "       description = '%s'", project.getProjectName(),
-                DateHelper.format(new Date(), Config.DATE_FORMAT),
-                project.getBudget(), project.getDescription()
-        ));
-
-        // Skip updating start and deadline dates if they are NULL.
-        if (project.getStartDate() != null)
-            updateProjectSql.append(String.format(", start_date = '%s'",
-                    DateHelper.format(project.getStartDate(), Config.DATE_FORMAT)));
-
-        if (project.getDeadlineDate() != null)
-            updateProjectSql.append(String.format(", deadline_date = '%s'",
-                    DateHelper.format(project.getDeadlineDate(), Config.DATE_FORMAT)));
-
-        updateProjectSql.append(String.format(" WHERE project_id = %d", projectId));
-
+        // Open
+        this.open();
+        
+        sql = 	"UPDATE project " +
+                "SET    project_name = ?, update_date = ?, budget = ?, " +
+                "       description = ?, start_date = ?, deadline_date = ?" +
+                " WHERE project_id = ?";
+        
         try {
-            int updatedRows = statement.executeUpdate(updateProjectSql.toString());
+        	
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+        	ps.setString(1, project.getProjectName());
+        	ps.setString(2, DateHelper.format(new Date(), Config.DATE_FORMAT));
+        	ps.setDouble(3, project.getBudget());
+        	ps.setString(4, project.getDescription());
+        	ps.setString(5, DateHelper.format(project.getStartDate(), Config.DATE_FORMAT));
+        	ps.setString(6, DateHelper.format(project.getDeadlineDate(), Config.DATE_FORMAT));
+        	ps.setInt(7, projectId);
+        	
+        	// Run
+            affectedRows = ps.executeUpdate();
 
-            return (updatedRows == 1);
-
+            // Check if updated
+            return (affectedRows == 1);
+            
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not update project with ID = " + projectId +
                     " --- detailed info: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
         }
 
         return false;

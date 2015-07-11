@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin:'application'
 apply plugin: 'eclipse'
+apply plugin: 'com.bmuschko.izpack'
 
 
 // Variables
@@ -24,11 +25,8 @@ sourceSets {
 			srcDir "src/main/java"
 			output.classesDir   = 'build/classes/main'
 		}
-		
+
 		resources{
-			
-			// TODO Include JSON files
-			
 			srcDir "src/main/resources"
 			output.resourcesDir   = 'build/resources/main'
 		}
@@ -37,6 +35,17 @@ sourceSets {
 
 repositories {
     mavenCentral()
+}
+
+// For izpack
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.bmuschko:gradle-izpack-plugin:2.1'
+    }
 }
 
 // Custom jar file name and folder
@@ -52,6 +61,7 @@ dependencies {
 	compile 'com.fasterxml.jackson.core:jackson-annotations:2.5.4'
 	compile 'net.sourceforge.jdatepicker:jdatepicker:1.3.2'
 	testCompile group: 'junit', name: 'junit', version: '4.12'
+	izpack 'org.codehaus.izpack:izpack-standalone-compiler:4.3.4'
 }
 
 // Creating a jar
@@ -64,19 +74,37 @@ task pmexpert_jar (type: Jar) {
 	}
 	from sourceSets.main.runtimeClasspath
 	from configurations.compile.collect { zipTree it }
-} 	
+}
 
 // Print and create application
 task pmexpert(dependsOn:['clean', 'build']) << {
 	println '\n>> Exporting ' + applicationTitle + ' to jar file...\n'
 	pmexpert_jar.execute()
-	
+
+	//println '\n>> Generating Javadoc...\n'
+	//myJavadocs.execute()
+
 	println '\n>> Creating launcher.bat\n'
 	new File('build/' + libsDirName + '/launcher.bat').write 'java -jar "' + archivesBaseName + '-' + version + '.jar"'
 }
 
+// Generate Javadoc
+task myJavadocs(type: Javadoc) {
+  source = sourceSets.main.allJava
+}
+
+// izpack task
+izpack {
+    baseDir = file("$buildDir/" + libsDirName)
+    installFile = file('src/main/izpack/install.xml')
+    outputFile = file("$buildDir/distributions/" + libsDirName + "-installer.jar")
+}
+
 // Disable task for build
 jar.enabled = false
+
+// TESTING Enabled/Disabled
+// test.enabled = false;
 
 // Order of execution
 build.mustRunAfter(clean)

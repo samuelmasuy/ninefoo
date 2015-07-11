@@ -1,9 +1,10 @@
 package ninefoo.model.sql;
 
-import ninefoo.model.DbManager;
+import ninefoo.config.Database;
 import ninefoo.model.object.Member;
 import ninefoo.model.object.Project;
 import ninefoo.model.object.Role;
+import ninefoo.model.sql.template.AbstractModel;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,8 +22,7 @@ import java.util.List;
  * Created on 02-Jun-2015.
  * @author Farzad MajidFayyaz
  */
-public class ProjectMember_model {
-    private static final Logger LOGGER = LogManager.getLogger();
+public class ProjectMember_model extends AbstractModel{
 
     /**
      * Gets the list of projects for the specified member in which that member
@@ -44,50 +44,50 @@ public class ProjectMember_model {
      *      member has the role corresponding to the roleId.
      * @param memberId ID of the member for whom we want to find the projects.
      * @param roleId ID of the role of that member in the projects.
-     * @return List of Project objects, or NULL if no project is found.
+     * @return List of Project objects, or NULL if error
      */
     public List<Project> getProjectsByMember(int memberId, int roleId) {
 
         if (memberId == 0 || roleId == 0)
             return null;
 
-        Statement statement = DbManager.createConnectionStatement();
+        // Open
+        this.open();
 
-        if (statement == null) {
-            LOGGER.warn("Could not get a connection statement to DB");
-            return null;
-        }
-
-        List<Integer> projectIds = new ArrayList<>();
         List<Project> projects = new ArrayList<>();
 
-        // First get the list of project IDs from "project_member" table.
-        String getProjectIdsSql = String.format(
-                "SELECT project_id FROM project_member " +
-                "WHERE member_id = %d AND role_id = %d", memberId, roleId);
+        // Query
+        sql = "SELECT * FROM project_member pm, project p " +
+              "WHERE member_id = ? AND role_id = ? AND p.project_id = pm.project_id";
 
         try {
-            ResultSet projectIdsFromDb = statement.executeQuery(getProjectIdsSql);
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+        	ps.setInt(1, memberId);
+        	ps.setInt(2, roleId);
+        	
+        	// Run
+            result = ps.executeQuery();
 
-            while (projectIdsFromDb.next()) {
-                projectIds.add(projectIdsFromDb.getInt("project_id"));
+            // Get all
+            while (result.next()) {
+            	Project project = this.getNextProject(result);
+
+                if (project != null)
+                    projects.add(project);
             }
-
+            
+        // Error
         } catch (SQLException e) {
             LOGGER.error("Could not get projects form member_id = " + memberId +
                     " --- detailed info: " + e.getMessage());
-
             return null;
-        }
-
-        // Now that we have the list of project IDs, we get the list of projects.
-        Project_model projectModel = new Project_model();
-
-        for (Integer projectId : projectIds) {
-            Project project = projectModel.getProjectById(projectId);
-
-            if (project != null)
-                projects.add(project);
+            
+        // Close
+        } finally {
+        	this.close();
         }
 
         return projects;
@@ -101,6 +101,7 @@ public class ProjectMember_model {
      * @param role Role object representing the role of the members.
      * @return True if successful, False otherwise.
      */
+    @Deprecated
     public boolean addMembersToProject(Project project, List<Member> members, Role role) {
 
         if (project == null || members == null || role == null)
@@ -121,36 +122,36 @@ public class ProjectMember_model {
      * @param roleId Id of the role of all the members in the list in the specified project.
      * @return True if successful, False otherwise.
      */
+    @Deprecated
     public boolean addMembersToProject(int projectId, List<Integer> memberIds, int roleId) {
 
-        if (projectId == 0 || roleId == 0)
-            return false;
-
-        Statement statement = DbManager.createConnectionStatement();
-
-        if (statement == null) {
-            LOGGER.warn("Could not get a connection statement to DB");
-            return false;
-        }
-
-        String insertNewProjectMemberSql;
-        boolean success = true;
-
-        for (int memberId : memberIds) {
-
-            insertNewProjectMemberSql = String.format(
-                    "INSERT INTO project_member VALUES(%d, %d, %d)", projectId, memberId, roleId);
-
-            try {
-                statement.executeUpdate(insertNewProjectMemberSql);
-            } catch (SQLException e) {
-                LOGGER.error("Could not add members to project with ID: " +
-                        projectId + " --- detailed info: " + e.getMessage());
-                success = false;
-            }
-        }
-
-        return success;
+    	// No need to update because it's not used
+    	return false;
+    	
+//        if (projectId == 0 || roleId == 0)
+//            return false;
+//
+//        // Open
+//        this.open();
+//        
+//        String insertNewProjectMemberSql;
+//        boolean success = true;
+//
+//        for (int memberId : memberIds) {
+//
+//            insertNewProjectMemberSql = String.format(
+//                    "INSERT INTO project_member VALUES(%d, %d, %d)", projectId, memberId, roleId);
+//
+//            try {
+//                statement.executeUpdate(insertNewProjectMemberSql);
+//            } catch (SQLException e) {
+//                LOGGER.error("Could not add members to project with ID: " +
+//                        projectId + " --- detailed info: " + e.getMessage());
+//                success = false;
+//            }
+//        }
+//
+//        return success;
     }
     
     /**
@@ -163,12 +164,41 @@ public class ProjectMember_model {
      */
     public boolean addMemberToProject(int projectId, int memberId, Role role) {
 
+    	// Condition
         if (role == null)
             return false;
 
-        List<Integer> memberIds = new ArrayList<>();
-        memberIds.add(memberId);
-
-        return addMembersToProject(projectId, memberIds, role.getRoleId());
+        // Open
+        this.open();
+        
+        // Query
+        sql = "INSERT INTO project_member(project_id, member_id, role_id) VALUES (?, ?, ?)";
+        
+        try {	
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+			ps.setInt(1, projectId);
+        	ps.setInt(2, memberId);
+        	ps.setInt(3, role.getRoleId());
+        	
+        	// Run
+        	affectedRows = ps.executeUpdate();
+        	
+        	// Check inserted
+        	return affectedRows == 1;
+        	
+    	// Error
+    	} catch (SQLException e) {
+    		LOGGER.info("Could not insert project_member" +
+                " --- detailed info: " + e.getMessage());
+		
+    	// Close
+    	} finally {
+			this.close();
+		}
+        
+        return false;
     }
 }

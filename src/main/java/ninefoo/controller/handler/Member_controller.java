@@ -2,7 +2,7 @@ package ninefoo.controller.handler;
 
 import ninefoo.config.Database;
 import ninefoo.config.Session;
-import ninefoo.controller.AbstractController;
+import ninefoo.controller.handler.template.AbstractController;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.validationForm.ValidationForm;
 import ninefoo.lib.validationForm.ValidationRule;
