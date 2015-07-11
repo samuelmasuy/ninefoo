@@ -1,8 +1,5 @@
 package ninefoo.model.object;
 
-import ninefoo.config.Config;
-import ninefoo.helper.DateHelper;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -28,7 +25,7 @@ public class Activity {
     private Project project;
     private Member member;
     private List<Activity> prerequisites;
-    private double cost;
+    private Double cost;
 
     /**
      * This constructor is used when converting DB entities to Java classes.
@@ -99,10 +96,11 @@ public class Activity {
      * @param project
      * @param member
      */
-    public Activity(String activityLabel, int duration, Date startDate, Date finishDate, Project project, Member member, double cost){
+    public Activity(String activityLabel, int duration, Date startDate, Date finishDate, Project project, Member member, Double cost){
          this(0,activityLabel, null, duration, 0, 0, 0, null, project, member, null);
          this.startDate = startDate;
          this.finishDate = finishDate;
+         this.cost = cost;
     }
 
     public int getActivityId() {
@@ -231,11 +229,11 @@ public class Activity {
     	return Arrays.toString(preId.toArray());
     }
 
-	public double getCost() {
+	public Double getCost() {
 		return cost;
 	}
 
-	public void setCost(double cost) {
+	public void setCost(Double cost) {
 		this.cost = cost;
 	}
 }

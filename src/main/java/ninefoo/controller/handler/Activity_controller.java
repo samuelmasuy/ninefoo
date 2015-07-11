@@ -3,8 +3,10 @@ package ninefoo.controller.handler;
 import java.util.ArrayList;
 import java.util.List;
 
+import ninefoo.config.Config;
 import ninefoo.config.Database;
 import ninefoo.controller.handler.template.AbstractController;
+import ninefoo.helper.DateHelper;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.validationForm.ValidationForm;
 import ninefoo.lib.validationForm.ValidationRule;
@@ -37,7 +39,7 @@ public class Activity_controller extends AbstractController implements
 	 *
 	 * @param view
 	 */
-	Activity_controller(UpdatableView view) {
+	public Activity_controller(UpdatableView view) {
 		super(view);
 	}
 
@@ -51,7 +53,7 @@ public class Activity_controller extends AbstractController implements
 	@Override
 	public void createActivity(int row, String activityId,
 			String activityLabel, String duration, String startDate,
-			String finishDate, Project project, String completion, int memberId) {
+			String finishDate, String cost, Project project, String completion, int memberId) {
 
 		// set individual rules for each passed parameter json file
 		ValidationRule activityLabelRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_LABEL_ACT"), activityLabel);
@@ -93,10 +95,11 @@ public class Activity_controller extends AbstractController implements
 			// TODO add a completion (% completion) parameter for the activity
 			// constructor used right here below
 
+			// Make cost Double | null
+			Double doubleCost = cost.isEmpty() ? null : new Double(Double.parseDouble(cost));
+			
 			// create activity
-			Activity activity = new Activity(activityLabel,
-					Integer.parseInt(duration), startDate, finishDate, project,
-					member);
+			Activity activity = new Activity(activityLabel, Integer.parseInt(duration), DateHelper.parse(startDate, Config.DATE_FORMAT_SHORT), DateHelper.parse(finishDate, Config.DATE_FORMAT_SHORT), project, member, doubleCost);
 
 			// add a new activity to the activity model
 			// if insert failed
@@ -141,7 +144,7 @@ public class Activity_controller extends AbstractController implements
 	 * @author Melissa Duong 
 	 * @date July-05-2015
 	 */
-	public void editActivity(int row, String activityId, String activityLabel, String duration, String startDate, String finishDate, Project project, String completion, int memberId) {
+	public void editActivity(int row, String activityId, String activityLabel, String duration, String startDate, String finishDate, String cost, Project project, String completion, int memberId) {
 		// set individual rules for each passed parameter json file
 		ValidationRule activityLabelRule = new ValidationRule(
 				LanguageText.getConstant("ACTIVITY_LABEL_ACT"), activityLabel);
@@ -185,10 +188,11 @@ public class Activity_controller extends AbstractController implements
 			// TODO add a completion (% completion) parameter for the activity
 			// constructor used right here below
 
-			// create activity object
-			Activity activity = new Activity(activityLabel,
-					Integer.parseInt(duration), startDate, finishDate, project,
-					member);
+			// Make cost Double | null
+			Double doubleCost = cost.isEmpty() ? null : new Double(Double.parseDouble(cost));
+			
+			// create activity
+			Activity activity = new Activity(activityLabel, Integer.parseInt(duration), DateHelper.parse(startDate, Config.DATE_FORMAT_SHORT), DateHelper.parse(finishDate, Config.DATE_FORMAT_SHORT), project, member, doubleCost);
 
 			// update activity in the activity model
 			// if update failed
