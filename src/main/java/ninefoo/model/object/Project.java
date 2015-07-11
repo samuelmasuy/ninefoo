@@ -37,11 +37,11 @@ public class Project {
 
         this.projectId = projectId;
         this.projectName = projectName;
-        this.startDate = (Date)startDate.clone();
-        this.createDate = (Date)createDate.clone();
-        this.updateDate = (Date)updateDate.clone();
+        this.startDate = startDate;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
         this.budget = budget;
-        this.deadlineDate = (Date)deadlineDate.clone();
+        this.deadlineDate = deadlineDate;
         this.description = description;
     }
 
@@ -57,8 +57,8 @@ public class Project {
 
         this.projectName = projectName;
         this.budget = budget;
-        this.startDate = (Date)startDate.clone();
-        this.deadlineDate = (Date)deadlineDate.clone();
+        this.startDate = startDate;
+        this.deadlineDate = deadlineDate;
         this.description = description;
     }
     
@@ -83,7 +83,7 @@ public class Project {
     }
 
     public void setUpdateDate(Date updateDate) {
-        this.updateDate = (Date)updateDate.clone();
+        this.updateDate = updateDate;
     }
 
     public Double getBudget() {
@@ -95,11 +95,11 @@ public class Project {
     }
 
     public Date getDeadlineDate() {
-        return (Date)deadlineDate.clone();
+        return deadlineDate;
     }
 
     public void setDeadlineDate(Date deadlineDate) {
-        this.deadlineDate = (Date)deadlineDate.clone();
+        this.deadlineDate = deadlineDate;
     }
 
     public String getDescription() {
@@ -115,7 +115,7 @@ public class Project {
 	}
 
 	public void setStartDate(Date startDate) {
-		this.startDate = (Date)startDate.clone();
+		this.startDate = startDate;
 	}
 
 	public String toString() {
@@ -140,6 +140,6 @@ public class Project {
     }
 
     public void setFinishDate(Date finishDate) {
-        this.finishDate = (Date)finishDate.clone();
+        this.finishDate = finishDate;
     }
 }

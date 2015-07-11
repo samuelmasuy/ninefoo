@@ -56,7 +56,7 @@ public class Activity {
         this.optimisticDuration = optimisticDuration;
         this.likelyDuration = likelyDuration;
         this.pessimisticDuration = pessimisticDuration;
-        this.createDate = (Date)createDate.clone();
+        this.createDate = createDate;
         this.project = project;
         this.member = member;
         this.prerequisites = prerequisites;
@@ -101,8 +101,8 @@ public class Activity {
      */
     public Activity(String activityLabel, int duration, Date startDate, Date finishDate, Project project, Member member, double cost){
          this(0,activityLabel, null, duration, 0, 0, 0, null, project, member, null);
-         this.startDate = (Date)startDate.clone();
-         this.finishDate = (Date)finishDate.clone();
+         this.startDate = startDate;
+         this.finishDate = finishDate;
     }
 
     public int getActivityId() {
@@ -192,7 +192,7 @@ public class Activity {
     }
 
     public void setStartDate(Date startDate) {
-        this.startDate = (Date)startDate.clone();
+        this.startDate = startDate;
     }
 
     public Date getUpdateDate() {
@@ -200,7 +200,7 @@ public class Activity {
     }
 
     public void setUpdateDate(Date updateDate) {
-        this.updateDate = (Date)updateDate.clone();
+        this.updateDate = updateDate;
     }
 
     public Date getFinishDate() {
@@ -208,7 +208,7 @@ public class Activity {
     }
 
     public void setFinishDate(Date finishDate) {
-        this.finishDate = (Date)finishDate.clone();
+        this.finishDate = finishDate;
     }
     
     /**
