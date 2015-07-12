@@ -7,6 +7,11 @@ import ninefoo.model.object.Project;
  * @author Amir El Bawab
  */
 public interface ActivityListener {
-	public void createActivity(int row, String activityid, String activityLabel, String duration, String startDate, String finishDate, String cost, Project project, String completion, int memberId);
-	public void createDependentActivities(int activityIdDependent, int activityIdDependentOn, int row);
+	
+	// Create
+	public void createActivity(int row, String activityid, String activityLabel, String duration, String startDate, String finishDate, String cost, Project project, int memberId, String[] prerequisite);
+	public void editActivity(int row, String activityid, String activityLabel, String duration, String startDate, String finishDate, String cost, Project project,int memberId, String[] prerequisite);
+	
+	// Load
+	public void loadActivitiesByProject(Project project); // Populate the list in the dropdown
 }

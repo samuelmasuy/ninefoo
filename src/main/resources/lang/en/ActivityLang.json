@@ -20,6 +20,7 @@
 		"LIKELY_ACT"                : "Likely",
 		"PESSIMISTIC_ACT"           : "Pessimistic",
 		"MEMBER_ACT"                : "Member",
+		"COST_ACT"                  : "Cost",
 		"PREREQ_ACT"                : "Prereq."
 	}
 }
