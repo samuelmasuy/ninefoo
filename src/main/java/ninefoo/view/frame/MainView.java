@@ -231,7 +231,7 @@ public class MainView extends JFrame implements UpdatableView{
 
 			@Override
 			public void createUser(String firstName, String lastName, String username, String password) {
-				System.out.println(firstName);
+				// TODO 
 			}
 
 			@Override
@@ -258,10 +258,9 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
-			public void deleteProject(ViewMyProjectsDialog parentDialog,
-					Project project) {
+			public void deleteProject(ViewMyProjectsDialog parentDialog, Project project) {
 				// TODO Auto-generated method stub
-				System.out.println("Delete activity confirmed...!");
+				
 			}
 		});
 		
