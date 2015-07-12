@@ -230,9 +230,8 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
-			public void createUser() {
-				// TODO createUser
-				System.out.println("Create user clicked...");
+			public void createUser(String firstName, String lastName, String username, String password) {
+				System.out.println(firstName);
 			}
 
 			@Override
@@ -563,7 +562,6 @@ public class MainView extends JFrame implements UpdatableView{
 	
 	@Override
 	public void updateCreateActivity(boolean success, String message, Project project) {
-		
 		// TODO updateCreateActivity
 	}
 	
@@ -575,6 +573,10 @@ public class MainView extends JFrame implements UpdatableView{
 	@Override
 	public void updateEditActivity(boolean success, String message, Project project) {
 		// TODO Auto-generated method stub
-		
+	}
+
+	@Override
+	public void updateLoadActivitiesByProject(boolean success, String message, List<Activity> activities) {
+		// TODO Auto-generated method stub
 	}
 }

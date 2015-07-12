@@ -51,7 +51,7 @@ public class CreateUserDialog extends CenterFormSouthButtonDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (toolsListener != null)
-					toolsListener.createUser();
+					toolsListener.createUser(firstName.getText(), lastName.getText(), usernameField.getText(), new String(passwordField.getPassword()));
 			}
 		});
 		
