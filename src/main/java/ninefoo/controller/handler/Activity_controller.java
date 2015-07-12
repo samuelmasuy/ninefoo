@@ -225,4 +225,10 @@ public class Activity_controller extends AbstractController implements ActivityL
 			this.view.updateEditActivity(false, activityValidation.getError(),null);
 		}
 	}
+
+	@Override
+	public void loadActivitiesByProject(Project project) {
+		// TODO Auto-generated method stub
+		
+	}
 }
