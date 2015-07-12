@@ -15,7 +15,6 @@ public interface ToolsListener {
 	// Create
 	public void newProject(CreateProjectDialog formDialog, String name, String budget, String startDate, String deadline, String description);
 	public void createUser();
-	public void assignMemberToActivity();
 	public void addUserToProject();
 	public void createActivity();
 	
