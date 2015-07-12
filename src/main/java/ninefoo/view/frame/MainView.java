@@ -256,6 +256,13 @@ public class MainView extends JFrame implements UpdatableView{
 				// TODO createActivity
 				System.out.println("Create new activity clicked...");
 			}
+
+			@Override
+			public void deleteProject(ViewMyProjectsDialog parentDialog,
+					Project project) {
+				// TODO Auto-generated method stub
+				System.out.println("Delete activity confirmed...!");
+			}
 		});
 		
 		// Configure the JFrame

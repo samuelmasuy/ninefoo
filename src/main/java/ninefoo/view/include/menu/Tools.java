@@ -30,7 +30,7 @@ public class Tools extends JPanel{
 	private static final long serialVersionUID = -1862085076331720213L;
 
 	// Create components
-	private JButton newProject, newMember, newActivity, logout, viewProject, refreshProject, addUser, viewAssigned;
+	private JButton newProject, newMember, newActivity, logout, viewProject, addUser, viewAssigned;
 	
 	// Create listener
 	private ToolsListener toolsListener;
@@ -47,7 +47,6 @@ public class Tools extends JPanel{
 		this.newActivity = new JButton(new ImageIcon(getClass().getResource("/images/new_activity.png")));
 		this.logout = new JButton(new ImageIcon(getClass().getResource("/images/logout.png")));
 		this.viewProject = new JButton(new ImageIcon(getClass().getResource("/images/view_project.png")));
-		this.refreshProject = new JButton(new ImageIcon(getClass().getResource("/images/refresh_project.png")));
 		this.addUser = new JButton(new ImageIcon(getClass().getResource("/images/assign.png")));
 		this.viewAssigned = new JButton(new ImageIcon(getClass().getResource("/images/view_project.png")));
 		
@@ -85,13 +84,6 @@ public class Tools extends JPanel{
 		this.logout.setVerticalTextPosition(SwingConstants.BOTTOM);
 		this.logout.setHorizontalTextPosition(SwingConstants.CENTER);
 		this.logout.setText("Logout");
-		
-		this.refreshProject.setContentAreaFilled(false);
-		this.refreshProject.setBorder(null);
-		this.refreshProject.setVerticalTextPosition(SwingConstants.BOTTOM);
-		this.refreshProject.setHorizontalTextPosition(SwingConstants.CENTER);
-		this.refreshProject.setText("Refresh");
-		this.refreshProject.setToolTipText("Refresh project");
 		
 		this.addUser.setContentAreaFilled(false);
 		this.addUser.setBorder(null);
@@ -197,8 +189,6 @@ public class Tools extends JPanel{
 		this.add(this.newMember);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
 		this.add(this.addUser);
-		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
-		this.add(this.refreshProject);
 		this.add(Box.createRigidArea(new Dimension(spacing, 0)));
 		this.add(this.logout);
 		

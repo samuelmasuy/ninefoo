@@ -2,7 +2,11 @@
 	"name" : "Project language",
 	"description" : "Language related to Project. Include the suffix _PRO for each key",
 	"language" : {
-		"UPDATE_PROJECT" : "Update project",
-		"ADD_USER_PRO": "Add user to project"
+		"UPDATE_PROJECT" 	: "Update project",
+		"ADD_USER_PRO"		: "Add user to project",
+		"VIEW_MY_PROJECTS_PRO": "View my projects",
+		"OPEN_PRO"			: "Open",
+		"EDIT_PRO"			: "Edit",
+		"DELETE_PRO"		: "Delete"
 	}
 }
