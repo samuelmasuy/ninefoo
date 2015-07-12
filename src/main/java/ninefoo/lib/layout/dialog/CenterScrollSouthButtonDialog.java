@@ -25,7 +25,7 @@ import javax.swing.JScrollPane;
  *  |        BUTTONS        |
  *  +-----------------------+
  *  
- * @author Amir El Bawab
+ * @author Amir El Bawab, Sebouh Bardakjian
  */
 public abstract class CenterScrollSouthButtonDialog extends JDialog{
 
@@ -42,7 +42,7 @@ public abstract class CenterScrollSouthButtonDialog extends JDialog{
 		
 		// Set layout
 		this.setLayout(new BorderLayout());
-				
+		
 		// Initialize components
 		this.southPanel = new JPanel();
 		
@@ -73,6 +73,10 @@ public abstract class CenterScrollSouthButtonDialog extends JDialog{
 		
 		// Set Scroll pane
 		this.centerPanelScroll = new JScrollPane(this.centerPanel);
+		
+		// Set scroll speed
+		this.centerPanelScroll.getVerticalScrollBar().setUnitIncrement(20);
+		this.centerPanelScroll.getHorizontalScrollBar().setUnitIncrement(20);
 		
 		// Set border
 		this.centerPanelScroll.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5), BorderFactory.createTitledBorder("")));

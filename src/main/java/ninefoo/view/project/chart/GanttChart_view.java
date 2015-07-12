@@ -71,6 +71,10 @@ public class GanttChart_view extends JPanel{
 		panel.setBackground(Color.WHITE);
 		panel.setPreferredSize(new Dimension(2000,0));
 		
+		// Configure scrollPane
+		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
+		scrollPane.getHorizontalScrollBar().setUnitIncrement(20);
+		
 		// Add components
 		this.add(scrollPane, BorderLayout.CENTER);
 	}
