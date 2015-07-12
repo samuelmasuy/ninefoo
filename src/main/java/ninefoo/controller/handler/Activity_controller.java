@@ -245,9 +245,17 @@ public class Activity_controller extends AbstractController implements ActivityL
 
 	@Override
 	public void loadActivitiesForAllProjectByMember(int memberId) {
+		//my assigned activites
+		//could be a project that you didnt creaqte, but you are member of it
+		
+		
 		//get all projects for a member by member id->getAllProjects()
 		//assign it to a list of projects
-		//for loop each project 
+		//for loop each project and get the activities for them
+		//update the view
+		
+		List<Project> projectByMember=this.project_model.getAllProjects();
+		
 		
 		
 		
