@@ -237,4 +237,10 @@ public class Project_controller extends AbstractController implements ProjectLis
 		// TODO loadAssignedActivitiesProject
 		// Load all my activities with their projects using one query
 	}
+
+	@Override
+	public void addUserToProject(int memberId, int projectId, String role) {
+		// TODO Auto-generated method stub
+		
+	}
 }

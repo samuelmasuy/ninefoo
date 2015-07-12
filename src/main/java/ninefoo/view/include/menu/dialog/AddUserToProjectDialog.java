@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import ninefoo.config.RoleNames;
+import ninefoo.config.Session;
 import ninefoo.lib.autocompleteComboBox.AutocompleteComboBox;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.layout.dialog.CenterFormSouthButtonDialog;
@@ -52,8 +53,15 @@ public class AddUserToProjectDialog extends CenterFormSouthButtonDialog{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (toolsListener != null)
-					toolsListener.addUserToProject();
+				if (toolsListener != null){
+					if(memberBox.checkAndGetText() == null || memberBox.getSelectedIndex() < 0){
+						// TODO put this in the language file
+						AddUserToProjectDialog.this.setErrorMessage("Please choose a member!");
+					} else {
+						int memberId = users.get(memberBox.getSelectedIndex()).getMemberId();
+						toolsListener.addUserToProject(AddUserToProjectDialog.this, memberId, Session.getInstance().getProjectId(), roleBox.getSelectedItem().toString());
+					}
+				}
 			}
 		});
 		

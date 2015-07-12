@@ -13,6 +13,7 @@ import ninefoo.model.object.Project;
 import ninefoo.view.include.footer.StatusBar;
 import ninefoo.view.include.menu.Menu;
 import ninefoo.view.include.menu.Tools;
+import ninefoo.view.include.menu.dialog.AddUserToProjectDialog;
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
 import ninefoo.view.include.menu.dialog.EditProjectDialog;
 import ninefoo.view.include.menu.dialog.ViewAssignedActivitiesDialog;
@@ -56,6 +57,7 @@ public class MainView extends JFrame implements UpdatableView{
 	private ViewMyProjectsDialog viewMyProjectsDialog;
 	private EditProjectDialog editProjectDialog;
 	private ViewAssignedActivitiesDialog viewAssignedActivitiesDialog;
+	private AddUserToProjectDialog addUserToProjectDilaog;
 	
 	// Define variables
 	private JPanel currentCenterPanel;
@@ -231,13 +233,16 @@ public class MainView extends JFrame implements UpdatableView{
 
 			@Override
 			public void createUser(String firstName, String lastName, String username, String password) {
-				// TODO 
+				// TODO createUser
 			}
 
 			@Override
-			public void addUserToProject() {
-				// TODO addUserToProject
-				System.out.println("Added user to project clicked...");
+			public void addUserToProject(AddUserToProjectDialog dialog, int memberId, int projectId, String role) {
+				
+				// Set the dialog
+				addUserToProjectDilaog = dialog;
+				
+				// 
 			}
 
 			@Override
@@ -558,6 +563,11 @@ public class MainView extends JFrame implements UpdatableView{
 			// Reset pointer
 			this.viewAssignedActivitiesDialog = null;
 		}
+	}
+
+	@Override
+	public void updateAddUserToProject(boolean success, String message) {
+		// TODO updateAddUserToProject
 	}
 	
 	/************************************************************

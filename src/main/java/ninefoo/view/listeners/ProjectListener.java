@@ -8,6 +8,7 @@ public interface ProjectListener {
 	
 	// Create
 	public void createProject(String name, String budget, String startDate, String deadline, String description);
+	public void addUserToProject(int memberId, int projectId, String role);
 	
 	// Update
 	public void editProject(int projectId, String name, String budget, String startDate, String deadline, String description);
