@@ -14,4 +14,5 @@ public interface ActivityListener {
 	
 	// Load
 	public void loadActivitiesByProject(Project project); // Populate the list in the dropdown everytime you add a prerequisite
+	public void loadActivitiesForAllProjectByMember(int memberId);
 }
