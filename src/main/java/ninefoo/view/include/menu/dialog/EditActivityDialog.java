@@ -70,7 +70,7 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
 		this.startDate = new DatePicker(8);
 		this.finishDate = new DatePicker(8);
 		this.memberBox = new AutocompleteComboBox(members_dummy);
-		this.prerequisiteDropdown = new MultiDropdown("Add dependency", new String[]{"One", "Two"});
+		this.prerequisiteDropdown = new MultiDropdown(LanguageText.getConstant("ADD_DEPENDENCY_ACT"), new String[]{"One", "Two"});
 		
 		this.setTitle(LanguageText.getConstant("UPDATE_ACTIVITY_ACT"));
 		

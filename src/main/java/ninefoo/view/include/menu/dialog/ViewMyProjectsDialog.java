@@ -184,7 +184,7 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 			}
 		});
 		
-		// Add edit listener
+		// Add delete listener
 		this.deleteButton.addActionListener(new ActionListener() {
 			
 			@Override

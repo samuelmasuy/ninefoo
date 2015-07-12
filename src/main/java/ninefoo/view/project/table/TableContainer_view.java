@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import ninefoo.model.object.Project;
+import ninefoo.view.project.table.listener.TableToolsListener;
 
 public class TableContainer_view extends JPanel{
 	// Declare Variables
@@ -17,7 +18,7 @@ public class TableContainer_view extends JPanel{
 		this.setLayout(new BorderLayout());
 		
 		// Initialize variables
-		tableToolbarPanel = new TableToolbar_view();
+		tableToolbarPanel = new TableToolbar_view(parentPanel);
 		tabularDataPanel = new TabularData_view(parentPanel);
 		
 		this.add(tableToolbarPanel, BorderLayout.SOUTH);
