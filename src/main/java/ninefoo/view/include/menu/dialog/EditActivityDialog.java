@@ -207,4 +207,32 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
 			// Refresh list
 			//this.refreshList();
 		}
+		
+		//TODO Add refresh
+		/**
+		 * Populate activity fields data
+		 * @param activity
+		 */
+		public void populateFields(Activity activity){
+			
+			// If an activity was returned
+			if(activity != null){
+				
+				// Add data to fields
+				this.activityLabel.setText(activity.getActivityLabel());
+				this.description.setText(activity.getDescription());
+				this.duration.setText(activity.getDuration() + "");
+				this.optimisticDuration.setText(activity.getOptimisticDuration() + "");
+				this.likelyDuration.setText(activity.getLikelyDuration() + "");
+				this.pessimisticDuration.setText(activity.getPessimisticDuration() + "");
+				this.cost.setText(activity.getCost() + "");
+				this.startDate.setDate(activity.getStartDate());
+				this.finishDate.setDate(activity.getFinishDate());
+				//this.memberBox = new AutocompleteComboBox(members_dummy);
+				//this.prerequisiteDropdown = new MultiDropdown("Add dependency", new String[]{"One", "Two"});
+			}
+			
+			// Refresh list
+			//this.refreshList();
+		}
 }
