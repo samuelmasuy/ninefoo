@@ -13,5 +13,6 @@ public interface ActivityListener {
 	public void editActivity(int row, String activityid, String activityLabel, String duration, String startDate, String finishDate, String cost, Project project,int memberId, String[] prerequisite);
 	
 	// Load
-	public void loadActivitiesByProject(Project project); // Populate the list in the dropdown
+	public void loadActivitiesByProject(Project project); // Populate the list in the dropdown everytime you add a prerequisite
+	public void loadActivitiesForAllProjectByMember(int memberId);
 }
