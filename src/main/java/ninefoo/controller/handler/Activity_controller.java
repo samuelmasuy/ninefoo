@@ -229,6 +229,5 @@ public class Activity_controller extends AbstractController implements ActivityL
 	@Override
 	public void loadActivitiesByProject(Project project) {
 		// TODO Auto-generated method stub
-		
 	}
 }
