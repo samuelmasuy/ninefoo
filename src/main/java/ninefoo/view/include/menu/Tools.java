@@ -101,6 +101,8 @@ public class Tools extends JPanel{
 		
 		// Disable buttons at start
 		this.newActivity.setEnabled(false);
+		this.addUser.setEnabled(false);
+		this.newMember.setEnabled(false);
 		
 		// Add new project listener
 		this.newProject.addActionListener(new ActionListener() {
@@ -212,4 +214,21 @@ public class Tools extends JPanel{
 	public void setNewActivityEnabled(boolean enable){
 		this.newActivity.setEnabled(enable);
 	}
+	
+	/**
+	 * Set add user button enabled
+	 * @param enable Boolean
+	 */
+	public void setAddUserEnabled(boolean enable){
+		this.addUser.setEnabled(enable);
+	}
+	
+	/**
+	 * Set new member button enabled
+	 * @param enable Boolean
+	 */
+	public void setNewMemberEnabled(boolean enable){
+		this.newMember.setEnabled(enable);
+	}
+	
 }

@@ -132,7 +132,7 @@ public class Activity_controller extends AbstractController implements ActivityL
 			// Display error when validation error
 			this.view.updateCreateActivity(false, activityValidation.getError(),null);
 		}
-	}
+	}//end of createActivity
 
 	/**
 	 * This method updates the activity information when user edits it.
@@ -224,10 +224,34 @@ public class Activity_controller extends AbstractController implements ActivityL
 			// Display error when validation error
 			this.view.updateEditActivity(false, activityValidation.getError(),null);
 		}
-	}
+	}//end of editActivity
 
 	@Override
 	public void loadActivitiesByProject(Project project) {
-		// TODO Auto-generated method stub
-	}
-}
+
+		List<Activity> projectActivities = this.activity_model.getActivitiesByProject(project);
+		if (projectActivities==null) {
+			
+			this.view.updateLoadActivitiesByProject(false, LanguageText.getConstant("ERROR_OCCURED"), null);
+		}
+		
+		else{
+			
+			this.view.updateLoadActivitiesByProject(true, null , projectActivities);		
+		}
+	}//end of loadActivitiesByProject
+
+
+
+	@Override
+	public void loadActivitiesForAllProjectByMember(int memberId) {
+		//get all projects for a member by member id->getAllProjects()
+		//assign it to a list of projects
+		//for loop each project 
+		
+		
+		
+	
+	}//end of loadActivitiesForAllProjectByMember
+
+}//end of Activity Controller Class

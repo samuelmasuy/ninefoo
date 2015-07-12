@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import ninefoo.config.RoleNames;
 import ninefoo.config.Session;
 import ninefoo.model.object.Activity;
 import ninefoo.model.object.Project;
@@ -267,6 +268,13 @@ public class MainView extends JFrame implements UpdatableView{
 				// TODO Auto-generated method stub
 				
 			}
+
+			@Override
+			public void updateActivity() {
+				// TODO Auto-generated method stub
+				System.out.println("Edit activity clicked...");
+				
+			}
 		});
 		
 		// Configure the JFrame
@@ -396,6 +404,8 @@ public class MainView extends JFrame implements UpdatableView{
 		this.loadView(loginPanel);
 		this.tableChartPanel.reset();
 		this.toolsPanel.setNewActivityEnabled(false);
+		this.toolsPanel.setNewMemberEnabled(false);
+		this.toolsPanel.setAddUserEnabled(false);
 		this.tableChartPanel.setProject(null);
 		LOGGER.info("Logout successful");
 	}
@@ -431,8 +441,10 @@ public class MainView extends JFrame implements UpdatableView{
 				// Load project
 				this.tableChartPanel.loadProject(project);
 				
-				// Enable creating activities
+				// Enable manager buttons
 				this.toolsPanel.setNewActivityEnabled(true);
+				this.toolsPanel.setNewMemberEnabled(true);
+				this.toolsPanel.setAddUserEnabled(true);
 			
 			// If project not created
 			} else {
@@ -462,11 +474,19 @@ public class MainView extends JFrame implements UpdatableView{
 				// Show success message
 				this.viewMyProjectsDialog.setSuccessMessage(message);
 				
+				// Enable buttons if role is manager, or else disable
+				if (this.viewMyProjectsDialog.getSelectedRole() == RoleNames.MANAGER){
+					this.toolsPanel.setNewActivityEnabled(true);
+					this.toolsPanel.setNewMemberEnabled(true);
+					this.toolsPanel.setAddUserEnabled(true);
+				}else if (this.viewMyProjectsDialog.getSelectedRole() == RoleNames.MEMBER){
+					this.toolsPanel.setNewActivityEnabled(false);
+					this.toolsPanel.setNewMemberEnabled(false);
+					this.toolsPanel.setAddUserEnabled(false);
+				}
+				
 				// Close window
 				this.viewMyProjectsDialog.dispose();
-				
-				// Enable new activity button
-				this.toolsPanel.setNewActivityEnabled(true);
 				
 				// Reset data
 				this.tableChartPanel.reset();
