@@ -146,6 +146,7 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 			public void actionPerformed(ActionEvent e) {
 				if(toolsListener != null){
 					reloadProjectListByRole();
+					enableActionsByRole();
 				}
 			}
 		});
@@ -245,6 +246,26 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 			toolsListener.loadAllMyProjectsByRole(ViewMyProjectsDialog.this, roleBox.getSelectedItem().toString());
 			resetDescriptionPanel();
 		}
+	}
+	
+	/**
+	 * Enable / Disable edit and delete buttons based on role
+	 */
+	public void enableActionsByRole(){
+		if (roleBox.getSelectedItem() == RoleNames.MANAGER){
+			this.editButton.setEnabled(true);
+			this.deleteButton.setEnabled(true);
+		}else if (roleBox.getSelectedItem() == RoleNames.MEMBER){
+			this.editButton.setEnabled(false);
+			this.deleteButton.setEnabled(false);
+		}
+	}
+	
+	/** 
+	 * Get the roleBox selected role
+	 */
+	public String getSelectedRole(){
+		return roleBox.getSelectedItem().toString();
 	}
 	
 	/**
