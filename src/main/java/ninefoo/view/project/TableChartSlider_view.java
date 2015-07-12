@@ -9,6 +9,7 @@ import javax.swing.JSplitPane;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.object.Project;
 import ninefoo.view.project.chart.GanttChart_view;
+import ninefoo.view.project.table.TableContainer_view;
 import ninefoo.view.project.table.TabularData_view;
 
 /**
@@ -20,7 +21,7 @@ public class TableChartSlider_view extends JPanel{
 	private static final long serialVersionUID = 1821070698625712816L;
 	
 	// Declare panels
-	private TabularData_view tabularPanel;
+	private TableContainer_view tableContainer;
 	private GanttChart_view chartPanel;
 	private JSplitPane splitPane;
 	private Project project;
@@ -34,11 +35,11 @@ public class TableChartSlider_view extends JPanel{
 		this.setLayout(new BorderLayout());
 		
 		// Initialize panels
-		this.tabularPanel = new TabularData_view(this);
+		this.tableContainer = new TableContainer_view(this);
 		this.chartPanel = new GanttChart_view();
 		
 		// Add the panels to the splitter
-		this.splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tabularPanel, chartPanel);
+		this.splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tableContainer, chartPanel);
 		
 		// Customize the splitter
 		this.splitPane.setResizeWeight(0.5);
@@ -56,7 +57,7 @@ public class TableChartSlider_view extends JPanel{
 	 */
 	public void setProject(Project project){
 		this.project = project;
-		this.tabularPanel.setProject(project);
+		this.tableContainer.setProject(project);
 	}
 	
 	/**
@@ -77,7 +78,7 @@ public class TableChartSlider_view extends JPanel{
 		this.setProject(project);
 		
 		// Populate activities
-		this.tabularPanel.populateTable();
+		this.tableContainer.populateTable();
 	}
 	
 	/**
@@ -92,6 +93,6 @@ public class TableChartSlider_view extends JPanel{
 	 * Reset table and chart
 	 */
 	public void reset(){
-		this.tabularPanel.resetTable();
+		this.tableContainer.resetTable();
 	}
 }
