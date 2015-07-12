@@ -7,6 +7,6 @@ import ninefoo.model.object.Project;
  * @author Amir El Bawab
  */
 public interface ActivityListener {
-	public void createActivity(int row, String activityid, String activityLabel, String duration, String startDate, String finishDate, Project project, String completion, int memberId);
+	public void createActivity(int row, String activityid, String activityLabel, String duration, String startDate, String finishDate, String cost, Project project, String completion, int memberId);
 	public void createDependentActivities(int activityIdDependent, int activityIdDependentOn, int row);
 }
