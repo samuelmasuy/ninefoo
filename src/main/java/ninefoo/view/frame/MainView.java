@@ -259,10 +259,16 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
-			public void deleteProject(ViewMyProjectsDialog parentDialog,
-					Project project) {
+			public void deleteProject(ViewMyProjectsDialog parentDialog, Project project) {
 				// TODO Auto-generated method stub
 				System.out.println("Delete activity confirmed...!");
+			}
+
+			@Override
+			public void updateActivity() {
+				// TODO Auto-generated method stub
+				System.out.println("Edit activity clicked...");
+				
 			}
 		});
 		

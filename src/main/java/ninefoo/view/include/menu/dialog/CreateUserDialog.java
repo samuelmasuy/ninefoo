@@ -7,12 +7,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import ninefoo.config.RoleNames;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.layout.dialog.CenterFormSouthButtonDialog;
 import ninefoo.lib.layout.dialog.FormDialog;
@@ -29,6 +31,7 @@ public class CreateUserDialog extends CenterFormSouthButtonDialog{
 	private JButton createButton;
 	private JTextField firstName, lastName, usernameField;
 	private JPasswordField passwordField;
+	private JComboBox<String> roleBox;
 	
 	/**
 	 *  Constructor
@@ -36,11 +39,12 @@ public class CreateUserDialog extends CenterFormSouthButtonDialog{
 	public CreateUserDialog(JFrame parentFrame, final ToolsListener toolsListener) {
 		
 		// Initialize components
-		this.createButton = new JButton(LanguageText.getConstant("CREATE"));
+		this.createButton = new JButton(LanguageText.getConstant("CREATE_ADD_PRO"));
 		this.firstName = new JTextField(10);
 		this.lastName = new JTextField(10);
 		this.usernameField = new JTextField(10);
 		this.passwordField = new JPasswordField(10);
+		this.roleBox = new JComboBox<>(RoleNames.ROLES);
 		
 		// Set border title
 		this.setTitle(LanguageText.getConstant("NEW_ACCOUNT"));
@@ -68,6 +72,7 @@ public class CreateUserDialog extends CenterFormSouthButtonDialog{
 				lastName.setBorder(BorderFactory.createCompoundBorder(lastName.getBorder(), inputPadding));
 				usernameField.setBorder(BorderFactory.createCompoundBorder(usernameField.getBorder(), inputPadding));
 				passwordField.setBorder(BorderFactory.createCompoundBorder(passwordField.getBorder(), inputPadding));
+				roleBox.setBorder(BorderFactory.createCompoundBorder(roleBox.getBorder(), inputPadding));
 				
 				// Add components
 				this.table.put(new JLabel(LanguageText.getConstant("FIRST_NAME")));
@@ -84,6 +89,11 @@ public class CreateUserDialog extends CenterFormSouthButtonDialog{
 				this.table.newRow();
 				this.table.put(new JLabel(LanguageText.getConstant("PASSWORD")));
 				this.table.put(passwordField);
+				
+				this.table.newRow();
+				this.table.put(new JLabel(LanguageText.getConstant("ROLE")));
+				this.table.put(roleBox);
+				
 			}
 		});
 		
