@@ -27,13 +27,13 @@ import ninefoo.model.object.Member;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
 /**
- * Dialog for creating an activity
+ * Dialog for editing an activity
  * @author Sebouh Bardakjian
  */
-public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
+public class EditActivityDialog extends CenterScrollSouthButtonDialog {
 	
 	// Define components
-	private JButton createButton;
+	private JButton updateButton;
 	private JTextField activityLabel;
 	private JTextArea description;
 	private JTextField duration;
@@ -52,14 +52,14 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 	/** 
 	 *  Constructor
 	 */
-	public CreateActivityDialog(JFrame parentFrame, final ToolsListener toolsListener) {
+	public EditActivityDialog(JFrame parentFrame, final ToolsListener toolsListener) {
 		
 		// Dummy data
 		String[] members_dummy = new String[] {"Mem1", "Member2BlaBlaBla"};
 				
 		
 		// Initialize components
-		this.createButton = new JButton(LanguageText.getConstant("CREATE"));
+		this.updateButton = new JButton(LanguageText.getConstant("UPDATE_ACTIVITY_ACT"));
 		this.activityLabel = new JTextField(10);
 		this.description = new JTextArea(3,10);
 		this.duration = new JTextField(10);
@@ -72,15 +72,15 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 		this.memberBox = new AutocompleteComboBox(members_dummy);
 		this.prerequisiteDropdown = new MultiDropdown("Add dependency", new String[]{"One", "Two"});
 		
-		this.setTitle(LanguageText.getConstant("CREATE_ACTIVITY_ACT"));
+		this.setTitle(LanguageText.getConstant("UPDATE_ACTIVITY_ACT"));
 		
 		// Add button listener
-		this.createButton.addActionListener(new ActionListener() {
+		this.updateButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (toolsListener != null)
-					toolsListener.createActivity();
+					toolsListener.updateActivity();
 			}
 		});
 		
@@ -93,10 +93,10 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 			public void placeForm() {
 				
 				// Set border title
-				this.titledBorder.setTitle(LanguageText.getConstant("CREATE_ACTIVITY_ACT"));
+				this.titledBorder.setTitle(LanguageText.getConstant("UPDATE_ACTIVITY_ACT"));
 				
 				// Set input border
-				createButton.setBorder(BorderFactory.createCompoundBorder(createButton.getBorder(), inputPadding));
+				updateButton.setBorder(BorderFactory.createCompoundBorder(updateButton.getBorder(), inputPadding));
 				activityLabel.setBorder(BorderFactory.createCompoundBorder(activityLabel.getBorder(), inputPadding));
 				description.setBorder(BorderFactory.createCompoundBorder(description.getBorder(), inputPadding));
 				duration.setBorder(BorderFactory.createCompoundBorder(duration.getBorder(), inputPadding));
@@ -157,7 +157,7 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 		});
 		
 		// Add component to south panel
-		this.southPanel.add(this.createButton);
+		this.southPanel.add(this.updateButton);
 		
 		// Configure dialog
 		this.setSize(new Dimension(360,500));

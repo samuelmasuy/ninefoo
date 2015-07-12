@@ -9,6 +9,7 @@
 		"ASSIGN_ACT"                : "Assign",
 		"MY_ASSIGNED_ACTIVITIES_ACT" : "My assigned activities",
 		"CREATE_ACTIVITY_ACT" 	: "Create activity",
+		"UPDATE_ACTIVITY_ACT"		: "Update activity",
 		"ACTIVITY_ID_ACT"           : "Activity ID",
 		"ACTIVITY_NAME_ACT"         : "Activity Name",
 		"ACTIVITY_LABEL_ACT"		: "Activity label",

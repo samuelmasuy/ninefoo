@@ -262,6 +262,13 @@ public class MainView extends JFrame implements UpdatableView{
 				// TODO Auto-generated method stub
 				
 			}
+
+			@Override
+			public void updateActivity() {
+				// TODO Auto-generated method stub
+				System.out.println("Edit activity clicked...");
+				
+			}
 		});
 		
 		// Configure the JFrame
