@@ -221,7 +221,7 @@ public class Activity_controller extends AbstractController implements ActivityL
 			}// else
 		} else {
 			
-			// Display error when validation error
+			// Display error when validation
 			this.view.updateEditActivity(false, activityValidation.getError(),null);
 		}
 	}//end of editActivity
@@ -245,20 +245,51 @@ public class Activity_controller extends AbstractController implements ActivityL
 
 	@Override
 	public void loadActivitiesForAllProjectByMember(int memberId) {
-		//my assigned activites
-		//could be a project that you didnt creaqte, but you are member of it
-		
-		
-		//get all projects for a member by member id->getAllProjects()
-		//assign it to a list of projects
-		//for loop each project and get the activities for them
-		//update the view
+		//TODO implement a getActivityByMemberId method
+		//TODO implement getProjectId method
 		
 		List<Project> projectByMember=this.project_model.getAllProjects();
+		//get all the activities associated with a memberId from the db
+		List<Activity> activitiesAssignedToMember =this.activity_model.getActivityByMemberId(memberId);//arraylist
+		
+		//add project Ids associated with each activities
+		Set <Integer> projectIdSet=new HashSet<>();//set of integers
+		
+		for (int i=0; i<activitiesAssignedToMember.size(); i++)
+		{
+			projectIdSet.add(activitiesAssignedToMember.get(i).getProjectId());
+		}
+		
+		//convert the set containing the project ids to a list so that we can do nested loops below
+		List <Integer>projectIdList=new ArrayList<>();
+		projectIdList.addAll(projectIdSet);
+		
+		//create an arraylist containing all project objects with their projectId
+		List <Project> projectsAssignedToMemberList= new ArrayList<>();
 		
 		
-		
-		
+		for (int i=0; i<projectIdSet.size(); i++)
+		{
+			//add all projects assigned to a member into a list
+			projectsAssignedToMemberList.add(this.project_model.getProjectById(projectIdList.get(i)));
+			
+			
+			List<Activity>activitiesByProjectList=new ArrayList<>();
+			
+			//loop through all activities assigned to a member and create a list of activities
+			//for a corresponding project. add the respective list of activities to the respective project
+			for (int j=0;j<activitiesAssignedToMember.size(); j++)
+			{
+				if    (activitiesAssignedToMember.get(j).getProjectId())== projectIdList.get(i))
+				{
+					activitiesByProjectList.add(activitiesAssignedToMember.get(j));
+					projectsAssignedToMemberList.get(i).setAcitivies(activitiesByProjectList);
+	
+				}
+			
+			}//end of loop through all activities- inner for loop
+		}//end of loop through project list- outer for loop
+			
 	
 	}//end of loadActivitiesForAllProjectByMember
 
