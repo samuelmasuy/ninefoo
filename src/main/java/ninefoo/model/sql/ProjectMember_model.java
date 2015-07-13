@@ -1,17 +1,11 @@
 package ninefoo.model.sql;
 
-import ninefoo.config.Database;
 import ninefoo.model.object.Member;
 import ninefoo.model.object.Project;
 import ninefoo.model.object.Role;
 import ninefoo.model.sql.template.AbstractModel;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,5 +133,48 @@ public class ProjectMember_model extends AbstractModel{
 		}
         
         return false;
+    }
+    
+    /**
+     * Check if the user is already assigned
+     * @param memberId
+     * @param projectId
+     * @param role
+     * @return boolean
+     */
+    public boolean getAssignedAnyRole(int memberId, int projectId){
+    	
+    	// Open
+    	this.open();
+    	
+    	// Query
+    	sql = "SELECT * FROM project_member WHERE member_id = ? AND project_id = ?";
+    	
+    	try {
+    		
+    		// Prepare
+			this.prepareStatement();
+			
+			// Set data
+			ps.setInt(1, memberId);
+			ps.setInt(2, projectId);
+			
+			// Run
+            result = ps.executeQuery();
+            
+            // Get single
+            if (result.next()) {
+            	return true;
+            } else {
+            	return false;
+            }
+			
+		} catch (SQLException e) {
+			LOGGER.error("Error occured: " + e.getMessage());
+		} finally {
+			this.close();
+		}
+    	
+    	return false;
     }
 }

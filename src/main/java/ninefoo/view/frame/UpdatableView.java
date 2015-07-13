@@ -3,6 +3,7 @@ package ninefoo.view.frame;
 import java.util.List;
 
 import ninefoo.model.object.Activity;
+import ninefoo.model.object.Member;
 import ninefoo.model.object.Project;
 import ninefoo.view.listeners.ActivityListener;
 import ninefoo.view.listeners.MemberListener;
@@ -28,6 +29,8 @@ public interface UpdatableView {
 	public void updateLoadEditProjectFields(boolean success, String message, Project project);
 	public void updateLoadAssignedActivitiesProject(boolean success, String message, List<Project> projects);
 	public void updateLoadActivitiesByProject(boolean success, String message, List<Activity> activities);
+	public void updateAddUserToProject(boolean success, String message);
+	public void updateLoadAllMembers(boolean success, String message, List<Member> user);
 	
 	// Set listeners. Start methods with prefix: set
 	public void setMemberListener(MemberListener memberListener);

@@ -48,7 +48,7 @@ public class MultiDropdown extends JPanel{
 		this.setLayout(new BorderLayout());
 					
 		// Initialize
-		this.addButton = new JButton(buttonText, new ImageIcon(getClass().getResource("/images/buttons/act_add_dependency.png")));
+		this.addButton = new JButton(buttonText, new ImageIcon(getClass().getResource("/images/buttons/general/add.png")));
 		this.centerPanel = new JPanel();
 		this.northPanel = new JPanel();
 		this.centerPanelScroll = new JScrollPane(this.centerPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -122,7 +122,7 @@ public class MultiDropdown extends JPanel{
 			
 			// Initialize components
 			this.boxField = new AutocompleteComboBox(data);
-			this.removeButton = new JButton(new ImageIcon(getClass().getResource("/images/buttons/act_remove_dependency.png")));
+			this.removeButton = new JButton(new ImageIcon(getClass().getResource("/images/buttons/general/remove.png")));
 			
 			// Configure button
 			this.removeButton.setBorderPainted(false); 

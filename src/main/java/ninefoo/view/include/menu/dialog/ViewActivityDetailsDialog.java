@@ -27,13 +27,13 @@ import ninefoo.model.object.Member;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
 /**
- * Dialog for creating an activity
+ * Dialog for editing an activity
  * @author Sebouh Bardakjian
  */
-public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
+public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
 	
 	// Define components
-	private JButton createButton;
+	private JButton closeButton;
 	private JTextField activityLabel;
 	private JTextArea description;
 	private JTextField duration;
@@ -52,14 +52,14 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 	/** 
 	 *  Constructor
 	 */
-	public CreateActivityDialog(JFrame parentFrame, final ToolsListener toolsListener) {
+	public ViewActivityDetailsDialog(JFrame parentFrame, final ToolsListener toolsListener) {
 		
 		// Dummy data
 		String[] members_dummy = new String[] {"Mem1", "Member2BlaBlaBla"};
 				
 		
 		// Initialize components
-		this.createButton = new JButton(LanguageText.getConstant("CREATE"));
+		this.closeButton = new JButton(LanguageText.getConstant("CLOSE"));
 		this.activityLabel = new JTextField(10);
 		this.description = new JTextArea(3,10);
 		this.duration = new JTextField(10);
@@ -72,15 +72,15 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 		this.memberBox = new AutocompleteComboBox(members_dummy);
 		this.prerequisiteDropdown = new MultiDropdown(LanguageText.getConstant("ADD_DEPENDENCY_ACT"), new String[]{"One", "Two"});
 		
-		this.setTitle(LanguageText.getConstant("CREATE_ACTIVITY_ACT"));
+		this.setTitle(LanguageText.getConstant("VIEW_ACTIVITY_DETAILS_ACT"));
 		
 		// Add button listener
-		this.createButton.addActionListener(new ActionListener() {
+		this.closeButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (toolsListener != null)
-					toolsListener.createActivity();
+					dispose();
 			}
 		});
 		
@@ -93,10 +93,10 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 			public void placeForm() {
 				
 				// Set border title
-				this.titledBorder.setTitle(LanguageText.getConstant("CREATE_ACTIVITY_ACT"));
+				this.titledBorder.setTitle(LanguageText.getConstant("VIEW_ACTIVITY_DETAILS_ACT"));
 				
 				// Set input border
-				createButton.setBorder(BorderFactory.createCompoundBorder(createButton.getBorder(), inputPadding));
+				closeButton.setBorder(BorderFactory.createCompoundBorder(closeButton.getBorder(), inputPadding));
 				activityLabel.setBorder(BorderFactory.createCompoundBorder(activityLabel.getBorder(), inputPadding));
 				description.setBorder(BorderFactory.createCompoundBorder(description.getBorder(), inputPadding));
 				duration.setBorder(BorderFactory.createCompoundBorder(duration.getBorder(), inputPadding));
@@ -157,7 +157,7 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 		});
 		
 		// Add component to south panel
-		this.southPanel.add(this.createButton);
+		this.southPanel.add(this.closeButton);
 		
 		// Configure dialog
 		this.setSize(new Dimension(360,500));
@@ -202,6 +202,34 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 				
 				// Add projects
 				this.activities_data.addAll(activities);
+			}
+			
+			// Refresh list
+			//this.refreshList();
+		}
+		
+		//TODO Add refresh
+		/**
+		 * Populate activity fields data
+		 * @param activity
+		 */
+		public void populateFields(Activity activity){
+			
+			// If an activity was returned
+			if(activity != null){
+				
+				// Add data to fields
+				this.activityLabel.setText(activity.getActivityLabel());
+				this.description.setText(activity.getDescription());
+				this.duration.setText(activity.getDuration() + "");
+				this.optimisticDuration.setText(activity.getOptimisticDuration() + "");
+				this.likelyDuration.setText(activity.getLikelyDuration() + "");
+				this.pessimisticDuration.setText(activity.getPessimisticDuration() + "");
+				this.cost.setText(activity.getCost() + "");
+				this.startDate.setDate(activity.getStartDate());
+				this.finishDate.setDate(activity.getFinishDate());
+				//this.memberBox = new AutocompleteComboBox(members_dummy);
+				//this.prerequisiteDropdown = new MultiDropdown("Add dependency", new String[]{"One", "Two"});
 			}
 			
 			// Refresh list

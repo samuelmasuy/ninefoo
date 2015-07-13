@@ -1,5 +1,7 @@
 package ninefoo.config;
 
+import ninefoo.model.object.Project;
+
 import org.apache.logging.log4j.LogManager;
 
 /**
@@ -18,6 +20,7 @@ public class Session {
 	// Define variables
 	private int userId;
 	private boolean open;
+	private int currentProject;
 	
 	/**
 	 * Constructor - Private
@@ -87,5 +90,21 @@ public class Session {
 			this.userId = 0;
 			LOGGER.info("Session closed");
 		}
+	}
+	
+	/**
+	 * Set project id
+	 * @param project
+	 */
+	public void setProjectId(int project){
+		this.currentProject = project;
+	}
+	
+	/**
+	 * Get project id
+	 * @return project id
+	 */
+	public int getProjectId(){
+		return this.currentProject;
 	}
 }

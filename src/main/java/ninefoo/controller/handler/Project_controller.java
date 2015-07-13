@@ -97,6 +97,9 @@ public class Project_controller extends AbstractController implements ProjectLis
 				// Load the project
 				Project insertedProject = project_model.getProjectById(projectId);
 				
+				// Store it in the session
+				Session.getInstance().setProjectId(insertedProject.getProjectId());
+				
 				// Empty list of activities on create
 				insertedProject.setAcitivies(new ArrayList<Activity>());
 				
@@ -201,6 +204,9 @@ public class Project_controller extends AbstractController implements ProjectLis
 			// Load activities for this project
 			project.setAcitivies(actList);
 			
+			// Store project in the session
+			Session.getInstance().setProjectId(project.getProjectId());
+			
 			// Update view
 			this.view.updateLoadProject(true, String.format(LanguageText.getConstant("LOADED"), String.format("%s '%s'", LanguageText.getConstant("PROJECT"), project.getProjectName())), project);
 		
@@ -236,5 +242,35 @@ public class Project_controller extends AbstractController implements ProjectLis
 	public void loadAssignedActivitiesProject() {
 		// TODO loadAssignedActivitiesProject
 		// Load all my activities with their projects using one query
+	}
+
+	@Override
+	public void addUserToProject(int memberId, int projectId, String roleName) {
+		
+		// Get the role from the DB
+		Role role = role_model.getRoleByName(roleName);
+		
+		// If user not already assigned
+		if(!projectMember_model.getAssignedAnyRole(memberId, projectId)) {
+			
+			// If insert is successful
+			if(projectMember_model.addMemberToProject(projectId, memberId, role)){
+				
+				// TODO Add to the language
+				this.view.updateAddUserToProject(true, "Mmeber succesfull added");
+			
+			// If failed
+			} else {
+				
+				// Display error
+				this.view.updateAddUserToProject(false, LanguageText.getConstant("ERROR_OCCURED"));
+			}
+			
+		// If user already assigned
+		} else {
+			
+			// TODO add to the language
+			this.view.updateAddUserToProject(false, "User already assigned!");
+		}
 	}
 }

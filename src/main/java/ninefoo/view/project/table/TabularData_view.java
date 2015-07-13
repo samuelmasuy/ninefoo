@@ -14,7 +14,7 @@ import ninefoo.model.object.Project;
 
 /**
  * Table showing data about activities in a project
- * @author Amir El Bawab
+ * @author Amir El Bawab, Sebouh Bardakjian
  */
 public class TabularData_view extends JPanel {
 
@@ -37,6 +37,10 @@ public class TabularData_view extends JPanel {
 		// Initialize components
 		this.dataTable = new NumberedExcelTable(ActivityConfig.TABLE_HEADER);
 		this.dataTableScrollPane = this.dataTable.getJScrollPane();
+		
+		// Configure scrolling speed
+		this.dataTableScrollPane.getVerticalScrollBar().setUnitIncrement(20);
+		this.dataTableScrollPane.getHorizontalScrollBar().setUnitIncrement(20);
 		
 		// Customize the scroll table
 		this.dataTableScrollPane.setPreferredSize(new Dimension(300, 0));

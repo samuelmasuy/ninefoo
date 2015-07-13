@@ -1,0 +1,897 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.8" icons="true" automaticImage="JPEG" always-add-relationships="false" 
+  generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <interface id="1" language="java" name="ninefoo.view.frame.UpdatableView" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/frame/UpdatableView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1271" y="2322"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="2" language="java" name="ninefoo.view.frame.MainView" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/frame/MainView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="490" y="-142"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="ninefoo.view.include.footer.StatusBar" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/include/footer/StatusBar.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="90" y="-599"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="ninefoo.view.include.menu.dialog.AddUserToProjectDialog" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/include/menu/dialog/AddUserToProjectDialog.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="345" y="-640"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="ninefoo.view.include.menu.dialog.CreateActivityDialog" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/include/menu/dialog/CreateActivityDialog.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="665" y="-691"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="ninefoo.view.include.menu.dialog.CreateUserDialog" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/include/menu/dialog/CreateUserDialog.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="933" y="-621"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="ninefoo.view.include.menu.dialog.ViewAssignedActivitiesDialog" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/include/menu/dialog/ViewAssignedActivitiesDialog.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1223" y="-621"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="ninefoo.view.include.menu.dialog.CreateProjectDialog" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/include/menu/dialog/CreateProjectDialog.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1519" y="-603"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" 
+    name="ninefoo.view.include.menu.dialog.ViewAssignedActivitiesDialog.ProjectActivityWrapper" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/include/menu/dialog/ViewAssignedActivitiesDialog.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1233" y="-859"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="ninefoo.view.include.menu.dialog.ViewMyProjectsDialog.DescriptionPanel" 
+    project="ninefoo" file="/ninefoo/src/main/java/ninefoo/view/include/menu/dialog/ViewMyProjectsDialog.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2443" y="-812"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="ninefoo.view.include.menu.dialog.EditProjectDialog" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/include/menu/dialog/EditProjectDialog.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1843" y="-594"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="ninefoo.view.include.menu.dialog.ViewMyProjectsDialog" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/include/menu/dialog/ViewMyProjectsDialog.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2175" y="-450"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="13" language="java" name="ninefoo.view.include.menu.listener.ToolsListener" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/include/menu/listener/ToolsListener.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3046" y="-31"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="14" language="java" name="ninefoo.view.include.menu.Tools" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/include/menu/Tools.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2908" y="336"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="ninefoo.view.include.menu.Menu" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/include/menu/Menu.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-331" y="-564"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="16" language="java" name="ninefoo.view.listeners.MemberListener" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/listeners/MemberListener.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-1587" y="1976"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="17" language="java" name="ninefoo.view.listeners.ActivityListener" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/listeners/ActivityListener.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-1023" y="1998"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="18" language="java" name="ninefoo.view.listeners.ProjectListener" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/listeners/ProjectListener.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-535" y="1994"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="19" language="java" name="ninefoo.view.member.listeners.RegisterListener" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/member/listeners/RegisterListener.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-1196" y="-425"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="20" language="java" name="ninefoo.view.member.Register_view" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/member/Register_view.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-1180" y="-84"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="ninefoo.view.member.Login_view" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/member/Login_view.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-796" y="-369"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="22" language="java" name="ninefoo.view.member.listeners.LoginListener" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/member/listeners/LoginListener.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-816" y="-705"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="23" language="java" name="ninefoo.view.project.chart.GanttChart_view" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/project/chart/GanttChart_view.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1700" y="668"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="ninefoo.view.project.table.TabularData_view" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/project/table/TabularData_view.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2572" y="896"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="ninefoo.view.project.TableChartSlider_view" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/project/TableChartSlider_view.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2348" y="496"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="ninefoo.view.project.table.TableContainer_view" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/project/table/TableContainer_view.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2923" y="704"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="ninefoo.view.project.table.TableToolbar_view" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/view/project/table/TableToolbar_view.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3325" y="1049"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="ninefoo.controller.handler.Activity_controller" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/controller/handler/Activity_controller.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-694" y="3153"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="ninefoo.controller.handler.Project_controller" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/controller/handler/Project_controller.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="947" y="2848"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="ninefoo.controller.MainController" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/controller/MainController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="174" y="2041"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="ninefoo.controller.handler.template.AbstractController" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/controller/handler/template/AbstractController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-169" y="3003"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="ninefoo.controller.handler.Member_controller" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/controller/handler/Member_controller.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-1466" y="2921"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="33" language="java" name="ninefoo.model.object.Config" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/model/object/Config.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4349" y="3558"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="34" language="java" name="ninefoo.model.object.Status" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/model/object/Status.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4648" y="4075"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="35" language="java" name="ninefoo.model.object.Member" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/model/object/Member.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5134" y="4450"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="36" language="java" name="ninefoo.model.object.Project" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/model/object/Project.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4544" y="5076"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="37" language="java" name="ninefoo.model.object.ActivityLog" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/model/object/ActivityLog.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5631" y="3446"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="38" language="java" name="ninefoo.model.object.Role" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/model/object/Role.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4419" y="3845"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="39" language="java" name="ninefoo.model.object.Activity" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/model/object/Activity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5976" y="4509"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="40" language="java" name="ninefoo.model.sql.Activity_model" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/model/sql/Activity_model.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-976" y="4636"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="41" language="java" name="ninefoo.model.sql.template.AbstractModel" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/model/sql/template/AbstractModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-506" y="5260"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="42" language="java" name="ninefoo.model.sql.Member_model" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/model/sql/Member_model.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-694" y="4627"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="43" language="java" name="ninefoo.model.sql.Project_model" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/model/sql/Project_model.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-397" y="4618"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="44" language="java" name="ninefoo.model.sql.Role_model" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/model/sql/Role_model.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-135" y="4600"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="45" language="java" name="ninefoo.model.sql.ProjectMember_model" project="ninefoo" 
+    file="/ninefoo/src/main/java/ninefoo/model/sql/ProjectMember_model.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="118" y="4582"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="46">    
+    <end type="SOURCE" refId="2" navigable="false" variant="ASSOCIATION">      
+      <attribute id="47" name="toolsPanel"/>      
+      <multiplicity id="48" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="49">    
+    <end type="SOURCE" refId="5" navigable="false" variant="ASSOCIATION">      
+      <attribute id="50" name="activities_data"/>      
+      <multiplicity id="51" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="52">    
+    <end type="SOURCE" refId="36" navigable="false" variant="ASSOCIATION">      
+      <attribute id="53" name="acitivies"/>      
+      <multiplicity id="54" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="55">    
+    <end type="SOURCE" refId="2" navigable="false" variant="ASSOCIATION">      
+      <attribute id="56" name="projectListener"/>      
+      <multiplicity id="57" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="58">    
+    <end type="SOURCE" refId="2" navigable="false" variant="ASSOCIATION">      
+      <attribute id="59" name="addUserToProjectDilaog"/>      
+      <multiplicity id="60" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="61">    
+    <end type="SOURCE" refId="23" navigable="false" variant="ASSOCIATION">      
+      <attribute id="62" name="activities"/>      
+      <multiplicity id="63" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="64">    
+    <end type="SOURCE" refId="7" navigable="false" variant="ASSOCIATION">      
+      <attribute id="65" name="projects"/>      
+      <multiplicity id="66" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="67">    
+    <end type="SOURCE" refId="37" navigable="false" variant="ASSOCIATION">      
+      <attribute id="68" name="activity"/>      
+      <multiplicity id="69" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="70">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <realization id="71">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="18"/>  
+  </realization>  
+  <association id="72">    
+    <end type="SOURCE" refId="25" navigable="false" variant="ASSOCIATION">      
+      <attribute id="73" name="project"/>      
+      <multiplicity id="74" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="75">    
+    <end type="SOURCE" refId="28" navigable="false" variant="ASSOCIATION">      
+      <attribute id="76" name="member_model"/>      
+      <multiplicity id="77" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="42" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="78">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <association id="79">    
+    <end type="SOURCE" refId="2" navigable="false" variant="ASSOCIATION">      
+      <attribute id="80" name="editProjectDialog"/>      
+      <multiplicity id="81" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="82">    
+    <end type="SOURCE" refId="31" navigable="false" variant="ASSOCIATION">      
+      <attribute id="83" name="view"/>      
+      <multiplicity id="84" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="85">    
+    <end type="SOURCE" refId="2" navigable="false" variant="ASSOCIATION">      
+      <attribute id="86" name="createProjectDialog"/>      
+      <multiplicity id="87" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="88">    
+    <end type="SOURCE" refId="4" navigable="false" variant="ASSOCIATION">      
+      <attribute id="89" name="users"/>      
+      <multiplicity id="90" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="91">    
+    <end type="SOURCE" refId="12" navigable="false" variant="ASSOCIATION">      
+      <attribute id="92" name="projects"/>      
+      <multiplicity id="93" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="94">    
+    <end type="SOURCE" refId="14" navigable="false" variant="ASSOCIATION">      
+      <attribute id="95" name="toolsListener"/>      
+      <multiplicity id="96" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="97">    
+    <end type="SOURCE" refId="43"/>    
+    <end type="TARGET" refId="41"/>  
+  </generalization>  
+  <association id="98">    
+    <end type="SOURCE" refId="20" navigable="false" variant="ASSOCIATION">      
+      <attribute id="99" name="registerListener"/>      
+      <multiplicity id="100" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="101">    
+    <end type="SOURCE" refId="28" navigable="false" variant="ASSOCIATION">      
+      <attribute id="102" name="activity_model"/>      
+      <multiplicity id="103" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="40" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="104">    
+    <end type="SOURCE" refId="29" navigable="false" variant="ASSOCIATION">      
+      <attribute id="105" name="activity_model"/>      
+      <multiplicity id="106" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="40" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="107">    
+    <bendpoint x="4997" y="3605"/>    
+    <end type="SOURCE" refId="37" navigable="false" variant="ASSOCIATION">      
+      <attribute id="108" name="member"/>      
+      <multiplicity id="109" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="110">    
+    <end type="SOURCE" refId="2" navigable="false" variant="ASSOCIATION">      
+      <attribute id="111" name="viewAssignedActivitiesDialog"/>      
+      <multiplicity id="112" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="113">    
+    <end type="SOURCE" refId="39" navigable="false" variant="ASSOCIATION">      
+      <attribute id="114" name="member"/>      
+      <multiplicity id="115" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="116">    
+    <end type="SOURCE" refId="2" navigable="false" variant="ASSOCIATION">      
+      <attribute id="117" name="registerPanel"/>      
+      <multiplicity id="118" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="119">    
+    <end type="SOURCE" refId="28" navigable="false" variant="ASSOCIATION">      
+      <attribute id="120" name="project_model"/>      
+      <multiplicity id="121" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="43" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="122">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="32"/>  
+  </dependency>  
+  <association id="123">    
+    <end type="SOURCE" refId="39" navigable="false" variant="ASSOCIATION">      
+      <attribute id="124" name="project"/>      
+      <multiplicity id="125" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="126">    
+    <end type="SOURCE" refId="26" navigable="false" variant="ASSOCIATION">      
+      <attribute id="127" name="tableToolbarPanel"/>      
+      <multiplicity id="128" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="129">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="17"/>  
+  </realization>  
+  <generalization id="130">    
+    <end type="SOURCE" refId="45"/>    
+    <end type="TARGET" refId="41"/>  
+  </generalization>  
+  <association id="131">    
+    <end type="SOURCE" refId="2" navigable="false" variant="ASSOCIATION">      
+      <attribute id="132" name="memberListener"/>      
+      <multiplicity id="133" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="134">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="10"/>  
+  </nesting>  
+  <dependency id="135">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="28"/>  
+  </dependency>  
+  <association id="136">    
+    <end type="SOURCE" refId="2" navigable="false" variant="ASSOCIATION">      
+      <attribute id="137" name="statusBarPanel"/>      
+      <multiplicity id="138" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="139">    
+    <end type="SOURCE" refId="2" navigable="false" variant="ASSOCIATION">      
+      <attribute id="140" name="loginPanel"/>      
+      <multiplicity id="141" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="142">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="31"/>  
+  </generalization>  
+  <association id="143">    
+    <end type="SOURCE" refId="29" navigable="false" variant="ASSOCIATION">      
+      <attribute id="144" name="role_model"/>      
+      <multiplicity id="145" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="44" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="146">    
+    <end type="SOURCE" refId="2" navigable="false" variant="ASSOCIATION">      
+      <attribute id="147" name="viewMyProjectsDialog"/>      
+      <multiplicity id="148" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="149">    
+    <end type="SOURCE" refId="2" navigable="false" variant="ASSOCIATION">      
+      <attribute id="150" name="tableChartPanel"/>      
+      <multiplicity id="151" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="25" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="152">    
+    <end type="SOURCE" refId="39" navigable="false" variant="ASSOCIATION">      
+      <attribute id="153" name="prerequisites"/>      
+      <multiplicity id="154" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="155">    
+    <end type="SOURCE" refId="12" navigable="false" variant="ASSOCIATION">      
+      <attribute id="156" name="descriptionPanel"/>      
+      <multiplicity id="157" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="158">    
+    <end type="SOURCE" refId="25" navigable="false" variant="ASSOCIATION">      
+      <attribute id="159" name="chartPanel"/>      
+      <multiplicity id="160" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="161">    
+    <end type="SOURCE" refId="40"/>    
+    <end type="TARGET" refId="41"/>  
+  </generalization>  
+  <generalization id="162">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="31"/>  
+  </generalization>  
+  <association id="163">    
+    <end type="SOURCE" refId="12" navigable="false" variant="ASSOCIATION">      
+      <attribute id="164" name="toolsListener"/>      
+      <multiplicity id="165" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="166">    
+    <end type="SOURCE" refId="25" navigable="false" variant="ASSOCIATION">      
+      <attribute id="167" name="tabularPanel"/>      
+      <multiplicity id="168" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="169">    
+    <end type="SOURCE" refId="29" navigable="false" variant="ASSOCIATION">      
+      <attribute id="170" name="projectMember_model"/>      
+      <multiplicity id="171" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="45" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="172">    
+    <end type="SOURCE" refId="30" navigable="false" variant="ASSOCIATION">      
+      <attribute id="173" name="view"/>      
+      <multiplicity id="174" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="175">    
+    <end type="SOURCE" refId="2" navigable="false" variant="ASSOCIATION">      
+      <attribute id="176" name="menu"/>      
+      <multiplicity id="177" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="178">    
+    <bendpoint x="4765" y="3505"/>    
+    <end type="SOURCE" refId="37" navigable="false" variant="ASSOCIATION">      
+      <attribute id="179" name="project"/>      
+      <multiplicity id="180" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="181">    
+    <end type="SOURCE" refId="32" navigable="false" variant="ASSOCIATION">      
+      <attribute id="182" name="member_model"/>      
+      <multiplicity id="183" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="42" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="184">    
+    <end type="SOURCE" refId="5" navigable="false" variant="ASSOCIATION">      
+      <attribute id="185" name="members_data"/>      
+      <multiplicity id="186" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="187">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="31"/>  
+  </generalization>  
+  <generalization id="188">    
+    <end type="SOURCE" refId="44"/>    
+    <end type="TARGET" refId="41"/>  
+  </generalization>  
+  <association id="189">    
+    <end type="SOURCE" refId="24" navigable="false" variant="ASSOCIATION">      
+      <attribute id="190" name="project"/>      
+      <multiplicity id="191" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="192">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="9"/>  
+  </nesting>  
+  <association id="193">    
+    <end type="SOURCE" refId="2" navigable="false" variant="ASSOCIATION">      
+      <attribute id="194" name="activityListener"/>      
+      <multiplicity id="195" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="196">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="16"/>  
+  </realization>  
+  <association id="197">    
+    <end type="SOURCE" refId="26" navigable="false" variant="ASSOCIATION">      
+      <attribute id="198" name="tabularDataPanel"/>      
+      <multiplicity id="199" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="200">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="41"/>  
+  </generalization>  
+  <dependency id="201">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="29"/>  
+  </dependency>  
+  <association id="202">    
+    <end type="SOURCE" refId="29" navigable="false" variant="ASSOCIATION">      
+      <attribute id="203" name="project_model"/>      
+      <multiplicity id="204" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="43" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="205">    
+    <end type="SOURCE" refId="21" navigable="false" variant="ASSOCIATION">      
+      <attribute id="206" name="loginListener"/>      
+      <multiplicity id="207" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="208">    
+    <end type="SOURCE" refId="37" navigable="false" variant="ASSOCIATION">      
+      <attribute id="209" name="status"/>      
+      <multiplicity id="210" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="34" navigable="true" variant="ASSOCIATION"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

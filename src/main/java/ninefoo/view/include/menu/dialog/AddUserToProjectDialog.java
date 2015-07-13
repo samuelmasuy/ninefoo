@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import ninefoo.config.RoleNames;
+import ninefoo.config.Session;
 import ninefoo.lib.autocompleteComboBox.AutocompleteComboBox;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.layout.dialog.CenterFormSouthButtonDialog;
@@ -34,17 +35,22 @@ public class AddUserToProjectDialog extends CenterFormSouthButtonDialog{
 	private AutocompleteComboBox memberBox;
 	private JComboBox<String> roleBox;
 	private ArrayList<Member> users;
+	private String[] usersName;
 	
 	/** 
 	 *  Constructor
 	 */
 	public AddUserToProjectDialog(JFrame parentFrame, final ToolsListener toolsListener) {
 		
+		// Load user
+		toolsListener.loadAllMembersForAddUserToProjectDialog(AddUserToProjectDialog.this);
+		
 		// Initialize components
 		this.addButton = new JButton(LanguageText.getConstant("ADD"));
-		this.memberBox = new AutocompleteComboBox();
+		this.memberBox = new AutocompleteComboBox(usersName);
 		this.roleBox = new JComboBox<>(RoleNames.ROLES);
 		
+		// Set the title
 		this.setTitle(LanguageText.getConstant("ADD_USER_PRO"));
 		
 		// Add button listener
@@ -52,8 +58,15 @@ public class AddUserToProjectDialog extends CenterFormSouthButtonDialog{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (toolsListener != null)
-					toolsListener.addUserToProject();
+				if (toolsListener != null){
+					if(memberBox.checkAndGetText() == null || memberBox.getSelectedIndex() < 0){
+						// TODO put this in the language file
+						AddUserToProjectDialog.this.setErrorMessage("Please choose a member!");
+					} else {
+						int memberId = users.get(memberBox.getSelectedIndex()).getMemberId();
+						toolsListener.addUserToProject(AddUserToProjectDialog.this, memberId, Session.getInstance().getProjectId(), roleBox.getSelectedItem().toString());
+					}
+				}
 			}
 		});
 		
@@ -108,7 +121,11 @@ public class AddUserToProjectDialog extends CenterFormSouthButtonDialog{
 			this.users.addAll(users);
 		}
 		
-		// Refresh list
-		//this.refreshList();
+		// Create array
+		this.usersName = new String[users.size()];
+		
+		// Loop on users
+		for(int i= 0; i < users.size(); i++)
+			usersName[i] = users.get(i).getUsername();
 	}
 }
