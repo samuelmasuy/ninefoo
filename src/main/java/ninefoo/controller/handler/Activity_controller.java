@@ -1,9 +1,7 @@
 package ninefoo.controller.handler;
 
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,6 +10,7 @@ import ninefoo.config.Config;
 import ninefoo.config.Database;
 import ninefoo.controller.handler.template.AbstractController;
 import ninefoo.helper.DateHelper;
+import ninefoo.lib.graph.Graph;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.validationForm.ValidationForm;
 import ninefoo.lib.validationForm.ValidationRule;
@@ -40,7 +39,6 @@ public class Activity_controller extends AbstractController implements ActivityL
 
 	/**
 	 * Constructor
-	 *
 	 * @param view
 	 */
 	public Activity_controller(UpdatableView view) {
@@ -85,9 +83,14 @@ public class Activity_controller extends AbstractController implements ActivityL
 			this.view.updateCreateActivity(false, LanguageText.getConstant("ERROR_OCCURED"), null);
 			return;
 		}
-		
-		// TODO Check cycle test
 
+		// Create the graph to detect cyles
+		Graph graph = new Graph(prerequisite.length);
+
+		// Feed the graph
+//		for(int i=0; i < prerequisite.length; i++){
+//		}
+		
 		// if all the parameters passed respect the restrictions, add a new
 		// activity object in this if statement
 		if (activityValidation.validate()) {

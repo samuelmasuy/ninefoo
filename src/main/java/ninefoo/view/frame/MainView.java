@@ -16,6 +16,7 @@ import ninefoo.view.include.footer.StatusBar;
 import ninefoo.view.include.menu.Menu;
 import ninefoo.view.include.menu.Tools;
 import ninefoo.view.include.menu.dialog.AddUserToProjectDialog;
+import ninefoo.view.include.menu.dialog.CreateActivityDialog;
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
 import ninefoo.view.include.menu.dialog.EditProjectDialog;
 import ninefoo.view.include.menu.dialog.ViewAssignedActivitiesDialog;
@@ -60,6 +61,7 @@ public class MainView extends JFrame implements UpdatableView{
 	private EditProjectDialog editProjectDialog;
 	private ViewAssignedActivitiesDialog viewAssignedActivitiesDialog;
 	private AddUserToProjectDialog addUserToProjectDilaog;
+	private CreateActivityDialog createActivityDialog;
 	
 	// Define variables
 	private JPanel currentCenterPanel;
@@ -290,6 +292,25 @@ public class MainView extends JFrame implements UpdatableView{
 					memberListener.loadAllMembers();
 				}
 			}
+
+			@Override
+			public void loadAllMembersForCreateActivityDialog(CreateActivityDialog dialog) {
+				
+				// Set create activity dialog
+				createActivityDialog = dialog;
+				
+				// Load all members
+				memberListener.loadAllMembers();
+			}
+
+			@Override
+			public void loadActivitiesForCreateActivityDialog(CreateActivityDialog dialog) {
+				
+				// Set create activity dialog
+				createActivityDialog = dialog;
+				
+				//TODO FINISH THAT
+			}
 		});
 		
 		// Configure the JFrame
@@ -428,7 +449,7 @@ public class MainView extends JFrame implements UpdatableView{
 	@Override
 	public void updateLoadAllMembers(boolean success, String message, List<Member> users) {
 		
-		// If dialog exist
+		// If called from add user to project dialog
 		if(addUserToProjectDilaog != null) {
 			
 			// If success
@@ -442,6 +463,22 @@ public class MainView extends JFrame implements UpdatableView{
 				
 				// Display error
 				addUserToProjectDilaog.setErrorMessage(message);
+			}
+			
+		// If called from create activity dialgo
+		} else if(createActivityDialog != null){
+			
+			// If success
+			if(success) {
+				
+				// Populate the list
+				createActivityDialog.populateMemberList(users);
+				
+			// If fails
+			} else {
+				
+				// Display error
+				createActivityDialog.setErrorMessage(message);
 			}
 		}
 	}

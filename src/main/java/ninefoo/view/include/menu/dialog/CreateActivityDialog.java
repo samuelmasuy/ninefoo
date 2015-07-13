@@ -43,20 +43,23 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 	private JTextField cost;
 	private DatePicker startDate;
 	private DatePicker finishDate;
-	private ArrayList<Member> members_data;
-	private ArrayList<Activity> activities_data;
 	private AutocompleteComboBox memberBox;
 	private MultiDropdown prerequisiteDropdown;
 	
+	// Variables
+	private List<Member> members_data;
+	private List<Activity> activities_data;
+	private String[] membersName;
+	private String[] activitiesLabel;
 	
 	/** 
 	 *  Constructor
 	 */
 	public CreateActivityDialog(JFrame parentFrame, final ToolsListener toolsListener) {
 		
-		// Dummy data
-		String[] members_dummy = new String[] {"Mem1", "Member2BlaBlaBla"};
-				
+		// Load data
+		toolsListener.loadAllMembersForCreateActivityDialog(this);
+		toolsListener.loadActivitiesForCreateActivityDialog(this);
 		
 		// Initialize components
 		this.createButton = new JButton(LanguageText.getConstant("CREATE"));
@@ -69,8 +72,8 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 		this.cost = new JTextField(10);
 		this.startDate = new DatePicker(8);
 		this.finishDate = new DatePicker(8);
-		this.memberBox = new AutocompleteComboBox(members_dummy);
-		this.prerequisiteDropdown = new MultiDropdown(LanguageText.getConstant("ADD_DEPENDENCY_ACT"), new String[]{"One", "Two"});
+		this.memberBox = new AutocompleteComboBox(membersName);
+		this.prerequisiteDropdown = new MultiDropdown(LanguageText.getConstant("ADD_DEPENDENCY_ACT"), activitiesLabel);
 		
 		this.setTitle(LanguageText.getConstant("CREATE_ACTIVITY_ACT"));
 		
@@ -166,7 +169,7 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 		this.setVisible(true);
 	}
 	
-	//TODO Add refresh
+		//TODO Add refresh
 		/**
 		 * Populate list
 		 * @param users
@@ -183,8 +186,12 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 				this.members_data.addAll(members);
 			}
 			
-			// Refresh list
-			//this.refreshList();
+			// Create a list of members
+			this.membersName = new String[members.size()];
+			
+			// Populate list of user names
+			for(int i=0; i < members.size(); i++)
+				this.membersName[i] = members.get(i).getUsername();
 		}
 		
 		//TODO Add refresh
@@ -204,7 +211,12 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 				this.activities_data.addAll(activities);
 			}
 			
-			// Refresh list
-			//this.refreshList();
+			// Create a list of activities
+			this.membersName = new String[activities.size()];
+			
+			// Populate list of user names
+			for(int i=0; i < activities.size(); i++)
+				this.membersName[i] = String.valueOf(activities.get(i).getActivityId());
+			
 		}
 }
