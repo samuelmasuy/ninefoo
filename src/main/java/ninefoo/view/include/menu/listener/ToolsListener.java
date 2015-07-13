@@ -2,6 +2,7 @@ package ninefoo.view.include.menu.listener;
 
 import ninefoo.model.object.Project;
 import ninefoo.view.include.menu.dialog.AddUserToProjectDialog;
+import ninefoo.view.include.menu.dialog.CreateActivityDialog;
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
 import ninefoo.view.include.menu.dialog.EditProjectDialog;
 import ninefoo.view.include.menu.dialog.ViewAssignedActivitiesDialog;
@@ -26,6 +27,8 @@ public interface ToolsListener {
 	public void loadEditProjectFields(EditProjectDialog editProjectDialog, int projectId);
 	public void loadAssignedActivitiesProject(ViewAssignedActivitiesDialog dialog);
 	public void loadAllMembersForAddUserToProjectDialog(AddUserToProjectDialog dialog);
+	public void loadAllMembersForCreateActivityDialog(CreateActivityDialog dialog);
+	public void loadActivitiesForCreateActivityDialog(CreateActivityDialog dialog);
 	
 	// Update
 	public void updateProject(ViewMyProjectsDialog parentDialog, EditProjectDialog dialog, int projectId, String name, String budget, String startDate, String deadline, String description);
