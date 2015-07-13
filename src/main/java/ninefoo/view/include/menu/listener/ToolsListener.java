@@ -25,6 +25,7 @@ public interface ToolsListener {
 	public void loadProject(ViewMyProjectsDialog viewMyProjectsDialog, int projectId);
 	public void loadEditProjectFields(EditProjectDialog editProjectDialog, int projectId);
 	public void loadAssignedActivitiesProject(ViewAssignedActivitiesDialog dialog);
+	public void loadAllMembersForAddUserToProjectDialog(AddUserToProjectDialog dialog);
 	
 	// Update
 	public void updateProject(ViewMyProjectsDialog parentDialog, EditProjectDialog dialog, int projectId, String name, String budget, String startDate, String deadline, String description);

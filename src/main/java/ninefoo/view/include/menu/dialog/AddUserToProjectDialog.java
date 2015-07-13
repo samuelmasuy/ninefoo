@@ -35,17 +35,22 @@ public class AddUserToProjectDialog extends CenterFormSouthButtonDialog{
 	private AutocompleteComboBox memberBox;
 	private JComboBox<String> roleBox;
 	private ArrayList<Member> users;
+	private String[] usersName;
 	
 	/** 
 	 *  Constructor
 	 */
 	public AddUserToProjectDialog(JFrame parentFrame, final ToolsListener toolsListener) {
 		
+		// Load user
+		toolsListener.loadAllMembersForAddUserToProjectDialog(AddUserToProjectDialog.this);
+		
 		// Initialize components
 		this.addButton = new JButton(LanguageText.getConstant("ADD"));
-		this.memberBox = new AutocompleteComboBox();
+		this.memberBox = new AutocompleteComboBox(usersName);
 		this.roleBox = new JComboBox<>(RoleNames.ROLES);
 		
+		// Set the title
 		this.setTitle(LanguageText.getConstant("ADD_USER_PRO"));
 		
 		// Add button listener
@@ -116,7 +121,11 @@ public class AddUserToProjectDialog extends CenterFormSouthButtonDialog{
 			this.users.addAll(users);
 		}
 		
-		// Refresh list
-		//this.refreshList();
+		// Create array
+		this.usersName = new String[users.size()];
+		
+		// Loop on users
+		for(int i= 0; i < users.size(); i++)
+			usersName[i] = users.get(i).getUsername();
 	}
 }

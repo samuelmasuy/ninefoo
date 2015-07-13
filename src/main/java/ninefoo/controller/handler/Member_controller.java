@@ -1,5 +1,7 @@
 package ninefoo.controller.handler;
 
+import java.util.List;
+
 import ninefoo.config.Database;
 import ninefoo.config.Session;
 import ninefoo.controller.handler.template.AbstractController;
@@ -156,5 +158,25 @@ public class Member_controller extends AbstractController implements MemberListe
 	public void logout() {
 		Session.getInstance().close();
 		this.view.updateLogout();
+	}
+
+	@Override
+	public void loadAllMembers() {
+		
+		// Get all members
+		List<Member> members = member_model.getAllMembers();
+		
+		// If error occurred
+		if(members == null) {
+			
+			// Display error
+			this.view.updateLoadAllMembers(false, LanguageText.getConstant("ERROR_OCCURED"), null);
+		
+		// If users found
+		} else {
+			
+			// Load them
+			this.view.updateLoadAllMembers(true, null, members);
+		}
 	}
 }

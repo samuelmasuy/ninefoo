@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import ninefoo.config.RoleNames;
 import ninefoo.config.Session;
 import ninefoo.model.object.Activity;
+import ninefoo.model.object.Member;
 import ninefoo.model.object.Project;
 import ninefoo.view.include.footer.StatusBar;
 import ninefoo.view.include.menu.Menu;
@@ -243,7 +244,9 @@ public class MainView extends JFrame implements UpdatableView{
 				// Set the dialog
 				addUserToProjectDilaog = dialog;
 				
-				// 
+				// Pass it to the controller
+				if(projectListener != null)
+					projectListener.addUserToProject(memberId, projectId, role);
 			}
 
 			@Override
@@ -274,6 +277,18 @@ public class MainView extends JFrame implements UpdatableView{
 				// TODO Auto-generated method stub
 				System.out.println("Edit activity clicked...");
 				
+			}
+
+			@Override
+			public void loadAllMembersForAddUserToProjectDialog(AddUserToProjectDialog dialog) {
+				
+				// Set the dialog
+				addUserToProjectDilaog = dialog;
+				
+				// Pass to controller
+				if(memberListener != null) {
+					memberListener.loadAllMembers();
+				}
 			}
 		});
 		
@@ -408,6 +423,27 @@ public class MainView extends JFrame implements UpdatableView{
 		this.toolsPanel.setAddUserEnabled(false);
 		this.tableChartPanel.setProject(null);
 		LOGGER.info("Logout successful");
+	}
+	
+	@Override
+	public void updateLoadAllMembers(boolean success, String message, List<Member> users) {
+		
+		// If dialog exist
+		if(addUserToProjectDilaog != null) {
+			
+			// If success
+			if(success) {
+				
+				// Populate the list
+				addUserToProjectDilaog.populateUserList(users);
+				
+			// If fails
+			} else {
+				
+				// Display error
+				addUserToProjectDilaog.setErrorMessage(message);
+			}
+		}
 	}
 
 	/************************************************************
@@ -587,7 +623,26 @@ public class MainView extends JFrame implements UpdatableView{
 
 	@Override
 	public void updateAddUserToProject(boolean success, String message) {
-		// TODO updateAddUserToProject
+		
+		// If not null
+		if(addUserToProjectDilaog != null){
+			
+			// If success
+			if(success) {
+			
+				// Display success
+				addUserToProjectDilaog.setSuccessMessage(message);
+				
+				// Close dialog
+				addUserToProjectDilaog.dispose();
+				
+			// If fails
+			} else {
+				
+				// Display error
+				addUserToProjectDilaog.setErrorMessage(message);
+			}
+		}
 	}
 	
 	/************************************************************

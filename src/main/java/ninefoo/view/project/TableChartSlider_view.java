@@ -10,7 +10,6 @@ import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.object.Project;
 import ninefoo.view.project.chart.GanttChart_view;
 import ninefoo.view.project.table.TableContainer_view;
-import ninefoo.view.project.table.TabularData_view;
 
 /**
  * Panel container of a the table and Gantt chart
