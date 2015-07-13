@@ -7,6 +7,7 @@ package ninefoo.view.listeners;
 public interface MemberListener {
 	public void login(String username, String password);
 	public void register(String firstName, String lastName, String username, String password);
+	public void registerAndAssign(String firstName, String lastName, String username, String password, String role, int projectId);
 	public void loadAllMembers();
 	public void logout();
 }

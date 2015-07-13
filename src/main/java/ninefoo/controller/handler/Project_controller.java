@@ -257,7 +257,7 @@ public class Project_controller extends AbstractController implements ProjectLis
 			if(projectMember_model.addMemberToProject(projectId, memberId, role)){
 				
 				// TODO Add to the language
-				this.view.updateAddUserToProject(true, "Mmeber succesfull added");
+				this.view.updateAddUserToProject(true, "Member successfully added");
 			
 			// If failed
 			} else {
