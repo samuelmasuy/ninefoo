@@ -110,7 +110,7 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 				startDate.setBorder(BorderFactory.createCompoundBorder(startDate.getBorder(), inputPadding));
 				finishDate.setBorder(BorderFactory.createCompoundBorder(finishDate.getBorder(), inputPadding));
 				memberBox.setBorder(BorderFactory.createCompoundBorder(memberBox.getBorder(), inputPadding));
-				prerequisiteDropdown.setBorder(BorderFactory.createCompoundBorder(memberBox.getBorder(), inputPadding));
+				prerequisiteDropdown.setBorder(BorderFactory.createCompoundBorder(prerequisiteDropdown.getBorder(), inputPadding));
 				
 				// Add components
 				this.table.put(new JLabel(LanguageText.getConstant("NAME")));

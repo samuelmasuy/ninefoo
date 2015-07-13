@@ -16,6 +16,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import ninefoo.config.Config;
+import ninefoo.helper.ActivityHelper;
+import ninefoo.helper.DateHelper;
 import ninefoo.lib.autocompleteComboBox.AutocompleteComboBox;
 import ninefoo.lib.datePicker.DatePicker;
 import ninefoo.lib.lang.LanguageText;
@@ -24,6 +27,7 @@ import ninefoo.lib.layout.dialog.FormDialog;
 import ninefoo.lib.multiDropdown.MultiDropdown;
 import ninefoo.model.object.Activity;
 import ninefoo.model.object.Member;
+import ninefoo.model.object.Project;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
 /**
@@ -34,19 +38,18 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
 	
 	// Define components
 	private JButton closeButton;
-	private JTextField activityLabel;
-	private JTextArea description;
-	private JTextField duration;
-	private JTextField optimisticDuration;
-	private JTextField likelyDuration;
-	private JTextField pessimisticDuration;
-	private JTextField cost;
-	private DatePicker startDate;
-	private DatePicker finishDate;
-	private ArrayList<Member> members_data;
+	private JLabel activityLabelInfo;
+	private JTextArea descriptionInfo;
+	private JLabel durationInfo;
+	private JLabel optimisticDurationInfo;
+	private JLabel likelyDurationInfo;
+	private JLabel pessimisticDurationInfo;
+	private JLabel costInfo;
+	private JLabel startDateInfo;
+	private JLabel finishDateInfo;
 	private ArrayList<Activity> activities_data;
-	private AutocompleteComboBox memberBox;
-	private MultiDropdown prerequisiteDropdown;
+	private JLabel memberInfo;
+	private ArrayList<JLabel> prerequisiteList;
 	
 	
 	/** 
@@ -54,23 +57,19 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
 	 */
 	public ViewActivityDetailsDialog(JFrame parentFrame, final ToolsListener toolsListener) {
 		
-		// Dummy data
-		String[] members_dummy = new String[] {"Mem1", "Member2BlaBlaBla"};
-				
-		
 		// Initialize components
 		this.closeButton = new JButton(LanguageText.getConstant("CLOSE"));
-		this.activityLabel = new JTextField(10);
-		this.description = new JTextArea(3,10);
-		this.duration = new JTextField(10);
-		this.optimisticDuration = new JTextField(10);
-		this.likelyDuration = new JTextField(10);
-		this.pessimisticDuration = new JTextField(10);
-		this.cost = new JTextField(10);
-		this.startDate = new DatePicker(8);
-		this.finishDate = new DatePicker(8);
-		this.memberBox = new AutocompleteComboBox(members_dummy);
-		this.prerequisiteDropdown = new MultiDropdown(LanguageText.getConstant("ADD_DEPENDENCY_ACT"), new String[]{"One", "Two"});
+		this.activityLabelInfo = new JLabel();
+		this.descriptionInfo = new JTextArea();
+		this.durationInfo = new JLabel();
+		this.optimisticDurationInfo = new JLabel();
+		this.likelyDurationInfo = new JLabel();
+		this.pessimisticDurationInfo = new JLabel();
+		this.costInfo = new JLabel();
+		this.startDateInfo = new JLabel();
+		this.finishDateInfo = new JLabel();
+		this.memberInfo = new JLabel();
+		this.prerequisiteList = new ArrayList<JLabel>();
 		
 		this.setTitle(LanguageText.getConstant("VIEW_ACTIVITY_DETAILS_ACT"));
 		
@@ -97,62 +96,59 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
 				
 				// Set input border
 				closeButton.setBorder(BorderFactory.createCompoundBorder(closeButton.getBorder(), inputPadding));
-				activityLabel.setBorder(BorderFactory.createCompoundBorder(activityLabel.getBorder(), inputPadding));
-				description.setBorder(BorderFactory.createCompoundBorder(description.getBorder(), inputPadding));
-				duration.setBorder(BorderFactory.createCompoundBorder(duration.getBorder(), inputPadding));
-				optimisticDuration.setBorder(BorderFactory.createCompoundBorder(optimisticDuration.getBorder(), inputPadding));
-				likelyDuration.setBorder(BorderFactory.createCompoundBorder(likelyDuration.getBorder(), inputPadding));
-				pessimisticDuration.setBorder(BorderFactory.createCompoundBorder(pessimisticDuration.getBorder(), inputPadding));
-				cost.setBorder(BorderFactory.createCompoundBorder(pessimisticDuration.getBorder(), inputPadding));
-				startDate.setBorder(BorderFactory.createCompoundBorder(startDate.getBorder(), inputPadding));
-				finishDate.setBorder(BorderFactory.createCompoundBorder(finishDate.getBorder(), inputPadding));
-				memberBox.setBorder(BorderFactory.createCompoundBorder(memberBox.getBorder(), inputPadding));
-				prerequisiteDropdown.setBorder(BorderFactory.createCompoundBorder(memberBox.getBorder(), inputPadding));
 				
 				// Add components
 				this.table.put(new JLabel(LanguageText.getConstant("NAME")));
-				this.table.put(activityLabel);
+				this.table.put(activityLabelInfo);
 				
 				this.table.newRow();
 				this.table.put(new JLabel(LanguageText.getConstant("DESCRIPTION")));
-				this.table.put(new JScrollPane(description));
+				this.table.put(new JScrollPane(descriptionInfo));
 				
 				this.table.newRow();
 				this.table.put(new JLabel(LanguageText.getConstant("DURATION_ACT")));
-				this.table.put(duration);
+				this.table.put(durationInfo);
 				
 				this.table.newRow();
 				this.table.put(new JLabel(LanguageText.getConstant("OPTIMISTIC_ACT")));
-				this.table.put(optimisticDuration);
+				this.table.put(optimisticDurationInfo);
 				
 				this.table.newRow();
 				this.table.put(new JLabel(LanguageText.getConstant("LIKELY_ACT")));
-				this.table.put(likelyDuration);
+				this.table.put(likelyDurationInfo);
 				
 				this.table.newRow();
 				this.table.put(new JLabel(LanguageText.getConstant("PESSIMISTIC_ACT")));
-				this.table.put(pessimisticDuration);
+				this.table.put(pessimisticDurationInfo);
 				
 				this.table.newRow();
 				this.table.put(new JLabel(LanguageText.getConstant("COST_ACT")));
-				this.table.put(cost);
+				this.table.put(costInfo);
 				
 				this.table.newRow();
 				this.table.put(new JLabel(LanguageText.getConstant("START_ACT")));
-				this.table.put(startDate);
+				this.table.put(startDateInfo);
 				
 				this.table.newRow();
 				this.table.put(new JLabel(LanguageText.getConstant("FINISH_ACT")));
-				this.table.put(finishDate);
+				this.table.put(finishDateInfo);
 				
 				this.table.newRow();
 				this.table.put(new JLabel(LanguageText.getConstant("MEMBER_ACT")));
-				this.table.put(memberBox);
+				this.table.put(memberInfo);
 				
-				this.table.newRow();
-				this.table.placeCenterTop();
-				this.table.put(new JLabel(LanguageText.getConstant("PREREQ_ACT")));
-				this.table.put(prerequisiteDropdown);
+				
+				for (int i = 0; i < prerequisiteList.size(); i++){
+					this.table.newRow();
+					
+					if (i == 0){
+						this.table.placeCenterTop();
+						this.table.put(new JLabel(LanguageText.getConstant("PREREQ_ACT")));
+					}else{
+						this.table.getGridBagConstraints().gridx++;
+					}
+					this.table.put(prerequisiteList.get(i));
+				}
 			}
 		});
 		
@@ -166,73 +162,25 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
 		this.setVisible(true);
 	}
 	
-	//TODO Add refresh
-		/**
-		 * Populate list
-		 * @param users
-		 */
-		public void populateMemberList(List<Member> members){
-			
-			// Reset array
-			this.members_data = new ArrayList<>();
-			
-			// If a list was returned
-			if(members != null){
-				
-				// Add projects
-				this.members_data.addAll(members);
-			}
-			
-			// Refresh list
-			//this.refreshList();
-		}
+	/**
+	 * Populate activity data
+	 */
+	private void populateActivityData(Activity activity){
+		this.activityLabelInfo.setText(String.format("<html><div>%s</div></html>", activity.getActivityLabel()));
+		this.descriptionInfo.setText(activity.getDescription());
+		this.durationInfo.setText(activity.getDuration() + "");
+		this.optimisticDurationInfo.setText(activity.getOptimisticDuration() + "");
+		this.likelyDurationInfo.setText(activity.getLikelyDuration() + "");
+		this.pessimisticDurationInfo.setText(activity.getPessimisticDuration() + "");
+		this.costInfo.setText(activity.getCost() + "");
+		this.startDateInfo.setText(DateHelper.format(activity.getStartDate(), Config.DATE_FORMAT_SHORT));
+		this.finishDateInfo.setText(DateHelper.format(activity.getFinishDate(), Config.DATE_FORMAT_SHORT));
+		this.memberInfo.setText(activity.getMember() + "");
 		
-		//TODO Add refresh
-		/**
-		 * Populate list
-		 * @param activities
-		 */
-		public void populateActivityList(List<Activity> activities){
-			
-			// Reset array
-			this.activities_data = new ArrayList<>();
-			
-			// If a list was returned
-			if(activities != null){
-				
-				// Add projects
-				this.activities_data.addAll(activities);
-			}
-			
-			// Refresh list
-			//this.refreshList();
-		}
+		List<Activity> prerequisites = activity.getPrerequisites();
 		
-		//TODO Add refresh
-		/**
-		 * Populate activity fields data
-		 * @param activity
-		 */
-		public void populateFields(Activity activity){
-			
-			// If an activity was returned
-			if(activity != null){
-				
-				// Add data to fields
-				this.activityLabel.setText(activity.getActivityLabel());
-				this.description.setText(activity.getDescription());
-				this.duration.setText(activity.getDuration() + "");
-				this.optimisticDuration.setText(activity.getOptimisticDuration() + "");
-				this.likelyDuration.setText(activity.getLikelyDuration() + "");
-				this.pessimisticDuration.setText(activity.getPessimisticDuration() + "");
-				this.cost.setText(activity.getCost() + "");
-				this.startDate.setDate(activity.getStartDate());
-				this.finishDate.setDate(activity.getFinishDate());
-				//this.memberBox = new AutocompleteComboBox(members_dummy);
-				//this.prerequisiteDropdown = new MultiDropdown("Add dependency", new String[]{"One", "Two"});
-			}
-			
-			// Refresh list
-			//this.refreshList();
+		for (int i = 0; i < prerequisites.size(); i++){
+			this.prerequisiteList.get(i).setText(ActivityHelper.getIdAndName(prerequisites.get(i)));
 		}
+	}
 }

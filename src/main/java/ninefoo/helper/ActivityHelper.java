@@ -62,4 +62,12 @@ public class ActivityHelper {
 		
 		return data;
 	}
+	
+	/**
+	 * Get the id and name of activity as a string
+	 * @param activity
+	 */
+	public static String getIdAndName(Activity activity){
+		return String.format("%d - %s",activity.getActivityId(),activity.getActivityLabel());
+	}
 }
