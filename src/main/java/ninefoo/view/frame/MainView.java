@@ -482,6 +482,12 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 		}
 	}
+	
+	@Override
+	public void updateRegisterAndAssign(boolean success, String message) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	/************************************************************
 	*                                                           *
