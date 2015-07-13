@@ -179,4 +179,9 @@ public class Member_controller extends AbstractController implements MemberListe
 			this.view.updateLoadAllMembers(true, null, members);
 		}
 	}
+
+	@Override
+	public void registerAndAssign(String firstName, String lastName, String username, String password, String role, int projectId) {
+		
+	}
 }
