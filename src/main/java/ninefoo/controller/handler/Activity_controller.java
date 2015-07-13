@@ -242,22 +242,42 @@ public class Activity_controller extends AbstractController implements ActivityL
 	}//end of loadActivitiesByProject
 
 
-
+	/**
+	 * Load all corresponding activities by memberID
+	 * these activities are also classified by projec to which they are assigned
+	 * @param memberId the member Id is an integer
+	 */
 	@Override
 	public void loadActivitiesForAllProjectByMember(int memberId) {
-		//TODO implement a getActivityByMemberId method
+		//TODO implement a getActivitiesByMemberId method
 		//TODO implement getProjectId method
 		
 		List<Project> projectByMember=this.project_model.getAllProjects();
 		//get all the activities associated with a memberId from the db
-		List<Activity> activitiesAssignedToMember =this.activity_model.getActivityByMemberId(memberId);//arraylist
+	//	List<Activity> activitiesAssignedToMember =this.activity_model.getActivitiesByMemberId(memberId);//arraylist
+		
+		//****temporary replacement for the code line above so it runs correctly****
+		List<Activity> activitiesAssignedToMember = new ArrayList<>();//arraylist
+		
+		Member testMember=new Member("Melissa", "Duong", "meDuong", "password");
+		Project testProject=new Project("testProject", 200.00, DateHelper.parse("11-04-1234", Config.DATE_FORMAT_SHORT), DateHelper.parse("11-04-1236", Config.DATE_FORMAT_SHORT), "hello everybody");
+		Activity testActivity=new Activity("testActivity", 1, DateHelper.parse("12-04-1234", Config.DATE_FORMAT_SHORT), DateHelper.parse("12-04-1236", Config.DATE_FORMAT_SHORT), testProject, testMember, (double) 1);
+		
+		activitiesAssignedToMember.add(testActivity);
+		//****temporary replacement for the code line above so it runs correctly****
+		
 		
 		//add project Ids associated with each activities
 		Set <Integer> projectIdSet=new HashSet<>();//set of integers
 		
 		for (int i=0; i<activitiesAssignedToMember.size(); i++)
 		{
-			projectIdSet.add(activitiesAssignedToMember.get(i).getProjectId());
+			//projectIdSet.add(activitiesAssignedToMember.get(i).getProjectId());
+			
+			//********here is a temporary replacement to the above line in comment to not cause errors******
+			projectIdSet.add(1);
+			//********here is a temporary replacement to not cause errors*******
+
 		}
 		
 		//convert the set containing the project ids to a list so that we can do nested loops below
@@ -280,7 +300,12 @@ public class Activity_controller extends AbstractController implements ActivityL
 			//for a corresponding project. add the respective list of activities to the respective project
 			for (int j=0;j<activitiesAssignedToMember.size(); j++)
 			{
-				if    (activitiesAssignedToMember.get(j).getProjectId())== projectIdList.get(i))
+				//if    (activitiesAssignedToMember.get(j).getProjectId())== projectIdList.get(i))
+				
+				//********here is a temporary replacement to the above line in comment not cause errors******
+				if    (true)
+				//********here is a temporary replacement to not cause errors******
+				
 				{
 					activitiesByProjectList.add(activitiesAssignedToMember.get(j));
 					projectsAssignedToMemberList.get(i).setAcitivies(activitiesByProjectList);
