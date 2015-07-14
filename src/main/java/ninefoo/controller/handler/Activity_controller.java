@@ -85,7 +85,7 @@ public class Activity_controller extends AbstractController implements ActivityL
 		}
 
 		// Create the graph to detect cyles
-		Graph graph = new Graph(prerequisite.length);
+//		Graph graph = new Graph(prerequisite.length);
 
 		// Feed the graph
 //		for(int i=0; i < prerequisite.length; i++){

@@ -1,4 +1,4 @@
-package ninefoo.view.include.menu.dialog;
+package ninefoo.view.project.table.dialog;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -8,10 +8,8 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -24,13 +22,15 @@ import ninefoo.lib.layout.dialog.FormDialog;
 import ninefoo.lib.multiDropdown.MultiDropdown;
 import ninefoo.model.object.Activity;
 import ninefoo.model.object.Member;
-import ninefoo.view.include.menu.listener.ToolsListener;
+import ninefoo.view.project.table.listener.TableToolsListener;
 
 /**
  * Dialog for creating an activity
- * @author Sebouh Bardakjian
+ * @author Sebouh Bardakjian, Amir El Bawab
  */
 public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
+	
+	private static final long serialVersionUID = -3895150614923358876L;
 	
 	// Define components
 	private JButton createButton;
@@ -55,11 +55,11 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 	/** 
 	 *  Constructor
 	 */
-	public CreateActivityDialog(JFrame parentFrame, final ToolsListener toolsListener) {
+	public CreateActivityDialog(JFrame parentFrame, final TableToolsListener tableToolsListener) {
 		
 		// Load data
-		toolsListener.loadAllMembersForCreateActivityDialog(this);
-		toolsListener.loadActivitiesForCreateActivityDialog(this);
+		tableToolsListener.loadAllMembersForCreateActivityDialog(this);
+		tableToolsListener.loadActivitiesForCreateActivityDialog(this);
 		
 		// Initialize components
 		this.createButton = new JButton(LanguageText.getConstant("CREATE"));
@@ -82,8 +82,8 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (toolsListener != null)
-					toolsListener.createActivity();
+				if (tableToolsListener != null)
+					tableToolsListener.createActivity();
 			}
 		});
 		

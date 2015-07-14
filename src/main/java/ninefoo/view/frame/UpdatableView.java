@@ -37,5 +37,5 @@ public interface UpdatableView {
 	public void setMemberListener(MemberListener memberListener);
 	public void setProjectListener(ProjectListener projectListener);
 	public void setActivityListener(ActivityListener activityListener);
-	
+
 }
