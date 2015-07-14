@@ -6,7 +6,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -60,6 +62,7 @@ public class GanttChart_view extends JPanel{
 				g2.setRenderingHint ( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
 				
 				drawCalendar(g2);
+				//drawActivity(g2, row, start, end, activity name)
 				drawActivity(g2, 0, 0, 10, "Activity 1");
 				drawActivity(g2, 1, 2, 2, "Activity 2");
 				drawActivity(g2, 2, 3, 5, "Activity 3");
@@ -79,14 +82,31 @@ public class GanttChart_view extends JPanel{
 		this.add(scrollPane, BorderLayout.CENTER);
 	}
 	
-	
 	/** 
 	 * Setter for list of activities
+	 * @param List<Activity>
 	 */
 	public void setActivitiesGantt(List<Activity> activities){
 		this.activities = activities;
 	}
 	
+	/**
+	 * Set Minimum Date
+	 */
+	private Date getMinDate(){
+		if (activities != null){
+			List<Date> startDates = new ArrayList<Date>();
+			for (int i = 0; i < activities.size(); i++){
+				startDates.add(activities.get(i).getStartDate());
+			}
+			Date minDate = DateHelper.getMinDate(startDates);
+			if (minDate != null){
+				return minDate;
+			} 
+		}
+		Calendar cal = Calendar.getInstance();
+		return cal.getTime();
+	}
 	
 	/**
 	 * Draw activity
@@ -145,13 +165,12 @@ public class GanttChart_view extends JPanel{
 		
 		Calendar cal = Calendar.getInstance();
 		
-		
 		for(int week = 0; week < weeks; week++){
 			// Week
 			int weeklyColumn = startCol + days.length * week * columnSize;
 			g3.setColor(blue);
 			
-			String date = DateHelper.format(cal.getTime(), Config.DATE_FORMAT_ALPHA);
+			String date = DateHelper.format(getMinDate(), Config.DATE_FORMAT_ALPHA);
 			int datePadding = 3;
 			g3.drawChars(date.toCharArray(), 0, date.length(), weeklyColumn + datePadding  , startRow);
 			cal.add(Calendar.DATE, 7);
