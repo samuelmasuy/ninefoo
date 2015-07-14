@@ -58,13 +58,13 @@ public class ProjectMember_modelTests {
     }
 
     @Test
-    public void test01_ProjectMember_InitiallyNoMemberInProject() {
+    public void test01_ProjectMember_getProjectsByMember_InitiallyNoMemberInProject() {
         List<Project> projects = projectMember_model.getProjectsByMember(newMemberId, newRoleId);
         assertEquals("Initially, the number of projects for member should be zero", 0, projects.size());
     }
 
     @Test
-    public void test02_ProjectMember_MemberIsAddedToProject() {
+    public void test02_ProjectMember_addMemberToProject_MemberIsAddedToProject() {
         Role role = role_model.getRoleById(newRoleId);
 
         boolean success = projectMember_model.addMemberToProject(newProjectId, newMemberId, role);
@@ -72,7 +72,7 @@ public class ProjectMember_modelTests {
     }
 
     @Test
-    public void test03_ProjectMember_ProjectNumberIsOneForMember() {
+    public void test03_ProjectMember_getProjectsByMember_ProjectNumberIsOneForTestMember() {
         List<Project> projects = projectMember_model.getProjectsByMember(
                 member_model.getMemberById(newMemberId),
                 role_model.getRoleById(newRoleId)
@@ -82,20 +82,25 @@ public class ProjectMember_modelTests {
     }
 
     @Test
-    public void test04_ProjectMember_getProjectsReturnsNullForNullValues() {
+    public void test04_ProjectMember_getProjectsByMember_ReturnsNullForNullValues() {
         List<Project> projects = projectMember_model.getProjectsByMember(null, null);
         assertNull("Project list for null member and role should be null", projects);
     }
 
     @Test
-    public void test05_ProjectMember_getProjectsReturnsNullForIdEqualZero() {
+    public void test05_ProjectMember_getProjectsByMember_ReturnsNullForIdEqualZero() {
         List<Project> projects = projectMember_model.getProjectsByMember(0, 0);
         assertNull("Project list for member role id of zero should be null", projects);
     }
 
     @Test
-    public void test06_ProjectMember_addMemberReturnsFalseForNullRole() {
+    public void test06_ProjectMember_addMemberToProject_NullIsReturnedForNullRole() {
         boolean success = projectMember_model.addMemberToProject(1, 2, null);
         assertFalse("addMember returns false when role object is null", success);
+    }
+
+    @Test
+    public void test07_ProjectMember_getProjectsByMemberAndRole_NumberOfProjectsIsCorrect() {
+
     }
 }
