@@ -16,7 +16,6 @@ import ninefoo.view.include.footer.StatusBar;
 import ninefoo.view.include.menu.Menu;
 import ninefoo.view.include.menu.Tools;
 import ninefoo.view.include.menu.dialog.AddUserToProjectDialog;
-import ninefoo.view.include.menu.dialog.CreateActivityDialog;
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
 import ninefoo.view.include.menu.dialog.EditProjectDialog;
 import ninefoo.view.include.menu.dialog.ViewAssignedActivitiesDialog;
@@ -30,6 +29,8 @@ import ninefoo.view.member.Register_view;
 import ninefoo.view.member.listeners.LoginListener;
 import ninefoo.view.member.listeners.RegisterListener;
 import ninefoo.view.project.TableChartSlider_view;
+import ninefoo.view.project.table.dialog.CreateActivityDialog;
+import ninefoo.view.project.table.listener.TableToolsListener;
 
 import org.apache.logging.log4j.LogManager;
 
@@ -85,7 +86,7 @@ public class MainView extends JFrame implements UpdatableView{
 		// Initialize panels
 		this.toolsPanel = new Tools(this);
 		this.statusBarPanel = new StatusBar();
-		this.tableChartPanel = new TableChartSlider_view();
+		this.tableChartPanel = new TableChartSlider_view(this);
 		this.loginPanel = new Login_view();
 		this.registerPanel = new Register_view();
 		
@@ -263,12 +264,6 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
-			public void createActivity() {
-				// TODO createActivity
-				System.out.println("Create new activity clicked...");
-			}
-
-			@Override
 			public void deleteProject(ViewMyProjectsDialog parentDialog, Project project) {
 				// TODO Auto-generated method stub
 				
@@ -292,7 +287,17 @@ public class MainView extends JFrame implements UpdatableView{
 					memberListener.loadAllMembers();
 				}
 			}
-
+		});
+		
+		// Add listener to table chart slider
+		this.tableChartPanel.setTableToolsListener(new TableToolsListener() {
+			
+			@Override
+			public void viewActivityDetails() {
+				// TODO Auto-generated method stub
+				
+			}
+			
 			@Override
 			public void loadAllMembersForCreateActivityDialog(CreateActivityDialog dialog) {
 				
@@ -302,7 +307,7 @@ public class MainView extends JFrame implements UpdatableView{
 				// Load all members
 				memberListener.loadAllMembers();
 			}
-
+			
 			@Override
 			public void loadActivitiesForCreateActivityDialog(CreateActivityDialog dialog) {
 				
@@ -310,6 +315,24 @@ public class MainView extends JFrame implements UpdatableView{
 				createActivityDialog = dialog;
 				
 				//TODO FINISH THAT
+			}
+			
+			@Override
+			public void editActivity() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void deleteActivity() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void createActivity() {
+				// TODO createActivity
+				System.out.println("Create new activity clicked...");
 			}
 		});
 		
