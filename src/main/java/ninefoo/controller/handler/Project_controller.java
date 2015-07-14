@@ -179,7 +179,7 @@ public class Project_controller extends AbstractController implements ProjectLis
 		Role role = role_model.getRoleByName(roleName);
 		
 		// Get projects as a list
-		List<Project> projects = project_model.getAllProjectsByMemberAndRole(memberId, role.getRoleId());
+		List<Project> projects = projectMember_model.getAllProjectsByMemberAndRole(memberId, role.getRoleId());
 		
 		// Update GUI
 		this.view.updateLoadAllProjectsByMemberAndRole(projects);
