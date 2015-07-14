@@ -27,7 +27,7 @@ public class ProjectMember_modelTests {
 
     private static int newMemberId;
     private static int newRoleId;
-    private static int newProjectId;
+    private static int newProjectId, project1Id, project2Id, project3Id;
 
     @BeforeClass
     public static void setupDb() {
@@ -38,6 +38,18 @@ public class ProjectMember_modelTests {
                 DateHelper.parse("07/07/2015", Config.DATE_FORMAT_SHORT),
                 DateHelper.parse("08/08/2015", Config.DATE_FORMAT_SHORT),
                 "test_project description");
+        Project project1 = new Project("project1_for_members", 5555.00,
+                DateHelper.parse("07/07/2015", Config.DATE_FORMAT_SHORT),
+                DateHelper.parse("08/08/2015", Config.DATE_FORMAT_SHORT),
+                "description");
+        Project project2 = new Project("project2_for_members", 5555.00,
+                DateHelper.parse("07/07/2015", Config.DATE_FORMAT_SHORT),
+                DateHelper.parse("08/08/2015", Config.DATE_FORMAT_SHORT),
+                "description");
+        Project project3 = new Project("project3_for_members", 5555.00,
+                DateHelper.parse("07/07/2015", Config.DATE_FORMAT_SHORT),
+                DateHelper.parse("08/08/2015", Config.DATE_FORMAT_SHORT),
+                "description");
 
         newMemberId = member_model.insertNewMember(member);
         if (newMemberId == 0)
@@ -48,6 +60,9 @@ public class ProjectMember_modelTests {
             newRoleId = role_model.getRoleByName(role.getRoleName()).getRoleId();
 
         newProjectId = project_model.insertNewProject(project);
+        project1Id = project_model.insertNewProject(project1);
+        project2Id = project_model.insertNewProject(project2);
+        project3Id = project_model.insertNewProject(project3);
     }
 
     @AfterClass
@@ -55,6 +70,9 @@ public class ProjectMember_modelTests {
         member_model.deleteMemberById(newMemberId);
         role_model.deleteRoleById(newRoleId);
         project_model.deleteProjectById(newProjectId);
+        project_model.deleteProjectById(project1Id);
+        project_model.deleteProjectById(project2Id);
+        project_model.deleteProjectById(project3Id);
     }
 
     @Test
@@ -101,6 +119,21 @@ public class ProjectMember_modelTests {
 
     @Test
     public void test07_ProjectMember_getProjectsByMemberAndRole_NumberOfProjectsIsCorrect() {
+        // Add the member to more projects
+        Role role = role_model.getRoleById(newRoleId);
+        boolean success = false;
 
+        success = projectMember_model.addMemberToProject(project1Id, newMemberId, role);
+        assertTrue("Add member to 'project1' should return true", success);
+        success = projectMember_model.addMemberToProject(project2Id, newMemberId, role);
+        assertTrue("Add member to 'project2' should return true", success);
+        success = projectMember_model.addMemberToProject(project3Id, newMemberId, role);
+        assertTrue("Add member to 'project3' should return true", success);
+
+        // Now the member should be part of 4 projects.
+        int expectedProjectCount = 4;
+        List<Project> projects = projectMember_model.getAllProjectsByMemberAndRole(newMemberId, newRoleId);
+        assertEquals("Member should be part of " + expectedProjectCount + " projects",
+                expectedProjectCount, projects.size());
     }
 }
