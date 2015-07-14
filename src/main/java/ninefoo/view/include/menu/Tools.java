@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import ninefoo.view.include.menu.dialog.AddUserToProjectDialog;
-import ninefoo.view.include.menu.dialog.CreateActivityDialog;
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
 import ninefoo.view.include.menu.dialog.CreateUserDialog;
 import ninefoo.view.include.menu.dialog.ViewAssignedActivitiesDialog;
@@ -113,18 +112,6 @@ public class Tools extends JPanel{
 				// Open dialog
 				if(toolsListener != null)
 					new CreateProjectDialog(parentFrame, toolsListener);
-			}
-		});
-		
-		// Add new activity listener
-		this.newActivity.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				// Create new activity
-				if(toolsListener != null)
-					new CreateActivityDialog(parentFrame, toolsListener);
 			}
 		});
 		

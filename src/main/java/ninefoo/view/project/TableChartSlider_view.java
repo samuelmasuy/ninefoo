@@ -2,6 +2,7 @@ package ninefoo.view.project;
 
 import java.awt.BorderLayout;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -10,6 +11,7 @@ import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.object.Project;
 import ninefoo.view.project.chart.GanttChart_view;
 import ninefoo.view.project.table.TableContainer_view;
+import ninefoo.view.project.table.listener.TableToolsListener;
 
 /**
  * Panel container of a the table and Gantt chart
@@ -28,13 +30,13 @@ public class TableChartSlider_view extends JPanel{
 	/**
 	 * Constructor
 	 */
-	public TableChartSlider_view() {
+	public TableChartSlider_view(JFrame parentFrame) {
 		
 		// Set layout
 		this.setLayout(new BorderLayout());
 		
 		// Initialize panels
-		this.tableContainer = new TableContainer_view(this);
+		this.tableContainer = new TableContainer_view(parentFrame, this);
 		this.chartPanel = new GanttChart_view();
 		
 		// Add the panels to the splitter
@@ -93,5 +95,13 @@ public class TableChartSlider_view extends JPanel{
 	 */
 	public void reset(){
 		this.tableContainer.resetTable();
+	}
+	
+	/**
+	 * Set table tools listener
+	 * @param tableToolsListener
+	 */
+	public void setTableToolsListener(TableToolsListener tableToolsListener){
+		tableContainer.setTableToolsListener(tableToolsListener);
 	}
 }

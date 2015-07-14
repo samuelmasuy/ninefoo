@@ -7,12 +7,10 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import ninefoo.lib.lang.LanguageText;
-import ninefoo.view.include.menu.dialog.CreateActivityDialog;
-import ninefoo.view.include.menu.dialog.ViewMyProjectsDialog;
+import ninefoo.view.project.table.dialog.CreateActivityDialog;
 import ninefoo.view.project.table.listener.TableToolsListener;
 
 /**
@@ -25,7 +23,14 @@ public class TableToolbar_view extends JPanel {
 	// Declare components
 	private JButton addActivity, editActivity, deleteActivity, viewActivity;
 	
-	public TableToolbar_view(JPanel parentPanel) {
+	// Declare listner
+	private TableToolsListener tableToolsListener;
+	
+	/**
+	 * Constructor
+	 * @param parentPanel
+	 */
+	public TableToolbar_view(final JFrame parentFrame, JPanel parentPanel) {
 		// Set layout
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
@@ -66,15 +71,15 @@ public class TableToolbar_view extends JPanel {
 		this.add(deleteActivity);
 		this.add(viewActivity);
 		
-		// Add add listener
+		// Add new activity listener
 		this.addActivity.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				//if(tableToolsListener != null){
-					//new CreateActivityDialog(this, tableToolsListener);
-				//}
+				// Create new activity
+				if(tableToolsListener != null)
+					new CreateActivityDialog(parentFrame, tableToolsListener);
 			}
 		});
 		
@@ -142,4 +147,10 @@ public class TableToolbar_view extends JPanel {
 //		});
 	}
 	
+	/**
+	 * Set listener
+	 */
+	public void setTableToolsListener(TableToolsListener tableToolsListener){
+		this.tableToolsListener = tableToolsListener;
+	}
 }
