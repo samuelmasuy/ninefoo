@@ -136,4 +136,23 @@ public class ProjectMember_modelTests {
         assertEquals("Member should be part of " + expectedProjectCount + " projects",
                 expectedProjectCount, projects.size());
     }
+
+    @Test
+    public void test08_ProjectMember_getAssignedMembers_ReturnsFalseForMemberNotInProject() {
+        // Add a new member
+        Member member = new Member("npm_firstname", "npm_lastname", "npm_username", "npm_password");
+        int memberId = member_model.insertNewMember(member);
+
+        boolean memberIsInProject = projectMember_model.getAssignedAnyRole(memberId, newProjectId);
+        assertFalse("Newly created member should not be in a project", memberIsInProject);
+
+        // Delete the member.
+        member_model.deleteMemberById(memberId);
+    }
+
+    @Test
+    public void test09_ProjectMember_getAssignedMembers_ReturnsTrueForMemberInProject() {
+        boolean memberIsInProject = projectMember_model.getAssignedAnyRole(newMemberId, newProjectId);
+        assertTrue("Other member should be part of the project", memberIsInProject);
+    }
 }
