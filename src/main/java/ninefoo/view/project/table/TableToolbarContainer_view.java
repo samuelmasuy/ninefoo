@@ -5,24 +5,36 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import ninefoo.model.object.Activity;
 import ninefoo.model.object.Project;
 import ninefoo.view.project.table.listener.TableToolsListener;
+import ninefoo.view.project.table.listener.ToolbarListener;
 
-public class TableContainer_view extends JPanel{
+public class TableToolbarContainer_view extends JPanel{
 	private static final long serialVersionUID = 7053727563192342007L;
 
 	// Declare Variables
 	private TabularData_view tabularDataPanel;
 	private TableToolbar_view tableToolbarPanel; 
 	
-	public TableContainer_view(JFrame parentFrame, JPanel parentPanel) {
+	public TableToolbarContainer_view(JFrame parentFrame, JPanel parentPanel) {
 		// Set layout
 		this.setLayout(new BorderLayout());
 		
 		// Initialize variables
-		tableToolbarPanel = new TableToolbar_view(parentFrame, parentPanel);
+		tableToolbarPanel = new TableToolbar_view(parentFrame);
 		tabularDataPanel = new TabularData_view(parentPanel);
 		
+		// Add listener
+		tableToolbarPanel.setToolbarListener(new ToolbarListener() {
+			
+			@Override
+			public Activity getSelectedActivity() {
+				return tabularDataPanel.getSelectedActivity();
+			}
+		});
+		
+		// Add components
 		this.add(tableToolbarPanel, BorderLayout.SOUTH);
 		this.add(tabularDataPanel, BorderLayout.CENTER);
 	}

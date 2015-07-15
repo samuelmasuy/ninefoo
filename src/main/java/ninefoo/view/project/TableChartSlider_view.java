@@ -10,7 +10,7 @@ import javax.swing.JSplitPane;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.object.Project;
 import ninefoo.view.project.chart.GanttChart_view;
-import ninefoo.view.project.table.TableContainer_view;
+import ninefoo.view.project.table.TableToolbarContainer_view;
 import ninefoo.view.project.table.listener.TableToolsListener;
 
 /**
@@ -22,7 +22,7 @@ public class TableChartSlider_view extends JPanel{
 	private static final long serialVersionUID = 1821070698625712816L;
 	
 	// Declare panels
-	private TableContainer_view tableContainer;
+	private TableToolbarContainer_view tableContainer;
 	private GanttChart_view chartPanel;
 	private JSplitPane splitPane;
 	private Project project;
@@ -36,7 +36,7 @@ public class TableChartSlider_view extends JPanel{
 		this.setLayout(new BorderLayout());
 		
 		// Initialize panels
-		this.tableContainer = new TableContainer_view(parentFrame, this);
+		this.tableContainer = new TableToolbarContainer_view(parentFrame, this);
 		this.chartPanel = new GanttChart_view();
 		
 		// Add the panels to the splitter
