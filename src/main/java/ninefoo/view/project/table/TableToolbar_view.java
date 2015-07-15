@@ -93,8 +93,8 @@ public class TableToolbar_view extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				// If no activity selected, show error
-				//if(projectList.getSelectedIndex() < 0)
-				//	JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("MISSING_DELETE"),LanguageText.getConstant("PROJECT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
+//				if(projectList.getSelectedIndex() < 0)
+//					JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("MISSING_DELETE"),LanguageText.getConstant("PROJECT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
 				
 				// If activity selected
 				//else if(tableToolsListener != null){

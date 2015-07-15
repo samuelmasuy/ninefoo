@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -32,6 +30,8 @@ import ninefoo.view.project.table.listener.TableToolsListener;
  */
 public class EditActivityDialog extends CenterScrollSouthButtonDialog {
 	
+	private static final long serialVersionUID = -3817935790634099734L;
+	
 	// Define components
 	private PMButton updateButton;
 	private JTextField activityLabel;
@@ -47,7 +47,6 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
 	private ArrayList<Activity> activities_data;
 	private AutocompleteComboBox memberBox;
 	private MultiDropdown prerequisiteDropdown;
-	
 	
 	/** 
 	 *  Constructor
