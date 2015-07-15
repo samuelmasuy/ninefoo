@@ -22,7 +22,6 @@
 		"PESSIMISTIC_ACT"           : "Pessimistic",
 		"COST_ACT"				 : "Cost",
 		"MEMBER_ACT"                : "Member",
-		"COST_ACT"                  : "Cost",
 		"PREREQ_ACT"                : "Prereq.",
 		"ADD_DEPENDENCY_ACT"		: "Add dependency",
 		"ADD_ACT"				: "Add",

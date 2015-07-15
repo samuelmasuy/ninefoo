@@ -9,6 +9,7 @@ import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -37,6 +38,7 @@ public class GanttChart_view extends JPanel{
 	// Define components
 	private JPanel panel;
 	private List<Activity> activities;
+	private Calendar activityCal;
 	
 	/**
 	 * Constructor
@@ -48,6 +50,7 @@ public class GanttChart_view extends JPanel{
 		
 		// Define components
 		panel = new JPanel(){
+		
 			
 			private static final long serialVersionUID = 8383128594912669663L;
 
@@ -60,6 +63,8 @@ public class GanttChart_view extends JPanel{
 				
 				// Better quality
 				g2.setRenderingHint ( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
+				
+				
 				
 				drawCalendar(g2);
 				//drawActivity(g2, row, start, end, activity name)
@@ -104,8 +109,8 @@ public class GanttChart_view extends JPanel{
 				return minDate;
 			} 
 		}
-		Calendar cal = Calendar.getInstance();
-		return cal.getTime();
+		Calendar defaultCal = Calendar.getInstance();
+		return defaultCal.getTime();
 	}
 	
 	/**
@@ -163,17 +168,19 @@ public class GanttChart_view extends JPanel{
 		// Calendar size
 		int weeks = panel.getWidth() / (columnSize * days.length) + 2;
 		
-		Calendar cal = Calendar.getInstance();
+		activityCal = Calendar.getInstance();
+		activityCal.setTime(getMinDate());
 		
 		for(int week = 0; week < weeks; week++){
 			// Week
 			int weeklyColumn = startCol + days.length * week * columnSize;
 			g3.setColor(blue);
 			
-			String date = DateHelper.format(getMinDate(), Config.DATE_FORMAT_ALPHA);
+			String date = DateHelper.format(activityCal.getTime(), Config.DATE_FORMAT_ALPHA);
+			
 			int datePadding = 3;
 			g3.drawChars(date.toCharArray(), 0, date.length(), weeklyColumn + datePadding  , startRow);
-			cal.add(Calendar.DATE, 7);
+			activityCal.add(Calendar.DATE, 7);
 			
 			for(int day=0; day < days.length; day++){
 				//Day

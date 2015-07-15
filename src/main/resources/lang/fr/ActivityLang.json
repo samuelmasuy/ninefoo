@@ -1,0 +1,33 @@
+	{
+	"name" : "Language des activités",
+	"description" : "Language reliée aux activités. Inclure le suffixe _ACT pour chaque mot cle",
+	"language" : {
+		"NEW_DEPENDENCY_ACT"        : "Nouvelle dependance",
+		"ACTIVITY_DEPENDS_ACT"      : "Activité '%s' dépend sur",
+		"ASSIGN_MEMBER_ACTIVITY_ACT": "Assigner membre aux activités",
+		"ACTIVITY_ACT"              : "Activité",
+		"ASSIGN_ACT"                : "Assigner",
+		"MY_ASSIGNED_ACTIVITIES_ACT" : "Mes activités assignés",
+		"CREATE_ACTIVITY_ACT" 	: "Créer activité",
+		"UPDATE_ACTIVITY_ACT"		: "Mettre à jour l'activité",
+		"ACTIVITY_ID_ACT"           : "Numero d'identification",
+		"ACTIVITY_NAME_ACT"         : "Nom",
+		"ACTIVITY_LABEL_ACT"		 : "Nom",
+		"START_ACT"                 : "Début",
+		"FINISH_ACT"                : "Fin",
+		"DURATION_ACT"              : "Durée",
+		"PLANNED_PERCENTAGE_ACT"    : "% Planifié",
+		"OPTIMISTIC_ACT"            : "Optimiste",
+		"LIKELY_ACT"                : "Probable",
+		"PESSIMISTIC_ACT"           : "Pessimiste",
+		"COST_ACT"				 : "Coût",
+		"MEMBER_ACT"                : "Membre",
+		"PREREQ_ACT"                : "Prereq.",
+		"ADD_DEPENDENCY_ACT"		: "Ajouter dependance",
+		"ADD_ACT"				: "Ajouter",
+		"EDIT_ACT"				: "Modifier",
+		"REMOVE_ACT"			: "Supprimer",
+		"VIEW_DETAILS_ACT"		: "Voir details",
+		"VIEW_ACTIVITY_DETAILS_ACT": "Voir les details de l'activité"
+	}
+}
