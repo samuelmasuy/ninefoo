@@ -57,3 +57,6 @@ gradle-app.setting
 
 #db
 *.db
+
+#class diagram
+*.ucls
