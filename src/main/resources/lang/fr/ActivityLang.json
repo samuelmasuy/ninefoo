@@ -25,8 +25,11 @@
 		"PREREQ_ACT"                : "Prereq.",
 		"ADD_DEPENDENCY_ACT"		: "Ajouter dependance",
 		"ADD_ACT"				: "Ajouter",
+		"ADD_A_NEW_ACTIVITY_ACT"	: "Ajouter une nouvelle activité",
 		"EDIT_ACT"				: "Modifier",
+		"EDIT_THE_ACTIVITY_PROPERTIES_ACT" : "Modifier les propriétés de l'activité",
 		"REMOVE_ACT"			: "Supprimer",
+		"REMOVE_THE_ACTIVITY_ACT"	: "Supprimer l'activité du projet",
 		"VIEW_DETAILS_ACT"		: "Voir details",
 		"VIEW_ACTIVITY_DETAILS_ACT": "Voir les details de l'activité"
 	}

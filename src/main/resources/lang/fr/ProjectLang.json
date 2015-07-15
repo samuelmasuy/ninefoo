@@ -9,5 +9,13 @@
 		"OPEN_PRO"			: "Ouvrir",
 		"EDIT_PRO"			: "Modifier",
 		"DELETE_PRO"		: "Supprimer"
+		"NEW_PROJECT_PRO"	: "Nouveau Projet",
+		"CREATE_A_NEW_PROJECT_PRO" : "Créer un nouveau projet",
+		"VIEW_PROJECTS_PRO"	: "Voir Projets",
+		"VIEW_MY_PROJECTS_PRO": "Voir mes projets",
+		"ADD_USER_PRO"		: "Ajouter Utilisateur",
+		"ASSIGN_USERS_TO_THE_PROJECT_PRO" : "Assigner utilisateur au projet"
+
+
 	}
 }

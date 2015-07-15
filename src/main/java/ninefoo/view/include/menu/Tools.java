@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import ninefoo.lib.component.PMButton;
+import ninefoo.lib.lang.LanguageText;
 import ninefoo.view.include.menu.dialog.AddUserToProjectDialog;
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
 import ninefoo.view.include.menu.dialog.CreateUserDialog;
@@ -53,42 +54,42 @@ public class Tools extends JPanel{
 		this.newProject.setBorder(null);
 		this.newProject.setVerticalTextPosition(SwingConstants.BOTTOM);
 		this.newProject.setHorizontalTextPosition(SwingConstants.CENTER);
-		this.newProject.setText("New Project");
-		this.newProject.setToolTipText("Create a new project");
+		this.newProject.setText(LanguageText.getConstant("NEW_PROJECT_PRO"));
+		this.newProject.setToolTipText(LanguageText.getConstant("CREATE_A_NEW_PROJECT_PRO"));
 		
 		this.newMember.setContentAreaFilled(false);
 		this.newMember.setBorder(null);
 		this.newMember.setVerticalTextPosition(SwingConstants.BOTTOM);
 		this.newMember.setHorizontalTextPosition(SwingConstants.CENTER);
-		this.newMember.setText("New Member");
-		this.newMember.setToolTipText("Register a new member");
+		this.newMember.setText(LanguageText.getConstant("NEW_MEMBER"));
+		this.newMember.setToolTipText(LanguageText.getConstant("REGISTER_A_NEW_MEMBER"));
 		
 		this.viewProject.setContentAreaFilled(false);
 		this.viewProject.setBorder(null);
 		this.viewProject.setVerticalTextPosition(SwingConstants.BOTTOM);
 		this.viewProject.setHorizontalTextPosition(SwingConstants.CENTER);
-		this.viewProject.setText("View Projects");
-		this.viewProject.setToolTipText("View my projects");
+		this.viewProject.setText(LanguageText.getConstant("VIEW_PROJECTS_PRO"));
+		this.viewProject.setToolTipText(LanguageText.getConstant("VIEW_MY_PROJECTS_PRO"));
 		
 		this.logout.setContentAreaFilled(false);
 		this.logout.setBorder(null);
 		this.logout.setVerticalTextPosition(SwingConstants.BOTTOM);
 		this.logout.setHorizontalTextPosition(SwingConstants.CENTER);
-		this.logout.setText("Logout");
+		this.logout.setText(LanguageText.getConstant("LOGOUT"));
 		
 		this.addUser.setContentAreaFilled(false);
 		this.addUser.setBorder(null);
 		this.addUser.setVerticalTextPosition(SwingConstants.BOTTOM);
 		this.addUser.setHorizontalTextPosition(SwingConstants.CENTER);
-		this.addUser.setText("Add User");
-		this.addUser.setToolTipText("Assign users to the project");
+		this.addUser.setText(LanguageText.getConstant("ADD_USER_PRO"));
+		this.addUser.setToolTipText(LanguageText.getConstant("ASSIGN_USERS_TO_THE_PROJECT_PRO"));
 		
 		this.viewAssigned.setContentAreaFilled(false);
 		this.viewAssigned.setBorder(null);
 		this.viewAssigned.setVerticalTextPosition(SwingConstants.BOTTOM);
 		this.viewAssigned.setHorizontalTextPosition(SwingConstants.CENTER);
-		this.viewAssigned.setText("View Assigned");
-		this.viewAssigned.setToolTipText("View my assigned tasks");
+		this.viewAssigned.setText(LanguageText.getConstant("VIEW_ASSIGNED"));
+		this.viewAssigned.setToolTipText(LanguageText.getConstant("VIEW_MY_ASSIGNED_ACTIVITIES"));
 		
 		// Disable buttons at start
 		this.addUser.setEnabled(false);

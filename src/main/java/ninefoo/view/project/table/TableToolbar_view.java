@@ -51,24 +51,28 @@ public class TableToolbar_view extends JPanel {
 		this.viewActivity.setFocusPainted(false); 
 		this.viewActivity.setOpaque(false);
 		this.viewActivity.setText(LanguageText.getConstant("VIEW_DETAILS_ACT"));
+		this.viewActivity.setToolTipText(LanguageText.getConstant("VIEW_ACTIVITY_DETAILS_ACT"));
 		
 		this.addActivity.setBorderPainted(false); 
 		this.addActivity.setContentAreaFilled(false); 
 		this.addActivity.setFocusPainted(false); 
 		this.addActivity.setOpaque(false);
 		this.addActivity.setText(LanguageText.getConstant("ADD_ACT"));
+		this.addActivity.setToolTipText(LanguageText.getConstant("ADD_A_NEW_ACTIVITY_ACT"));
 		
 		this.editActivity.setBorderPainted(false); 
 		this.editActivity.setContentAreaFilled(false); 
 		this.editActivity.setFocusPainted(false); 
 		this.editActivity.setOpaque(false);
 		this.editActivity.setText(LanguageText.getConstant("EDIT_ACT"));
+		this.editActivity.setToolTipText(LanguageText.getConstant("EDIT_THE_ACTIVITY_PROPERTIES_ACT"));
 		
 		this.deleteActivity.setBorderPainted(false); 
 		this.deleteActivity.setContentAreaFilled(false); 
 		this.deleteActivity.setFocusPainted(false); 
 		this.deleteActivity.setOpaque(false);
 		this.deleteActivity.setText(LanguageText.getConstant("REMOVE_ACT"));
+		this.deleteActivity.setToolTipText(LanguageText.getConstant("REMOVE_THE_ACTIVITY_ACT"));
 		
 		// Add component
 		this.add(addActivity);
