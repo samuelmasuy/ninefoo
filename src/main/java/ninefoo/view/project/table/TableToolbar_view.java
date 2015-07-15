@@ -15,6 +15,7 @@ import ninefoo.view.project.table.dialog.CreateActivityDialog;
 import ninefoo.view.project.table.dialog.EditActivityDialog;
 import ninefoo.view.project.table.dialog.ViewActivityDetailsDialog;
 import ninefoo.view.project.table.listener.TableToolsListener;
+import ninefoo.view.project.table.listener.ToolbarListener;
 
 /**
  * Bottom Left panel toolbar for activity actions
@@ -28,12 +29,13 @@ public class TableToolbar_view extends JPanel {
 	
 	// Declare listener
 	private TableToolsListener tableToolsListener;
+	private ToolbarListener toolbarListener;
 	
 	/**
 	 * Constructor
 	 * @param parentPanel
 	 */
-	public TableToolbar_view(final JFrame parentFrame, JPanel parentPanel) {
+	public TableToolbar_view(final JFrame parentFrame) {
 		// Set layout
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
@@ -92,18 +94,22 @@ public class TableToolbar_view extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				// If no activity selected, show error
-				//if(projectList.getSelectedIndex() < 0)
-				//	JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("MISSING_DELETE"),LanguageText.getConstant("PROJECT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
-				
-				// If activity selected
-				//else if(tableToolsListener != null){
-					new EditActivityDialog(parentFrame, tableToolsListener);
-					//}
-				//}
+				// If listener set
+				if(toolbarListener != null){
+					
+					// If no activity selected, show error
+					if(toolbarListener.getSelectedActivity() == null){
+						JOptionPane.showMessageDialog(parentFrame, String.format(LanguageText.getConstant("MISSING_DELETE"),LanguageText.getConstant("ACTIVITY_ACT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
+					
+					// If activity selected
+					} else {
+						new EditActivityDialog(parentFrame, tableToolsListener);
+					}
+				}
 			}
 		});
 		
+		// TODO To finish
 		// Add view activity details listener
 		this.viewActivity.addActionListener(new ActionListener() {
 			
@@ -182,5 +188,13 @@ public class TableToolbar_view extends JPanel {
 	 */
 	public void setViewActivityEnabled(boolean enable){
 		this.viewActivity.setEnabled(enable);
+	}
+	
+	/**
+	 * Set toolbar listener
+	 * @param toolbarListener
+	 */
+	public void setToolbarListener(ToolbarListener toolbarListener) {
+		this.toolbarListener = toolbarListener;
 	}
 }

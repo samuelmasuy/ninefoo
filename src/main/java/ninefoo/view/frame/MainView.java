@@ -277,13 +277,6 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
-			public void updateActivity() {
-				// TODO Auto-generated method stub
-				System.out.println("Edit activity clicked...");
-				
-			}
-
-			@Override
 			public void loadAllMembersForAddUserToProjectDialog(AddUserToProjectDialog dialog) {
 				
 				// Set the dialog
@@ -312,7 +305,8 @@ public class MainView extends JFrame implements UpdatableView{
 				createActivityDialog = dialog;
 				
 				// Load all members
-				memberListener.loadAllMembers();
+				if(memberListener != null)
+					memberListener.loadAllMembers();
 			}
 			
 			@Override

@@ -28,7 +28,6 @@ public interface ToolsListener {
 	
 	// Update
 	public void updateProject(ViewMyProjectsDialog parentDialog, EditProjectDialog dialog, int projectId, String name, String budget, String startDate, String deadline, String description);
-	public void updateActivity();
 	
 	//Delete
 	public void deleteProject(ViewMyProjectsDialog parentDialog, Project project);
