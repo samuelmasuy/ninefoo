@@ -17,6 +17,7 @@ import ninefoo.view.include.menu.Menu;
 import ninefoo.view.include.menu.Tools;
 import ninefoo.view.include.menu.dialog.AddUserToProjectDialog;
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
+import ninefoo.view.include.menu.dialog.CreateUserDialog;
 import ninefoo.view.include.menu.dialog.EditProjectDialog;
 import ninefoo.view.include.menu.dialog.ViewAssignedActivitiesDialog;
 import ninefoo.view.include.menu.dialog.ViewMyProjectsDialog;
@@ -30,6 +31,8 @@ import ninefoo.view.member.listeners.LoginListener;
 import ninefoo.view.member.listeners.RegisterListener;
 import ninefoo.view.project.TableChartSlider_view;
 import ninefoo.view.project.table.dialog.CreateActivityDialog;
+import ninefoo.view.project.table.dialog.EditActivityDialog;
+import ninefoo.view.project.table.dialog.ViewActivityDetailsDialog;
 import ninefoo.view.project.table.listener.TableToolsListener;
 
 import org.apache.logging.log4j.LogManager;
@@ -57,12 +60,16 @@ public class MainView extends JFrame implements UpdatableView{
 	private Register_view registerPanel;
 	
 	// Define dialogs
+	private AddUserToProjectDialog addUserToProjectDialog;
 	private CreateProjectDialog createProjectDialog;
-	private ViewMyProjectsDialog viewMyProjectsDialog;
+	private CreateUserDialog createUserDialog;
 	private EditProjectDialog editProjectDialog;
 	private ViewAssignedActivitiesDialog viewAssignedActivitiesDialog;
-	private AddUserToProjectDialog addUserToProjectDilaog;
+	private ViewMyProjectsDialog viewMyProjectsDialog;
+	
 	private CreateActivityDialog createActivityDialog;
+	private EditActivityDialog editActivityDialog;
+	private ViewActivityDetailsDialog viewActivityDetailsDialog;
 	
 	// Define variables
 	private JPanel currentCenterPanel;
@@ -245,7 +252,7 @@ public class MainView extends JFrame implements UpdatableView{
 			public void addUserToProject(AddUserToProjectDialog dialog, int memberId, int projectId, String role) {
 				
 				// Set the dialog
-				addUserToProjectDilaog = dialog;
+				addUserToProjectDialog = dialog;
 				
 				// Pass it to the controller
 				if(projectListener != null)
@@ -280,7 +287,7 @@ public class MainView extends JFrame implements UpdatableView{
 			public void loadAllMembersForAddUserToProjectDialog(AddUserToProjectDialog dialog) {
 				
 				// Set the dialog
-				addUserToProjectDilaog = dialog;
+				addUserToProjectDialog = dialog;
 				
 				// Pass to controller
 				if(memberListener != null) {
@@ -318,21 +325,21 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 			
 			@Override
-			public void editActivity() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
 			public void deleteActivity() {
 				// TODO Auto-generated method stub
-				
+				System.out.println("Delete activity confirmed...");
 			}
 			
 			@Override
 			public void createActivity() {
 				// TODO createActivity
 				System.out.println("Create new activity clicked...");
+			}
+
+			@Override
+			public void updateActivity() {
+				// TODO Auto-generated method stub
+				System.out.println("Update activity clicked...");
 			}
 		});
 		
@@ -462,7 +469,6 @@ public class MainView extends JFrame implements UpdatableView{
 		this.loginPanel.reset();
 		this.loadView(loginPanel);
 		this.tableChartPanel.reset();
-		this.toolsPanel.setNewActivityEnabled(false);
 		this.toolsPanel.setNewMemberEnabled(false);
 		this.toolsPanel.setAddUserEnabled(false);
 		this.tableChartPanel.setProject(null);
@@ -473,19 +479,19 @@ public class MainView extends JFrame implements UpdatableView{
 	public void updateLoadAllMembers(boolean success, String message, List<Member> users) {
 		
 		// If called from add user to project dialog
-		if(addUserToProjectDilaog != null) {
+		if(addUserToProjectDialog != null) {
 			
 			// If success
 			if(success) {
 				
 				// Populate the list
-				addUserToProjectDilaog.populateUserList(users);
+				addUserToProjectDialog.populateUserList(users);
 				
 			// If fails
 			} else {
 				
 				// Display error
-				addUserToProjectDilaog.setErrorMessage(message);
+				addUserToProjectDialog.setErrorMessage(message);
 			}
 			
 		// If called from create activity dialgo
@@ -544,9 +550,12 @@ public class MainView extends JFrame implements UpdatableView{
 				this.tableChartPanel.loadProject(project);
 				
 				// Enable manager buttons
-				this.toolsPanel.setNewActivityEnabled(true);
 				this.toolsPanel.setNewMemberEnabled(true);
 				this.toolsPanel.setAddUserEnabled(true);
+				this.tableChartPanel.setAddActivityEnabled(true);
+				
+				//TODO visible toolbar
+				this.tableChartPanel.setAddActivityEnabled(true);
 			
 			// If project not created
 			} else {
@@ -578,13 +587,14 @@ public class MainView extends JFrame implements UpdatableView{
 				
 				// Enable buttons if role is manager, or else disable
 				if (this.viewMyProjectsDialog.getSelectedRole() == RoleNames.MANAGER){
-					this.toolsPanel.setNewActivityEnabled(true);
 					this.toolsPanel.setNewMemberEnabled(true);
 					this.toolsPanel.setAddUserEnabled(true);
+					//TODO visible toolbar
+					this.tableChartPanel.setAddActivityEnabled(true);
 				}else if (this.viewMyProjectsDialog.getSelectedRole() == RoleNames.MEMBER){
-					this.toolsPanel.setNewActivityEnabled(false);
 					this.toolsPanel.setNewMemberEnabled(false);
 					this.toolsPanel.setAddUserEnabled(false);
+					//TODO hide toolbar
 				}
 				
 				// Close window
@@ -691,22 +701,22 @@ public class MainView extends JFrame implements UpdatableView{
 	public void updateAddUserToProject(boolean success, String message) {
 		
 		// If not null
-		if(addUserToProjectDilaog != null){
+		if(addUserToProjectDialog != null){
 			
 			// If success
 			if(success) {
 			
 				// Display success
-				addUserToProjectDilaog.setSuccessMessage(message);
+				addUserToProjectDialog.setSuccessMessage(message);
 				
 				// Close dialog
-				addUserToProjectDilaog.dispose();
+				addUserToProjectDialog.dispose();
 				
 			// If fails
 			} else {
 				
 				// Display error
-				addUserToProjectDilaog.setErrorMessage(message);
+				addUserToProjectDialog.setErrorMessage(message);
 			}
 		}
 	}

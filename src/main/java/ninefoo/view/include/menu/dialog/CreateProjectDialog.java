@@ -5,13 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import ninefoo.lib.component.PMButton;
+import ninefoo.lib.component.PMLabel;
 import ninefoo.lib.datePicker.DatePicker;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.layout.dialog.CenterFormSouthButtonDialog;
@@ -27,7 +27,7 @@ public class CreateProjectDialog extends CenterFormSouthButtonDialog{
 	private static final long serialVersionUID = 216394661255136241L;
 	
 	// Create components
-	private JButton createButton;
+	private PMButton createButton;
 	private JTextField name, budget;
 	private JTextArea description;
 	private DatePicker deadline, start;
@@ -38,7 +38,7 @@ public class CreateProjectDialog extends CenterFormSouthButtonDialog{
 	public CreateProjectDialog(JFrame parentFrame, final ToolsListener toolsListener) {
 		
 		// Initialize components
-		this.createButton = new JButton(LanguageText.getConstant("CREATE_PROJECT"));
+		this.createButton = new PMButton(LanguageText.getConstant("CREATE_PROJECT"));
 		this.name = new JTextField(10);
 		this.budget= new JTextField(10);
 		this.deadline = new DatePicker(8);
@@ -66,23 +66,23 @@ public class CreateProjectDialog extends CenterFormSouthButtonDialog{
 				start.setBorder(BorderFactory.createCompoundBorder(start.getBorder(), inputPadding));
 				
 				// Add components
-				this.table.put(new JLabel(LanguageText.getConstant("NAME")));
+				this.table.put(new PMLabel(LanguageText.getConstant("NAME")));
 				this.table.put(name);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("BUDGET")));
+				this.table.put(new PMLabel(LanguageText.getConstant("BUDGET")));
 				this.table.put(budget);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("START_DATE")));
+				this.table.put(new PMLabel(LanguageText.getConstant("START_DATE")));
 				this.table.put(start);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("DEADLINE")));
+				this.table.put(new PMLabel(LanguageText.getConstant("DEADLINE")));
 				this.table.put(deadline);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("DESCRIPTION")));
+				this.table.put(new PMLabel(LanguageText.getConstant("DESCRIPTION")));
 				this.table.put(new JScrollPane(description));
 			}
 		});

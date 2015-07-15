@@ -56,4 +56,36 @@ public class TableContainer_view extends JPanel{
 	public void setTableToolsListener(TableToolsListener tableToolsListener){
 		this.tableToolbarPanel.setTableToolsListener(tableToolsListener);
 	}
+	
+	/**
+	 * Set new activity button enabled
+	 * @param enable Boolean
+	 */
+	public void setAddActivityEnabled(boolean enable){
+		this.tableToolbarPanel.setAddActivityEnabled(enable);
+	}
+	
+	/**
+	 * Set edit activity button enabled
+	 * @param enable Boolean
+	 */
+	public void setEditActivityEnabled(boolean enable){
+		this.tableToolbarPanel.setEditActivityEnabled(enable);
+	}
+	
+	/**
+	 * Set delete activity button enabled
+	 * @param enable Boolean
+	 */
+	public void setDeleteActivityEnabled(boolean enable){
+		this.tableToolbarPanel.setDeleteActivityEnabled(enable);
+	}
+	
+	/**
+	 * Set View activity details button enabled
+	 * @param enable Boolean
+	 */
+	public void setViewActivityEnabled(boolean enable){
+		this.tableToolbarPanel.setViewActivityEnabled(enable);
+	}
 }

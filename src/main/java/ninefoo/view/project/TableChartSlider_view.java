@@ -104,4 +104,36 @@ public class TableChartSlider_view extends JPanel{
 	public void setTableToolsListener(TableToolsListener tableToolsListener){
 		tableContainer.setTableToolsListener(tableToolsListener);
 	}
+	
+	/**
+	 * Set new activity button enabled
+	 * @param enable Boolean
+	 */
+	public void setAddActivityEnabled(boolean enable){
+		this.tableContainer.setAddActivityEnabled(enable);
+	}
+	
+	/**
+	 * Set edit activity button enabled
+	 * @param enable Boolean
+	 */
+	public void setEditActivityEnabled(boolean enable){
+		this.tableContainer.setEditActivityEnabled(enable);
+	}
+	
+	/**
+	 * Set delete activity button enabled
+	 * @param enable Boolean
+	 */
+	public void setDeleteActivityEnabled(boolean enable){
+		this.tableContainer.setDeleteActivityEnabled(enable);
+	}
+	
+	/**
+	 * Set View activity details button enabled
+	 * @param enable Boolean
+	 */
+	public void setViewActivityEnabled(boolean enable){
+		this.tableContainer.setViewActivityEnabled(enable);
+	}
 }

@@ -1,8 +1,9 @@
 package ninefoo.view.include.menu;
 
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import ninefoo.lib.component.PMMenu;
 
 /**
  * Top Menu bar.
@@ -13,17 +14,17 @@ public class Menu extends JMenuBar{
 	private static final long serialVersionUID = -481460797811819303L;
 	
 	// Define components
-	private JMenu project, edit, member, help;
+	private PMMenu project, edit, member, help;
 	private JMenuItem newProject, openProject, saveProject, restart, exit, editTitle, editMembers, editActivites, login, logout, allMember, newMember, assignProject, tourGuide, aboutInfo;
 	
 	// Constructor
 	public Menu() {
 		
 		// Initialize Menu
-		this.project = new JMenu("Project");
-		this.edit = new JMenu("Edit");
-		this.member = new JMenu("Member");
-		this.help = new JMenu("Help");
+		this.project = new PMMenu("Project");
+		this.edit = new PMMenu("Edit");
+		this.member = new PMMenu("Member");
+		this.help = new PMMenu("Help");
 		
 		// Initialize Sub-Menu
 		this.newProject = new JMenuItem("New project");

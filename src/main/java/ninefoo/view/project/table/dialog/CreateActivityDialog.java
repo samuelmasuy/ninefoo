@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import ninefoo.lib.autocompleteComboBox.AutocompleteComboBox;
+import ninefoo.lib.component.PMButton;
+import ninefoo.lib.component.PMLabel;
 import ninefoo.lib.datePicker.DatePicker;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.layout.dialog.CenterScrollSouthButtonDialog;
@@ -33,7 +33,7 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 	private static final long serialVersionUID = -3895150614923358876L;
 	
 	// Define components
-	private JButton createButton;
+	private PMButton createButton;
 	private JTextField activityLabel;
 	private JTextArea description;
 	private JTextField duration;
@@ -62,7 +62,7 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 		tableToolsListener.loadActivitiesForCreateActivityDialog(this);
 		
 		// Initialize components
-		this.createButton = new JButton(LanguageText.getConstant("CREATE"));
+		this.createButton = new PMButton(LanguageText.getConstant("CREATE"));
 		this.activityLabel = new JTextField(10);
 		this.description = new JTextArea(3,10);
 		this.duration = new JTextField(10);
@@ -113,48 +113,48 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 				prerequisiteDropdown.setBorder(BorderFactory.createCompoundBorder(prerequisiteDropdown.getBorder(), inputPadding));
 				
 				// Add components
-				this.table.put(new JLabel(LanguageText.getConstant("NAME")));
+				this.table.put(new PMLabel(LanguageText.getConstant("NAME")));
 				this.table.put(activityLabel);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("DESCRIPTION")));
+				this.table.put(new PMLabel(LanguageText.getConstant("DESCRIPTION")));
 				this.table.put(new JScrollPane(description));
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("DURATION_ACT")));
+				this.table.put(new PMLabel(LanguageText.getConstant("DURATION_ACT")));
 				this.table.put(duration);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("OPTIMISTIC_ACT")));
+				this.table.put(new PMLabel(LanguageText.getConstant("OPTIMISTIC_ACT")));
 				this.table.put(optimisticDuration);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("LIKELY_ACT")));
+				this.table.put(new PMLabel(LanguageText.getConstant("LIKELY_ACT")));
 				this.table.put(likelyDuration);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("PESSIMISTIC_ACT")));
+				this.table.put(new PMLabel(LanguageText.getConstant("PESSIMISTIC_ACT")));
 				this.table.put(pessimisticDuration);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("COST_ACT")));
+				this.table.put(new PMLabel(LanguageText.getConstant("COST_ACT")));
 				this.table.put(cost);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("START_ACT")));
+				this.table.put(new PMLabel(LanguageText.getConstant("START_ACT")));
 				this.table.put(startDate);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("FINISH_ACT")));
+				this.table.put(new PMLabel(LanguageText.getConstant("FINISH_ACT")));
 				this.table.put(finishDate);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("MEMBER_ACT")));
+				this.table.put(new PMLabel(LanguageText.getConstant("MEMBER_ACT")));
 				this.table.put(memberBox);
 				
 				this.table.newRow();
 				this.table.placeCenterTop();
-				this.table.put(new JLabel(LanguageText.getConstant("PREREQ_ACT")));
+				this.table.put(new PMLabel(LanguageText.getConstant("PREREQ_ACT")));
 				this.table.put(prerequisiteDropdown);
 			}
 		});

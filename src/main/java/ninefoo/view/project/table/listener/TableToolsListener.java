@@ -16,7 +16,7 @@ public interface TableToolsListener {
 	public void loadActivitiesForCreateActivityDialog(CreateActivityDialog dialog);
 	
 	// Edit
-	public void editActivity();
+	public void updateActivity();
 	
 	// Delete
 	public void deleteActivity();

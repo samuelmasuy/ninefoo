@@ -7,14 +7,14 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import ninefoo.config.ActivityConfig;
 import ninefoo.helper.ActivityHelper;
+import ninefoo.lib.component.PMButton;
+import ninefoo.lib.component.PMLabel;
 import ninefoo.lib.excelTable.NumberedExcelTable;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.layout.dialog.CenterScrollSouthButtonDialog;
@@ -34,7 +34,7 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 	private static final long serialVersionUID = 6984471626529243638L;
 	
 	// Define components
-	private JButton close;
+	private PMButton close;
 	private List<Project> projects;
 	
 	/** 
@@ -43,7 +43,7 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 	public ViewAssignedActivitiesDialog(JFrame parentFrame, final ToolsListener toolsListener) {
 		
 		// Initialize components
-		this.close = new JButton(LanguageText.getConstant("CLOSE"));
+		this.close = new PMButton(LanguageText.getConstant("CLOSE"));
 		
 		// Set title
 		this.setTitle(LanguageText.getConstant("MY_ASSIGNED_ACTIVITIES_ACT"));
@@ -132,7 +132,7 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 		private static final long serialVersionUID = -9006410938025352835L;
 		
 		// Define components
-		private JLabel title;
+		private PMLabel title;
 		private NumberedExcelTable table;
 		private JScrollPane tableScrollPane;
 		
@@ -142,7 +142,7 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 			this.setLayout(new BorderLayout());
 			
 			// Initialize components
-			this.title = new JLabel(project.getProjectName());
+			this.title = new PMLabel(project.getProjectName());
 			this.table = new NumberedExcelTable(ActivityConfig.TABLE_HEADER);
 			this.tableScrollPane = this.table.getJScrollPane();
 			

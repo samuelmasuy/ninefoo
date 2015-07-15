@@ -5,12 +5,15 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import ninefoo.lib.component.PMButton;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.view.project.table.dialog.CreateActivityDialog;
+import ninefoo.view.project.table.dialog.EditActivityDialog;
+import ninefoo.view.project.table.dialog.ViewActivityDetailsDialog;
 import ninefoo.view.project.table.listener.TableToolsListener;
 
 /**
@@ -21,9 +24,9 @@ public class TableToolbar_view extends JPanel {
 	private static final long serialVersionUID = -7124432397140089151L;
 
 	// Declare components
-	private JButton addActivity, editActivity, deleteActivity, viewActivity;
+	private PMButton addActivity, editActivity, deleteActivity, viewActivity;
 	
-	// Declare listner
+	// Declare listener
 	private TableToolsListener tableToolsListener;
 	
 	/**
@@ -35,10 +38,10 @@ public class TableToolbar_view extends JPanel {
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
 		// Initialize components
-		this.viewActivity = new JButton(new ImageIcon(getClass().getResource("/images/buttons/general/eye.png")));
-		this.addActivity = new JButton(new ImageIcon(getClass().getResource("/images/buttons/general/add.png")));
-		this.editActivity = new JButton(new ImageIcon(getClass().getResource("/images/buttons/general/edit.png")));
-		this.deleteActivity = new JButton(new ImageIcon(getClass().getResource("/images/buttons/general/remove.png")));
+		this.viewActivity = new PMButton(new ImageIcon(getClass().getResource("/images/buttons/general/eye.png")));
+		this.addActivity = new PMButton(new ImageIcon(getClass().getResource("/images/buttons/general/add.png")));
+		this.editActivity = new PMButton(new ImageIcon(getClass().getResource("/images/buttons/general/edit.png")));
+		this.deleteActivity = new PMButton(new ImageIcon(getClass().getResource("/images/buttons/general/remove.png")));
 		
 		// Configure buttons
 		this.viewActivity.setBorderPainted(false); 
@@ -83,68 +86,63 @@ public class TableToolbar_view extends JPanel {
 			}
 		});
 		
-//		// Add edit listener
-//		this.editActivity.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				
-//				// If no activity selected, show error
-//				if(projectList.getSelectedIndex() < 0)
-//					JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("MISSING_DELETE"),LanguageText.getConstant("PROJECT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
-//				
-//				// If activity selected
-//				else if(toolsListener != null){
-//					String projectName = "'" + projectList.getSelectedValue() + "'";
-//					int reply = JOptionPane.showConfirmDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("DELETE_CONFIRMATION_TEXT"), LanguageText.getConstant("PROJECT").toLowerCase(), projectName) , LanguageText.getConstant("DELETE_CONFIRMATION"), JOptionPane.YES_NO_OPTION);
-//					if (reply == JOptionPane.YES_OPTION){
-//					    toolsListener.deleteProject(ViewMyProjectsDialog.this, projects.get(projectList.getSelectedIndex()));
-//					}
-//				}
-//			}
-//		});
-//		
-//		// Add view activity details listener
-//		this.viewActivity.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				
-//				// If no activity selected, show error
-//				if(projectList.getSelectedIndex() < 0)
-//					JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("MISSING_DELETE"),LanguageText.getConstant("PROJECT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
-//				
-//				// If activity selected
-//				else if(toolsListener != null){
-//					String projectName = "'" + projectList.getSelectedValue() + "'";
-//					int reply = JOptionPane.showConfirmDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("DELETE_CONFIRMATION_TEXT"), LanguageText.getConstant("PROJECT").toLowerCase(), projectName) , LanguageText.getConstant("DELETE_CONFIRMATION"), JOptionPane.YES_NO_OPTION);
-//					if (reply == JOptionPane.YES_OPTION){
-//					    toolsListener.deleteProject(ViewMyProjectsDialog.this, projects.get(projectList.getSelectedIndex()));
-//					}
-//				}
-//			}
-//		});
-//		
-//		// Add delete listener
-//		this.deleteActivity.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				
-//				// If no activity selected, show error
-//				if(projectList.getSelectedIndex() < 0)
-//					JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("MISSING_DELETE"),LanguageText.getConstant("PROJECT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
-//				
-//				// If activity selected
-//				else if(toolsListener != null){
-//					String projectName = "'" + projectList.getSelectedValue() + "'";
-//					int reply = JOptionPane.showConfirmDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("DELETE_CONFIRMATION_TEXT"), LanguageText.getConstant("PROJECT").toLowerCase(), projectName) , LanguageText.getConstant("DELETE_CONFIRMATION"), JOptionPane.YES_NO_OPTION);
-//					if (reply == JOptionPane.YES_OPTION){
-//					    toolsListener.deleteProject(ViewMyProjectsDialog.this, projects.get(projectList.getSelectedIndex()));
-//					}
-//				}
-//			}
-//		});
+		// Add edit listener
+		this.editActivity.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				// If no activity selected, show error
+				//if(projectList.getSelectedIndex() < 0)
+				//	JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("MISSING_DELETE"),LanguageText.getConstant("PROJECT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
+				
+				// If activity selected
+				//else if(tableToolsListener != null){
+					new EditActivityDialog(parentFrame, tableToolsListener);
+					//}
+				//}
+			}
+		});
+		
+		// Add view activity details listener
+		this.viewActivity.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				// If no activity selected, show error
+				//if(projectList.getSelectedIndex() < 0)
+				//	JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("MISSING_DELETE"),LanguageText.getConstant("PROJECT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
+				
+				// If activity selected
+				//else if(tableToolsListener != null){
+					new ViewActivityDetailsDialog(parentFrame, tableToolsListener);
+				//	}
+				//}
+			}
+		});
+		
+		// Add delete listener
+		this.deleteActivity.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				// If no activity selected, show error
+				//if(projectList.getSelectedIndex() < 0)
+				//	JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("MISSING_DELETE"),LanguageText.getConstant("PROJECT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
+				
+				// If activity selected
+				//else if(tableToolsListener != null){
+					//String projectName = "'" + projectList.getSelectedValue() + "'";
+					int reply = JOptionPane.showConfirmDialog(parentFrame, String.format(LanguageText.getConstant("DELETE_CONFIRMATION") /*, LanguageText.getConstant("ACTIVITY_ACT").toLowerCase(), activity name */) , LanguageText.getConstant("DELETE_CONFIRMATION"), JOptionPane.YES_NO_OPTION);
+					if (reply == JOptionPane.YES_OPTION){
+					    tableToolsListener.deleteActivity(/* parentFrame, projects.get(projectList.getSelectedIndex())*/);
+					}
+				//}
+			}
+		});
+		
 	}
 	
 	/**
@@ -152,5 +150,37 @@ public class TableToolbar_view extends JPanel {
 	 */
 	public void setTableToolsListener(TableToolsListener tableToolsListener){
 		this.tableToolsListener = tableToolsListener;
+	}
+	
+	/**
+	 * Set new activity button enabled
+	 * @param enable Boolean
+	 */
+	public void setAddActivityEnabled(boolean enable){
+		this.addActivity.setEnabled(enable);
+	}
+	
+	/**
+	 * Set edit activity button enabled
+	 * @param enable Boolean
+	 */
+	public void setEditActivityEnabled(boolean enable){
+		this.editActivity.setEnabled(enable);
+	}
+	
+	/**
+	 * Set delete activity button enabled
+	 * @param enable Boolean
+	 */
+	public void setDeleteActivityEnabled(boolean enable){
+		this.deleteActivity.setEnabled(enable);
+	}
+	
+	/**
+	 * Set View activity details button enabled
+	 * @param enable Boolean
+	 */
+	public void setViewActivityEnabled(boolean enable){
+		this.viewActivity.setEnabled(enable);
 	}
 }

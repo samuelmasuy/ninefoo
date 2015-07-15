@@ -9,14 +9,14 @@ import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import ninefoo.helper.LayoutHelper;
+import ninefoo.lib.component.PMButton;
+import ninefoo.lib.component.PMLabel;
 import ninefoo.lib.layout.panel.FormPanel;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.view.member.listeners.LoginListener;
@@ -30,10 +30,10 @@ public class Login_view extends FormPanel{
 	private static final long serialVersionUID = 1578431485931709295L;
 	
 	// Define components
-	private JButton loginButton;
+	private PMButton loginButton;
 	private JTextField usernameField;
 	private JPasswordField passwordField;
-	private JLabel registerText;
+	private PMLabel registerText;
 	private LoginListener loginListener;
 	
 	// Constructor
@@ -43,10 +43,10 @@ public class Login_view extends FormPanel{
 		super();
 		
 		// Initialize components
-		this.loginButton = new JButton(LanguageText.getConstant("LOGIN"));
+		this.loginButton = new PMButton(LanguageText.getConstant("LOGIN"));
 		this.usernameField = new JTextField(10);
 		this.passwordField = new JPasswordField(10);
-		this.registerText = new JLabel(LanguageText.getConstant("REGISTRATION_LINK"));
+		this.registerText = new PMLabel(LanguageText.getConstant("REGISTRATION_LINK"));
 		
 		// Configure buttons
 		Border inputPadding = BorderFactory.createEmptyBorder(3, 3, 3, 3);
@@ -113,15 +113,15 @@ public class Login_view extends FormPanel{
 		// Add components to fixedPanel
 		int row = 0;
 		LayoutHelper.gcGrid(gc, row++, 0, 2);
-		fixedPanel.add(new JLabel(new ImageIcon(getClass().getResource("/images/login_user.png"))), gc);
+		fixedPanel.add(new PMLabel(new ImageIcon(getClass().getResource("/images/login_user.png"))), gc);
 		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
-		fixedPanel.add(new JLabel(LanguageText.getConstant("USERNAME")), gc);
+		fixedPanel.add(new PMLabel(LanguageText.getConstant("USERNAME")), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.usernameField, gc);
 		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
-		fixedPanel.add(new JLabel(LanguageText.getConstant("PASSWORD")), gc);
+		fixedPanel.add(new PMLabel(LanguageText.getConstant("PASSWORD")), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.passwordField, gc);
 		

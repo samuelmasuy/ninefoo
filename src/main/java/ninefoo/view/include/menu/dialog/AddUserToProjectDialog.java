@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 import ninefoo.config.RoleNames;
 import ninefoo.config.Session;
 import ninefoo.lib.autocompleteComboBox.AutocompleteComboBox;
+import ninefoo.lib.component.PMButton;
+import ninefoo.lib.component.PMLabel;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.layout.dialog.CenterFormSouthButtonDialog;
 import ninefoo.lib.layout.dialog.FormDialog;
@@ -31,7 +31,7 @@ public class AddUserToProjectDialog extends CenterFormSouthButtonDialog{
 
 	private static final long serialVersionUID = 4530177660846739513L;
 	// Define components
-	private JButton addButton;
+	private PMButton addButton;
 	private AutocompleteComboBox memberBox;
 	private JComboBox<String> roleBox;
 	private ArrayList<Member> users;
@@ -46,7 +46,7 @@ public class AddUserToProjectDialog extends CenterFormSouthButtonDialog{
 		toolsListener.loadAllMembersForAddUserToProjectDialog(AddUserToProjectDialog.this);
 		
 		// Initialize components
-		this.addButton = new JButton(LanguageText.getConstant("ADD"));
+		this.addButton = new PMButton(LanguageText.getConstant("ADD"));
 		this.memberBox = new AutocompleteComboBox(usersName);
 		this.roleBox = new JComboBox<>(RoleNames.ROLES);
 		
@@ -85,11 +85,11 @@ public class AddUserToProjectDialog extends CenterFormSouthButtonDialog{
 				roleBox.setBorder(BorderFactory.createCompoundBorder(roleBox.getBorder(), inputPadding));
 
 				// Add components
-				this.table.put(new JLabel(LanguageText.getConstant("USER")));
+				this.table.put(new PMLabel(LanguageText.getConstant("USER")));
 				this.table.put(memberBox);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("ROLE")));
+				this.table.put(new PMLabel(LanguageText.getConstant("ROLE")));
 				this.table.put(roleBox);
 			}
 		});
