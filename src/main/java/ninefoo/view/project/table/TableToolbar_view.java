@@ -103,7 +103,7 @@ public class TableToolbar_view extends JPanel {
 					
 					// If no activity selected, show error
 					if(toolbarListener.getSelectedActivity() == null){
-						JOptionPane.showMessageDialog(parentFrame, String.format(LanguageText.getConstant("MISSING_DELETE"),LanguageText.getConstant("ACTIVITY_ACT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(parentFrame, String.format(LanguageText.getConstant("MISSING_EDIT_ACT"),LanguageText.getConstant("ACTIVITY_ACT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
 					
 					// If activity selected
 					} else {
@@ -113,7 +113,6 @@ public class TableToolbar_view extends JPanel {
 			}
 		});
 		
-		// TODO To finish
 		// Add view activity details listener
 		this.viewActivity.addActionListener(new ActionListener() {
 			
@@ -121,14 +120,13 @@ public class TableToolbar_view extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				// If no activity selected, show error
-				//if(projectList.getSelectedIndex() < 0)
-				//	JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("MISSING_DELETE"),LanguageText.getConstant("PROJECT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
+				if(toolbarListener.getSelectedActivity() == null){
+					JOptionPane.showMessageDialog(parentFrame, String.format(LanguageText.getConstant("MISSING_VIEW_ACT"),LanguageText.getConstant("ACTIVITY_ACT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
 				
 				// If activity selected
-				//else if(tableToolsListener != null){
+				} else {
 					new ViewActivityDetailsDialog(parentFrame, tableToolsListener);
-				//	}
-				//}
+				}
 			}
 		});
 		
@@ -139,17 +137,17 @@ public class TableToolbar_view extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				// If no activity selected, show error
-				//if(projectList.getSelectedIndex() < 0)
-				//	JOptionPane.showMessageDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("MISSING_DELETE"),LanguageText.getConstant("PROJECT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
+				if(toolbarListener.getSelectedActivity() == null){
+					JOptionPane.showMessageDialog(parentFrame, String.format(LanguageText.getConstant("MISSING_DELETE_ACT"),LanguageText.getConstant("ACTIVITY_ACT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
 				
 				// If activity selected
-				//else if(tableToolsListener != null){
-					//String projectName = "'" + projectList.getSelectedValue() + "'";
-					int reply = JOptionPane.showConfirmDialog(parentFrame, String.format(LanguageText.getConstant("DELETE_CONFIRMATION") /*, LanguageText.getConstant("ACTIVITY_ACT").toLowerCase(), activity name */) , LanguageText.getConstant("DELETE_CONFIRMATION"), JOptionPane.YES_NO_OPTION);
+				} else {
+					String activityName = "'" + toolbarListener.getSelectedActivity().getActivityLabel() + "'";
+					int reply = JOptionPane.showConfirmDialog(parentFrame, String.format(LanguageText.getConstant("DELETE_CONFIRMATION_ACT"), LanguageText.getConstant("ACTIVITY_ACT").toLowerCase(), activityName ) , LanguageText.getConstant("DELETE_CONFIRMATION"), JOptionPane.YES_NO_OPTION);
 					if (reply == JOptionPane.YES_OPTION){
-					    tableToolsListener.deleteActivity(/* parentFrame, projects.get(projectList.getSelectedIndex())*/);
+					    tableToolsListener.deleteActivity(parentFrame, toolbarListener.getSelectedActivity());
 					}
-				//}
+				}
 			}
 		});
 		

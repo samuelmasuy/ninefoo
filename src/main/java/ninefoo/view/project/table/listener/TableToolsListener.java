@@ -1,5 +1,8 @@
 package ninefoo.view.project.table.listener;
 
+import javax.swing.JFrame;
+
+import ninefoo.model.object.Activity;
 import ninefoo.view.project.table.dialog.CreateActivityDialog;
 
 /**
@@ -19,7 +22,7 @@ public interface TableToolsListener {
 	public void updateActivity();
 	
 	// Delete
-	public void deleteActivity();
+	public void deleteActivity(JFrame parentFrame, Activity activity);
 	
 	// View details
 	public void viewActivityDetails();

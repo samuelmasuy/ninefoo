@@ -319,12 +319,6 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 			
 			@Override
-			public void deleteActivity() {
-				// TODO Auto-generated method stub
-				System.out.println("Delete activity confirmed...");
-			}
-			
-			@Override
 			public void createActivity() {
 				// TODO createActivity
 				System.out.println("Create new activity clicked...");
@@ -334,6 +328,12 @@ public class MainView extends JFrame implements UpdatableView{
 			public void updateActivity() {
 				// TODO Auto-generated method stub
 				System.out.println("Update activity clicked...");
+			}
+
+			@Override
+			public void deleteActivity(JFrame parentFrame, Activity activity) {
+				// TODO Auto-generated method stub
+				System.out.println("Delete activity confirmed...");
 			}
 		});
 		
