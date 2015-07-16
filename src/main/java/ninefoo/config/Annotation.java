@@ -36,12 +36,11 @@ public class Annotation {
 	/**
 	 * Methods and classes that have this annotation should not be modified in this version.
 	 * If any changes are required, mention it in the @param changesRequiredInNextVersion
-	 * @author Amir El Bawab
 	 */
 	@Retention(RetentionPolicy.SOURCE)
 	@Target({ElementType.METHOD, ElementType.TYPE})
 	public @interface FinalVersion {
-		int version();
+		String version();
 		String[] changesRequiredInNextVersion() default {};
 	}
 	

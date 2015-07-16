@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import ninefoo.config.Annotation.FinalVersion;
 import ninefoo.config.RoleNames;
 import ninefoo.config.Session;
 import ninefoo.model.object.Activity;
@@ -116,6 +117,7 @@ public class MainView extends JFrame implements UpdatableView{
 			/**
 			 * Switch to register panel
 			 */
+			@FinalVersion(version = "1.0")
 			@Override
 			public void registerLink() {
 				MainView.this.registerPanel.reset();
@@ -127,6 +129,7 @@ public class MainView extends JFrame implements UpdatableView{
 			 * @param username
 			 * @param password
 			 */
+			@FinalVersion(version = "1.0")
 			@Override
 			public void login(String username, String password) {
 				LOGGER.info(String.format("Login info= [%s : %s]", username, password));
@@ -148,6 +151,7 @@ public class MainView extends JFrame implements UpdatableView{
 			 * @param password
 			 */
 			@Override
+			@FinalVersion(version = "1.0")
 			public void register(String firstName, String lastName, String username, String password) {
 				
 				// Logger info
@@ -162,6 +166,7 @@ public class MainView extends JFrame implements UpdatableView{
 			 * Switch to login panel
 			 */
 			@Override
+			@FinalVersion(version = "1.0")
 			public void loginLink() {
 				MainView.this.loginPanel.reset();
 				MainView.this.loadView(loginPanel);
@@ -172,6 +177,7 @@ public class MainView extends JFrame implements UpdatableView{
 		this.toolsPanel.setToolsListener(new ToolsListener() {
 			
 			@Override
+			@FinalVersion(version = "1.0")
 			public void newProject(CreateProjectDialog dialog, String name, String budget, String startDate, String deadline, String description) {
 				LOGGER.info(String.format("Project '%s' has been been submitted!", name));
 				
@@ -187,6 +193,7 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
+			@FinalVersion(version = "1.0")
 			public void logout() {
 				
 				// Logout
@@ -195,6 +202,7 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
+			@FinalVersion(version = "1.0")
 			public void loadAllMyProjectsByRole(ViewMyProjectsDialog dialog, String roleName) {
 
 				LOGGER.info(String.format("Retreiving projects from the DB for user id %d and role %s ", Session.getInstance().getUserId(), roleName.toString()));
@@ -211,6 +219,7 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
+			@FinalVersion(version = "1.0")
 			public void loadProject(ViewMyProjectsDialog dialog, int projectId) {
 				
 				// Store view my projects dialog
@@ -221,6 +230,7 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
+			@FinalVersion(version = "1.0")
 			public void updateProject(ViewMyProjectsDialog parentDialog, EditProjectDialog dialog, int projectId, String name, String budget, String startDate, String deadline, String description) {
 				
 				// Store dialog
@@ -233,6 +243,7 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
+			@FinalVersion(version = "1.0")
 			public void loadEditProjectFields(EditProjectDialog dialog, int projectId) {
 				
 				// Store dialog
@@ -249,6 +260,7 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
+			@FinalVersion(version = "1.0")
 			public void addUserToProject(AddUserToProjectDialog dialog, int memberId, int projectId, String role) {
 				
 				// Set the dialog
@@ -350,6 +362,7 @@ public class MainView extends JFrame implements UpdatableView{
 	 * Load view to the center panel
 	 * @param panel
 	 */
+	@FinalVersion(version = "1.0")
 	private void loadView(JPanel panel){
 		
 		// If current center panel is not set, set it
@@ -382,6 +395,7 @@ public class MainView extends JFrame implements UpdatableView{
 	 * @param memberListener
 	 */
 	@Override
+	@FinalVersion(version = "1.0")
 	public void setMemberListener(MemberListener memberListener){
 		this.memberListener = memberListener;
 	};
@@ -391,6 +405,7 @@ public class MainView extends JFrame implements UpdatableView{
 	 * @param memberListener
 	 */
 	@Override
+	@FinalVersion(version = "1.0")
 	public void setProjectListener(ProjectListener projectListener){
 		this.projectListener = projectListener;
 	};
@@ -400,6 +415,7 @@ public class MainView extends JFrame implements UpdatableView{
 	 * @param activityListener
 	 */
 	@Override
+	@FinalVersion(version = "1.0")
 	public void setActivityListener(ActivityListener activityListener) {
 		this.activityListener = activityListener;
 	}
@@ -416,6 +432,7 @@ public class MainView extends JFrame implements UpdatableView{
 	 * @param message
 	 */
 	@Override
+	@FinalVersion(version = "1.0")
 	public void updateLogin(boolean success, String message){
 		
 		// If logged is successful
@@ -438,6 +455,7 @@ public class MainView extends JFrame implements UpdatableView{
 	 * @param message
 	 */
 	@Override
+	@FinalVersion(version = "1.0")
 	public void updateRegister(boolean success, String message){
 		
 		// If register is successful
@@ -459,6 +477,7 @@ public class MainView extends JFrame implements UpdatableView{
 	}
 	
 	@Override
+	@FinalVersion(version = "1.0")
 	public void updateLogout() {
 		this.loginPanel.reset();
 		this.loadView(loginPanel);
@@ -524,6 +543,7 @@ public class MainView extends JFrame implements UpdatableView{
 	 * @param message
 	 */
 	@Override
+	@FinalVersion(version = "1.0")
 	public void updateCreateProject(boolean success, String message, Project project){
 		
 		// If dialog exists
@@ -566,6 +586,7 @@ public class MainView extends JFrame implements UpdatableView{
 	}
 	
 	@Override
+	@FinalVersion(version = "1.0")
 	public void updateLoadProject(boolean success, String message, Project project) {
 		
 		// If dialog exists
@@ -613,6 +634,7 @@ public class MainView extends JFrame implements UpdatableView{
 	}
 
 	@Override
+	@FinalVersion(version = "1.0")
 	public void updateEditProject(boolean success, String message) {
 		
 		// If edit window opened
@@ -643,16 +665,22 @@ public class MainView extends JFrame implements UpdatableView{
 	}
 
 	@Override
+	@FinalVersion(version = "1.0")
 	public void updateLoadAllProjectsByMemberAndRole(List<Project> projects) {
 		
-		// Update parent list
-		this.viewMyProjectsDialog.populateProjectList(projects);
-		
-		// Reset pointer
-		this.viewMyProjectsDialog = null;
+		// If view window exist
+		if(this.viewMyProjectsDialog != null){
+			
+			// Update parent list
+			this.viewMyProjectsDialog.populateProjectList(projects);
+			
+			// Reset pointer
+			this.viewMyProjectsDialog = null;
+		}
 	}
 
 	@Override
+	@FinalVersion(version = "1.0")
 	public void updateLoadEditProjectFields(boolean success, String message, Project project) {
 		
 		// If success
@@ -695,6 +723,7 @@ public class MainView extends JFrame implements UpdatableView{
 	}
 
 	@Override
+	@FinalVersion(version = "1.0")
 	public void updateAddUserToProject(boolean success, String message) {
 		
 		// If not null
