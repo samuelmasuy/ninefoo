@@ -4,11 +4,9 @@ import ninefoo.config.*;
 import ninefoo.helper.DateHelper;
 import ninefoo.config.Config;
 import ninefoo.model.object.Activity;
-import ninefoo.model.object.Member;
 import ninefoo.model.object.Project;
 import ninefoo.model.sql.template.AbstractModel;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,7 +38,7 @@ public class Activity_model extends AbstractModel{
     	// Query
         sql = "INSERT INTO activity(activity_label, description, duration, " +
         "optimistic_duration, likely_duration, pessimistic_duration, " +
-        "project_id, member_id, start_date, finish_date, cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "project_id, member_id, start_date, finish_date, cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         try {
         	
@@ -81,7 +79,7 @@ public class Activity_model extends AbstractModel{
 
     // Helper function to insert the prerequisites for a given activity.
     @Deprecated
-    private boolean insertPrereqs(int activityId, List<Activity> prerequisites) {
+    private boolean insertPrerequisites(int activityId, List<Activity> prerequisites) {
     	
     	// Open
     	this.open();
@@ -360,7 +358,45 @@ public class Activity_model extends AbstractModel{
 
         return false;
     }
-    
+
+    /**
+     * Deletes an activity from the database corresponding to the specified ID.
+     * @param activityID ID of the activity to be deleted from the database.
+     * @return True if the operation is successful, false otherwise.
+     */
+    public boolean deleteActivityById(int activityID) {
+        // Open
+        this.open();
+
+        // Query
+        sql = "DELETE FROM activity WHERE activity_id = ?";
+
+        try {
+
+            // Prepare
+            this.prepareStatement();
+
+            // Data
+            ps.setInt(1, activityID);
+
+            // Run
+            affectedRows = ps.executeUpdate();
+
+            // Check if deleted
+            return (affectedRows == 1);
+
+            // Error
+        } catch (SQLException e) {
+            LOGGER.error("Could not delete activity --- detailed info: " + e.getMessage());
+
+            // Close
+        } finally {
+            this.close();
+        }
+
+        return false;
+
+    }
     /**
      * Add one Prerequisites only
      * @param activityIdDependent
@@ -373,7 +409,7 @@ public class Activity_model extends AbstractModel{
     	// Add one only
     	List<Activity> list = new ArrayList<>();
     	list.add(activityIdDependentOn);
-    	return this.insertPrereqs(activityIdDependent, list);
+    	return this.insertPrerequisites(activityIdDependent, list);
     }
     
     
