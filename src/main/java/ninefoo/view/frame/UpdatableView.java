@@ -32,6 +32,7 @@ public interface UpdatableView {
 	public void updateAddUserToProject(boolean success, String message);
 	public void updateLoadAllMembers(boolean success, String message, List<Member> user);
 	public void updateRegisterAndAssign(boolean success, String message);
+	public void updateDeleteProject(boolean success, String message, List<Project> projects);
 	
 	// Set listeners. Start methods with prefix: set
 	public void setMemberListener(MemberListener memberListener);

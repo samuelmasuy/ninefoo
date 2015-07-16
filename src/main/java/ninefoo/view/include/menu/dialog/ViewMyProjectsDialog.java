@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 
+import ninefoo.config.Annotation.FinalVersion;
 import ninefoo.config.RoleNames;
 import ninefoo.helper.DateHelper;
 import ninefoo.lib.component.PMButton;
@@ -171,6 +172,7 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 		this.editButton.addActionListener(new ActionListener() {
 			
 			@Override
+			@FinalVersion(version="1.0")
 			public void actionPerformed(ActionEvent e) {
 				
 				// If no project selected, show error
@@ -188,6 +190,7 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 		this.deleteButton.addActionListener(new ActionListener() {
 			
 			@Override
+			@FinalVersion(version = "1.0")
 			public void actionPerformed(ActionEvent e) {
 				
 				// If no project selected, show error
@@ -196,9 +199,7 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 				
 				// If project selected
 				else if(toolsListener != null){
-					String projectName = "'" + projectList.getSelectedValue() + "'";
-					int reply = JOptionPane.showConfirmDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("DELETE_CONFIRMATION_TEXT"), LanguageText.getConstant("PROJECT").toLowerCase(), projectName) , LanguageText.getConstant("DELETE_CONFIRMATION"), JOptionPane.YES_NO_OPTION);
-					if (reply == JOptionPane.YES_OPTION){
+					if (JOptionPane.showConfirmDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("DELETE_CONFIRMATION_TEXT"), LanguageText.getConstant("PROJECT").toLowerCase(), String.format("'%s'", projectList.getSelectedValue())) , LanguageText.getConstant("DELETE_CONFIRMATION"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 					    toolsListener.deleteProject(ViewMyProjectsDialog.this, projects.get(projectList.getSelectedIndex()));
 					}
 				}

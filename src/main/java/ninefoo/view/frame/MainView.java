@@ -283,9 +283,15 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
-			public void deleteProject(ViewMyProjectsDialog parentDialog, Project project) {
-				// TODO Auto-generated method stub
+			@FinalVersion(version = "1.0")
+			public void deleteProject(ViewMyProjectsDialog dialog, Project project) {
 				
+				// Set dialog
+				viewMyProjectsDialog = dialog;
+				
+				// pass it to controller
+				if(projectListener != null)
+					projectListener.deleteProject(project);
 			}
 
 			@Override
@@ -743,6 +749,31 @@ public class MainView extends JFrame implements UpdatableView{
 				
 				// Display error
 				addUserToProjectDialog.setErrorMessage(message);
+			}
+		}
+	}
+	
+	@Override
+	@FinalVersion(version = "1.0")
+	public void updateDeleteProject(boolean success, String message, List<Project> projects) {
+		
+		// If view window is opened
+		if(viewMyProjectsDialog != null) {
+			
+			// If success
+			if(success) {
+				
+				// Display success
+				viewMyProjectsDialog.setSuccessMessage(message);
+				
+				// Populate new list of projects
+				viewMyProjectsDialog.populateProjectList(projects);
+				
+			// If fails
+			} else {
+				
+				// Display error
+				viewMyProjectsDialog.setErrorMessage(message);
 			}
 		}
 	}

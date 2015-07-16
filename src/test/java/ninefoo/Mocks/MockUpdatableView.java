@@ -164,4 +164,10 @@ public class MockUpdatableView implements UpdatableView {
     public void setActivityListener(ActivityListener activityListener) {
         this.called_method = "setActivityListener";
     }
+
+	@Override
+	public void updateDeleteProject(boolean success, String message, List<Project> projects) {
+		// TODO Auto-generated method stub
+		
+	}
 }
