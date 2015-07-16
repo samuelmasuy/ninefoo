@@ -548,9 +548,9 @@ public class MainView extends JFrame implements UpdatableView{
 				this.toolsPanel.setAddUserEnabled(true);
 				this.tableChartPanel.setAddActivityEnabled(true);
 				
-				//TODO visible toolbar
-				this.tableChartPanel.setAddActivityEnabled(true);
-			
+				// Enable tool bar below table
+				this.tableChartPanel.setVisibleToolbar(true);
+				
 			// If project not created
 			} else {
 				

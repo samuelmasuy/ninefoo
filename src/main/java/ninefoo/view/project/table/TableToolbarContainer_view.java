@@ -100,4 +100,14 @@ public class TableToolbarContainer_view extends JPanel{
 	public void setViewActivityEnabled(boolean enable){
 		this.tableToolbarPanel.setViewActivityEnabled(enable);
 	}
+	
+	/**
+	 * Show/Hide tool bar below the table
+	 * @param isVisible
+	 */
+	public void setVisibleToolbar(boolean isVisible){
+		this.tableToolbarPanel.setVisible(isVisible);
+		this.tableToolbarPanel.repaint();
+		this.tableToolbarPanel.revalidate();
+	}
 }

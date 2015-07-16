@@ -48,6 +48,9 @@ public class TableChartSlider_view extends JPanel{
 		this.splitPane.setDividerSize(4);
 		this.splitPane.setContinuousLayout(true);
 		
+		// By default the tool bar is not visible
+		this.setVisibleToolbar(false);
+		
 		// Add components
 		this.add(splitPane);
 	}
@@ -135,5 +138,13 @@ public class TableChartSlider_view extends JPanel{
 	 */
 	public void setViewActivityEnabled(boolean enable){
 		this.tableContainer.setViewActivityEnabled(enable);
+	}
+	
+	/**
+	 * Show/Hide tool bar below the table
+	 * @param isVisible
+	 */
+	public void setVisibleToolbar(boolean isVisible){
+		this.tableContainer.setVisibleToolbar(isVisible);
 	}
 }
