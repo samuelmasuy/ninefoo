@@ -4,21 +4,36 @@
 	"language" : {
 		"REQUIRED" : "%s est requis.",
 		"WRONG_FORMAT" : "%s est invalide.",
-		"WRONG_USERNAME_PASSWORD" : "Nom d'utilisateur ou mot de passe incorrect.",
+		"WRONG_USERNAME_PASSWORD" : "Nom d'utilisateur ou mot de passe invalide.",
 		"WRONG_DATE_BEFORE_DATE" : "%s devrait etre au plus %s",
 		"WRONG_DATE_AFTER_DATE" : "%s devrait etre au moins %s",
 		"MIN_LENGTH" : "%s longueur doit etre au moins %d.",
 		"MAX_LENGTH" : "%s longueur doit etre au plus %d.",
-		"REGISTRATION_SUCCESS" : "Inscription reussie! Connecter vous.",
+		"REGISTRATION_SUCCESS" : "Inscription réussie! Connectez vous.",
 		"UNIQUE" : "%s doit etre unique",
+		"MAX_NUM_VALUE": "%s chiffre excède limite de %d",
+		"MIN_NUM_VALUE": "%s chiffre est moins que le minimum %d",
+
 		
-		"OPERATION_FAILED" : "L'operation a echoue",
-		"OPERATION_SUCCESSFUL" : "Operation reussie",
+		"OPERATION_FAILED" : "L'opération a échoué",
+		"OPERATION_SUCCESSFUL" : "Opération réussie",
 		"ERROR_OCCURED" : "Une erreur s'est produite",
+		"MISSING_OPEN" : "Selectionner un %s pour ouvrir",
+		"MISSING_EDIT" : "Selectionner un %s pour modifier",
+		"MISSING_DELETE": "Selectionner un %s pour supprimer",
+		"MISSING_OPEN_ACT" : "Selectionner une %s pour ouvrir",
+		"MISSING_EDIT_ACT" : "Selectionner une %s pour modifier",
+		"MISSING_DELETE_ACT": "Selectionner une %s pour supprimer",
+		"MISSING_VIEW_ACT" :	"Selectionner une %s pour visionner",
+
+
+		"DELETE_CONFIRMATION" : "Confirmation Supprimer",
+		"DELETE_CONFIRMATION_TEXT" : "Êtes-vous sûr de vouloir supprimer %s: %s",
+
 		
-		"UPDATED" : "%s mis a jour avec succes!",
-		"DELETED" : "%s supprime avec succes!",
-		"LOADED" : "%s charge avec succes!",
-		"CREATED" : "%s cree avec succes!"
+		"UPDATED" : "%s mis à jour avec succès!",
+		"DELETED" : "%s supprime avec succès!",
+		"LOADED" : "%s charge avec succès!",
+		"CREATED" : "%s créé avec succès!"
 	}	
 }

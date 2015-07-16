@@ -1,4 +1,4 @@
-package ninefoo.view.include.menu.dialog;
+package ninefoo.view.project.table.dialog;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -7,16 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import ninefoo.lib.autocompleteComboBox.AutocompleteComboBox;
+import ninefoo.lib.component.PMButton;
+import ninefoo.lib.component.PMLabel;
 import ninefoo.lib.datePicker.DatePicker;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.layout.dialog.CenterScrollSouthButtonDialog;
@@ -24,16 +22,18 @@ import ninefoo.lib.layout.dialog.FormDialog;
 import ninefoo.lib.multiDropdown.MultiDropdown;
 import ninefoo.model.object.Activity;
 import ninefoo.model.object.Member;
-import ninefoo.view.include.menu.listener.ToolsListener;
+import ninefoo.view.project.table.listener.TableToolsListener;
 
 /**
  * Dialog for creating an activity
- * @author Sebouh Bardakjian
+ * @author Sebouh Bardakjian, Amir El Bawab
  */
 public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 	
+	private static final long serialVersionUID = -3895150614923358876L;
+	
 	// Define components
-	private JButton createButton;
+	private PMButton createButton;
 	private JTextField activityLabel;
 	private JTextArea description;
 	private JTextField duration;
@@ -55,14 +55,14 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 	/** 
 	 *  Constructor
 	 */
-	public CreateActivityDialog(JFrame parentFrame, final ToolsListener toolsListener) {
+	public CreateActivityDialog(JFrame parentFrame, final TableToolsListener tableToolsListener) {
 		
 		// Load data
-		toolsListener.loadAllMembersForCreateActivityDialog(this);
-		toolsListener.loadActivitiesForCreateActivityDialog(this);
+		tableToolsListener.loadAllMembersForCreateActivityDialog(this);
+		tableToolsListener.loadActivitiesForCreateActivityDialog(this);
 		
 		// Initialize components
-		this.createButton = new JButton(LanguageText.getConstant("CREATE"));
+		this.createButton = new PMButton(LanguageText.getConstant("CREATE"));
 		this.activityLabel = new JTextField(10);
 		this.description = new JTextArea(3,10);
 		this.duration = new JTextField(10);
@@ -82,8 +82,8 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (toolsListener != null)
-					toolsListener.createActivity();
+				if (tableToolsListener != null)
+					tableToolsListener.createActivity();
 			}
 		});
 		
@@ -113,48 +113,48 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 				prerequisiteDropdown.setBorder(BorderFactory.createCompoundBorder(prerequisiteDropdown.getBorder(), inputPadding));
 				
 				// Add components
-				this.table.put(new JLabel(LanguageText.getConstant("NAME")));
+				this.table.put(new PMLabel(LanguageText.getConstant("NAME")));
 				this.table.put(activityLabel);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("DESCRIPTION")));
+				this.table.put(new PMLabel(LanguageText.getConstant("DESCRIPTION")));
 				this.table.put(new JScrollPane(description));
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("DURATION_ACT")));
+				this.table.put(new PMLabel(LanguageText.getConstant("DURATION_ACT")));
 				this.table.put(duration);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("OPTIMISTIC_ACT")));
+				this.table.put(new PMLabel(LanguageText.getConstant("OPTIMISTIC_ACT")));
 				this.table.put(optimisticDuration);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("LIKELY_ACT")));
+				this.table.put(new PMLabel(LanguageText.getConstant("LIKELY_ACT")));
 				this.table.put(likelyDuration);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("PESSIMISTIC_ACT")));
+				this.table.put(new PMLabel(LanguageText.getConstant("PESSIMISTIC_ACT")));
 				this.table.put(pessimisticDuration);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("COST_ACT")));
+				this.table.put(new PMLabel(LanguageText.getConstant("COST_ACT")));
 				this.table.put(cost);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("START_ACT")));
+				this.table.put(new PMLabel(LanguageText.getConstant("START_ACT")));
 				this.table.put(startDate);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("FINISH_ACT")));
+				this.table.put(new PMLabel(LanguageText.getConstant("FINISH_ACT")));
 				this.table.put(finishDate);
 				
 				this.table.newRow();
-				this.table.put(new JLabel(LanguageText.getConstant("MEMBER_ACT")));
+				this.table.put(new PMLabel(LanguageText.getConstant("MEMBER_ACT")));
 				this.table.put(memberBox);
 				
 				this.table.newRow();
 				this.table.placeCenterTop();
-				this.table.put(new JLabel(LanguageText.getConstant("PREREQ_ACT")));
+				this.table.put(new PMLabel(LanguageText.getConstant("PREREQ_ACT")));
 				this.table.put(prerequisiteDropdown);
 			}
 		});

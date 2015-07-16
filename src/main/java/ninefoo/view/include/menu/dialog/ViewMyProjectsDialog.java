@@ -12,10 +12,8 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -23,8 +21,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 
+import ninefoo.config.Annotation.FinalVersion;
 import ninefoo.config.RoleNames;
 import ninefoo.helper.DateHelper;
+import ninefoo.lib.component.PMButton;
+import ninefoo.lib.component.PMLabel;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.layout.dialog.CenterFormSouthButtonDialog;
 import ninefoo.lib.layout.dialog.FormDialog;
@@ -42,12 +43,12 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 	private static final long serialVersionUID = 216394661255136241L;
 	
 	// Create components
-	private JButton openButton, editButton, deleteButton;
+	private PMButton openButton, editButton, deleteButton;
 	private JComboBox<String> roleBox;
 	private JList<String> projectList;
 	private DefaultListModel<String> listModel;
 	private JScrollPane scrollList;
-	private JLabel nameInfo, budgetInfo, createdDateInfo, startDateInfo, deadlineDateInfo;
+	private PMLabel nameInfo, budgetInfo, createdDateInfo, startDateInfo, deadlineDateInfo;
 	private JTextArea descriptionInfo;
 	private ArrayList<Project> projects;
 	
@@ -69,19 +70,19 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 		this.setTitle(LanguageText.getConstant("VIEW_MY_PROJECTS_PRO"));
 		
 		// Initialize components
-		this.openButton = new JButton(LanguageText.getConstant("OPEN_PRO"));
-		this.editButton = new JButton(LanguageText.getConstant("EDIT_PRO"));
-		this.deleteButton = new JButton(LanguageText.getConstant("DELETE_PRO"));
+		this.openButton = new PMButton(LanguageText.getConstant("OPEN_PRO"));
+		this.editButton = new PMButton(LanguageText.getConstant("EDIT_PRO"));
+		this.deleteButton = new PMButton(LanguageText.getConstant("DELETE_PRO"));
 		this.roleBox = new JComboBox<String>(RoleNames.ROLES);
 		this.listModel = new DefaultListModel<>();
 		this.projectList = new JList<String>(listModel);
 		this.scrollList = new JScrollPane(this.projectList);
-		this.nameInfo = new JLabel();
-		this.budgetInfo = new JLabel();
+		this.nameInfo = new PMLabel();
+		this.budgetInfo = new PMLabel();
 		this.descriptionInfo = new JTextArea();
-		this.createdDateInfo = new JLabel();
-		this.startDateInfo = new JLabel();
-		this.deadlineDateInfo = new JLabel();
+		this.createdDateInfo = new PMLabel();
+		this.startDateInfo = new PMLabel();
+		this.deadlineDateInfo = new PMLabel();
 		
 		// Set listeners
 		this.toolsListener = toolsListener;
@@ -111,7 +112,7 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 				// Add components
 				this.table.placeCenterLeft();
 				this.table.paddingCell(5, 5, 5, 10);
-				this.table.put(new JLabel("Role"));
+				this.table.put(new PMLabel("Role"));
 				this.table.put(roleBox);
 
 				this.table.newRow();
@@ -171,6 +172,7 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 		this.editButton.addActionListener(new ActionListener() {
 			
 			@Override
+			@FinalVersion(version="1.0")
 			public void actionPerformed(ActionEvent e) {
 				
 				// If no project selected, show error
@@ -188,6 +190,7 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 		this.deleteButton.addActionListener(new ActionListener() {
 			
 			@Override
+			@FinalVersion(version = "1.0")
 			public void actionPerformed(ActionEvent e) {
 				
 				// If no project selected, show error
@@ -196,9 +199,7 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 				
 				// If project selected
 				else if(toolsListener != null){
-					String projectName = "'" + projectList.getSelectedValue() + "'";
-					int reply = JOptionPane.showConfirmDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("DELETE_CONFIRMATION_TEXT"), LanguageText.getConstant("PROJECT").toLowerCase(), projectName) , LanguageText.getConstant("DELETE_CONFIRMATION"), JOptionPane.YES_NO_OPTION);
-					if (reply == JOptionPane.YES_OPTION){
+					if (JOptionPane.showConfirmDialog(ViewMyProjectsDialog.this, String.format(LanguageText.getConstant("DELETE_CONFIRMATION_TEXT"), LanguageText.getConstant("PROJECT").toLowerCase(), String.format("'%s'", projectList.getSelectedValue())) , LanguageText.getConstant("DELETE_CONFIRMATION"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 					    toolsListener.deleteProject(ViewMyProjectsDialog.this, projects.get(projectList.getSelectedIndex()));
 					}
 				}
@@ -387,27 +388,27 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 			table.placeTopLeft();
 			
 			// Add components
-			table.put(new JLabel(LanguageText.getConstant("PROJECT")));
+			table.put(new PMLabel(LanguageText.getConstant("PROJECT")));
 			table.put(nameInfo);
 			
 			table.newRow();
-			table.put(new JLabel(LanguageText.getConstant("BUDGET")));
+			table.put(new PMLabel(LanguageText.getConstant("BUDGET")));
 			table.put(budgetInfo);
 			
 			table.newRow();
-			table.put(new JLabel(LanguageText.getConstant("DATE_CREATED")));
+			table.put(new PMLabel(LanguageText.getConstant("DATE_CREATED")));
 			table.put(createdDateInfo);
 			
 			table.newRow();
-			table.put(new JLabel(LanguageText.getConstant("START_DATE")));
+			table.put(new PMLabel(LanguageText.getConstant("START_DATE")));
 			table.put(startDateInfo);
 			
 			table.newRow();
-			table.put(new JLabel(LanguageText.getConstant("DEADLINE")));
+			table.put(new PMLabel(LanguageText.getConstant("DEADLINE")));
 			table.put(deadlineDateInfo);
 			
 			table.newRow();
-			table.put(new JLabel(LanguageText.getConstant("DESCRIPTION")));
+			table.put(new PMLabel(LanguageText.getConstant("DESCRIPTION")));
 			
 			table.newRow();
 			table.put(descriptionScroll, 2);

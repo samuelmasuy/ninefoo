@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import ninefoo.lib.component.PMLabel;
+
 /**
  * Footer status bar.
  * @author Amir El Bawab
@@ -15,7 +17,7 @@ public class StatusBar extends JPanel{
 	private static final long serialVersionUID = -5534459903549181858L;
 	
 	// Define components
-	private JLabel status;
+	private PMLabel status;
 	
 	// Constructor
 	public StatusBar(){
@@ -24,7 +26,7 @@ public class StatusBar extends JPanel{
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		
 		// Initialize components
-		this.status = new JLabel("e.g. A new project has been created successfully");
+		this.status = new PMLabel("e.g. A new project has been created successfully");
 		
 		// Add components
 		this.add(this.status);

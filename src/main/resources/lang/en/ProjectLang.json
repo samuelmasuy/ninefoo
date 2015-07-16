@@ -8,6 +8,13 @@
 		"VIEW_MY_PROJECTS_PRO": "View my projects",
 		"OPEN_PRO"			: "Open",
 		"EDIT_PRO"			: "Edit",
-		"DELETE_PRO"		: "Delete"
+		"DELETE_PRO"		: "Delete",
+		"NEW_PROJECT_PRO"	: "New Project",
+		"CREATE_A_NEW_PROJECT_PRO" : "Create a new project",
+		"VIEW_PROJECTS_PRO"	: "View Projects",
+		"VIEW_MY_PROJECTS_PRO": "View my projects",
+		"ADD_USER_PRO"		: "Add User",
+		"ASSIGN_USERS_TO_THE_PROJECT_PRO" : "Assign users to the project"
+		
 	}
 }

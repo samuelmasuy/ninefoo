@@ -9,13 +9,13 @@ import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import ninefoo.helper.LayoutHelper;
+import ninefoo.lib.component.PMButton;
+import ninefoo.lib.component.PMLabel;
 import ninefoo.lib.layout.panel.FormPanel;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.view.member.listeners.RegisterListener;
@@ -29,22 +29,22 @@ public class Register_view extends FormPanel{
 	private static final long serialVersionUID = 6743725688945067304L;
 	
 	// Define components
-	private JButton registerButton;
+	private PMButton registerButton;
 	private JTextField usernameField, firstName, lastName;
 	private JPasswordField passwordField;
-	private JLabel loginText;
+	private PMLabel loginText;
 	private RegisterListener registerListener;
 	
 	// Constructor
 	public Register_view() {
 		
 		// Initialize components
-		this.registerButton = new JButton(LanguageText.getConstant("REGISTER"));
+		this.registerButton = new PMButton(LanguageText.getConstant("REGISTER"));
 		this.firstName = new JTextField(10);
 		this.lastName = new JTextField(10);
 		this.usernameField = new JTextField(10);
 		this.passwordField = new JPasswordField(10);
-		this.loginText = new JLabel(LanguageText.getConstant("LOGIN_LINK"));
+		this.loginText = new PMLabel(LanguageText.getConstant("LOGIN_LINK"));
 		
 		// Configure buttons
 		Border inputPadding = BorderFactory.createEmptyBorder(3, 3, 3, 3);
@@ -130,25 +130,25 @@ public class Register_view extends FormPanel{
 		// Add components to fixedPanel
 		int row = 0;
 		LayoutHelper.gcGrid(gc, row++, 0, 2);
-		fixedPanel.add(new JLabel(new ImageIcon(getClass().getResource("/images/register_user.png"))), gc);
+		fixedPanel.add(new PMLabel(new ImageIcon(getClass().getResource("/images/register_user.png"))), gc);
 		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
-		fixedPanel.add(new JLabel(LanguageText.getConstant("FIRST_NAME")), gc);
+		fixedPanel.add(new PMLabel(LanguageText.getConstant("FIRST_NAME")), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.firstName, gc);
 		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
-		fixedPanel.add(new JLabel(LanguageText.getConstant("LAST_NAME")), gc);
+		fixedPanel.add(new PMLabel(LanguageText.getConstant("LAST_NAME")), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.lastName, gc);
 		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
-		fixedPanel.add(new JLabel(LanguageText.getConstant("USERNAME")), gc);
+		fixedPanel.add(new PMLabel(LanguageText.getConstant("USERNAME")), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.usernameField, gc);
 		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
-		fixedPanel.add(new JLabel(LanguageText.getConstant("PASSWORD")), gc);
+		fixedPanel.add(new PMLabel(LanguageText.getConstant("PASSWORD")), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.passwordField, gc);
 		

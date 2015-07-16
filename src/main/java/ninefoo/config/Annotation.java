@@ -18,7 +18,7 @@ public class Annotation {
 	 */
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.METHOD)
-	public @interface autoload{
+	public @interface AutoloadAtRuntime{
 		boolean active() default true;
 		int priority() default 0;
 	}
@@ -29,7 +29,19 @@ public class Annotation {
 	 */
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.TYPE)
-	public @interface autoloadConfig{
+	public @interface AutoloadConfig{
 		int lowestPriority() default 0;
 	}
+	
+	/**
+	 * Methods and classes that have this annotation should not be modified in this version.
+	 * If any changes are required, mention it in the @param changesRequiredInNextVersion
+	 */
+	@Retention(RetentionPolicy.SOURCE)
+	@Target({ElementType.METHOD, ElementType.TYPE})
+	public @interface FinalVersion {
+		String version();
+		String[] changesRequiredInNextVersion() default {};
+	}
+	
 }

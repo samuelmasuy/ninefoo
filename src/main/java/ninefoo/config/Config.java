@@ -5,8 +5,8 @@ import java.lang.reflect.Method;
 
 import org.apache.logging.log4j.LogManager;
 
-import ninefoo.config.Annotation.autoload;
-import ninefoo.config.Annotation.autoloadConfig;
+import ninefoo.config.Annotation.AutoloadAtRuntime;
+import ninefoo.config.Annotation.AutoloadConfig;
 
 /**
  * This class contains constants and methods that configure the application
@@ -49,7 +49,7 @@ public class Config {
 		// Auto load methods in Autoload.java with annotation @autoload(active = true)
 		// The methods are not executed in any order, so make sure they don't conflict, or use priority attribute
 		Autoload autoload = new Autoload();
-		autoloadConfig configAnnotation = autoload.getClass().getAnnotation(autoloadConfig.class);
+		AutoloadConfig configAnnotation = autoload.getClass().getAnnotation(AutoloadConfig.class);
 		Method methods[] = autoload.getClass().getMethods();
 
 		// If class annotation exists
@@ -58,7 +58,7 @@ public class Config {
 			// Execute methods by priority
 			for(int priority=0; priority <= configAnnotation.lowestPriority(); priority++){
 				for(Method method : methods){
-					autoload autoloadAnnotation = method.getAnnotation(autoload.class);
+					AutoloadAtRuntime autoloadAnnotation = method.getAnnotation(AutoloadAtRuntime.class);
 					
 					if(autoloadAnnotation != null){
 						if(autoloadAnnotation.active() && autoloadAnnotation.priority() == priority){
@@ -79,7 +79,7 @@ public class Config {
 			
 			// Run methods with priority more than last priority
 			for(Method method : methods){
-				autoload autoloadAnnotation = method.getAnnotation(autoload.class);
+				AutoloadAtRuntime autoloadAnnotation = method.getAnnotation(AutoloadAtRuntime.class);
 				
 				if(autoloadAnnotation != null){
 					if(autoloadAnnotation.active() && autoloadAnnotation.priority() > configAnnotation.lowestPriority()){

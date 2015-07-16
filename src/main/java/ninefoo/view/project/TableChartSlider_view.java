@@ -2,6 +2,7 @@ package ninefoo.view.project;
 
 import java.awt.BorderLayout;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -9,7 +10,8 @@ import javax.swing.JSplitPane;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.object.Project;
 import ninefoo.view.project.chart.GanttChart_view;
-import ninefoo.view.project.table.TableContainer_view;
+import ninefoo.view.project.table.TableToolbarContainer_view;
+import ninefoo.view.project.table.listener.TableToolsListener;
 
 /**
  * Panel container of a the table and Gantt chart
@@ -20,7 +22,7 @@ public class TableChartSlider_view extends JPanel{
 	private static final long serialVersionUID = 1821070698625712816L;
 	
 	// Declare panels
-	private TableContainer_view tableContainer;
+	private TableToolbarContainer_view tableContainer;
 	private GanttChart_view chartPanel;
 	private JSplitPane splitPane;
 	private Project project;
@@ -28,13 +30,13 @@ public class TableChartSlider_view extends JPanel{
 	/**
 	 * Constructor
 	 */
-	public TableChartSlider_view() {
+	public TableChartSlider_view(JFrame parentFrame) {
 		
 		// Set layout
 		this.setLayout(new BorderLayout());
 		
 		// Initialize panels
-		this.tableContainer = new TableContainer_view(this);
+		this.tableContainer = new TableToolbarContainer_view(parentFrame, this);
 		this.chartPanel = new GanttChart_view();
 		
 		// Add the panels to the splitter
@@ -45,6 +47,9 @@ public class TableChartSlider_view extends JPanel{
 		this.splitPane.setDividerLocation(0.5);
 		this.splitPane.setDividerSize(4);
 		this.splitPane.setContinuousLayout(true);
+		
+		// By default the tool bar is not visible
+		this.setVisibleToolbar(false);
 		
 		// Add components
 		this.add(splitPane);
@@ -93,5 +98,53 @@ public class TableChartSlider_view extends JPanel{
 	 */
 	public void reset(){
 		this.tableContainer.resetTable();
+	}
+	
+	/**
+	 * Set table tools listener
+	 * @param tableToolsListener
+	 */
+	public void setTableToolsListener(TableToolsListener tableToolsListener){
+		tableContainer.setTableToolsListener(tableToolsListener);
+	}
+	
+	/**
+	 * Set new activity button enabled
+	 * @param enable Boolean
+	 */
+	public void setAddActivityEnabled(boolean enable){
+		this.tableContainer.setAddActivityEnabled(enable);
+	}
+	
+	/**
+	 * Set edit activity button enabled
+	 * @param enable Boolean
+	 */
+	public void setEditActivityEnabled(boolean enable){
+		this.tableContainer.setEditActivityEnabled(enable);
+	}
+	
+	/**
+	 * Set delete activity button enabled
+	 * @param enable Boolean
+	 */
+	public void setDeleteActivityEnabled(boolean enable){
+		this.tableContainer.setDeleteActivityEnabled(enable);
+	}
+	
+	/**
+	 * Set View activity details button enabled
+	 * @param enable Boolean
+	 */
+	public void setViewActivityEnabled(boolean enable){
+		this.tableContainer.setViewActivityEnabled(enable);
+	}
+	
+	/**
+	 * Show/Hide tool bar below the table
+	 * @param isVisible
+	 */
+	public void setVisibleToolbar(boolean isVisible){
+		this.tableContainer.setVisibleToolbar(isVisible);
 	}
 }

@@ -1,0 +1,21 @@
+{
+	"name" : "Project language",
+	"description" : "Language related to Project. Include the suffix _PRO for each key",
+	"language" : {
+		"UPDATE_PROJECT" 	: "Mettre à jour projet",
+		"CREATE_ADD_PRO"		: "Créer et Ajouter",
+		"ADD_USER_PRO"		: "Ajouter utilisateur au projet",
+		"VIEW_MY_PROJECTS_PRO": "Voir mes projets",
+		"OPEN_PRO"			: "Ouvrir",
+		"EDIT_PRO"			: "Modifier",
+		"DELETE_PRO"		: "Supprimer"
+		"NEW_PROJECT_PRO"	: "Nouveau Projet",
+		"CREATE_A_NEW_PROJECT_PRO" : "Créer un nouveau projet",
+		"VIEW_PROJECTS_PRO"	: "Voir Projets",
+		"VIEW_MY_PROJECTS_PRO": "Voir mes projets",
+		"ADD_USER_PRO"		: "Ajouter Utilisateur",
+		"ASSIGN_USERS_TO_THE_PROJECT_PRO" : "Assigner utilisateur au projet"
+
+
+	}
+}

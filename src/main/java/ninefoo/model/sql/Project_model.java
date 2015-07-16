@@ -154,60 +154,6 @@ public class Project_model extends AbstractModel{
     }
 
     /**
-     * Get all projects by member id and role id
-     * Added by Amir
-     * @param memberId
-     * @param roleId
-     * @return List of projects
-     */
-    public List<Project> getAllProjectsByMemberAndRole(int memberId, int roleId){
-    	
-    	// Open
-    	this.open();
-    	
-    	List<Project> allProjects = new ArrayList<>();
-    	
-    	// Query
-        sql =  	  "SELECT P.project_id, P.project_name, P.create_date, P.start_date, P.update_date, P.budget, P.deadline_date, P.description "
-        		+ "FROM Project P, Project_member PM "
-        		+ "WHERE PM.project_id = P.project_id "
-        		+ "AND PM.member_id = ? "
-        		+ "AND PM.role_id = ?";
-        try {
-        	
-        	// Prepare
-        	this.prepareStatement();
-        	
-        	// Data
-        	ps.setInt(1, memberId);
-        	ps.setInt(2, roleId);
-        	
-        	// Run
-            result = ps.executeQuery();
-
-            // Get all
-            while (result.next()) {
-                Project nextProject = getNextProject(result);
-
-                if (nextProject != null)
-                    allProjects.add(nextProject);
-            }
-
-            return allProjects;
-        
-        // Error
-        } catch (SQLException e) {
-            LOGGER.error("Could not get projects from db --- detailed info: " + e.getMessage());
-        
-        // Close
-        } finally {
-        	this.close();
-        }
-
-        return null;
-    }
-    
-    /**
      * Deletes a project from DB corresponding to the specified Project object.
      * @param project Project object to be deleted from DB.
      * @return True if a record was deleted; False otherwise.

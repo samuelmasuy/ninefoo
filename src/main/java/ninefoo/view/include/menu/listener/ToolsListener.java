@@ -2,7 +2,6 @@ package ninefoo.view.include.menu.listener;
 
 import ninefoo.model.object.Project;
 import ninefoo.view.include.menu.dialog.AddUserToProjectDialog;
-import ninefoo.view.include.menu.dialog.CreateActivityDialog;
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
 import ninefoo.view.include.menu.dialog.EditProjectDialog;
 import ninefoo.view.include.menu.dialog.ViewAssignedActivitiesDialog;
@@ -17,9 +16,8 @@ public interface ToolsListener {
 	
 	// Create
 	public void newProject(CreateProjectDialog formDialog, String name, String budget, String startDate, String deadline, String description);
-	public void createUser(String firstName, String lastName, String username, String password);
+	public void createAndAssignUserToProject(String firstName, String lastName, String username, String password, String roleName, int projectId);
 	public void addUserToProject(AddUserToProjectDialog dialog, int memberId, int projectId, String role);
-	public void createActivity();
 	
 	// Load
 	public void loadAllMyProjectsByRole(ViewMyProjectsDialog viewMyProjectsDialog, String roleName);
@@ -27,12 +25,9 @@ public interface ToolsListener {
 	public void loadEditProjectFields(EditProjectDialog editProjectDialog, int projectId);
 	public void loadAssignedActivitiesProject(ViewAssignedActivitiesDialog dialog);
 	public void loadAllMembersForAddUserToProjectDialog(AddUserToProjectDialog dialog);
-	public void loadAllMembersForCreateActivityDialog(CreateActivityDialog dialog);
-	public void loadActivitiesForCreateActivityDialog(CreateActivityDialog dialog);
 	
 	// Update
 	public void updateProject(ViewMyProjectsDialog parentDialog, EditProjectDialog dialog, int projectId, String name, String budget, String startDate, String deadline, String description);
-	public void updateActivity();
 	
 	//Delete
 	public void deleteProject(ViewMyProjectsDialog parentDialog, Project project);

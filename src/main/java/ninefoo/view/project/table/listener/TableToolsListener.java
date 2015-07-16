@@ -1,5 +1,10 @@
 package ninefoo.view.project.table.listener;
 
+import javax.swing.JFrame;
+
+import ninefoo.model.object.Activity;
+import ninefoo.view.project.table.dialog.CreateActivityDialog;
+
 /**
  * Listener used to communicate with the Table Container View
  * @author Sebouh Bardakjian
@@ -9,11 +14,15 @@ public interface TableToolsListener {
 	// Create
 	public void createActivity();
 	
+	// Load
+	public void loadAllMembersForCreateActivityDialog(CreateActivityDialog dialog);
+	public void loadActivitiesForCreateActivityDialog(CreateActivityDialog dialog);
+	
 	// Edit
-	public void editActivity();
+	public void updateActivity();
 	
 	// Delete
-	public void deleteActivity();
+	public void deleteActivity(JFrame parentFrame, Activity activity);
 	
 	// View details
 	public void viewActivityDetails();

@@ -6,26 +6,41 @@
 		"WELCOME" : "Bienvenue",
 		"NEW_ACCOUNT" : "Nouveau compte",
 		
-		"FIRST_NAME" : "Prenom",
+		"FIRST_NAME" : "Prénom",
 		"LAST_NAME" : "Nom de famille",
 		"USERNAME" : "Pseudo",
 		"PASSWORD" : "Mot de passe",
 		
 		"REGISTRATION_LINK" : "<html>Pas de compte ? <font color=\"#000099\"><u>Inscrivez-vous</u></font></html>",
-		"LOGIN_LINK" : "<html>Deja inscrit ? <font color=\"#000099\"><u>Connectez-vous</u></font></html>",
+		"LOGIN_LINK" : "<html>Déja inscrit ? <font color=\"#000099\"><u>Connectez-vous</u></font></html>",
 		
-		"LOGIN" : "Connecter",
+		"LOGIN" 	: "Connecter",
+		"LOGOUT"   : "Déconnexion",
 		"REGISTER" : "Enregistrer",
+		"CREATE" 	: "Créer ",
+		"ADD" 	: "Ajouter",
+		"CLOSE" 	: "Fermer",
+
 		
-		"CREATE_NEW_PROJECT" : "Creer un nouveau projet",
-		"CREATE_PROJECT" : "Creer un projet",
-		"DATE_CREATED" : "Date de creation",
+		"CREATE_NEW_PROJECT" : "Créer un nouveau projet",
+		"CREATE_PROJECT" : "Créer un projet",
+		"DATE_CREATED" : "Date de création",
 		"PROJECT" : "Projet",
+		"USER": "Utilisateur",
+		"MEMBER" : "Membre",
+		"MANAGER" : "Gestionnaire",
+		"ROLE" : "Rôle",
 		"NAME" : "Nom",
 		"BUDGET" : "Budget",
 		"DEADLINE" : "Date limite",
 		"DESCRIPTION" : "Description",
 		
-		"START_DATE" : "Date de commencement"
+		"START_DATE" : "Date de commencement",
+		"NEW_MEMBER" : "Nouveau Membre",
+		"REGISTER_A_NEW_MEMBER" : "Enregistrer un nouveau membre"
+		"VIEW_ASSIGNED" : "Voir Assignés",
+		"VIEW_MY_ASSIGNED_TASKS" : "Voir mes activités assignés"
+
+
 	}
 }

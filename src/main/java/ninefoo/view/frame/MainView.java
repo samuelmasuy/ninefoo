@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import ninefoo.config.Annotation.FinalVersion;
 import ninefoo.config.RoleNames;
 import ninefoo.config.Session;
 import ninefoo.model.object.Activity;
@@ -16,8 +17,8 @@ import ninefoo.view.include.footer.StatusBar;
 import ninefoo.view.include.menu.Menu;
 import ninefoo.view.include.menu.Tools;
 import ninefoo.view.include.menu.dialog.AddUserToProjectDialog;
-import ninefoo.view.include.menu.dialog.CreateActivityDialog;
 import ninefoo.view.include.menu.dialog.CreateProjectDialog;
+import ninefoo.view.include.menu.dialog.CreateUserDialog;
 import ninefoo.view.include.menu.dialog.EditProjectDialog;
 import ninefoo.view.include.menu.dialog.ViewAssignedActivitiesDialog;
 import ninefoo.view.include.menu.dialog.ViewMyProjectsDialog;
@@ -30,6 +31,10 @@ import ninefoo.view.member.Register_view;
 import ninefoo.view.member.listeners.LoginListener;
 import ninefoo.view.member.listeners.RegisterListener;
 import ninefoo.view.project.TableChartSlider_view;
+import ninefoo.view.project.table.dialog.CreateActivityDialog;
+import ninefoo.view.project.table.dialog.EditActivityDialog;
+import ninefoo.view.project.table.dialog.ViewActivityDetailsDialog;
+import ninefoo.view.project.table.listener.TableToolsListener;
 
 import org.apache.logging.log4j.LogManager;
 
@@ -56,12 +61,16 @@ public class MainView extends JFrame implements UpdatableView{
 	private Register_view registerPanel;
 	
 	// Define dialogs
+	private AddUserToProjectDialog addUserToProjectDialog;
 	private CreateProjectDialog createProjectDialog;
-	private ViewMyProjectsDialog viewMyProjectsDialog;
+	private CreateUserDialog createUserDialog;
 	private EditProjectDialog editProjectDialog;
 	private ViewAssignedActivitiesDialog viewAssignedActivitiesDialog;
-	private AddUserToProjectDialog addUserToProjectDilaog;
+	private ViewMyProjectsDialog viewMyProjectsDialog;
+	
 	private CreateActivityDialog createActivityDialog;
+	private EditActivityDialog editActivityDialog;
+	private ViewActivityDetailsDialog viewActivityDetailsDialog;
 	
 	// Define variables
 	private JPanel currentCenterPanel;
@@ -85,7 +94,7 @@ public class MainView extends JFrame implements UpdatableView{
 		// Initialize panels
 		this.toolsPanel = new Tools(this);
 		this.statusBarPanel = new StatusBar();
-		this.tableChartPanel = new TableChartSlider_view();
+		this.tableChartPanel = new TableChartSlider_view(this);
 		this.loginPanel = new Login_view();
 		this.registerPanel = new Register_view();
 		
@@ -108,6 +117,7 @@ public class MainView extends JFrame implements UpdatableView{
 			/**
 			 * Switch to register panel
 			 */
+			@FinalVersion(version = "1.0")
 			@Override
 			public void registerLink() {
 				MainView.this.registerPanel.reset();
@@ -119,6 +129,7 @@ public class MainView extends JFrame implements UpdatableView{
 			 * @param username
 			 * @param password
 			 */
+			@FinalVersion(version = "1.0")
 			@Override
 			public void login(String username, String password) {
 				LOGGER.info(String.format("Login info= [%s : %s]", username, password));
@@ -140,6 +151,7 @@ public class MainView extends JFrame implements UpdatableView{
 			 * @param password
 			 */
 			@Override
+			@FinalVersion(version = "1.0")
 			public void register(String firstName, String lastName, String username, String password) {
 				
 				// Logger info
@@ -154,6 +166,7 @@ public class MainView extends JFrame implements UpdatableView{
 			 * Switch to login panel
 			 */
 			@Override
+			@FinalVersion(version = "1.0")
 			public void loginLink() {
 				MainView.this.loginPanel.reset();
 				MainView.this.loadView(loginPanel);
@@ -164,6 +177,7 @@ public class MainView extends JFrame implements UpdatableView{
 		this.toolsPanel.setToolsListener(new ToolsListener() {
 			
 			@Override
+			@FinalVersion(version = "1.0")
 			public void newProject(CreateProjectDialog dialog, String name, String budget, String startDate, String deadline, String description) {
 				LOGGER.info(String.format("Project '%s' has been been submitted!", name));
 				
@@ -179,6 +193,7 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
+			@FinalVersion(version = "1.0")
 			public void logout() {
 				
 				// Logout
@@ -187,6 +202,7 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
+			@FinalVersion(version = "1.0")
 			public void loadAllMyProjectsByRole(ViewMyProjectsDialog dialog, String roleName) {
 
 				LOGGER.info(String.format("Retreiving projects from the DB for user id %d and role %s ", Session.getInstance().getUserId(), roleName.toString()));
@@ -203,6 +219,7 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
+			@FinalVersion(version = "1.0")
 			public void loadProject(ViewMyProjectsDialog dialog, int projectId) {
 				
 				// Store view my projects dialog
@@ -213,6 +230,7 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
+			@FinalVersion(version = "1.0")
 			public void updateProject(ViewMyProjectsDialog parentDialog, EditProjectDialog dialog, int projectId, String name, String budget, String startDate, String deadline, String description) {
 				
 				// Store dialog
@@ -225,6 +243,7 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
+			@FinalVersion(version = "1.0")
 			public void loadEditProjectFields(EditProjectDialog dialog, int projectId) {
 				
 				// Store dialog
@@ -236,15 +255,16 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
-			public void createUser(String firstName, String lastName, String username, String password) {
-				// TODO createUser
+			public void createAndAssignUserToProject(String firstName, String lastName, String username, String password, String roleName, int projectId) {
+				// TODO createAndAssignUserToProject
 			}
 
 			@Override
+			@FinalVersion(version = "1.0")
 			public void addUserToProject(AddUserToProjectDialog dialog, int memberId, int projectId, String role) {
 				
 				// Set the dialog
-				addUserToProjectDilaog = dialog;
+				addUserToProjectDialog = dialog;
 				
 				// Pass it to the controller
 				if(projectListener != null)
@@ -263,36 +283,39 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
-			public void createActivity() {
-				// TODO createActivity
-				System.out.println("Create new activity clicked...");
-			}
-
-			@Override
-			public void deleteProject(ViewMyProjectsDialog parentDialog, Project project) {
-				// TODO Auto-generated method stub
+			@FinalVersion(version = "1.0")
+			public void deleteProject(ViewMyProjectsDialog dialog, Project project) {
 				
-			}
-
-			@Override
-			public void updateActivity() {
-				// TODO Auto-generated method stub
-				System.out.println("Edit activity clicked...");
+				// Set dialog
+				viewMyProjectsDialog = dialog;
 				
+				// pass it to controller
+				if(projectListener != null)
+					projectListener.deleteProject(project);
 			}
 
 			@Override
 			public void loadAllMembersForAddUserToProjectDialog(AddUserToProjectDialog dialog) {
 				
 				// Set the dialog
-				addUserToProjectDilaog = dialog;
+				addUserToProjectDialog = dialog;
 				
 				// Pass to controller
 				if(memberListener != null) {
 					memberListener.loadAllMembers();
 				}
 			}
-
+		});
+		
+		// Add listener to table chart slider
+		this.tableChartPanel.setTableToolsListener(new TableToolsListener() {
+			
+			@Override
+			public void viewActivityDetails() {
+				// TODO Auto-generated method stub
+				
+			}
+			
 			@Override
 			public void loadAllMembersForCreateActivityDialog(CreateActivityDialog dialog) {
 				
@@ -300,9 +323,10 @@ public class MainView extends JFrame implements UpdatableView{
 				createActivityDialog = dialog;
 				
 				// Load all members
-				memberListener.loadAllMembers();
+				if(memberListener != null)
+					memberListener.loadAllMembers();
 			}
-
+			
 			@Override
 			public void loadActivitiesForCreateActivityDialog(CreateActivityDialog dialog) {
 				
@@ -310,6 +334,24 @@ public class MainView extends JFrame implements UpdatableView{
 				createActivityDialog = dialog;
 				
 				//TODO FINISH THAT
+			}
+			
+			@Override
+			public void createActivity() {
+				// TODO createActivity
+				System.out.println("Create new activity clicked...");
+			}
+
+			@Override
+			public void updateActivity() {
+				// TODO Auto-generated method stub
+				System.out.println("Update activity clicked...");
+			}
+
+			@Override
+			public void deleteActivity(JFrame parentFrame, Activity activity) {
+				// TODO Auto-generated method stub
+				System.out.println("Delete activity confirmed...");
 			}
 		});
 		
@@ -326,6 +368,7 @@ public class MainView extends JFrame implements UpdatableView{
 	 * Load view to the center panel
 	 * @param panel
 	 */
+	@FinalVersion(version = "1.0")
 	private void loadView(JPanel panel){
 		
 		// If current center panel is not set, set it
@@ -358,6 +401,7 @@ public class MainView extends JFrame implements UpdatableView{
 	 * @param memberListener
 	 */
 	@Override
+	@FinalVersion(version = "1.0")
 	public void setMemberListener(MemberListener memberListener){
 		this.memberListener = memberListener;
 	};
@@ -367,6 +411,7 @@ public class MainView extends JFrame implements UpdatableView{
 	 * @param memberListener
 	 */
 	@Override
+	@FinalVersion(version = "1.0")
 	public void setProjectListener(ProjectListener projectListener){
 		this.projectListener = projectListener;
 	};
@@ -376,6 +421,7 @@ public class MainView extends JFrame implements UpdatableView{
 	 * @param activityListener
 	 */
 	@Override
+	@FinalVersion(version = "1.0")
 	public void setActivityListener(ActivityListener activityListener) {
 		this.activityListener = activityListener;
 	}
@@ -392,6 +438,7 @@ public class MainView extends JFrame implements UpdatableView{
 	 * @param message
 	 */
 	@Override
+	@FinalVersion(version = "1.0")
 	public void updateLogin(boolean success, String message){
 		
 		// If logged is successful
@@ -414,6 +461,7 @@ public class MainView extends JFrame implements UpdatableView{
 	 * @param message
 	 */
 	@Override
+	@FinalVersion(version = "1.0")
 	public void updateRegister(boolean success, String message){
 		
 		// If register is successful
@@ -435,11 +483,11 @@ public class MainView extends JFrame implements UpdatableView{
 	}
 	
 	@Override
+	@FinalVersion(version = "1.0")
 	public void updateLogout() {
 		this.loginPanel.reset();
 		this.loadView(loginPanel);
 		this.tableChartPanel.reset();
-		this.toolsPanel.setNewActivityEnabled(false);
 		this.toolsPanel.setNewMemberEnabled(false);
 		this.toolsPanel.setAddUserEnabled(false);
 		this.tableChartPanel.setProject(null);
@@ -450,19 +498,19 @@ public class MainView extends JFrame implements UpdatableView{
 	public void updateLoadAllMembers(boolean success, String message, List<Member> users) {
 		
 		// If called from add user to project dialog
-		if(addUserToProjectDilaog != null) {
+		if(addUserToProjectDialog != null) {
 			
 			// If success
 			if(success) {
 				
 				// Populate the list
-				addUserToProjectDilaog.populateUserList(users);
+				addUserToProjectDialog.populateUserList(users);
 				
 			// If fails
 			} else {
 				
 				// Display error
-				addUserToProjectDilaog.setErrorMessage(message);
+				addUserToProjectDialog.setErrorMessage(message);
 			}
 			
 		// If called from create activity dialgo
@@ -501,6 +549,7 @@ public class MainView extends JFrame implements UpdatableView{
 	 * @param message
 	 */
 	@Override
+	@FinalVersion(version = "1.0")
 	public void updateCreateProject(boolean success, String message, Project project){
 		
 		// If dialog exists
@@ -521,10 +570,13 @@ public class MainView extends JFrame implements UpdatableView{
 				this.tableChartPanel.loadProject(project);
 				
 				// Enable manager buttons
-				this.toolsPanel.setNewActivityEnabled(true);
 				this.toolsPanel.setNewMemberEnabled(true);
 				this.toolsPanel.setAddUserEnabled(true);
-			
+				this.tableChartPanel.setAddActivityEnabled(true);
+				
+				// Enable tool bar below table
+				this.tableChartPanel.setVisibleToolbar(true);
+				
 			// If project not created
 			} else {
 				
@@ -540,6 +592,7 @@ public class MainView extends JFrame implements UpdatableView{
 	}
 	
 	@Override
+	@FinalVersion(version = "1.0")
 	public void updateLoadProject(boolean success, String message, Project project) {
 		
 		// If dialog exists
@@ -555,13 +608,14 @@ public class MainView extends JFrame implements UpdatableView{
 				
 				// Enable buttons if role is manager, or else disable
 				if (this.viewMyProjectsDialog.getSelectedRole() == RoleNames.MANAGER){
-					this.toolsPanel.setNewActivityEnabled(true);
 					this.toolsPanel.setNewMemberEnabled(true);
 					this.toolsPanel.setAddUserEnabled(true);
+					//TODO visible toolbar
+					this.tableChartPanel.setAddActivityEnabled(true);
 				}else if (this.viewMyProjectsDialog.getSelectedRole() == RoleNames.MEMBER){
-					this.toolsPanel.setNewActivityEnabled(false);
 					this.toolsPanel.setNewMemberEnabled(false);
 					this.toolsPanel.setAddUserEnabled(false);
+					//TODO hide toolbar
 				}
 				
 				// Close window
@@ -586,43 +640,53 @@ public class MainView extends JFrame implements UpdatableView{
 	}
 
 	@Override
+	@FinalVersion(version = "1.0")
 	public void updateEditProject(boolean success, String message) {
 		
-		// If successful
-		if(success){
+		// If edit window opened
+		if(editProjectDialog != null){
 			
-			// Set success message
-			this.editProjectDialog.setSuccessMessage(message);
-			
-			// Update project
-			this.viewMyProjectsDialog.reloadProjectListByRole();
-			
-			// Close window
-			this.editProjectDialog.dispose();
-			
-			// Clear values
-			this.viewMyProjectsDialog = null;
-			this.editProjectDialog = null;
-			
-		// If error
-		}else{
-			
-			// Display error
-			this.editProjectDialog.setErrorMessage(message);
+			// If successful
+			if(success){
+				
+				// Set success message
+				this.editProjectDialog.setSuccessMessage(message);
+				
+				// Update project
+				this.viewMyProjectsDialog.reloadProjectListByRole();
+				
+				// Close window
+				this.editProjectDialog.dispose();
+				
+				// Clear values
+				this.editProjectDialog = null;
+				
+			// If error
+			}else{
+				
+				// Display error
+				this.editProjectDialog.setErrorMessage(message);
+			}
 		}
 	}
 
 	@Override
+	@FinalVersion(version = "1.0")
 	public void updateLoadAllProjectsByMemberAndRole(List<Project> projects) {
 		
-		// Update parent list
-		this.viewMyProjectsDialog.populateProjectList(projects);
-		
-		// Reset pointer
-		this.viewMyProjectsDialog = null;
+		// If view window exist
+		if(this.viewMyProjectsDialog != null){
+			
+			// Update parent list
+			this.viewMyProjectsDialog.populateProjectList(projects);
+			
+			// Reset pointer
+			this.viewMyProjectsDialog = null;
+		}
 	}
 
 	@Override
+	@FinalVersion(version = "1.0")
 	public void updateLoadEditProjectFields(boolean success, String message, Project project) {
 		
 		// If success
@@ -665,25 +729,51 @@ public class MainView extends JFrame implements UpdatableView{
 	}
 
 	@Override
+	@FinalVersion(version = "1.0")
 	public void updateAddUserToProject(boolean success, String message) {
 		
 		// If not null
-		if(addUserToProjectDilaog != null){
+		if(addUserToProjectDialog != null){
 			
 			// If success
 			if(success) {
 			
 				// Display success
-				addUserToProjectDilaog.setSuccessMessage(message);
+				addUserToProjectDialog.setSuccessMessage(message);
 				
 				// Close dialog
-				addUserToProjectDilaog.dispose();
+				addUserToProjectDialog.dispose();
 				
 			// If fails
 			} else {
 				
 				// Display error
-				addUserToProjectDilaog.setErrorMessage(message);
+				addUserToProjectDialog.setErrorMessage(message);
+			}
+		}
+	}
+	
+	@Override
+	@FinalVersion(version = "1.0")
+	public void updateDeleteProject(boolean success, String message, List<Project> projects) {
+		
+		// If view window is opened
+		if(viewMyProjectsDialog != null) {
+			
+			// If success
+			if(success) {
+				
+				// Display success
+				viewMyProjectsDialog.setSuccessMessage(message);
+				
+				// Populate new list of projects
+				viewMyProjectsDialog.populateProjectList(projects);
+				
+			// If fails
+			} else {
+				
+				// Display error
+				viewMyProjectsDialog.setErrorMessage(message);
 			}
 		}
 	}

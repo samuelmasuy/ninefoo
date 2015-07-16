@@ -6,8 +6,8 @@ import javax.swing.UIManager;
 
 import org.apache.logging.log4j.LogManager;
 
-import ninefoo.config.Annotation.autoload;
-import ninefoo.config.Annotation.autoloadConfig;
+import ninefoo.config.Annotation.AutoloadAtRuntime;
+import ninefoo.config.Annotation.AutoloadConfig;
 import ninefoo.helper.StringHelper;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.object.Member;
@@ -24,19 +24,19 @@ import ninefoo.model.sql.Role_model;
  * To temporarily disable a method, make the <code>active = false</code> in the annotation.
  * @author Amir EL Bawab
  */
-@autoloadConfig(lowestPriority = 2)
+@AutoloadConfig(lowestPriority = 2)
 public class Autoload {
 	
 	// Logger
 	private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 		
-	@autoload
+	@AutoloadAtRuntime
 	public void loadEngLanguage(){
 		LanguageText.setLanguage(LanguageText.ENGLISH);
 		LOGGER.info("Auto loaded language is: English");
 	}
 	
-	@autoload
+	@AutoloadAtRuntime
 	public void setLookAndFeel(){
 		
 		//Look and feel for the cross platform 
@@ -49,13 +49,13 @@ public class Autoload {
 		}
 	}
 	
-	@autoload(active = false)
+	@AutoloadAtRuntime(active = false)
 	public void loadFrLanguage(){
 		LanguageText.setLanguage(LanguageText.FRENCH);
 		LOGGER.info("Auto loaded language is: French");
 	}
 	
-	@autoload
+	@AutoloadAtRuntime
 	public void loadLanguages(){
 		
 		// Add language classes - Exclude the Lang from the class name
@@ -65,7 +65,7 @@ public class Autoload {
 		LanguageText.addLanguage("Project");
 	}
 	
-	@autoload
+	@AutoloadAtRuntime
 	public void createDB(){
 //		File db_file = new File(DbManager.dbName);
 //		if(!db_file.exists()){
@@ -76,7 +76,7 @@ public class Autoload {
 //		}
 	}
 	
-	@autoload(active=true, priority = 1)
+	@AutoloadAtRuntime(active=true, priority = 1)
 	public void createDemoUser(){
 		Member newMember = new Member("hello", "hello", "hello", "hello");
 		Member_model mm = new Member_model();
@@ -84,7 +84,7 @@ public class Autoload {
 		LOGGER.info(String.format("Member %s added!", newMember.getUsername()));
 	}
 	
-	@autoload(active=true, priority = 1)
+	@AutoloadAtRuntime(active=true, priority = 1)
 	public void addRoles(){
 		Role_model role_model = new Role_model();
 		ArrayList<Role> roles = new ArrayList<>(2);
@@ -101,7 +101,7 @@ public class Autoload {
 		LOGGER.info(String.format("Roles %s added to the database", rolesCreated));
 	}
 	
-	@autoload(active=false, priority = 2)
+	@AutoloadAtRuntime(active=false, priority = 2)
 	public void addDummyProject(){
 		Project_model project_model = new Project_model();
 		int id = project_model.insertNewProject(new Project("Amir", Double.valueOf(100), null, null, null));

@@ -22,12 +22,14 @@
 		"PESSIMISTIC_ACT"           : "Pessimistic",
 		"COST_ACT"				 : "Cost",
 		"MEMBER_ACT"                : "Member",
-		"COST_ACT"                  : "Cost",
 		"PREREQ_ACT"                : "Prereq.",
 		"ADD_DEPENDENCY_ACT"		: "Add dependency",
 		"ADD_ACT"				: "Add",
+		"ADD_A_NEW_ACTIVITY_ACT"	: "Add a new activity",
 		"EDIT_ACT"				: "Edit",
+		"EDIT_THE_ACTIVITY_PROPERTIES_ACT" : "Edit the activity properties",
 		"REMOVE_ACT"			: "Remove",
+		"REMOVE_THE_ACTIVITY_ACT"	: "Remove the activity from the project",
 		"VIEW_DETAILS_ACT"		: "View details",
 		"VIEW_ACTIVITY_DETAILS_ACT": "View activity details"
 	}

@@ -15,6 +15,7 @@
 		"LOGIN_LINK" : "<html>Already registered ? <font color=\"#000099\"><u>Login now</u></font></html>",
 		
 		"LOGIN" : "Login",
+		"LOGOUT" : "Logout",
 		"REGISTER" : "Register",
 		"CREATE" : "Create",
 		"ADD" : "Add",
@@ -33,6 +34,11 @@
 		"DEADLINE" : "Deadline",
 		"DESCRIPTION" : "Description",
 		
-		"START_DATE" : "Start date"
+		"START_DATE" : "Start date",
+		
+		"NEW_MEMBER" : "New Member",
+		"REGISTER_A_NEW_MEMBER" : "Register a new member",
+		"VIEW_ASSIGNED" : "View Assigned",
+		"VIEW_MY_ASSIGNED_ACTIVITIES" : "View my assigned activities"
 	}
 }

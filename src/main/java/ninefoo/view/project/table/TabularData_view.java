@@ -77,4 +77,14 @@ public class TabularData_view extends JPanel {
 	public void resetTable(){
 		this.dataTable.empty();
 	}
+	
+	/**
+	 * Get the selected row
+	 * @return activity or <code>NULL</code> if no row is selected
+	 */
+	public Activity getSelectedActivity(){
+		if(this.dataTable.getSelectedRow() >= 0)
+			return this.project.getAcitivies().get(this.dataTable.getSelectedRow());
+		return null;
+	}
 }

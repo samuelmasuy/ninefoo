@@ -11,11 +11,11 @@ import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import ninefoo.lib.autocompleteComboBox.AutocompleteComboBox;
+import ninefoo.lib.component.PMButton;
 
 /**
  * Panel that can have mutliple dropdown fields. You can add more fields by pressing on the button
@@ -37,7 +37,7 @@ public class MultiDropdown extends JPanel{
 	private static final long serialVersionUID = 1560308657758435285L;
 	
 	// Declare components
-	private JButton addButton;
+	private PMButton addButton;
 	private JPanel northPanel, centerPanel;
 	private JScrollPane centerPanelScroll;
 	private ArrayList<AutocompleteAndRemoveWrapper>  listBoxRemoveWrapper;
@@ -48,7 +48,7 @@ public class MultiDropdown extends JPanel{
 		this.setLayout(new BorderLayout());
 					
 		// Initialize
-		this.addButton = new JButton(buttonText, new ImageIcon(getClass().getResource("/images/buttons/general/add.png")));
+		this.addButton = new PMButton(buttonText, new ImageIcon(getClass().getResource("/images/buttons/general/add.png")));
 		this.centerPanel = new JPanel();
 		this.northPanel = new JPanel();
 		this.centerPanelScroll = new JScrollPane(this.centerPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -116,13 +116,13 @@ public class MultiDropdown extends JPanel{
 		
 		// Declare components
 		private AutocompleteComboBox boxField;
-		private JButton removeButton;
+		private PMButton removeButton;
 		
 		public AutocompleteAndRemoveWrapper(String[] data) {
 			
 			// Initialize components
 			this.boxField = new AutocompleteComboBox(data);
-			this.removeButton = new JButton(new ImageIcon(getClass().getResource("/images/buttons/general/remove.png")));
+			this.removeButton = new PMButton(new ImageIcon(getClass().getResource("/images/buttons/general/remove.png")));
 			
 			// Configure button
 			this.removeButton.setBorderPainted(false); 
@@ -140,7 +140,7 @@ public class MultiDropdown extends JPanel{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					JButton clickedButton = (JButton) e.getSource();
+					PMButton clickedButton = (PMButton) e.getSource();
 					
 					// Remove element from list and panel
 					for(int i=0; i < listBoxRemoveWrapper.size(); i++){

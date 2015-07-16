@@ -1,5 +1,7 @@
 package ninefoo.view.listeners;
 
+import ninefoo.model.object.Project;
+
 /**
  * Project Listener used to communicate with the Controller
  * @author Amir El Bawab
@@ -19,4 +21,6 @@ public interface ProjectListener {
 	public void loadAllProjectsByMemberAndRole(int memberId, String roleName);
 	public void loadProject(int projectId);
 	
+	// Delete
+	public void deleteProject(Project project);
 }

@@ -1,8 +1,10 @@
 package ninefoo.view.include.menu;
 
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import ninefoo.lib.component.PMMenu;
+import ninefoo.lib.component.PMMenuItem;
 
 /**
  * Top Menu bar.
@@ -13,34 +15,37 @@ public class Menu extends JMenuBar{
 	private static final long serialVersionUID = -481460797811819303L;
 	
 	// Define components
-	private JMenu project, edit, member, help;
-	private JMenuItem newProject, openProject, saveProject, restart, exit, editTitle, editMembers, editActivites, login, logout, allMember, newMember, assignProject, tourGuide, aboutInfo;
+	private PMMenu project, edit, member, help, language;
+	private JMenuItem newProject, openProject, saveProject, restart, exit, editTitle, editMembers, editActivites, login, logout, allMember, newMember, assignProject, tourGuide, aboutInfo, english, french;
 	
 	// Constructor
 	public Menu() {
 		
 		// Initialize Menu
-		this.project = new JMenu("Project");
-		this.edit = new JMenu("Edit");
-		this.member = new JMenu("Member");
-		this.help = new JMenu("Help");
+		this.project = new PMMenu("Project");
+		this.edit = new PMMenu("Edit");
+		this.member = new PMMenu("Member");
+		this.language = new PMMenu("Language");
+		this.help = new PMMenu("Help");
 		
 		// Initialize Sub-Menu
-		this.newProject = new JMenuItem("New project");
-		this.openProject = new JMenuItem("Open project");
-		this.saveProject = new JMenuItem("Save project");
-		this.restart = new JMenuItem("Restart");
-		this.exit = new JMenuItem("Exit");
-		this.editTitle = new JMenuItem("Edit title");
-		this.editMembers = new JMenuItem("Edit members");
-		this.editActivites = new JMenuItem("Edit Activities");
-		this.login = new JMenuItem("Login");
-		this.allMember = new JMenuItem("All member");
-		this.newMember = new JMenuItem("New member");
-		this.assignProject = new JMenuItem("Assign project");
-		this.logout = new JMenuItem("Logout");
-		this.tourGuide = new JMenuItem("Tour guide");
-		this.aboutInfo = new JMenuItem("About");
+		this.newProject = new PMMenuItem("New project");
+		this.openProject = new PMMenuItem("Open project");
+		this.saveProject = new PMMenuItem("Save project");
+		this.restart = new PMMenuItem("Restart");
+		this.exit = new PMMenuItem("Exit");
+		this.editTitle = new PMMenuItem("Edit title");
+		this.editMembers = new PMMenuItem("Edit members");
+		this.editActivites = new PMMenuItem("Edit Activities");
+		this.login = new PMMenuItem("Login");
+		this.allMember = new PMMenuItem("All member");
+		this.newMember = new PMMenuItem("New member");
+		this.assignProject = new PMMenuItem("Assign project");
+		this.logout = new PMMenuItem("Logout");
+		this.tourGuide = new PMMenuItem("Tour guide");
+		this.aboutInfo = new PMMenuItem("About");
+		this.english = new PMMenuItem("English");
+		this.french = new PMMenuItem("French");
 		
 		// Dependency
 		this.project.add(this.newProject);
@@ -58,11 +63,14 @@ public class Menu extends JMenuBar{
 		this.member.add(this.logout);
 		this.help.add(this.tourGuide);
 		this.help.add(this.aboutInfo);
+		this.language.add(this.english);
+		this.language.add(this.french);
 		
 		// Add components
 		this.add(project);
 		this.add(edit);
 		this.add(member);
+		this.add(language);
 		this.add(help);
 	}
 	

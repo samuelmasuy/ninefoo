@@ -1,5 +1,6 @@
 package ninefoo.controller.handler;
 
+import ninefoo.config.Annotation.FinalVersion;
 import ninefoo.config.Config;
 import ninefoo.config.Database;
 import ninefoo.config.RoleNames;
@@ -44,6 +45,7 @@ public class Project_controller extends AbstractController implements ProjectLis
 	}
 	
 	@Override
+	@FinalVersion(version="1.0")
 	public void createProject(String name, final String budget, String startDate, String deadline, String description) {
 		
 		// Create validation form
@@ -116,6 +118,7 @@ public class Project_controller extends AbstractController implements ProjectLis
 	}
 	
 	@Override
+	@FinalVersion(version="1.0")
 	public void editProject(int projectId, String name, final String budget, String startDate, String deadline, String description) {
 		
 		// Create validation form
@@ -173,19 +176,21 @@ public class Project_controller extends AbstractController implements ProjectLis
 	}
 
 	@Override
+	@FinalVersion(version="1.0")
 	public void loadAllProjectsByMemberAndRole(int memberId, String roleName) {
 		
 		// Get role
 		Role role = role_model.getRoleByName(roleName);
 		
 		// Get projects as a list
-		List<Project> projects = project_model.getAllProjectsByMemberAndRole(memberId, role.getRoleId());
+		List<Project> projects = projectMember_model.getAllProjectsByMemberAndRole(memberId, role.getRoleId());
 		
 		// Update GUI
 		this.view.updateLoadAllProjectsByMemberAndRole(projects);
 	}
 
 	@Override
+	@FinalVersion(version="1.0")
 	public void loadProject(int projectId) {
 		
 		// Get project 
@@ -219,6 +224,7 @@ public class Project_controller extends AbstractController implements ProjectLis
 	}
 
 	@Override
+	@FinalVersion(version="1.0")
 	public void loadEditProjectFields(int projectId) {
 		
 		// Get project 
@@ -271,6 +277,28 @@ public class Project_controller extends AbstractController implements ProjectLis
 			
 			// TODO add to the language
 			this.view.updateAddUserToProject(false, "User already assigned!");
+		}
+	}
+	
+	@Override
+	@FinalVersion(version = "1.0")
+	public void deleteProject(Project project){
+		
+		// If delete successful
+		if(project_model.deleteProject(project)) {
+			
+			// Get role
+			Role role = role_model.getRoleByName(RoleNames.MANAGER);
+			
+			// Load the list of projects
+			List<Project> projects = projectMember_model.getAllProjectsByMemberAndRole(Session.getInstance().getUserId(), role.getRoleId());
+			
+			// Update view
+			this.view.updateDeleteProject(true, String.format("Project %s deleted successfully", project.getProjectName()), projects);
+		} else {
+			
+			// Update view
+			this.view.updateDeleteProject(false, LanguageText.getConstant("ERROR_OCCURED"), null);
 		}
 	}
 }
