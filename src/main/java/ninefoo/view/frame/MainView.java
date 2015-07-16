@@ -333,7 +333,9 @@ public class MainView extends JFrame implements UpdatableView{
 				// Set create activity dialog
 				createActivityDialog = dialog;
 				
-				//TODO FINISH THAT
+				// Load all activities for this project
+				if(activityListener != null)
+					activityListener.loadActivitiesByProject(Session.getInstance().getProjectId());
 			}
 			
 			@Override
@@ -801,6 +803,28 @@ public class MainView extends JFrame implements UpdatableView{
 
 	@Override
 	public void updateLoadActivitiesByProject(boolean success, String message, List<Activity> activities) {
-		// TODO Auto-generated method stub
+		
+		// If create activity dialog is opened
+		if(createActivityDialog != null) {
+			
+			// If success
+			if(success) {
+				
+				// Populate dropdown
+				createActivityDialog.populateActivityList(activities);
+				
+			// If fails
+			} else {
+				
+				// Display error
+				createActivityDialog.setErrorMessage(message);
+				
+				// Close window
+				createActivityDialog.dispose();
+				
+				// Reset pointer
+				createActivityDialog = null;
+			}
+		}
 	}
 }

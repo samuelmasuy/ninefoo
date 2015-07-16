@@ -230,8 +230,11 @@ public class Activity_controller extends AbstractController implements ActivityL
 	}//end of editActivity
 
 	@Override
-	public void loadActivitiesByProject(Project project) {
+	public void loadActivitiesByProject(int projectId) {
 
+		// Load project
+		Project project = project_model.getProjectById(projectId);
+		
 		List<Activity> projectActivities = this.activity_model.getActivitiesByProject(project);
 		if (projectActivities==null) {
 			

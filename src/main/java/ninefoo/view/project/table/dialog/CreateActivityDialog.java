@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import ninefoo.helper.ActivityHelper;
 import ninefoo.lib.autocompleteComboBox.AutocompleteComboBox;
 import ninefoo.lib.component.PMButton;
 import ninefoo.lib.component.PMLabel;
@@ -75,6 +76,11 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 		this.memberBox = new AutocompleteComboBox(membersName);
 		this.prerequisiteDropdown = new MultiDropdown(LanguageText.getConstant("ADD_DEPENDENCY_ACT"), activitiesLabel);
 		
+		// If first activity, disable add prerequisite button
+		if(activities_data.size() == 0)
+			prerequisiteDropdown.setEnabled(false);
+		
+		// Set title
 		this.setTitle(LanguageText.getConstant("CREATE_ACTIVITY_ACT"));
 		
 		// Add button listener
@@ -169,7 +175,6 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 		this.setVisible(true);
 	}
 	
-		//TODO Add refresh
 		/**
 		 * Populate list
 		 * @param users
@@ -194,7 +199,6 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 				this.membersName[i] = members.get(i).getUsername();
 		}
 		
-		//TODO Add refresh
 		/**
 		 * Populate list
 		 * @param activities
@@ -211,12 +215,11 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 				this.activities_data.addAll(activities);
 			}
 			
-			// Create a list of activities
-			this.membersName = new String[activities.size()];
+			// Create a list of members
+			this.activitiesLabel = new String[activities.size()];
 			
 			// Populate list of user names
 			for(int i=0; i < activities.size(); i++)
-				this.membersName[i] = String.valueOf(activities.get(i).getActivityId());
-			
+				this.membersName[i] = ActivityHelper.getIdAndName(activities.get(i));
 		}
 }

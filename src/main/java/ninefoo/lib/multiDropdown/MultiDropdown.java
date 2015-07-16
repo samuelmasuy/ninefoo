@@ -91,6 +91,20 @@ public class MultiDropdown extends JPanel{
 	}
 	
 	/**
+	 * Enable or disable adding or removing dependencies
+	 * @param enable
+	 */
+	public void setEnabled(boolean enable){
+		
+		// Disable add button
+		this.addButton.setEnabled(enable);
+		
+		// Disable remove button
+		for(int i=0; i < listBoxRemoveWrapper.size(); i++)
+			listBoxRemoveWrapper.get(i).removeButton.setEnabled(enable);
+	}
+	
+	/**
 	 * Get only the correct data
 	 * @return array of the valid data
 	 */
