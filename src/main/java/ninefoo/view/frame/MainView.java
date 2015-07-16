@@ -244,8 +244,8 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
-			public void createUser(String firstName, String lastName, String username, String password) {
-				// TODO createUser
+			public void createAndAssignUserToProject(String firstName, String lastName, String username, String password, String roleName, int projectId) {
+				// TODO createAndAssignUserToProject
 			}
 
 			@Override
@@ -615,27 +615,30 @@ public class MainView extends JFrame implements UpdatableView{
 	@Override
 	public void updateEditProject(boolean success, String message) {
 		
-		// If successful
-		if(success){
+		// If edit window opened
+		if(editProjectDialog != null){
 			
-			// Set success message
-			this.editProjectDialog.setSuccessMessage(message);
-			
-			// Update project
-			this.viewMyProjectsDialog.reloadProjectListByRole();
-			
-			// Close window
-			this.editProjectDialog.dispose();
-			
-			// Clear values
-			this.viewMyProjectsDialog = null;
-			this.editProjectDialog = null;
-			
-		// If error
-		}else{
-			
-			// Display error
-			this.editProjectDialog.setErrorMessage(message);
+			// If successful
+			if(success){
+				
+				// Set success message
+				this.editProjectDialog.setSuccessMessage(message);
+				
+				// Update project
+				this.viewMyProjectsDialog.reloadProjectListByRole();
+				
+				// Close window
+				this.editProjectDialog.dispose();
+				
+				// Clear values
+				this.editProjectDialog = null;
+				
+			// If error
+			}else{
+				
+				// Display error
+				this.editProjectDialog.setErrorMessage(message);
+			}
 		}
 	}
 

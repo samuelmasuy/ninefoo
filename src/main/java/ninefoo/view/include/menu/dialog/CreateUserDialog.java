@@ -1,6 +1,5 @@
 package ninefoo.view.include.menu.dialog;
 
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,9 +9,9 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 
 import ninefoo.config.RoleNames;
+import ninefoo.config.Session;
 import ninefoo.lib.component.PMButton;
 import ninefoo.lib.component.PMLabel;
 import ninefoo.lib.lang.LanguageText;
@@ -27,6 +26,8 @@ import ninefoo.view.include.menu.listener.ToolsListener;
 
 public class CreateUserDialog extends CenterFormSouthButtonDialog{
 
+	private static final long serialVersionUID = -3135419784404284153L;
+	
 	// Define components
 	private PMButton createButton;
 	private JTextField firstName, lastName, usernameField;
@@ -55,13 +56,15 @@ public class CreateUserDialog extends CenterFormSouthButtonDialog{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (toolsListener != null)
-					toolsListener.createUser(firstName.getText(), lastName.getText(), usernameField.getText(), new String(passwordField.getPassword()));
+					toolsListener.createAndAssignUserToProject(firstName.getText(), lastName.getText(), usernameField.getText(), new String(passwordField.getPassword()), roleBox.getSelectedItem().toString(), Session.getInstance().getProjectId());
 			}
 		});
 		
 		// Add center form
 		this.setCenterPanel(new FormDialog() {
 			
+			private static final long serialVersionUID = -1069403931524408562L;
+
 			@Override
 			public void placeForm() {
 				// Set border title
