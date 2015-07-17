@@ -8,6 +8,7 @@ import java.util.Set;
 
 import ninefoo.config.Config;
 import ninefoo.config.Database;
+import ninefoo.config.Session;
 import ninefoo.controller.handler.template.AbstractController;
 import ninefoo.helper.DateHelper;
 import ninefoo.lib.graph.Graph;
@@ -51,36 +52,52 @@ public class Activity_controller extends AbstractController implements ActivityL
 	 * @author Melissa Duong 
 	 */
 	@Override
-	public void createActivity(int row, String activityId, String activityLabel, String duration, String startDate, String finishDate, String cost, Project project, int memberId, String[] prerequisite) {
+	public void createActivity(String activityLabel, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, Integer[] prerequisitesId) {
 
 		// set individual rules for each passed parameter json file
 		ValidationRule activityLabelRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_LABEL_ACT"), activityLabel);
+		ValidationRule activityDescriptionRule = new ValidationRule(LanguageText.getConstant("DESCRIPTION"), description);
 		ValidationRule activityDurationRule = new ValidationRule(LanguageText.getConstant("DURATION_ACT"), duration);
+		ValidationRule activityOptimisticRule = new ValidationRule(LanguageText.getConstant("OPTIMISTIC_ACT"), optimistic);
+		ValidationRule activityLikelyRule = new ValidationRule(LanguageText.getConstant("LIKELY_ACT"), likely);
+		ValidationRule activityPessimisticRule = new ValidationRule(LanguageText.getConstant("PESSIMISTIC_ACT"), pessimistic);
 		ValidationRule activityStartDateRule = new ValidationRule(LanguageText.getConstant("START_ACT"), startDate);
 		ValidationRule activityFinishDateRule = new ValidationRule(LanguageText.getConstant("FINISH_ACT"), finishDate);
 		ValidationRule activityCostRule = new ValidationRule(LanguageText.getConstant("COST_ACT"), cost);
 		
 		// set restrictions for those rules
-		activityLabelRule.checkEmpty().checkMaxLength(25).checkFormat("[a-zA-Z0-9]+");
-		activityDurationRule.checkEmpty().checkMaxNumValue(100000).checkMinNumValue(0).checkInt();
+		activityLabelRule.doTrim().checkEmpty().checkMaxLength(Config.MAX_TITLE_LENGTH);
+		activityDescriptionRule.checkMaxLength(Config.MAX_DESCRIPTION_LENGTH);
+		activityDurationRule.checkEmpty().checkMaxNumValue(Config.MAX_DATE_DURATION).checkMinNumValue(0).checkInt();
+		activityOptimisticRule.checkMaxNumValue(Config.MAX_DATE_DURATION).checkMinNumValue(0).checkInt();
+		activityLikelyRule.checkMaxNumValue(Config.MAX_DATE_DURATION).checkMinNumValue(0).checkInt();
+		activityPessimisticRule.checkMaxNumValue(Config.MAX_DATE_DURATION).checkMinNumValue(0).checkInt();
 		activityStartDateRule.checkEmpty().checkDateBefore(finishDate);
-
+		activityFinishDateRule.checkEmpty();
+		activityCostRule.checkDouble().checkMaxNumValue(Config.MAX_MONEY_AMOUNT).checkMinNumValue(0);
+		
 		// add a validation form which takes multiple validation rules
 		ValidationForm activityValidation = new ValidationForm();
 
 		// add the validation rules to the validation form
 		activityValidation.setRule(activityLabelRule);
+		activityValidation.setRule(activityDescriptionRule);
 		activityValidation.setRule(activityDurationRule);
+		activityValidation.setRule(activityOptimisticRule);
+		activityValidation.setRule(activityLikelyRule);
+		activityValidation.setRule(activityPessimisticRule);
 		activityValidation.setRule(activityStartDateRule);
 		activityValidation.setRule(activityFinishDateRule);
 		activityValidation.setRule(activityCostRule);
 		
 		// Condition for the prerequisite
-		Set<String> prereqSet = new HashSet<>(Arrays.asList(prerequisite));
+		Set<Integer> prereqSet = new HashSet<>(Arrays.asList(prerequisitesId));
 		
 		// Run redundancy test
-		if(prereqSet.size() != prerequisite.length){
-			this.view.updateCreateActivity(false, LanguageText.getConstant("ERROR_OCCURED"), null);
+		if(prereqSet.size() != prerequisitesId.length){
+			
+			// TODO Add to language
+			this.view.updateCreateActivity(false, "Some activities are added as dependent multiple times.", null);
 			return;
 		}
 
@@ -100,7 +117,10 @@ public class Activity_controller extends AbstractController implements ActivityL
 			Member member = this.member_model.getMemberById(memberId);
 
 			// Make cost Double | null
-			Double doubleCost = cost.isEmpty() ? null : new Double(Double.parseDouble(cost));
+			Double doubleCost = cost.isEmpty() ? 0 : new Double(Double.parseDouble(cost));
+			
+			// Get the project
+			Project project = this.project_model.getProjectById(Session.getInstance().getProjectId());
 			
 			// create activity
 			Activity activity = new Activity(activityLabel, Integer.parseInt(duration), DateHelper.parse(startDate, Config.DATE_FORMAT_SHORT), DateHelper.parse(finishDate, Config.DATE_FORMAT_SHORT), project, member, doubleCost);
@@ -124,10 +144,12 @@ public class Activity_controller extends AbstractController implements ActivityL
 
 					// else assign the list to the project object
 				} else {
+					
+					// Attach the list of activities
 					project.setAcitivies(activitiesList);
 
 					// update the view with the new project object and display successful activity creation message
-					this.view.updateCreateActivity(true,LanguageText.getConstant("CREATED"), project);
+					this.view.updateCreateActivity(true, String.format(LanguageText.getConstant("CREATED"), LanguageText.getConstant("ACTIVITY_ACT")), project);
 				}
 			}// else
 		} else {

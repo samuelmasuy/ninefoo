@@ -263,7 +263,7 @@ public class Activity_model extends AbstractModel{
         List<Activity> projectActivities = new ArrayList<>();
         
         // Query
-        sql = "SELECT activity_id FROM activity WHERE project_id = ?";
+        sql = "SELECT * FROM activity WHERE project_id = ?";
 
         try {
         	
@@ -276,11 +276,9 @@ public class Activity_model extends AbstractModel{
         	// Run
             result = ps.executeQuery();
 
-            int activityId;
             Activity activity;
             while (result.next()) {
-                activityId = result.getInt("activity_id");
-                activity = getActivityById(activityId);
+                activity = getNextActivity(result);
 
                 if (activity != null)
                     projectActivities.add(activity);

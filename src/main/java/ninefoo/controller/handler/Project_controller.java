@@ -59,9 +59,9 @@ public class Project_controller extends AbstractController implements ProjectLis
 		ValidationRule descriptionRule = new ValidationRule(LanguageText.getConstant("DESCRIPTION"), description);
 		
 		// Set restrictions - should be the same as edit
-		nameRule.checkEmpty().checkMaxLength(25);
-		descriptionRule.checkMaxLength(150);
-		budgetRule.checkDouble().checkMaxLength(15);
+		nameRule.checkEmpty().checkMaxLength(Config.MAX_TITLE_LENGTH);
+		descriptionRule.checkMaxLength(Config.MAX_DESCRIPTION_LENGTH);
+		budgetRule.checkDouble().checkMaxLength(15); // TODO Change this to max money amount
 		startDateRule.checkDateBefore(deadline);
 		
 		// Set rules

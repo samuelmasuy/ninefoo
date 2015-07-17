@@ -118,6 +118,19 @@ public class MultiDropdown extends JPanel{
 	}
 	
 	/**
+	 * Get only the correct data index
+	 * @return array of the index of the valid data
+	 */
+	public Integer[] getDataIndex(){
+		ArrayList<Integer> dataIndex = new ArrayList<>();
+		for(int i = 0; i < listBoxRemoveWrapper.size(); i++)
+			if(listBoxRemoveWrapper.get(i).getText() != null)
+				dataIndex.add(listBoxRemoveWrapper.get(i).getIndexInList());
+		
+		return dataIndex.toArray(new Integer[dataIndex.size()]);
+	}
+	
+	/**
 	 * Panel that holds the auto complete combo box with the remove button
 	 * +----------------------------+
 	 * | [                  ] [ X ] |
@@ -183,6 +196,14 @@ public class MultiDropdown extends JPanel{
 		 */
 		public String getText(){
 			return boxField.checkAndGetText();
+		}
+		
+		/**
+		 * Get index of the field
+		 * @return index or -1 if element doesn't exist in the list
+		 */
+		public int getIndexInList(){
+			return boxField.checkAndGetIndex();
 		}
 	}
 }

@@ -1,5 +1,7 @@
 package ninefoo.view.project.table.listener;
 
+import java.util.List;
+
 import javax.swing.JFrame;
 
 import ninefoo.model.object.Activity;
@@ -12,7 +14,7 @@ import ninefoo.view.project.table.dialog.CreateActivityDialog;
 public interface TableToolsListener {
 	
 	// Create
-	public void createActivity();
+	public void createActivity(CreateActivityDialog dialog, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, Integer[] prerequisitesId);
 	
 	// Load
 	public void loadAllMembersForCreateActivityDialog(CreateActivityDialog dialog);

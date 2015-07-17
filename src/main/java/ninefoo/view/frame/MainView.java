@@ -2,6 +2,7 @@ package ninefoo.view.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -339,9 +340,14 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 			
 			@Override
-			public void createActivity() {
-				// TODO createActivity
-				System.out.println("Create new activity clicked...");
+			public void createActivity(CreateActivityDialog dialog, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, Integer[] prerequisitesId){
+				
+				// Set dialog
+				createActivityDialog = dialog;
+				
+				// Pass to controller
+				if(activityListener != null)
+					activityListener.createActivity(name, description, duration, optimistic, likely, pessimistic, cost, startDate, finishDate, memberId, prerequisitesId);
 			}
 
 			@Override
@@ -788,7 +794,30 @@ public class MainView extends JFrame implements UpdatableView{
 	
 	@Override
 	public void updateCreateActivity(boolean success, String message, Project project) {
-		// TODO updateCreateActivity
+		
+		// If dialog opened
+		if(createActivityDialog != null) {
+			
+			// If success
+			if(success) {
+				
+				// Display success
+				createActivityDialog.setSuccessMessage(message);
+				
+				// Close window
+				createActivityDialog.dispose();
+				
+			// If fails
+			} else {
+				
+				// Display error
+				createActivityDialog.setErrorMessage(message);
+			}
+			
+			// Reset window
+			createActivityDialog = null;
+		}
+		
 	}
 	
 	@Override

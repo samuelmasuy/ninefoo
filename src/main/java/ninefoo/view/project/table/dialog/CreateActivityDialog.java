@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -56,7 +57,7 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 	/** 
 	 *  Constructor
 	 */
-	public CreateActivityDialog(JFrame parentFrame, final TableToolsListener tableToolsListener) {
+	public CreateActivityDialog(final JFrame parentFrame, final TableToolsListener tableToolsListener) {
 		
 		// Load data
 		tableToolsListener.loadAllMembersForCreateActivityDialog(this);
@@ -88,8 +89,16 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (tableToolsListener != null)
-					tableToolsListener.createActivity();
+				
+				// If no member selected
+				if(memberBox.getSelectedIndex() < 0 || memberBox.checkAndGetText() == null){
+					
+					// Display error
+					// TODO Add language
+					JOptionPane.showMessageDialog(CreateActivityDialog.this, "Please select a member to continue.", LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
+				
+				} else if (tableToolsListener != null)
+					tableToolsListener.createActivity(CreateActivityDialog.this, activityLabel.getText(), description.getText(), duration.getText(), optimisticDuration.getText(), likelyDuration.getText(), pessimisticDuration.getText(), cost.getText(), startDate.getText(), finishDate.getText(), members_data.get(memberBox.checkAndGetIndex()).getMemberId(), prerequisiteDropdown.getDataIndex());
 			}
 		});
 		

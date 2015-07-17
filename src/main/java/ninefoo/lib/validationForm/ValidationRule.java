@@ -135,7 +135,7 @@ public class ValidationRule {
 	 * @return ValidationRule
 	 */
 	public ValidationRule doTrim(){
-		this.value.trim();
+		this.value = this.value.trim();
 		return this;
 	}
 	

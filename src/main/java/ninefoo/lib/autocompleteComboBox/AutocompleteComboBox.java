@@ -46,7 +46,7 @@ public class AutocompleteComboBox extends JComboBox<String>{
 	}
 	
 	/**
-	 * Check that the data entered exist in the list and returns it
+	 * Checks that the data entered exist in the list and returns it
 	 * @return string if the input exists in the list, <code>NULL</code> if the input is not in the list
 	 */
 	public String checkAndGetText(){
@@ -55,5 +55,17 @@ public class AutocompleteComboBox extends JComboBox<String>{
 				return getTextComponent().getText();
 		}
 		return null;
+	}
+	
+	/**
+	 * Checks that the data entered exist in the list and returns its index
+	 * @return index or -1 if it doesn't exist
+	 */
+	public int checkAndGetIndex(){
+		for(int i = 0; i < getModel().getSize(); i++){
+			if(getTextComponent().getText().equals(getModel().getElementAt(i)))
+				return i;
+		}
+		return -1;
 	}
 }
