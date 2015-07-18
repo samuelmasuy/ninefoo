@@ -145,6 +145,20 @@ public class Activity_controller extends AbstractController implements ActivityL
 					// else assign the list to the project object
 				} else {
 					
+					// Get information about the activities
+					for(Activity currentActivity : activitiesList){
+						
+						// Fetch from the DB
+						Member currentMember = member_model.getMemberById(currentActivity.getMemberId());
+						List<Activity> currentActivityPrerequisites = activity_model.getActivityPrerequisites(currentActivity);
+						
+						// Set the member
+						currentActivity.setMember(currentMember);
+						
+						// Set the list of prerequisites
+						currentActivity.setPrerequisites(currentActivityPrerequisites);
+					}
+					
 					// Attach the list of activities
 					project.setAcitivies(activitiesList);
 

@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import ninefoo.config.ActivityConfig;
+import ninefoo.helper.ActivityHelper;
 import ninefoo.lib.excelTable.NumberedExcelTable;
 import ninefoo.model.object.Activity;
 import ninefoo.model.object.Project;
@@ -68,7 +69,7 @@ public class TabularData_view extends JPanel {
 		// Add rows
 		List<Activity> activities = this.project.getAcitivies();
 		for(Activity activity : activities)
-			this.dataTable.addRow(activity.getActivityId(), activity.getActivityLabel(), activity.getStartDate(), activity.getFinishDate(), activity.getDuration(), activity.getPrerequisitesAsString());
+			this.dataTable.addRow(ActivityHelper.getFilteredRow(activity));
 	}
 	
 	/**

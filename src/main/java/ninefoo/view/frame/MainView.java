@@ -807,6 +807,12 @@ public class MainView extends JFrame implements UpdatableView{
 				// Close window
 				createActivityDialog.dispose();
 				
+				// Set project
+				tableChartPanel.setProject(project);
+				
+				// Refresh data
+				tableChartPanel.refresh();
+				
 			// If fails
 			} else {
 				
