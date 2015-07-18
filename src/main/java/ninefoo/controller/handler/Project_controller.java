@@ -14,6 +14,7 @@ import ninefoo.model.object.Activity;
 import ninefoo.model.object.Project;
 import ninefoo.model.object.Role;
 import ninefoo.model.sql.Activity_model;
+import ninefoo.model.sql.Member_model;
 import ninefoo.model.sql.ProjectMember_model;
 import ninefoo.model.sql.Project_model;
 import ninefoo.model.sql.Role_model;
@@ -35,6 +36,7 @@ public class Project_controller extends AbstractController implements ProjectLis
 	private ProjectMember_model projectMember_model = new ProjectMember_model();
 	private Role_model role_model = new Role_model();
 	private Activity_model activity_model = new Activity_model();
+	private Member_model member_model = new Member_model();
 	
 	/**
 	 * Constructor
@@ -201,10 +203,14 @@ public class Project_controller extends AbstractController implements ProjectLis
 			
 			// Load activities and all their prerequisite
 			List<Activity> actList = this.activity_model.getActivitiesByProjectId(projectId);
-			for(Activity activity : actList)
+			for(Activity activity : actList){
+				
+				// Set member
+				activity.setMember(member_model.getMemberById(activity.getMemberId()));
 				
 				// Set prerequisites
 				activity.setPrerequisites(this.activity_model.getActivityPrerequisites(activity));
+			}
 			
 			// Load activities for this project
 			project.setAcitivies(actList);

@@ -614,16 +614,32 @@ public class MainView extends JFrame implements UpdatableView{
 				// Show success message
 				this.viewMyProjectsDialog.setSuccessMessage(message);
 				
+				// Display the tool bar below table
+				this.tableChartPanel.setVisibleToolbar(true);
+				
 				// Enable buttons if role is manager, or else disable
 				if (this.viewMyProjectsDialog.getSelectedRole() == RoleNames.MANAGER){
+					
+					// Top tool bar
 					this.toolsPanel.setNewMemberEnabled(true);
 					this.toolsPanel.setAddUserEnabled(true);
-					//TODO visible toolbar
+					
+					// Bottom tool bar
 					this.tableChartPanel.setAddActivityEnabled(true);
+					this.tableChartPanel.setEditActivityEnabled(true);
+					this.tableChartPanel.setDeleteActivityEnabled(true);
+					this.tableChartPanel.setViewActivityEnabled(true);
 				}else if (this.viewMyProjectsDialog.getSelectedRole() == RoleNames.MEMBER){
+					
+					// Top tool bar
 					this.toolsPanel.setNewMemberEnabled(false);
 					this.toolsPanel.setAddUserEnabled(false);
-					//TODO hide toolbar
+					
+					// Bottom tool bar
+					this.tableChartPanel.setAddActivityEnabled(false);
+					this.tableChartPanel.setEditActivityEnabled(false);
+					this.tableChartPanel.setDeleteActivityEnabled(false);
+					this.tableChartPanel.setViewActivityEnabled(true);
 				}
 				
 				// Close window
@@ -807,11 +823,8 @@ public class MainView extends JFrame implements UpdatableView{
 				// Close window
 				createActivityDialog.dispose();
 				
-				// Set project
-				tableChartPanel.setProject(project);
-				
-				// Refresh data
-				tableChartPanel.refresh();
+				// Set and load project
+				tableChartPanel.loadProject(project);
 				
 			// If fails
 			} else {

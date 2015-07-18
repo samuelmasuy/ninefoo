@@ -229,6 +229,6 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 			
 			// Populate list of user names
 			for(int i=0; i < activities.size(); i++)
-				this.membersName[i] = ActivityHelper.getIdAndName(activities.get(i));
+				this.activitiesLabel[i] = ActivityHelper.getIdAndName(activities.get(i));
 		}
 }
