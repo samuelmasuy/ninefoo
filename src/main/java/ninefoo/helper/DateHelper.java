@@ -135,7 +135,18 @@ public class DateHelper {
 	 * @return date
 	 */
 	public static Date getDateRelativeToToday(int day){
+		return getDateRelativeToDate(getToday(), day);
+	}
+	
+	/**
+	 * Get a date after/before x days from date n
+	 * @param date
+	 * @param day
+	 * @return date
+	 */
+	public static Date getDateRelativeToDate(Date date, int day){
 		Calendar c = Calendar.getInstance(); 
+		c.setTime(date);
 		c.add(Calendar.DATE, day);
 		return c.getTime();
 	}

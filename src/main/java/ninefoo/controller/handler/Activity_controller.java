@@ -57,7 +57,6 @@ public class Activity_controller extends AbstractController implements ActivityL
 		// set individual rules for each passed parameter json file
 		ValidationRule activityLabelRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_LABEL_ACT"), activityLabel);
 		ValidationRule activityDescriptionRule = new ValidationRule(LanguageText.getConstant("DESCRIPTION"), description);
-		ValidationRule activityDurationRule = new ValidationRule(LanguageText.getConstant("DURATION_ACT"), duration);
 		ValidationRule activityOptimisticRule = new ValidationRule(LanguageText.getConstant("OPTIMISTIC_ACT"), optimistic);
 		ValidationRule activityLikelyRule = new ValidationRule(LanguageText.getConstant("LIKELY_ACT"), likely);
 		ValidationRule activityPessimisticRule = new ValidationRule(LanguageText.getConstant("PESSIMISTIC_ACT"), pessimistic);
@@ -68,7 +67,6 @@ public class Activity_controller extends AbstractController implements ActivityL
 		// set restrictions for those rules
 		activityLabelRule.doTrim().checkEmpty().checkMaxLength(Config.MAX_TITLE_LENGTH);
 		activityDescriptionRule.checkMaxLength(Config.MAX_DESCRIPTION_LENGTH);
-		activityDurationRule.checkEmpty().checkMaxNumValue(Config.MAX_DATE_DURATION).checkMinNumValue(1).checkInt();
 		activityOptimisticRule.checkMaxNumValue(Config.MAX_DATE_DURATION).checkMinNumValue(0).checkInt();
 		activityLikelyRule.checkMaxNumValue(Config.MAX_DATE_DURATION).checkMinNumValue(0).checkInt();
 		activityPessimisticRule.checkMaxNumValue(Config.MAX_DATE_DURATION).checkMinNumValue(0).checkInt();
@@ -98,7 +96,6 @@ public class Activity_controller extends AbstractController implements ActivityL
 		// add the validation rules to the validation form
 		activityValidation.setRule(activityLabelRule);
 		activityValidation.setRule(activityDescriptionRule);
-		activityValidation.setRule(activityDurationRule);
 		activityValidation.setRule(activityOptimisticRule);
 		activityValidation.setRule(activityLikelyRule);
 		activityValidation.setRule(activityPessimisticRule);
