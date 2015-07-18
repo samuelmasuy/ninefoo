@@ -68,7 +68,6 @@ public class MainView extends JFrame implements UpdatableView{
 	private EditProjectDialog editProjectDialog;
 	private ViewAssignedActivitiesDialog viewAssignedActivitiesDialog;
 	private ViewMyProjectsDialog viewMyProjectsDialog;
-	
 	private CreateActivityDialog createActivityDialog;
 	private EditActivityDialog editActivityDialog;
 	private ViewActivityDetailsDialog viewActivityDetailsDialog;
@@ -325,7 +324,7 @@ public class MainView extends JFrame implements UpdatableView{
 				
 				// Load all members
 				if(memberListener != null)
-					memberListener.loadAllMembers();
+					memberListener.loadAllMembersForAProject(Session.getInstance().getProjectId());
 			}
 			
 			@Override
@@ -351,7 +350,7 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
-			public void updateActivity() {
+			public void updateActivity(EditActivityDialog dialog, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, Integer[] prerequisitesId) {
 				// TODO Auto-generated method stub
 				System.out.println("Update activity clicked...");
 			}
@@ -360,6 +359,28 @@ public class MainView extends JFrame implements UpdatableView{
 			public void deleteActivity(JFrame parentFrame, Activity activity) {
 				// TODO Auto-generated method stub
 				System.out.println("Delete activity confirmed...");
+			}
+
+			@Override
+			public void loadAllMembersForEditActivityDialog(EditActivityDialog dialog) {
+				
+				// Set create activity dialog
+				editActivityDialog = dialog;
+				
+				// Load all members
+				if(memberListener != null)
+					memberListener.loadAllMembersForAProject(Session.getInstance().getProjectId());
+			}
+
+			@Override
+			public void loadActivitiesForEditActivityDialog(EditActivityDialog dialog) {
+				
+				// Set create activity dialog
+				editActivityDialog = dialog;
+				
+				// Load all activities for this project
+				if(activityListener != null)
+					activityListener.loadActivitiesByProject(Session.getInstance().getProjectId());
 			}
 		});
 		
@@ -499,6 +520,7 @@ public class MainView extends JFrame implements UpdatableView{
 		this.toolsPanel.setNewMemberEnabled(false);
 		this.toolsPanel.setAddUserEnabled(false);
 		this.tableChartPanel.setProject(null);
+		this.tableChartPanel.setVisibleToolbar(false);
 		LOGGER.info("Logout successful");
 	}
 	
@@ -520,9 +542,14 @@ public class MainView extends JFrame implements UpdatableView{
 				// Display error
 				addUserToProjectDialog.setErrorMessage(message);
 			}
-			
+		}
+	}
+	
+	@Override
+	public void updateLoadAllMembersForAProject(boolean success, String message, List<Member> users) {
+		
 		// If called from create activity dialgo
-		} else if(createActivityDialog != null){
+		if(createActivityDialog != null){
 			
 			// If success
 			if(success) {
@@ -535,7 +562,36 @@ public class MainView extends JFrame implements UpdatableView{
 				
 				// Display error
 				createActivityDialog.setErrorMessage(message);
+				
+				// Close window
+				createActivityDialog.dispose();
 			}
+			
+			// Reset pointer
+			createActivityDialog = null;
+			
+		// If edit activity dialog is active
+		} else if(editActivityDialog != null){
+			
+			// If success
+			if(success) {
+				
+				// populate the list
+				editActivityDialog.populateMemberList(users);
+				
+			// If fails
+			} else {
+				
+				// Display error
+				editActivityDialog.setErrorMessage(message);
+				
+				// Close window
+				editActivityDialog.dispose();
+				
+			}
+			
+			// Reset pointer
+			editActivityDialog = null;
 		}
 	}
 	
@@ -869,10 +925,32 @@ public class MainView extends JFrame implements UpdatableView{
 				
 				// Close window
 				createActivityDialog.dispose();
-				
-				// Reset pointer
-				createActivityDialog = null;
 			}
+			
+			// Reset pointer
+			createActivityDialog = null;
+		
+		// If edit dialog opened
+		} else if(editActivityDialog != null){
+			
+			// If success
+			if(success) {
+				
+				// Populate dropdown
+				editActivityDialog.populateActivityList(activities);
+				
+			// If fails
+			} else {
+				
+				// Display error
+				editActivityDialog.setErrorMessage(message);
+				
+				// Close window
+				editActivityDialog.dispose();
+			}
+			
+			// Reset pointer
+			editActivityDialog = null;
 		}
 	}
 }

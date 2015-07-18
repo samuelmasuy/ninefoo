@@ -170,4 +170,10 @@ public class MockUpdatableView implements UpdatableView {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void updateLoadAllMembersForAProject(boolean success, String message, List<Member> users) {
+		// TODO Auto-generated method stub
+		
+	}
 }
