@@ -6,6 +6,7 @@ import ninefoo.config.Config;
 import ninefoo.config.Session;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -53,6 +54,7 @@ public class Activity_controllerTest {
     }
 
     @Test
+    @Ignore
     public void testCreateActivity_no_duration() throws Exception {
         Session.getInstance().setProjectId(1);
         activity_controller.createActivity("label", "", "", "", "", "", "", "11/11/1111", "12/11/1111", 1, new Integer[]{});
@@ -63,6 +65,7 @@ public class Activity_controllerTest {
     }
 
     @Test
+    @Ignore
     public void testCreateActivity_invalid_duration() throws Exception {
         Session.getInstance().setProjectId(1);
         activity_controller.createActivity("label", "", "xx", "", "", "", "", "11/11/1111", "12/11/1111", 1, new Integer[]{});
