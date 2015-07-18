@@ -47,6 +47,9 @@ public class Config {
 	
 	// Max money amount
 	public final static int MAX_MONEY_AMOUNT = 1000000000;
+	
+	// Invalid information
+	public final static int INVALID = -1;
 
 	/**
 	 * Auto load methods

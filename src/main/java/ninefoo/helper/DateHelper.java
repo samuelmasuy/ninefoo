@@ -128,4 +128,15 @@ public class DateHelper {
 		Calendar defaultCal = Calendar.getInstance();
 		return defaultCal.getTime();
 	}
+	
+	/**
+	 * Get a date after/before x days from today
+	 * @param day
+	 * @return date
+	 */
+	public static Date getDateRelativeToToday(int day){
+		Calendar c = Calendar.getInstance(); 
+		c.add(Calendar.DATE, day);
+		return c.getTime();
+	}
 }

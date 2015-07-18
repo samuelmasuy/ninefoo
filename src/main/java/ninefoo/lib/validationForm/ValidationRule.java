@@ -158,6 +158,7 @@ public class ValidationRule {
 	 */
 	private int maxValue;
 	public ValidationRule checkMaxNumValue(int maxValue) {
+		this.checkInt();
 		maxNumChecker=true;
 		this.maxValue=maxValue;
 		return this;
@@ -171,7 +172,9 @@ public class ValidationRule {
 	 * @return ValidationRule
 	 */
 	private int minValue;
-	public ValidationRule checkMinNumValue(int minValue) {
+	public ValidationRule checkMinNumValue(int minValue) 
+	{
+		this.checkInt();
 		minNumChecker=true;
 		this.minValue=minValue;
 		return this;

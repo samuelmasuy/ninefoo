@@ -13,7 +13,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import ninefoo.config.Config;
 import ninefoo.helper.ActivityHelper;
+import ninefoo.helper.DateHelper;
 import ninefoo.lib.autocompleteComboBox.AutocompleteComboBox;
 import ninefoo.lib.component.PMButton;
 import ninefoo.lib.component.PMLabel;
@@ -84,21 +86,23 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 		// Set title
 		this.setTitle(LanguageText.getConstant("CREATE_ACTIVITY_ACT"));
 		
+		// Set default values
+		this.startDate.setToday();
+		this.finishDate.setDate(DateHelper.getDateRelativeToToday(1));
+		this.duration.setText("1");
+		
 		// Add button listener
 		this.createButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				// If no member selected
-				if(memberBox.getSelectedIndex() < 0 || memberBox.checkAndGetText() == null){
+				int member = Config.INVALID;
+				if(memberBox.checkAndGetText() != null)
+					member = members_data.get(memberBox.checkAndGetIndex()).getMemberId();
 					
-					// Display error
-					// TODO Add language
-					JOptionPane.showMessageDialog(CreateActivityDialog.this, "Please select a member to continue.", LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
-				
-				} else if (tableToolsListener != null)
-					tableToolsListener.createActivity(CreateActivityDialog.this, activityLabel.getText(), description.getText(), duration.getText(), optimisticDuration.getText(), likelyDuration.getText(), pessimisticDuration.getText(), cost.getText(), startDate.getText(), finishDate.getText(), members_data.get(memberBox.checkAndGetIndex()).getMemberId(), prerequisiteDropdown.getDataIndex());
+				if (tableToolsListener != null)
+					tableToolsListener.createActivity(CreateActivityDialog.this, activityLabel.getText(), description.getText(), duration.getText(), optimisticDuration.getText(), likelyDuration.getText(), pessimisticDuration.getText(), cost.getText(), startDate.getText(), finishDate.getText(), member, prerequisiteDropdown.getDataIndex());
 			}
 		});
 		

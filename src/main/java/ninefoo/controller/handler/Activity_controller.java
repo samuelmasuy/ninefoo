@@ -52,7 +52,7 @@ public class Activity_controller extends AbstractController implements ActivityL
 	 * @author Melissa Duong 
 	 */
 	@Override
-	public void createActivity(String activityLabel, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, Integer[] prerequisitesId) {
+	public void createActivity(String activityLabel, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, final int memberId, Integer[] prerequisitesId) {
 
 		// set individual rules for each passed parameter json file
 		ValidationRule activityLabelRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_LABEL_ACT"), activityLabel);
@@ -68,13 +68,29 @@ public class Activity_controller extends AbstractController implements ActivityL
 		// set restrictions for those rules
 		activityLabelRule.doTrim().checkEmpty().checkMaxLength(Config.MAX_TITLE_LENGTH);
 		activityDescriptionRule.checkMaxLength(Config.MAX_DESCRIPTION_LENGTH);
-		activityDurationRule.checkEmpty().checkMaxNumValue(Config.MAX_DATE_DURATION).checkMinNumValue(0).checkInt();
+		activityDurationRule.checkEmpty().checkMaxNumValue(Config.MAX_DATE_DURATION).checkMinNumValue(1).checkInt();
 		activityOptimisticRule.checkMaxNumValue(Config.MAX_DATE_DURATION).checkMinNumValue(0).checkInt();
 		activityLikelyRule.checkMaxNumValue(Config.MAX_DATE_DURATION).checkMinNumValue(0).checkInt();
 		activityPessimisticRule.checkMaxNumValue(Config.MAX_DATE_DURATION).checkMinNumValue(0).checkInt();
 		activityStartDateRule.checkEmpty().checkDateBefore(finishDate);
 		activityFinishDateRule.checkEmpty();
 		activityCostRule.checkDouble().checkMaxNumValue(Config.MAX_MONEY_AMOUNT).checkMinNumValue(0);
+		
+		// Custom rule
+		ValidationRule activityMemberRule = new ValidationRule(LanguageText.getConstant("MEMBER_ACT"), String.valueOf(memberId)){
+			@Override
+			public boolean validate() {
+				
+				if(memberId == Config.INVALID){
+					
+					// TODO Add to language
+					setErrorMessage("Please select a member");
+					return false;
+				}
+				
+				return true;
+			}
+		};
 		
 		// add a validation form which takes multiple validation rules
 		ValidationForm activityValidation = new ValidationForm();
@@ -89,6 +105,7 @@ public class Activity_controller extends AbstractController implements ActivityL
 		activityValidation.setRule(activityStartDateRule);
 		activityValidation.setRule(activityFinishDateRule);
 		activityValidation.setRule(activityCostRule);
+		activityValidation.setRule(activityMemberRule);
 		
 		// Condition for the prerequisite
 		Set<Integer> prereqSet = new HashSet<>(Arrays.asList(prerequisitesId));
