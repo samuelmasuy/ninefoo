@@ -664,6 +664,9 @@ public class MainView extends JFrame implements UpdatableView{
 				// Load project
 				this.tableChartPanel.loadProject(project);
 				
+				// Refresh
+				this.tableChartPanel.refresh();
+				
 				// Enable manager buttons
 				this.toolsPanel.setNewMemberEnabled(true);
 				this.toolsPanel.setAddUserEnabled(true);
@@ -737,6 +740,9 @@ public class MainView extends JFrame implements UpdatableView{
 				
 				// Load project
 				this.tableChartPanel.loadProject(project);
+				
+				// Refresh
+				this.tableChartPanel.refresh();
 			} else {
 				
 				LOGGER.error(message);
@@ -919,6 +925,9 @@ public class MainView extends JFrame implements UpdatableView{
 				
 				// Set and load project
 				tableChartPanel.loadProject(project);
+				
+				// Refresh
+				tableChartPanel.refresh();
 				
 			// If fails
 			} else {
