@@ -374,4 +374,30 @@ public class Activity_controller extends AbstractController implements ActivityL
 	
 	}//end of loadActivitiesForAllProjectByMember
 
+	@Override
+	public void loadActivity(int activityId) {
+		
+		// Fetch activity from DB
+		Activity activity = activity_model.getActivityById(activityId);
+		
+		// If activity not found
+		if(activity == null) {
+			
+			// Update view
+			this.view.updateLoadActivity(false, LanguageText.getConstant("ERROR_OCCURED"), null);
+			
+		// If activity found
+		} else {
+			
+			// Fetch member from DB
+			Member member = member_model.getMemberById(activity.getMemberId());
+			
+			// Assign member to activity
+			activity.setMember(member);
+			
+			// Update view
+			this.view.updateLoadActivity(true, null, activity);
+		}
+	}
+
 }//end of Activity Controller Class

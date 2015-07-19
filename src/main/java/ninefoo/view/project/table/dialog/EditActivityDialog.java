@@ -27,6 +27,7 @@ import ninefoo.lib.layout.dialog.FormDialog;
 import ninefoo.lib.multiDropdown.MultiDropdown;
 import ninefoo.model.object.Activity;
 import ninefoo.model.object.Member;
+import ninefoo.model.object.Project;
 import ninefoo.view.project.table.listener.TableToolsListener;
 
 /**
@@ -60,7 +61,7 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
 	/** 
 	 *  Constructor
 	 */
-	public EditActivityDialog(final JFrame parentFrame, final TableToolsListener tableToolsListener) {
+	public EditActivityDialog(final JFrame parentFrame, final TableToolsListener tableToolsListener, int activityId) {
 		
 		// Load data
 		tableToolsListener.loadAllMembersForEditActivityDialog(this);
@@ -84,8 +85,11 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
 		if(activities_data.size() == 0)
 			prerequisiteDropdown.setEnabled(false);
 		
+		// Load fields
+		tableToolsListener.loadActivity(this, activityId);
+		
 		// Set title
-		this.setTitle(LanguageText.getConstant("CREATE_ACTIVITY_ACT"));
+		this.setTitle(LanguageText.getConstant("UPDATE_ACTIVITY_ACT"));
 		
 		// Set default values
 		this.startDate.setToday();
@@ -154,7 +158,7 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
 			public void placeForm() {
 				
 				// Set border title
-				this.titledBorder.setTitle(LanguageText.getConstant("CREATE_ACTIVITY_ACT"));
+				this.titledBorder.setTitle(LanguageText.getConstant("EDIT_THE_ACTIVITY_PROPERTIES_ACT"));
 				
 				// Set input border
 				updateButton.setBorder(BorderFactory.createCompoundBorder(updateButton.getBorder(), inputPadding));
@@ -290,5 +294,28 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
 		// Populate list of user names
 		for(int i=0; i < activities.size(); i++)
 			this.activitiesLabel[i] = ActivityHelper.getIdAndName(activities.get(i));
+	}
+	
+	/**
+	 * Populate fields
+	 * @param activity
+	 */
+	public void populateFields(Activity activity){
+		
+		this.activityLabel.setText(activity.getActivityLabel());
+		this.description.setText(activity.getDescription());
+		this.optimisticDuration.setText(String.valueOf(activity.getOptimisticDuration()));
+		this.likelyDuration.setText(String.valueOf(activity.getLikelyDuration()));
+		this.pessimisticDuration.setText(String.valueOf(activity.getPessimisticDuration()));
+		this.cost.setText(String.valueOf(activity.getCost()));
+		this.startDate.setDate(activity.getStartDate());
+		this.finishDate.setDate(activity.getFinishDate());
+		this.memberBox.getTextComponent().setText(activity.getMember().getUsername());
+		
+		// Update duration
+		this.updateDuration();
+		
+		// FIXME Missing implementation
+//		this.prerequisiteDropdown = new MultiDropdown(LanguageText.getConstant("ADD_DEPENDENCY_ACT"), activitiesLabel);
 	}
 }

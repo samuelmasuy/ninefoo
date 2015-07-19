@@ -178,4 +178,9 @@ public class MockUpdatableView implements UpdatableView {
         this.success = String.valueOf(success);
         this.message = message;
 	}
+
+	@Override
+	public void updateLoadActivity(boolean success, String message, Activity activity) {
+		
+	}
 }

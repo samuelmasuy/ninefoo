@@ -15,4 +15,5 @@ public interface ActivityListener {
 	// Load
 	public void loadActivitiesByProject(int projectId);
 	public void loadActivitiesForAllProjectByMember(int memberId);
+	public void loadActivity(int activityId);
 }
