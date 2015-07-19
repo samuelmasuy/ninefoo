@@ -15,14 +15,10 @@ public class PMButton extends JButton{
 	private String key;
 	private String toolTipKey;
 	
-	public PMButton(){
-		super();
-	}
 	
 	public PMButton(String key){
-		super();
+		this.setText(key);
 		this.key = key;
-		super.setText(LanguageText.getConstant(key));
 	}
 	
 	public PMButton(ImageIcon icon){

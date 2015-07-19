@@ -147,7 +147,7 @@ public class TableToolbar_view extends JPanel {
 				// If activity selected
 				} else {
 					String activityName = "'" + toolbarListener.getSelectedActivity().getActivityLabel() + "'";
-					int reply = JOptionPane.showConfirmDialog(parentFrame, String.format(LanguageText.getConstant("DELETE_CONFIRMATION_ACT"), LanguageText.getConstant("ACTIVITY_ACT").toLowerCase(), activityName ) , LanguageText.getConstant("DELETE_CONFIRMATION"), JOptionPane.YES_NO_OPTION);
+					int reply = JOptionPane.showConfirmDialog(parentFrame, String.format(LanguageText.getConstant("DELETE_CONFIRMATION_TEXT"), LanguageText.getConstant("ACTIVITY_ACT").toLowerCase(), activityName ) , LanguageText.getConstant("DELETE_CONFIRMATION"), JOptionPane.YES_NO_OPTION);
 					if (reply == JOptionPane.YES_OPTION){
 					    tableToolsListener.deleteActivity(parentFrame, toolbarListener.getSelectedActivity());
 					}
