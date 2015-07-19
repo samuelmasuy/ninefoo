@@ -25,5 +25,9 @@ public class PMLabel extends JLabel{
 		super(icon);
 	}
 	
+	public void Refresh(){
+		this.setText(LanguageText.getConstant(key));
+	}
+	
 	
 }

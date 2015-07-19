@@ -41,4 +41,9 @@ public class PMButton extends JButton{
 		this.toolTipKey = key;
 	}
 	
+	public void Refresh(){
+		this.setText(LanguageText.getConstant(key));
+		this.setToolTipText(LanguageText.getConstant(toolTipKey));
+	}
+	
 }

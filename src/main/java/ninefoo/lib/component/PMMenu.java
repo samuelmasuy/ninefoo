@@ -15,4 +15,8 @@ public class PMMenu extends JMenu{
 		super(LanguageText.getConstant(key));
 		this.key = key;
 	}
+	
+	public void Refresh(){
+		this.setText(LanguageText.getConstant(key));
+	}
 }
