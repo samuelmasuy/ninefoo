@@ -14,6 +14,8 @@
 		"VIEW_PROJECTS_PRO"	: "Voir Projets",
 		"VIEW_MY_PROJECTS_PRO": "Voir mes projets",
 		"ADD_USER_PRO"		: "Ajouter Utilisateur",
+        "ADD_USER_SUCCESS_PRO": "Utilisateur a bien ete ajoute au projet.",
+        "ADD_USER_FAIL_PRO": "Utilisateur fait deja parti du projet",
 		"ASSIGN_USERS_TO_THE_PROJECT_PRO" : "Assigner utilisateur au projet",
 		"ROLE_PRO" 		: "Role"
 

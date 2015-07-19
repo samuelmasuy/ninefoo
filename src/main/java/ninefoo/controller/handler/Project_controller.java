@@ -268,8 +268,7 @@ public class Project_controller extends AbstractController implements ProjectLis
 			// If insert is successful
 			if(projectMember_model.addMemberToProject(projectId, memberId, role)){
 				
-				// TODO Add to the language
-				this.view.updateAddUserToProject(true, "Member successfully added");
+				this.view.updateAddUserToProject(true, LanguageText.getConstant("ADD_USER_SUCCESS_PRO"));
 			
 			// If failed
 			} else {
@@ -281,8 +280,7 @@ public class Project_controller extends AbstractController implements ProjectLis
 		// If user already assigned
 		} else {
 			
-			// TODO add to the language
-			this.view.updateAddUserToProject(false, "User already assigned!");
+			this.view.updateAddUserToProject(false, LanguageText.getConstant("ADD_USER_FAIL_PRO"));
 		}
 	}
 	
