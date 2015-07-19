@@ -329,8 +329,6 @@ public class Activity_controller extends AbstractController implements ActivityL
 						graph.addEdge(prerequisitesId[i], activityId);
 					}
 					
-					System.out.println(graph);
-					
 					// If cycle detected
 					if(graph.isCyclic()) {
 						
