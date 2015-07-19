@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.apache.logging.log4j.LogManager;
@@ -53,6 +54,10 @@ public abstract class AbstractModel {
 	 * @throws SQLException
 	 */
 	public final int getLastInsertId() throws SQLException{
+		
+		// Flush old query on console
+		if(sql != null && !sql.isEmpty())
+			LOGGER.debug(sql);
 		
 		// Query
 		sql = "SELECT last_insert_rowid()";

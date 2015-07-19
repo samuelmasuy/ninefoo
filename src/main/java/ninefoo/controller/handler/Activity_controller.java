@@ -52,7 +52,7 @@ public class Activity_controller extends AbstractController implements ActivityL
 	 * @author Melissa Duong 
 	 */
 	@Override
-	public void createActivity(String activityLabel, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, final int memberId, final Integer[] prerequisitesId) {
+	public void createActivity(String activityLabel, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, final int memberId, final int[] prerequisitesId) {
 
 		// set individual rules for each passed parameter json file
 		ValidationRule activityLabelRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_LABEL_ACT"), activityLabel);
@@ -96,8 +96,13 @@ public class Activity_controller extends AbstractController implements ActivityL
 			@Override
 			public boolean validate() {
 				
+				// Convert int to Integer
+				Integer data[] = new Integer[prerequisitesId.length];
+				for(int i=0; i < data.length; i++)
+					data[i] = prerequisitesId[i];
+				
 				// Condition for the prerequisite
-				Set<Integer> prereqSet = new HashSet<>(Arrays.asList(prerequisitesId));
+				Set<Integer> prereqSet = new HashSet<>(Arrays.asList(data));
 				
 				// Run redundancy test
 				if(prereqSet.size() != prerequisitesId.length){
@@ -146,7 +151,8 @@ public class Activity_controller extends AbstractController implements ActivityL
 
 			// add a new activity to the activity model
 			// if insert failed
-			if (this.activity_model.insertNewActivity(activity) == Database.ERROR) {
+			int insertedActivityId;
+			if ( (insertedActivityId = this.activity_model.insertNewActivity(activity)) == Database.ERROR) {
 
 				// display error message
 				this.view.updateCreateActivity(false,LanguageText.getConstant("ERROR_OCCURED"), null);
@@ -155,6 +161,10 @@ public class Activity_controller extends AbstractController implements ActivityL
 			else {
 				// get the new list of activities including the new activity and  update the project object
 
+				// Insert prerequisites
+				for(int actId : prerequisitesId)
+					activity_model.addPrerequisite(insertedActivityId, actId);
+					
 				List<Activity> activitiesList = new ArrayList<>();
 
 				// if unable to retrieve list of activities return an error message

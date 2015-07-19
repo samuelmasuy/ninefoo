@@ -36,7 +36,7 @@ public class Activity_controllerTest {
     @Test
     public void testCreateActivity() throws Exception {
         Session.getInstance().setProjectId(1);
-        activity_controller.createActivity("label", "description", "5", "6", "7", "8", "100", "11/11/1111", "12/11/1111", 1, new Integer[]{});
+        activity_controller.createActivity("label", "description", "5", "6", "7", "8", "100", "11/11/1111", "12/11/1111", 1, new int[]{});
         assertEquals("create activity is successful method", "updateCreateActivity", mockUpdatableView.get_called_method());
         assertEquals("create activity is successful success", "true", mockUpdatableView.get_success());
         assertEquals("create activity is successful message", "Activity created successfully!", mockUpdatableView.get_message());
@@ -46,7 +46,7 @@ public class Activity_controllerTest {
     @Test
     public void testCreateActivity_minimum_requirements() throws Exception {
         Session.getInstance().setProjectId(1);
-        activity_controller.createActivity("label", "", "5", "", "", "", "", "11/11/1111", "12/11/1111", 1, new Integer[]{});
+        activity_controller.createActivity("label", "", "5", "", "", "", "", "11/11/1111", "12/11/1111", 1, new int[]{});
         assertEquals("create activity is successful method", "updateCreateActivity", mockUpdatableView.get_called_method());
         assertEquals("create activity is successful success", "true", mockUpdatableView.get_success());
         assertEquals("create activity is successful message", "Activity created successfully!", mockUpdatableView.get_message());
@@ -57,7 +57,7 @@ public class Activity_controllerTest {
     @Ignore
     public void testCreateActivity_no_duration() throws Exception {
         Session.getInstance().setProjectId(1);
-        activity_controller.createActivity("label", "", "", "", "", "", "", "11/11/1111", "12/11/1111", 1, new Integer[]{});
+        activity_controller.createActivity("label", "", "", "", "", "", "", "11/11/1111", "12/11/1111", 1, new int[]{});
         assertEquals("create activity has no duration method", "updateCreateActivity", mockUpdatableView.get_called_method());
         assertEquals("create activity has no duration success", "false", mockUpdatableView.get_success());
         assertEquals("create activity has no duration message", "Duration is required.", mockUpdatableView.get_message());
@@ -68,7 +68,7 @@ public class Activity_controllerTest {
     @Ignore
     public void testCreateActivity_invalid_duration() throws Exception {
         Session.getInstance().setProjectId(1);
-        activity_controller.createActivity("label", "", "xx", "", "", "", "", "11/11/1111", "12/11/1111", 1, new Integer[]{});
+        activity_controller.createActivity("label", "", "xx", "", "", "", "", "11/11/1111", "12/11/1111", 1, new int[]{});
         assertEquals("create activity has invalid duration method", "updateCreateActivity", mockUpdatableView.get_called_method());
         assertEquals("create activity has invalid duration success", "false", mockUpdatableView.get_success());
         assertEquals("create activity has invalid duration message", "Duration is not valid.", mockUpdatableView.get_message());
@@ -78,7 +78,7 @@ public class Activity_controllerTest {
     @Test
     public void testCreateActivity_invalid_member() throws Exception {
         Session.getInstance().setProjectId(1);
-        activity_controller.createActivity("label", "", "5", "", "", "", "", "11/11/1111", "12/11/1111", 999, new Integer[]{});
+        activity_controller.createActivity("label", "", "5", "", "", "", "", "11/11/1111", "12/11/1111", 999, new int[]{});
         assertEquals("create activity has invalid member method", "updateCreateActivity", mockUpdatableView.get_called_method());
         assertEquals("create activity has invalid member success", "false", mockUpdatableView.get_success());
         assertEquals("create activity has invalid member message", "An error occurred", mockUpdatableView.get_message());
@@ -88,7 +88,7 @@ public class Activity_controllerTest {
     @Test
     public void testCreateActivity_invalid_project() throws Exception {
         Session.getInstance().setProjectId(99);
-        activity_controller.createActivity("label", "", "5", "", "", "", "", "11/11/1111", "12/11/1111", 1, new Integer[]{});
+        activity_controller.createActivity("label", "", "5", "", "", "", "", "11/11/1111", "12/11/1111", 1, new int[]{});
         assertEquals("create activity has invalid project method", "updateCreateActivity", mockUpdatableView.get_called_method());
         assertEquals("create activity has invalid project success", "false", mockUpdatableView.get_success());
         assertEquals("create activity has invalid project message", "An error occurred", mockUpdatableView.get_message());

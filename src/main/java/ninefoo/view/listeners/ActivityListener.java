@@ -9,7 +9,7 @@ import ninefoo.model.object.Project;
 public interface ActivityListener {
 	
 	// Create
-	public void createActivity(String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, Integer[] prerequisitesId);
+	public void createActivity(String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, int[] prerequisitesId);
 	public void editActivity(int row, String activityid, String activityLabel, String duration, String startDate, String finishDate, String cost, Project project,int memberId, String[] prerequisite);
 	
 	// Load

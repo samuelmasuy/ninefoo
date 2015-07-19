@@ -139,12 +139,19 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+				// Get the member
 				int member = Config.INVALID;
 				if(memberBox.checkAndGetText() != null)
 					member = members_data.get(memberBox.checkAndGetIndex()).getMemberId();
 					
+				// Get the prerequisites
+				Integer[] prerequisiteDataIndex = prerequisiteDropdown.getDataIndex();
+				int[] activitiesPrereqId = new int[prerequisiteDataIndex.length];
+				for(int i=0; i < prerequisiteDataIndex.length; i++)
+					activitiesPrereqId[i] = activities_data.get(prerequisiteDataIndex[i]).getActivityId();
+					
 				if (tableToolsListener != null)
-					tableToolsListener.createActivity(CreateActivityDialog.this, activityLabel.getText(), description.getText(), duration.getText(), optimisticDuration.getText(), likelyDuration.getText(), pessimisticDuration.getText(), cost.getText(), startDate.getText(), finishDate.getText(), member, prerequisiteDropdown.getDataIndex());
+					tableToolsListener.createActivity(CreateActivityDialog.this, activityLabel.getText(), description.getText(), duration.getText(), optimisticDuration.getText(), likelyDuration.getText(), pessimisticDuration.getText(), cost.getText(), startDate.getText(), finishDate.getText(), member, activitiesPrereqId);
 			}
 		});
 		

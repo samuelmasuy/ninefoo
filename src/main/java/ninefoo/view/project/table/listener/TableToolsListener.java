@@ -13,7 +13,7 @@ import ninefoo.view.project.table.dialog.EditActivityDialog;
 public interface TableToolsListener {
 	
 	// Create
-	public void createActivity(CreateActivityDialog dialog, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, Integer[] prerequisitesId);
+	public void createActivity(CreateActivityDialog dialog, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, int[] prerequisitesId);
 	
 	// Load
 	public void loadAllMembersForCreateActivityDialog(CreateActivityDialog dialog);
