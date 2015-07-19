@@ -41,6 +41,7 @@ public class MultiDropdown extends JPanel{
 	private JPanel northPanel, centerPanel;
 	private JScrollPane centerPanelScroll;
 	private ArrayList<AutocompleteAndRemoveWrapper>  listBoxRemoveWrapper;
+	private String[] data;
 	
 	public MultiDropdown(String buttonText, final String[] data) {
 		
@@ -61,6 +62,9 @@ public class MultiDropdown extends JPanel{
 		// Configure component
 		this.centerPanelScroll.setBorder(null);
 		this.addButton.setMargin(new Insets(0, 0, 0, 5));
+		
+		// Store data
+		this.data = data;
 		
 		// Add action listener
 		addButton.addActionListener(new ActionListener() {
@@ -128,6 +132,23 @@ public class MultiDropdown extends JPanel{
 				dataIndex.add(listBoxRemoveWrapper.get(i).getIndexInList());
 		
 		return dataIndex.toArray(new Integer[dataIndex.size()]);
+	}
+	
+	public void addDropdown(String value){
+		
+		// Create panel
+		AutocompleteAndRemoveWrapper wrapper = new AutocompleteAndRemoveWrapper(data);
+		
+		// Add it to the list of boxes
+		listBoxRemoveWrapper.add(wrapper);
+		
+		// Set data
+		wrapper.setText(value);
+		
+		// Add the panel and configure it
+		centerPanel.add(wrapper);
+		MultiDropdown.this.repaint();
+		MultiDropdown.this.revalidate();
 	}
 	
 	/**
@@ -204,6 +225,19 @@ public class MultiDropdown extends JPanel{
 		 */
 		public int getIndexInList(){
 			return boxField.checkAndGetIndex();
+		}
+		
+		/**
+		 * Set text
+		 * @param value
+		 */
+		public void setText(String value){
+			for(int i=0; i < data.length; i++){
+				if(data[i].equals(value)){
+					boxField.getTextComponent().setText(value);
+					break;
+				}
+			}
 		}
 	}
 }

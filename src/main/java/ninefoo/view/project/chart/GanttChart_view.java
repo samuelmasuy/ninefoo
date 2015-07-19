@@ -9,7 +9,6 @@ import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -65,20 +64,34 @@ public class GanttChart_view extends JPanel{
 				// Better quality
 				g2.setRenderingHint ( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
 				
+				int weeks = (DateHelper.getDifferenceDates(getMinDate(), getMaxDate()) / 7) + 2;
+				weeks = Math.max(weeks, 5);
 				
+				drawCalendar(g2, weeks);
 				
-				drawCalendar(g2);
-				//drawActivity(g2, row, start, end, activity name)
-				drawActivity(g2, 0, 0, 10, "Activity 1");
-				drawActivity(g2, 1, 2, 2, "Activity 2");
-				drawActivity(g2, 2, 3, 5, "Activity 3");
+				// Set the panel size
+				panel.setPreferredSize(new Dimension(weeks * 7 * columnSize + startCol,0));
+				
+				if(activities != null) {
+					
+					for(int i=0; i < activities.size(); i++){
+						
+						int startDateCol = DateHelper.getDifferenceDates(getMinDate(), activities.get(i).getStartDate());
+						int activityLenght = DateHelper.getDifferenceDates(activities.get(i).getStartDate(), activities.get(i).getFinishDate());
+						
+						drawActivity(g2, i, startDateCol, activityLenght, activities.get(i).getActivityLabel());
+					}
+				}
+				
+				// Refresh panel
+				panel.revalidate();
 			}
 		};
 		JScrollPane scrollPane = new JScrollPane(panel);
 		
 		// Configure panel
 		panel.setBackground(Color.WHITE);
-		panel.setPreferredSize(new Dimension(2000,0));
+		panel.setPreferredSize(new Dimension(1000,0));
 		
 		// Configure scrollPane
 		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
@@ -92,12 +105,27 @@ public class GanttChart_view extends JPanel{
 	 * Setter for list of activities
 	 * @param List<Activity>
 	 */
-	public void setActivitiesGantt(List<Activity> activities){
+	public void populateGanttChart(List<Activity> activities){
 		this.activities = activities;
+		
+		// If activity is not null, sort it
+		if(this.activities != null) {
+			for(int i=0; i < activities.size(); i++){
+				for(int j=0; j < activities.size() - 1; j++){
+					if(activities.get(j).getStartDate().after(activities.get(j+1).getStartDate())) {
+						Activity act = activities.get(j);
+						activities.set(j,activities.get(j+1));
+						activities.set(j+1,act);
+					}
+				}
+			}
+		}
+		
+		panel.repaint();
 	}
 	
 	/**
-	 * Set Minimum Date
+	 * Get Minimum Date
 	 */
 	private Date getMinDate(){
 		if (activities != null){
@@ -110,8 +138,26 @@ public class GanttChart_view extends JPanel{
 				return minDate;
 			} 
 		}
-		Calendar defaultCal = Calendar.getInstance();
-		return defaultCal.getTime();
+
+		return DateHelper.getToday();
+	}
+	
+	/**
+	 * Get Maximum Date
+	 */
+	private Date getMaxDate(){
+		if (activities != null){
+			List<Date> endDates = new ArrayList<Date>();
+			for (int i = 0; i < activities.size(); i++){
+				endDates.add(activities.get(i).getFinishDate());
+			}
+			Date maxDate = DateHelper.getMaxDate(endDates);
+			if (maxDate != null){
+				return maxDate;
+			} 
+		}
+		
+		return DateHelper.getDateRelativeToToday(30);
 	}
 	
 	/**
@@ -156,21 +202,19 @@ public class GanttChart_view extends JPanel{
 	 * @param g2
 	 * @param weeks
 	 */
-	private void drawCalendar(Graphics2D g2){
+	private void drawCalendar(Graphics2D g2, int weeks){
 		
 		Graphics2D g3 = (Graphics2D)g2.create();
 		
-		char days[] = {'M', 'T', 'W', 'T', 'F', 'S', 'S'};
+		char days[] = {'S', 'M', 'T', 'W', 'T', 'F', 'S'};
 		int row = startRow;
 		Color lightGray = Color.decode("#D8D8D8");
 		Color darkGray = Color.decode("#989898");
 		Color blue = Color.decode("#0000ff");
 		
-		// Calendar size
-		int weeks = panel.getWidth() / (columnSize * days.length) + 2;
-		
 		activityCal = Calendar.getInstance();
 		activityCal.setTime(getMinDate());
+		int dayOffset = activityCal.get(Calendar.DAY_OF_WEEK);
 		
 		for(int week = 0; week < weeks; week++){
 			// Week
@@ -202,10 +246,10 @@ public class GanttChart_view extends JPanel{
 				// Draw characters
 				int column = day * columnSize + startCol + days.length * week * columnSize;
 				int daysPadding = 25;
-				g3.drawChars(days, day, 1, (int) (column + columnSize/2.3), startRow + daysPadding);
+				g3.drawChars(days, (day + dayOffset - 1) % days.length, 1, (int) (column + columnSize/2.3), startRow + daysPadding);
 
 				// Draw lines
-				if(day == 0){
+				if((day + dayOffset - 1) % days.length == 0){
 					g3.setColor(darkGray);
 					g3.drawLine(column, startRowLine, column, this.getHeight());
 				}

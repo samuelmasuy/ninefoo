@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import ninefoo.config.Annotation.FinalVersion;
+import ninefoo.config.Config;
 import ninefoo.config.RoleNames;
 import ninefoo.config.Session;
 import ninefoo.model.object.Activity;
@@ -350,9 +351,14 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
-			public void updateActivity(EditActivityDialog dialog, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, Integer[] prerequisitesId) {
-				// TODO Auto-generated method stub
-				System.out.println("Update activity clicked...");
+			public void updateActivity(EditActivityDialog dialog, int activityId, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, int[] prerequisitesId) {
+				
+				// Set dialog
+				editActivityDialog = dialog;
+				
+				// Pass to controller
+				if(activityListener != null)
+					activityListener.editActivity(activityId, name, description, duration, optimistic, likely, pessimistic, cost, startDate, finishDate, memberId, prerequisitesId);
 			}
 
 			@Override
@@ -434,6 +440,20 @@ public class MainView extends JFrame implements UpdatableView{
 		this.add(currentCenterPanel, BorderLayout.CENTER);
 		this.currentCenterPanel.setVisible(true);
 		this.repaint();
+	}
+	
+	/**
+	 * Remove project and clear the screen
+	 */
+	private void clearScreen(){
+		// Remove project
+		this.tableChartPanel.setProject(null);
+		
+		// Refresh
+		this.tableChartPanel.refresh();
+		
+		// Remove tool bar below table
+		this.tableChartPanel.setVisibleToolbar(false);
 	}
 	
 	/**
@@ -644,6 +664,9 @@ public class MainView extends JFrame implements UpdatableView{
 				// Load project
 				this.tableChartPanel.loadProject(project);
 				
+				// Refresh
+				this.tableChartPanel.refresh();
+				
 				// Enable manager buttons
 				this.toolsPanel.setNewMemberEnabled(true);
 				this.toolsPanel.setAddUserEnabled(true);
@@ -717,6 +740,9 @@ public class MainView extends JFrame implements UpdatableView{
 				
 				// Load project
 				this.tableChartPanel.loadProject(project);
+				
+				// Refresh
+				this.tableChartPanel.refresh();
 			} else {
 				
 				LOGGER.error(message);
@@ -860,6 +886,13 @@ public class MainView extends JFrame implements UpdatableView{
 				// Populate new list of projects
 				viewMyProjectsDialog.populateProjectList(projects);
 				
+				// If no more project opened
+				if(Session.getInstance().getProjectId() == Config.INVALID){
+					
+					// Clear screen
+					clearScreen();
+				}
+				
 			// If fails
 			} else {
 				
@@ -893,6 +926,9 @@ public class MainView extends JFrame implements UpdatableView{
 				// Set and load project
 				tableChartPanel.loadProject(project);
 				
+				// Refresh
+				tableChartPanel.refresh();
+				
 			// If fails
 			} else {
 				
@@ -913,7 +949,35 @@ public class MainView extends JFrame implements UpdatableView{
 
 	@Override
 	public void updateEditActivity(boolean success, String message, Project project) {
-		// TODO Auto-generated method stub
+		
+		// If dialog opened
+		if(editActivityDialog != null) {
+			
+			// If success
+			if(success) {
+				
+				// Display success message
+				editActivityDialog.setSuccessMessage(message);
+				
+				// Close window
+				editActivityDialog.dispose();
+				
+				// Update project
+				this.tableChartPanel.setProject(project);
+				
+				// Refresh
+				this.tableChartPanel.refresh();
+				
+			// If fails
+			} else {
+				
+				// Display error message
+				editActivityDialog.setErrorMessage(message);
+			}
+			
+			// Reset pointer
+			editActivityDialog = null;
+		}
 	}
 
 	@Override

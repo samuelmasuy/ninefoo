@@ -50,6 +50,9 @@ public class Config {
 	
 	// Invalid information
 	public final static int INVALID = -1;
+	
+	// Round value
+	public final static int DECIMAL_ROUND = 2;
 
 	/**
 	 * Auto load methods

@@ -22,6 +22,7 @@ public class ActivityConfig {
 		LanguageText.getConstant("LIKELY_ACT"), 
 		LanguageText.getConstant("PESSIMISTIC_ACT"),
 		LanguageText.getConstant("MEMBER_ACT"),
+		LanguageText.getConstant("COST_ACT"),
 		LanguageText.getConstant("PREREQ_ACT")
 	};
 	
@@ -40,6 +41,7 @@ public class ActivityConfig {
 	public static final int PESSIMISTIC = getIndexOfTitle(LanguageText.getConstant("PESSIMISTIC_ACT"));
 	public static final int MEMBER = getIndexOfTitle(LanguageText.getConstant("MEMBER_ACT"));
 	public static final int PREREQ = getIndexOfTitle(LanguageText.getConstant("PREREQ_ACT"));
+	public static final int COST = getIndexOfTitle(LanguageText.getConstant("COST_ACT"));
 	
 	/**
 	 * Get index of a title in the header

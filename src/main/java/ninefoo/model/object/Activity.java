@@ -25,7 +25,7 @@ public class Activity {
     private Project project;
     private Member member;
     private List<Activity> prerequisites;
-	private Double cost;
+	private double cost;
     private int projectId;
     private int memberId;
 
@@ -98,11 +98,19 @@ public class Activity {
      * @param project
      * @param member
      */
-    public Activity(String activityLabel, int duration, Date startDate, Date finishDate, Project project, Member member, Double cost){
-         this(0,activityLabel, null, duration, 0, 0, 0, null, project, member, null);
-         this.startDate = startDate;
-         this.finishDate = finishDate;
-         this.cost = cost;
+    public Activity(String activityLabel, String description, int duration, int optimistic, int likely, int pessimistic, double cost, Date startDate, Date finishDate, int projectId, int memberId, List<Activity> prerequisites){
+    	this.activityLabel = activityLabel;
+    	this.description = description;
+    	this.duration = duration;
+    	this.optimisticDuration = optimistic;
+    	this.likelyDuration = likely;
+    	this.pessimisticDuration = pessimistic;
+    	this.cost = cost;
+    	this.startDate = startDate;
+    	this.finishDate = finishDate;
+    	this.memberId = memberId;
+    	this.prerequisites = prerequisites;
+    	this.projectId = projectId;
     }
 
     public int getActivityId() {
@@ -224,6 +232,12 @@ public class Activity {
      * @return String
      */
     public String getPrerequisitesAsString(){
+    	
+    	// If none found
+    	if(prerequisites.size() == 0)
+    		return "None";
+    	
+    	// If at least one
     	List<Integer> preId = new ArrayList<>();
     	if(this.prerequisites != null)
     		for(int i=0; i<prerequisites.size(); i++)

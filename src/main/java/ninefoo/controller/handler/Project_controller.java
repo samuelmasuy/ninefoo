@@ -299,6 +299,10 @@ public class Project_controller extends AbstractController implements ProjectLis
 			// Load the list of projects
 			List<Project> projects = projectMember_model.getAllProjectsByMemberAndRole(Session.getInstance().getUserId(), role.getRoleId());
 			
+			// If project to be deleted is now opened
+			if(Session.getInstance().getProjectId() == project.getProjectId())
+				Session.getInstance().setProjectId(Config.INVALID);
+			
 			// Update view
 			this.view.updateDeleteProject(true, String.format("Project %s deleted successfully", project.getProjectName()), projects);
 		} else {

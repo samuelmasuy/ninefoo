@@ -60,9 +60,17 @@ public class Graph {
 		int virtualTo = idMapper.get(to);
 		
 		try{
+			
+			// Check if edge already exist
+			for(int i=0; i<this.degree[virtualFrom]; i++){
+				if(this.graph[virtualFrom][i] == virtualTo)
+					return;
+			}
+			
 			// Create edge
-			this.graph[virtualFrom][this.degree[virtualFrom]++] = virtualTo;
-		
+			this.graph[virtualFrom][this.degree[virtualFrom]] = virtualTo;
+			this.degree[virtualFrom]++;
+			
 		} catch (IndexOutOfBoundsException e) {
 			LOGGER.error(String.format("Cannot add edge: %d -> %d", from, to));
 		}

@@ -117,6 +117,6 @@ public abstract class CenterScrollSouthButtonDialog extends JDialog{
 	 * @param msg Message to be displayed
 	 */
 	public void setSuccessMessage(String msg){
-		this.centerPanel.setSuccessMessage(msg);
+		JOptionPane.showMessageDialog(this, String .format("<html>%s</html>", msg), LanguageText.getConstant("OPERATION_SUCCESSFUL"), JOptionPane.INFORMATION_MESSAGE);
 	}
 }
