@@ -301,7 +301,44 @@ public class Activity_controller extends AbstractController implements ActivityL
 					return false;
 				}
 				
-				// TODO detect cycle
+				// Detect cycle
+				if(prerequisitesId.length > 0) {
+					
+					// Get all activities for the current project
+					List<Activity> allActivitiesForProject = activity_model.getActivitiesByProjectId(Session.getInstance().getProjectId());
+					
+					// Create graph
+					Graph graph = new Graph(allActivitiesForProject.size());
+					
+					// Get old prerequisite for each activity
+					for(Activity currentAcitivty : allActivitiesForProject) {
+						
+						// Get prerequisites for this activity
+						List<Activity> currentActivityPrerequisites = activity_model.getActivityPrerequisites(currentAcitivty.getActivityId());
+						
+						// Loop on the prerequisites
+						for(Activity currentPrerequisite : currentActivityPrerequisites)
+							// Feed the graph
+							graph.addEdge(currentPrerequisite.getActivityId(), currentAcitivty.getActivityId());
+					}
+					
+					// Get new prerequisite for the current activity
+					for(int i=0; i < prerequisitesId.length; i++){
+						
+						// Feed the graph
+						graph.addEdge(prerequisitesId[i], activityId);
+					}
+					
+					System.out.println(graph);
+					
+					// If cycle detected
+					if(graph.isCyclic()) {
+						
+						// TODO Add to language
+						setErrorMessage("A cycle has been detected.");
+						return false;
+					}
+				}
 				
 				return true;
 			}
