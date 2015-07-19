@@ -27,7 +27,6 @@ import ninefoo.lib.layout.dialog.FormDialog;
 import ninefoo.lib.multiDropdown.MultiDropdown;
 import ninefoo.model.object.Activity;
 import ninefoo.model.object.Member;
-import ninefoo.model.object.Project;
 import ninefoo.view.project.table.listener.TableToolsListener;
 
 /**
@@ -61,7 +60,7 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
 	/** 
 	 *  Constructor
 	 */
-	public EditActivityDialog(final JFrame parentFrame, final TableToolsListener tableToolsListener, int activityId) {
+	public EditActivityDialog(final JFrame parentFrame, final TableToolsListener tableToolsListener, final int activityId) {
 		
 		// Load data
 		tableToolsListener.loadAllMembersForEditActivityDialog(this);
@@ -140,12 +139,19 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+				// Get the member
 				int member = Config.INVALID;
 				if(memberBox.checkAndGetText() != null)
 					member = members_data.get(memberBox.checkAndGetIndex()).getMemberId();
 					
+				// Get the prerequisites
+				Integer[] prerequisiteDataIndex = prerequisiteDropdown.getDataIndex();
+				int[] activitiesPrereqId = new int[prerequisiteDataIndex.length];
+				for(int i=0; i < prerequisiteDataIndex.length; i++)
+					activitiesPrereqId[i] = activities_data.get(prerequisiteDataIndex[i]).getActivityId();
+					
 				if (tableToolsListener != null)
-					tableToolsListener.updateActivity(EditActivityDialog.this, activityLabel.getText(), description.getText(), duration.getText(), optimisticDuration.getText(), likelyDuration.getText(), pessimisticDuration.getText(), cost.getText(), startDate.getText(), finishDate.getText(), member, prerequisiteDropdown.getDataIndex());
+					tableToolsListener.updateActivity(EditActivityDialog.this, activityId, activityLabel.getText(), description.getText(), duration.getText(), optimisticDuration.getText(), likelyDuration.getText(), pessimisticDuration.getText(), cost.getText(), startDate.getText(), finishDate.getText(), member, activitiesPrereqId);
 			}
 		});
 		
@@ -315,7 +321,8 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
 		// Update duration
 		this.updateDuration();
 		
-		// FIXME Missing implementation
-//		this.prerequisiteDropdown = new MultiDropdown(LanguageText.getConstant("ADD_DEPENDENCY_ACT"), activitiesLabel);
+		// Set prerequisites
+		for(Activity crreutnActivity : activity.getPrerequisites())
+			this.prerequisiteDropdown.addDropdown(ActivityHelper.getIdAndName(crreutnActivity));
 	}
 }

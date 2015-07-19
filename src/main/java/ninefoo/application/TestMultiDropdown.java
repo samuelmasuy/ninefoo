@@ -21,6 +21,14 @@ public class TestMultiDropdown {
 		orgPanel.add(panel);
 		frame.add(orgPanel);
 		
+		panel.addDropdown("One");
+		panel.addDropdown("Test");
+		panel.addDropdown("Two");
+		panel.addDropdown("One");
+		
+		String a = "1";
+		Double.parseDouble(a);
+		
 		new Thread(){
 			public void run() {
 				while(true){

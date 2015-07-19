@@ -318,7 +318,8 @@ public class Activity_model extends AbstractModel{
 		        "SET    activity_label = ?, description = ?, " +
 		        "       duration = ?, optimistic_duration = ?, likely_duration = ?, " +
 		        "       pessimistic_duration = ?, update_date = ?, project_id = ?, " +
-		        "		start_date = ?, finish_date = ?, cost = ?" +
+		        "		start_date = ?, finish_date = ?, cost = ?," +
+		        "		member_id = ? " +
 		        " 		WHERE activity_id = ?";
         
         try {
@@ -338,7 +339,8 @@ public class Activity_model extends AbstractModel{
         	ps.setString(9, DateHelper.format(activity.getStartDate(), Config.DATE_FORMAT));
         	ps.setString(10, DateHelper.format(activity.getFinishDate(), Config.DATE_FORMAT));
         	ps.setDouble(11, activity.getCost());
-        	ps.setInt(12, activityId);
+        	ps.setInt(12, activity.getMember().getMemberId());
+        	ps.setInt(13, activityId);
         	
         	// Run
             affectedRows = ps.executeUpdate();
@@ -437,12 +439,50 @@ public class Activity_model extends AbstractModel{
             // Run
             affectedRows = ps.executeUpdate();
 
-            // Check if deleted
+            // Check if inserted
             return (affectedRows == 1);
 
             // Error
         } catch (SQLException e) {
             LOGGER.error("Could not insert activity prerequisite --- detailed info: " + e.getMessage());
+
+            // Close
+        } finally {
+            this.close();
+        }
+
+        return false;
+    }
+    
+    /**
+     * Delete all prerequisites for an activity
+     * @param activityId
+     * @return true if successful, false otherwise.
+     */
+    public boolean deletePrerequisitesForAnActivity(int activityId) {
+    	// Open
+        this.open();
+
+        // Query
+        sql = "DELETE FROM activity_relation WHERE activity_id = ?";
+
+        try {
+
+            // Prepare
+            this.prepareStatement();
+
+            // Data
+            ps.setInt(1, activityId);
+
+            // Run
+            affectedRows = ps.executeUpdate();
+
+            // Check if deleted
+            return true;
+
+            // Error
+        } catch (SQLException e) {
+            LOGGER.error("Could not delete activity prerequisite --- detailed info: " + e.getMessage());
 
             // Close
         } finally {

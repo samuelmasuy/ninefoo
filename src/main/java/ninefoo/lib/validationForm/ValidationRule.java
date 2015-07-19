@@ -158,7 +158,7 @@ public class ValidationRule {
 	 */
 	private int maxValue;
 	public ValidationRule checkMaxNumValue(int maxValue) {
-		this.checkInt();
+		this.checkDouble();
 		maxNumChecker=true;
 		this.maxValue=maxValue;
 		return this;
@@ -174,7 +174,7 @@ public class ValidationRule {
 	private int minValue;
 	public ValidationRule checkMinNumValue(int minValue) 
 	{
-		this.checkInt();
+		this.checkDouble();
 		minNumChecker=true;
 		this.minValue=minValue;
 		return this;
@@ -293,7 +293,7 @@ public class ValidationRule {
 
 			// If values are not empty
 			if (!this.value.isEmpty()) {
-				if (Integer.parseInt(this.value) > this.maxValue){
+				if (Double.parseDouble(this.value) > this.maxValue){
 					errorMessage = String.format(LanguageText.getConstant("MAX_NUM_VALUE"), this.name, this.maxValue);
 					return false;
 				}
@@ -305,7 +305,7 @@ public class ValidationRule {
 
 			// If values are not empty
 			if (!this.value.isEmpty()) {
-				if (Integer.parseInt(this.value) < this.minValue){
+				if (Double.parseDouble(this.value) < this.minValue){
 					errorMessage = String.format(LanguageText.getConstant("MIN_NUM_VALUE"), this.name, this.minValue);
 					return false;
 				}

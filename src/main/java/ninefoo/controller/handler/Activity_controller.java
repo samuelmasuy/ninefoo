@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import ninefoo.config.Annotation.FinalVersion;
 import ninefoo.config.Config;
 import ninefoo.config.Database;
 import ninefoo.config.Session;
@@ -52,8 +53,12 @@ public class Activity_controller extends AbstractController implements ActivityL
 	 * @author Melissa Duong 
 	 */
 	@Override
+	@FinalVersion(version="1.0")
 	public void createActivity(String activityLabel, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, final int memberId, final int[] prerequisitesId) {
 
+		/**
+		 * This validation form should be same for editActivity().
+		 */
 		// set individual rules for each passed parameter json file
 		ValidationRule activityLabelRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_LABEL_ACT"), activityLabel);
 		ValidationRule activityDescriptionRule = new ValidationRule(LanguageText.getConstant("DESCRIPTION"), description);
@@ -111,10 +116,8 @@ public class Activity_controller extends AbstractController implements ActivityL
 					setErrorMessage("Some activities are added as dependent multiple times.");
 					return false;
 				}
-				
 				return true;
 			}
-			
 		};
 		
 		// add a validation form which takes multiple validation rules
@@ -211,37 +214,99 @@ public class Activity_controller extends AbstractController implements ActivityL
 	 * @date July-05-2015
 	 */
 	@Override
-	public void editActivity(int row, String activityId, String activityLabel, String duration, String startDate, String finishDate, String cost, Project project, int memberId, String[] prerequisite) {
+	public void editActivity(final int activityId, String activityLabel, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, final int memberId, final int[] prerequisitesId) {
+		
+		/**
+		 * This validation form should be same for createActivity().
+		 */
 		// set individual rules for each passed parameter json file
 		ValidationRule activityLabelRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_LABEL_ACT"), activityLabel);
-		ValidationRule activityDurationRule = new ValidationRule(LanguageText.getConstant("DURATION_ACT"), duration);
+		ValidationRule activityDescriptionRule = new ValidationRule(LanguageText.getConstant("DESCRIPTION"), description);
+		ValidationRule activityOptimisticRule = new ValidationRule(LanguageText.getConstant("OPTIMISTIC_ACT"), optimistic);
+		ValidationRule activityLikelyRule = new ValidationRule(LanguageText.getConstant("LIKELY_ACT"), likely);
+		ValidationRule activityPessimisticRule = new ValidationRule(LanguageText.getConstant("PESSIMISTIC_ACT"), pessimistic);
 		ValidationRule activityStartDateRule = new ValidationRule(LanguageText.getConstant("START_ACT"), startDate);
 		ValidationRule activityFinishDateRule = new ValidationRule(LanguageText.getConstant("FINISH_ACT"), finishDate);
 		ValidationRule activityCostRule = new ValidationRule(LanguageText.getConstant("COST_ACT"), cost);
 		
 		// set restrictions for those rules
-		activityLabelRule.checkEmpty().checkMaxLength(25).checkFormat("[a-zA-Z0-9]+");
-		activityDurationRule.checkEmpty().checkMaxNumValue(100000).checkMinNumValue(0).checkInt();
+		activityLabelRule.doTrim().checkEmpty().checkMaxLength(Config.MAX_TITLE_LENGTH);
+		activityDescriptionRule.checkMaxLength(Config.MAX_DESCRIPTION_LENGTH);
+		activityOptimisticRule.checkMaxNumValue(Config.MAX_DATE_DURATION).checkMinNumValue(0).checkInt();
+		activityLikelyRule.checkMaxNumValue(Config.MAX_DATE_DURATION).checkMinNumValue(0).checkInt();
+		activityPessimisticRule.checkMaxNumValue(Config.MAX_DATE_DURATION).checkMinNumValue(0).checkInt();
 		activityStartDateRule.checkEmpty().checkDateBefore(finishDate);
-
+		activityFinishDateRule.checkEmpty();
+		activityCostRule.checkDouble().checkMaxNumValue(Config.MAX_MONEY_AMOUNT).checkMinNumValue(0);
+		
+		// Custom rule for member
+		ValidationRule activityMemberRule = new ValidationRule(LanguageText.getConstant("MEMBER_ACT"), String.valueOf(memberId)){
+			@Override
+			public boolean validate() {
+				
+				if(memberId == Config.INVALID){
+					
+					// TODO Add to language
+					setErrorMessage("Please select a member");
+					return false;
+				}
+				
+				return true;
+			}
+		};
+		
+		// Custom rule for prerequisites
+		ValidationRule activityPrerequisitesRule = new ValidationRule(LanguageText.getConstant("PREREQ_ACT"), null) {
+			
+			@Override
+			public boolean validate() {
+				
+				// Convert int to Integer
+				Integer data[] = new Integer[prerequisitesId.length];
+				for(int i=0; i < data.length; i++)
+					data[i] = prerequisitesId[i];
+				
+				// Condition for the prerequisite
+				Set<Integer> prereqSet = new HashSet<>(Arrays.asList(data));
+				
+				// Run self check test
+				for(int i=0; i < prerequisitesId.length; i++){
+					if(activityId == prerequisitesId[i]){
+						
+						// TODO Add to language
+						setErrorMessage("You cannot choose a self dependent activity.");
+						return false;
+					}
+				}
+				
+				// Run redundancy test
+				if(prereqSet.size() != prerequisitesId.length){
+					
+					// TODO Add to language
+					setErrorMessage("Some activities are added as dependent multiple times.");
+					return false;
+				}
+				
+				// TODO detect cycle
+				
+				return true;
+			}
+		};
+		
 		// add a validation form which takes multiple validation rules
 		ValidationForm activityValidation = new ValidationForm();
 
 		// add the validation rules to the validation form
 		activityValidation.setRule(activityLabelRule);
-		activityValidation.setRule(activityDurationRule);
+		activityValidation.setRule(activityDescriptionRule);
+		activityValidation.setRule(activityOptimisticRule);
+		activityValidation.setRule(activityLikelyRule);
+		activityValidation.setRule(activityPessimisticRule);
 		activityValidation.setRule(activityStartDateRule);
 		activityValidation.setRule(activityFinishDateRule);
 		activityValidation.setRule(activityCostRule);
-		
-		// Condition for the prerequisite
-		Set<String> prereqSet = new HashSet<>(Arrays.asList(prerequisite));
-		
-		// Run redundancy test
-		if(prereqSet.size() != prerequisite.length){
-			this.view.updateCreateActivity(false, LanguageText.getConstant("ERROR_OCCURED"), null);
-			return;
-		}
+		activityValidation.setRule(activityMemberRule);
+		activityValidation.setRule(activityPrerequisitesRule);
 
 		// if all the parameters passed respect the restrictions, add a new
 		// activity object in this if statement
@@ -251,45 +316,68 @@ public class Activity_controller extends AbstractController implements ActivityL
 			// the activity constructor that needs a member object
 			Member member = this.member_model.getMemberById(memberId);
 
-			// TODO add a completion (% completion) parameter for the activity
-			// constructor used right here below
-
 			// Make cost Double | null
-			Double doubleCost = cost.isEmpty() ? null : new Double(Double.parseDouble(cost));
+			Double doubleCost = cost.isEmpty() ? 0 : new Double(Double.parseDouble(cost));
+			
+			// Get the project
+			Project project = this.project_model.getProjectById(Session.getInstance().getProjectId());
 			
 			// create activity
 			Activity activity = new Activity(activityLabel, Integer.parseInt(duration), DateHelper.parse(startDate, Config.DATE_FORMAT_SHORT), DateHelper.parse(finishDate, Config.DATE_FORMAT_SHORT), project, member, doubleCost);
 
-			// update activity in the activity model
+			// Set the activity id
+			activity.setActivityId(activityId);
+			
 			// if update failed
-			if (this.activity_model.updateActivity(activity) == false) {
+			if ( !this.activity_model.updateActivity(activity)) {
 
 				// display error message
-				this.view.updateCreateActivity(false,LanguageText.getConstant("ERROR_OCCURED"), null);
+				this.view.updateEditActivity(false,LanguageText.getConstant("ERROR_OCCURED"), null);
 			}// if
-				// if activity updated successfully, update the view 
+				// if activity updated successfully, update the view because a new activity has been added to a project
 			else {
-				// get the new list of activities including the updated activity and  update the project object
+				// get the new list of activities including the new activity and  update the project object
 
+				// Delete all the old prerequisites
+				activity_model.deletePrerequisitesForAnActivity(activityId);
+				
+				// Insert prerequisites
+				for(int actId : prerequisitesId)
+					activity_model.addPrerequisite(activityId, actId);
+					
 				List<Activity> activitiesList = new ArrayList<>();
 
 				// if unable to retrieve list of activities return an error message
 				if ((activitiesList = this.activity_model.getActivitiesByProject(project)) == null) {
 					this.view.updateEditActivity(false,LanguageText.getConstant("ERROR_OCCURED"), null);
-				}
 
-				// else assign the list to the project object
-				else {
-					project.setAcitivies(activitiesList);
+					// else assign the list to the project object
+				} else {
 					
-					// update the view with the new project object and display successful activity update message
-					this.view.updateEditActivity(true,LanguageText.getConstant("UPDATED"), project);
+					// Get information about the activities
+					for(Activity currentActivity : activitiesList){
+						
+						// Fetch from the DB
+						Member currentMember = member_model.getMemberById(currentActivity.getMemberId());
+						List<Activity> currentActivityPrerequisites = activity_model.getActivityPrerequisites(currentActivity);
+						
+						// Set the member
+						currentActivity.setMember(currentMember);
+						
+						// Set the list of prerequisites
+						currentActivity.setPrerequisites(currentActivityPrerequisites);
+					}
+					
+					// Attach the list of activities
+					project.setAcitivies(activitiesList);
 
+					// update the view with the new project object and display successful activity creation message
+					this.view.updateEditActivity(true, String.format(LanguageText.getConstant("UPDATED"), LanguageText.getConstant("ACTIVITY_ACT")), project);
 				}
 			}// else
 		} else {
 			
-			// Display error when validation
+			// Display error when validation error
 			this.view.updateEditActivity(false, activityValidation.getError(),null);
 		}
 	}//end of editActivity
@@ -407,8 +495,14 @@ public class Activity_controller extends AbstractController implements ActivityL
 			// Fetch member from DB
 			Member member = member_model.getMemberById(activity.getMemberId());
 			
+			// Fetch prerequisite
+			List<Activity> prerequisites = activity_model.getActivityPrerequisites(activityId);
+			
 			// Assign member to activity
 			activity.setMember(member);
+			
+			// Assign prerequisites
+			activity.setPrerequisites(prerequisites);
 			
 			// Update view
 			this.view.updateLoadActivity(true, null, activity);

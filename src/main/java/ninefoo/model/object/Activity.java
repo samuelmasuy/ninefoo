@@ -224,6 +224,12 @@ public class Activity {
      * @return String
      */
     public String getPrerequisitesAsString(){
+    	
+    	// If none found
+    	if(prerequisites.size() == 0)
+    		return "None";
+    	
+    	// If at least one
     	List<Integer> preId = new ArrayList<>();
     	if(this.prerequisites != null)
     		for(int i=0; i<prerequisites.size(); i++)

@@ -23,7 +23,7 @@ public interface TableToolsListener {
 	public void loadActivity(EditActivityDialog dialog, int activityId);
 	
 	// Edit
-	public void updateActivity(EditActivityDialog dialog, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, Integer[] prerequisitesId);
+	public void updateActivity(EditActivityDialog dialog, int activityId, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, int[] prerequisitesId);
 	
 	// Delete
 	public void deleteActivity(JFrame parentFrame, Activity activity);

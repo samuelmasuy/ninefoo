@@ -350,9 +350,14 @@ public class MainView extends JFrame implements UpdatableView{
 			}
 
 			@Override
-			public void updateActivity(EditActivityDialog dialog, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, Integer[] prerequisitesId) {
-				// TODO Auto-generated method stub
-				System.out.println("Update activity clicked...");
+			public void updateActivity(EditActivityDialog dialog, int activityId, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, int[] prerequisitesId) {
+				
+				// Set dialog
+				editActivityDialog = dialog;
+				
+				// Pass to controller
+				if(activityListener != null)
+					activityListener.editActivity(activityId, name, description, duration, optimistic, likely, pessimistic, cost, startDate, finishDate, memberId, prerequisitesId);
 			}
 
 			@Override
@@ -913,7 +918,35 @@ public class MainView extends JFrame implements UpdatableView{
 
 	@Override
 	public void updateEditActivity(boolean success, String message, Project project) {
-		// TODO Auto-generated method stub
+		
+		// If dialog opened
+		if(editActivityDialog != null) {
+			
+			// If success
+			if(success) {
+				
+				// Display success message
+				editActivityDialog.setSuccessMessage(message);
+				
+				// Close window
+				editActivityDialog.dispose();
+				
+				// Update project
+				this.tableChartPanel.setProject(project);
+				
+				// Refresh
+				this.tableChartPanel.refresh();
+				
+			// If fails
+			} else {
+				
+				// Display error message
+				editActivityDialog.setErrorMessage(message);
+			}
+			
+			// Reset pointer
+			editActivityDialog = null;
+		}
 	}
 
 	@Override

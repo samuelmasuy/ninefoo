@@ -85,6 +85,14 @@ public class Autoload {
 	}
 	
 	@AutoloadAtRuntime(active=true, priority = 1)
+	public void createDemoUser2(){
+		Member newMember = new Member("user", "pass", "username", "password");
+		Member_model mm = new Member_model();
+		mm.insertNewMember(newMember);
+		LOGGER.info(String.format("Member %s added!", newMember.getUsername()));
+	}
+	
+	@AutoloadAtRuntime(active=true, priority = 1)
 	public void addRoles(){
 		Role_model role_model = new Role_model();
 		ArrayList<Role> roles = new ArrayList<>(2);
