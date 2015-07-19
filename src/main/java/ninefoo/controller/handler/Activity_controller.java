@@ -52,7 +52,7 @@ public class Activity_controller extends AbstractController implements ActivityL
 	 * @author Melissa Duong 
 	 */
 	@Override
-	public void createActivity(String activityLabel, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, final int memberId, Integer[] prerequisitesId) {
+	public void createActivity(String activityLabel, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, final int memberId, final Integer[] prerequisitesId) {
 
 		// set individual rules for each passed parameter json file
 		ValidationRule activityLabelRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_LABEL_ACT"), activityLabel);
@@ -74,7 +74,7 @@ public class Activity_controller extends AbstractController implements ActivityL
 		activityFinishDateRule.checkEmpty();
 		activityCostRule.checkDouble().checkMaxNumValue(Config.MAX_MONEY_AMOUNT).checkMinNumValue(0);
 		
-		// Custom rule
+		// Custom rule for member
 		ValidationRule activityMemberRule = new ValidationRule(LanguageText.getConstant("MEMBER_ACT"), String.valueOf(memberId)){
 			@Override
 			public boolean validate() {
@@ -90,6 +90,28 @@ public class Activity_controller extends AbstractController implements ActivityL
 			}
 		};
 		
+		// Custom rule for prerequisites
+		ValidationRule activityPrerequisitesRule = new ValidationRule(LanguageText.getConstant("PREREQ_ACT"), null) {
+			
+			@Override
+			public boolean validate() {
+				
+				// Condition for the prerequisite
+				Set<Integer> prereqSet = new HashSet<>(Arrays.asList(prerequisitesId));
+				
+				// Run redundancy test
+				if(prereqSet.size() != prerequisitesId.length){
+					
+					// TODO Add to language
+					setErrorMessage("Some activities are added as dependent multiple times.");
+					return false;
+				}
+				
+				return true;
+			}
+			
+		};
+		
 		// add a validation form which takes multiple validation rules
 		ValidationForm activityValidation = new ValidationForm();
 
@@ -103,24 +125,7 @@ public class Activity_controller extends AbstractController implements ActivityL
 		activityValidation.setRule(activityFinishDateRule);
 		activityValidation.setRule(activityCostRule);
 		activityValidation.setRule(activityMemberRule);
-		
-		// Condition for the prerequisite
-		Set<Integer> prereqSet = new HashSet<>(Arrays.asList(prerequisitesId));
-		
-		// Run redundancy test
-		if(prereqSet.size() != prerequisitesId.length){
-			
-			// TODO Add to language
-			this.view.updateCreateActivity(false, "Some activities are added as dependent multiple times.", null);
-			return;
-		}
-
-		// Create the graph to detect cyles
-//		Graph graph = new Graph(prerequisite.length);
-
-		// Feed the graph
-//		for(int i=0; i < prerequisite.length; i++){
-//		}
+		activityValidation.setRule(activityPrerequisitesRule);
 		
 		// if all the parameters passed respect the restrictions, add a new
 		// activity object in this if statement
