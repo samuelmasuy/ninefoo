@@ -2,6 +2,7 @@ package ninefoo.controller.handler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,6 +13,7 @@ import ninefoo.config.Database;
 import ninefoo.config.Session;
 import ninefoo.controller.handler.template.AbstractController;
 import ninefoo.helper.DateHelper;
+import ninefoo.helper.StringHelper;
 import ninefoo.lib.graph.Graph;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.validationForm.ValidationForm;
@@ -143,15 +145,27 @@ public class Activity_controller extends AbstractController implements ActivityL
 			// the activity constructor that needs a member object
 			Member member = this.member_model.getMemberById(memberId);
 
-			// Make cost Double | null
-			Double doubleCost = cost.isEmpty() ? 0 : new Double(Double.parseDouble(cost));
+			// Fix values
+			double doubleCost = StringHelper.zeroOrDouble(cost);
+			int intDuration = StringHelper.zeroOrInteger(duration);
+			int intOptimistic = StringHelper.zeroOrInteger(optimistic);
+			int intLikely = StringHelper.zeroOrInteger(likely);
+			int intPessimistic = StringHelper.zeroOrInteger(pessimistic);
+			Date DateStartDate = DateHelper.parse(startDate, Config.DATE_FORMAT_SHORT);
+			Date DateFinishDate = DateHelper.parse(finishDate, Config.DATE_FORMAT_SHORT);
 			
 			// Get the project
 			Project project = this.project_model.getProjectById(Session.getInstance().getProjectId());
 			
 			// create activity
-			Activity activity = new Activity(activityLabel, Integer.parseInt(duration), DateHelper.parse(startDate, Config.DATE_FORMAT_SHORT), DateHelper.parse(finishDate, Config.DATE_FORMAT_SHORT), project, member, doubleCost);
+			Activity activity = new Activity(activityLabel, description, intDuration, intOptimistic, intLikely, intPessimistic, doubleCost, DateStartDate, DateFinishDate, project.getProjectId(), member.getMemberId(), null);
 
+			// Set project 
+			activity.setProject(project);
+			
+			// Set member
+			activity.setMember(member);
+			
 			// add a new activity to the activity model
 			// if insert failed
 			int insertedActivityId;
@@ -316,18 +330,30 @@ public class Activity_controller extends AbstractController implements ActivityL
 			// the activity constructor that needs a member object
 			Member member = this.member_model.getMemberById(memberId);
 
-			// Make cost Double | null
-			Double doubleCost = cost.isEmpty() ? 0 : new Double(Double.parseDouble(cost));
+			// Fix values
+			double doubleCost = StringHelper.zeroOrDouble(cost);
+			int intDuration = StringHelper.zeroOrInteger(duration);
+			int intOptimistic = StringHelper.zeroOrInteger(optimistic);
+			int intLikely = StringHelper.zeroOrInteger(likely);
+			int intPessimistic = StringHelper.zeroOrInteger(pessimistic);
+			Date DateStartDate = DateHelper.parse(startDate, Config.DATE_FORMAT_SHORT);
+			Date DateFinishDate = DateHelper.parse(finishDate, Config.DATE_FORMAT_SHORT);
 			
 			// Get the project
 			Project project = this.project_model.getProjectById(Session.getInstance().getProjectId());
 			
 			// create activity
-			Activity activity = new Activity(activityLabel, Integer.parseInt(duration), DateHelper.parse(startDate, Config.DATE_FORMAT_SHORT), DateHelper.parse(finishDate, Config.DATE_FORMAT_SHORT), project, member, doubleCost);
+			Activity activity = new Activity(activityLabel, description, intDuration, intOptimistic, intLikely, intPessimistic, doubleCost, DateStartDate, DateFinishDate, project.getProjectId(), member.getMemberId(), null);
 
+			// Set project 
+			activity.setProject(project);
+			
 			// Set the activity id
 			activity.setActivityId(activityId);
 			
+			// Set member
+			activity.setMember(member);
+						
 			// if update failed
 			if ( !this.activity_model.updateActivity(activity)) {
 
@@ -420,9 +446,9 @@ public class Activity_controller extends AbstractController implements ActivityL
 		
 		Member testMember=new Member("Melissa", "Duong", "meDuong", "password");
 		Project testProject=new Project("testProject", 200.00, DateHelper.parse("11-04-1234", Config.DATE_FORMAT_SHORT), DateHelper.parse("11-04-1236", Config.DATE_FORMAT_SHORT), "hello everybody");
-		Activity testActivity=new Activity("testActivity", 1, DateHelper.parse("12-04-1234", Config.DATE_FORMAT_SHORT), DateHelper.parse("12-04-1236", Config.DATE_FORMAT_SHORT), testProject, testMember, (double) 1);
+//		Activity testActivity=new Activity("testActivity", 1, DateHelper.parse("12-04-1234", Config.DATE_FORMAT_SHORT), DateHelper.parse("12-04-1236", Config.DATE_FORMAT_SHORT), testProject, testMember, (double) 1);
 		
-		activitiesAssignedToMember.add(testActivity);
+//		activitiesAssignedToMember.add(testActivity);
 		//****temporary replacement for the code line above so it runs correctly****
 		
 		
