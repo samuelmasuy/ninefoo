@@ -49,7 +49,7 @@
 		"NEW_MEMBER" : "New Member",
 		"REGISTER_A_NEW_MEMBER" : "Register a new member",
 		"VIEW_ASSIGNED" : "View Assigned",
-		"VIEW_MY_ASSIGNED_ACTIVITIES" : "View my assigned activities",
+		"VIEW_MY_ASSIGNED_ACTIVITIES" : "View my assigned activities", 
 
 		"JANUARY"		: "January",
 		"FEBRUARY"		: "February",
@@ -64,6 +64,8 @@
 		"NOVEMBER"		: "November",
 		"DECEMBER"		: "December",
 
-		"SAMPLE_TEXT" : "e.g. é  A new project has been successfully created"
+		"SAMPLE_TEXT" : "e.g. A new project has been successfully created"
+
+
 	}
 }
