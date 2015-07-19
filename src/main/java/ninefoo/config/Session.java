@@ -88,6 +88,7 @@ public class Session {
 		if(this.open == true){
 			this.open = false;
 			this.userId = 0;
+			this.currentProject = 0;
 			LOGGER.info("Session closed");
 		}
 	}

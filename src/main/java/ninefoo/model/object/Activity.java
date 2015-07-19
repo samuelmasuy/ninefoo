@@ -25,7 +25,9 @@ public class Activity {
     private Project project;
     private Member member;
     private List<Activity> prerequisites;
-    private Double cost;
+	private Double cost;
+    private int projectId;
+    private int memberId;
 
     /**
      * This constructor is used when converting DB entities to Java classes.
@@ -235,5 +237,21 @@ public class Activity {
 
 	public void setCost(Double cost) {
 		this.cost = cost;
+	}
+	
+	public int getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
+	}
+	
+	public int getMemberId() {
+		return memberId;
+	}
+	
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
 	}
 }

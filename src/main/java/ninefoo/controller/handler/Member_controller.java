@@ -2,6 +2,7 @@ package ninefoo.controller.handler;
 
 import java.util.List;
 
+import ninefoo.config.Annotation.FinalVersion;
 import ninefoo.config.Database;
 import ninefoo.config.Session;
 import ninefoo.controller.handler.template.AbstractController;
@@ -155,12 +156,14 @@ public class Member_controller extends AbstractController implements MemberListe
 	 * Logout
 	 */
 	@Override
+	@FinalVersion(version="1.0")
 	public void logout() {
 		Session.getInstance().close();
 		this.view.updateLogout();
 	}
 
 	@Override
+	@FinalVersion(version="1.0")
 	public void loadAllMembers() {
 		
 		// Get all members
@@ -183,5 +186,26 @@ public class Member_controller extends AbstractController implements MemberListe
 	@Override
 	public void registerAndAssign(String firstName, String lastName, String username, String password, String role, int projectId) {
 		
+	}
+
+	@Override
+	@FinalVersion(version="1.0")
+	public void loadAllMembersForAProject(int projectId) {
+		
+		// Get all members
+		List<Member> members = member_model.getAllMembersForAProject(projectId);
+		
+		// If error occurred
+		if(members == null) {
+			
+			// Display error
+			this.view.updateLoadAllMembersForAProject(false, LanguageText.getConstant("ERROR_OCCURED"), null);
+		
+		// If users found
+		} else {
+			
+			// Load them
+			this.view.updateLoadAllMembersForAProject(true, null, members);
+		}
 	}
 }

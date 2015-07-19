@@ -3,15 +3,23 @@ package ninefoo.view.project.table.dialog;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
+import ninefoo.config.Config;
+import ninefoo.helper.ActivityHelper;
+import ninefoo.helper.DateHelper;
 import ninefoo.lib.autocompleteComboBox.AutocompleteComboBox;
 import ninefoo.lib.component.PMButton;
 import ninefoo.lib.component.PMLabel;
@@ -55,7 +63,7 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 	/** 
 	 *  Constructor
 	 */
-	public CreateActivityDialog(JFrame parentFrame, final TableToolsListener tableToolsListener) {
+	public CreateActivityDialog(final JFrame parentFrame, final TableToolsListener tableToolsListener) {
 		
 		// Load data
 		tableToolsListener.loadAllMembersForCreateActivityDialog(this);
@@ -75,15 +83,75 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 		this.memberBox = new AutocompleteComboBox(membersName);
 		this.prerequisiteDropdown = new MultiDropdown(LanguageText.getConstant("ADD_DEPENDENCY_ACT"), activitiesLabel);
 		
+		// If first activity, disable add prerequisite button
+		if(activities_data.size() == 0)
+			prerequisiteDropdown.setEnabled(false);
+		
+		// Set title
 		this.setTitle(LanguageText.getConstant("CREATE_ACTIVITY_ACT"));
+		
+		// Set default values
+		this.startDate.setToday();
+		this.finishDate.setDate(DateHelper.getDateRelativeToToday(1));
+		this.duration.setText("1");
+		this.duration.setEditable(false);
+		
+		// Set listener to the dates
+		this.startDate.getJFormattedTextField().getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateDuration();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateDuration();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateDuration();
+			}
+		});
+		
+		this.finishDate.getJFormattedTextField().getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateDuration();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateDuration();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateDuration();
+			}
+		});
 		
 		// Add button listener
 		this.createButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				// Get the member
+				int member = Config.INVALID;
+				if(memberBox.checkAndGetText() != null)
+					member = members_data.get(memberBox.checkAndGetIndex()).getMemberId();
+					
+				// Get the prerequisites
+				Integer[] prerequisiteDataIndex = prerequisiteDropdown.getDataIndex();
+				int[] activitiesPrereqId = new int[prerequisiteDataIndex.length];
+				for(int i=0; i < prerequisiteDataIndex.length; i++)
+					activitiesPrereqId[i] = activities_data.get(prerequisiteDataIndex[i]).getActivityId();
+					
 				if (tableToolsListener != null)
-					tableToolsListener.createActivity();
+					tableToolsListener.createActivity(CreateActivityDialog.this, activityLabel.getText(), description.getText(), duration.getText(), optimisticDuration.getText(), likelyDuration.getText(), pessimisticDuration.getText(), cost.getText(), startDate.getText(), finishDate.getText(), member, activitiesPrereqId);
 			}
 		});
 		
@@ -169,54 +237,68 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 		this.setVisible(true);
 	}
 	
-		//TODO Add refresh
-		/**
-		 * Populate list
-		 * @param users
-		 */
-		public void populateMemberList(List<Member> members){
-			
-			// Reset array
-			this.members_data = new ArrayList<>();
-			
-			// If a list was returned
-			if(members != null){
-				
-				// Add projects
-				this.members_data.addAll(members);
+	/**
+	 * Update the duration field
+	 */
+	private void updateDuration(){
+		int diff;
+		if(startDate.getText() == null || startDate.getText().isEmpty() || finishDate.getText() == null || finishDate.getText().isEmpty()){
+			diff = 0;
+		} else {
+			try{
+				diff = DateHelper.getDifferenceDates(DateHelper.parse(startDate.getText(), Config.DATE_FORMAT_SHORT), DateHelper.parse(finishDate.getText(), Config.DATE_FORMAT_SHORT));
+			} catch(IllegalArgumentException e) {
+				diff = 0;
 			}
+		}
+		duration.setText( String.valueOf(diff));
+	}
+	
+	/**
+	 * Populate list
+	 * @param users
+	 */
+	public void populateMemberList(List<Member> members){
+		
+		// Reset array
+		this.members_data = new ArrayList<>();
+		
+		// If a list was returned
+		if(members != null){
 			
-			// Create a list of members
-			this.membersName = new String[members.size()];
-			
-			// Populate list of user names
-			for(int i=0; i < members.size(); i++)
-				this.membersName[i] = members.get(i).getUsername();
+			// Add projects
+			this.members_data.addAll(members);
 		}
 		
-		//TODO Add refresh
-		/**
-		 * Populate list
-		 * @param activities
-		 */
-		public void populateActivityList(List<Activity> activities){
+		// Create a list of members
+		this.membersName = new String[members.size()];
+		
+		// Populate list of user names
+		for(int i=0; i < members.size(); i++)
+			this.membersName[i] = members.get(i).getUsername();
+	}
+	
+	/**
+	 * Populate list
+	 * @param activities
+	 */
+	public void populateActivityList(List<Activity> activities){
+		
+		// Reset array
+		this.activities_data = new ArrayList<>();
+		
+		// If a list was returned
+		if(activities != null){
 			
-			// Reset array
-			this.activities_data = new ArrayList<>();
-			
-			// If a list was returned
-			if(activities != null){
-				
-				// Add projects
-				this.activities_data.addAll(activities);
-			}
-			
-			// Create a list of activities
-			this.membersName = new String[activities.size()];
-			
-			// Populate list of user names
-			for(int i=0; i < activities.size(); i++)
-				this.membersName[i] = String.valueOf(activities.get(i).getActivityId());
-			
+			// Add projects
+			this.activities_data.addAll(activities);
 		}
+		
+		// Create a list of members
+		this.activitiesLabel = new String[activities.size()];
+		
+		// Populate list of user names
+		for(int i=0; i < activities.size(); i++)
+			this.activitiesLabel[i] = ActivityHelper.getIdAndName(activities.get(i));
+	}
 }

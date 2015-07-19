@@ -8,6 +8,7 @@ import java.util.Set;
 
 import ninefoo.config.Config;
 import ninefoo.config.Database;
+import ninefoo.config.Session;
 import ninefoo.controller.handler.template.AbstractController;
 import ninefoo.helper.DateHelper;
 import ninefoo.lib.graph.Graph;
@@ -51,45 +52,85 @@ public class Activity_controller extends AbstractController implements ActivityL
 	 * @author Melissa Duong 
 	 */
 	@Override
-	public void createActivity(int row, String activityId, String activityLabel, String duration, String startDate, String finishDate, String cost, Project project, int memberId, String[] prerequisite) {
+	public void createActivity(String activityLabel, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, final int memberId, final int[] prerequisitesId) {
 
 		// set individual rules for each passed parameter json file
 		ValidationRule activityLabelRule = new ValidationRule(LanguageText.getConstant("ACTIVITY_LABEL_ACT"), activityLabel);
-		ValidationRule activityDurationRule = new ValidationRule(LanguageText.getConstant("DURATION_ACT"), duration);
+		ValidationRule activityDescriptionRule = new ValidationRule(LanguageText.getConstant("DESCRIPTION"), description);
+		ValidationRule activityOptimisticRule = new ValidationRule(LanguageText.getConstant("OPTIMISTIC_ACT"), optimistic);
+		ValidationRule activityLikelyRule = new ValidationRule(LanguageText.getConstant("LIKELY_ACT"), likely);
+		ValidationRule activityPessimisticRule = new ValidationRule(LanguageText.getConstant("PESSIMISTIC_ACT"), pessimistic);
 		ValidationRule activityStartDateRule = new ValidationRule(LanguageText.getConstant("START_ACT"), startDate);
 		ValidationRule activityFinishDateRule = new ValidationRule(LanguageText.getConstant("FINISH_ACT"), finishDate);
 		ValidationRule activityCostRule = new ValidationRule(LanguageText.getConstant("COST_ACT"), cost);
 		
 		// set restrictions for those rules
-		activityLabelRule.checkEmpty().checkMaxLength(25).checkFormat("[a-zA-Z0-9]+");
-		activityDurationRule.checkEmpty().checkMaxNumValue(100000).checkMinNumValue(0).checkInt();
+		activityLabelRule.doTrim().checkEmpty().checkMaxLength(Config.MAX_TITLE_LENGTH);
+		activityDescriptionRule.checkMaxLength(Config.MAX_DESCRIPTION_LENGTH);
+		activityOptimisticRule.checkMaxNumValue(Config.MAX_DATE_DURATION).checkMinNumValue(0).checkInt();
+		activityLikelyRule.checkMaxNumValue(Config.MAX_DATE_DURATION).checkMinNumValue(0).checkInt();
+		activityPessimisticRule.checkMaxNumValue(Config.MAX_DATE_DURATION).checkMinNumValue(0).checkInt();
 		activityStartDateRule.checkEmpty().checkDateBefore(finishDate);
-
+		activityFinishDateRule.checkEmpty();
+		activityCostRule.checkDouble().checkMaxNumValue(Config.MAX_MONEY_AMOUNT).checkMinNumValue(0);
+		
+		// Custom rule for member
+		ValidationRule activityMemberRule = new ValidationRule(LanguageText.getConstant("MEMBER_ACT"), String.valueOf(memberId)){
+			@Override
+			public boolean validate() {
+				
+				if(memberId == Config.INVALID){
+					
+					// TODO Add to language
+					setErrorMessage("Please select a member");
+					return false;
+				}
+				
+				return true;
+			}
+		};
+		
+		// Custom rule for prerequisites
+		ValidationRule activityPrerequisitesRule = new ValidationRule(LanguageText.getConstant("PREREQ_ACT"), null) {
+			
+			@Override
+			public boolean validate() {
+				
+				// Convert int to Integer
+				Integer data[] = new Integer[prerequisitesId.length];
+				for(int i=0; i < data.length; i++)
+					data[i] = prerequisitesId[i];
+				
+				// Condition for the prerequisite
+				Set<Integer> prereqSet = new HashSet<>(Arrays.asList(data));
+				
+				// Run redundancy test
+				if(prereqSet.size() != prerequisitesId.length){
+					
+					// TODO Add to language
+					setErrorMessage("Some activities are added as dependent multiple times.");
+					return false;
+				}
+				
+				return true;
+			}
+			
+		};
+		
 		// add a validation form which takes multiple validation rules
 		ValidationForm activityValidation = new ValidationForm();
 
 		// add the validation rules to the validation form
 		activityValidation.setRule(activityLabelRule);
-		activityValidation.setRule(activityDurationRule);
+		activityValidation.setRule(activityDescriptionRule);
+		activityValidation.setRule(activityOptimisticRule);
+		activityValidation.setRule(activityLikelyRule);
+		activityValidation.setRule(activityPessimisticRule);
 		activityValidation.setRule(activityStartDateRule);
 		activityValidation.setRule(activityFinishDateRule);
 		activityValidation.setRule(activityCostRule);
-		
-		// Condition for the prerequisite
-		Set<String> prereqSet = new HashSet<>(Arrays.asList(prerequisite));
-		
-		// Run redundancy test
-		if(prereqSet.size() != prerequisite.length){
-			this.view.updateCreateActivity(false, LanguageText.getConstant("ERROR_OCCURED"), null);
-			return;
-		}
-
-		// Create the graph to detect cyles
-//		Graph graph = new Graph(prerequisite.length);
-
-		// Feed the graph
-//		for(int i=0; i < prerequisite.length; i++){
-//		}
+		activityValidation.setRule(activityMemberRule);
+		activityValidation.setRule(activityPrerequisitesRule);
 		
 		// if all the parameters passed respect the restrictions, add a new
 		// activity object in this if statement
@@ -100,14 +141,18 @@ public class Activity_controller extends AbstractController implements ActivityL
 			Member member = this.member_model.getMemberById(memberId);
 
 			// Make cost Double | null
-			Double doubleCost = cost.isEmpty() ? null : new Double(Double.parseDouble(cost));
+			Double doubleCost = cost.isEmpty() ? 0 : new Double(Double.parseDouble(cost));
+			
+			// Get the project
+			Project project = this.project_model.getProjectById(Session.getInstance().getProjectId());
 			
 			// create activity
 			Activity activity = new Activity(activityLabel, Integer.parseInt(duration), DateHelper.parse(startDate, Config.DATE_FORMAT_SHORT), DateHelper.parse(finishDate, Config.DATE_FORMAT_SHORT), project, member, doubleCost);
 
 			// add a new activity to the activity model
 			// if insert failed
-			if (this.activity_model.insertNewActivity(activity) == Database.ERROR) {
+			int insertedActivityId;
+			if ( (insertedActivityId = this.activity_model.insertNewActivity(activity)) == Database.ERROR) {
 
 				// display error message
 				this.view.updateCreateActivity(false,LanguageText.getConstant("ERROR_OCCURED"), null);
@@ -116,6 +161,10 @@ public class Activity_controller extends AbstractController implements ActivityL
 			else {
 				// get the new list of activities including the new activity and  update the project object
 
+				// Insert prerequisites
+				for(int actId : prerequisitesId)
+					activity_model.addPrerequisite(insertedActivityId, actId);
+					
 				List<Activity> activitiesList = new ArrayList<>();
 
 				// if unable to retrieve list of activities return an error message
@@ -124,10 +173,26 @@ public class Activity_controller extends AbstractController implements ActivityL
 
 					// else assign the list to the project object
 				} else {
+					
+					// Get information about the activities
+					for(Activity currentActivity : activitiesList){
+						
+						// Fetch from the DB
+						Member currentMember = member_model.getMemberById(currentActivity.getMemberId());
+						List<Activity> currentActivityPrerequisites = activity_model.getActivityPrerequisites(currentActivity);
+						
+						// Set the member
+						currentActivity.setMember(currentMember);
+						
+						// Set the list of prerequisites
+						currentActivity.setPrerequisites(currentActivityPrerequisites);
+					}
+					
+					// Attach the list of activities
 					project.setAcitivies(activitiesList);
 
 					// update the view with the new project object and display successful activity creation message
-					this.view.updateCreateActivity(true,LanguageText.getConstant("CREATED"), project);
+					this.view.updateCreateActivity(true, String.format(LanguageText.getConstant("CREATED"), LanguageText.getConstant("ACTIVITY_ACT")), project);
 				}
 			}// else
 		} else {
@@ -230,8 +295,11 @@ public class Activity_controller extends AbstractController implements ActivityL
 	}//end of editActivity
 
 	@Override
-	public void loadActivitiesByProject(Project project) {
+	public void loadActivitiesByProject(int projectId) {
 
+		// Load project
+		Project project = project_model.getProjectById(projectId);
+		
 		List<Activity> projectActivities = this.activity_model.getActivitiesByProject(project);
 		if (projectActivities==null) {
 			
@@ -320,5 +388,31 @@ public class Activity_controller extends AbstractController implements ActivityL
 			
 	
 	}//end of loadActivitiesForAllProjectByMember
+
+	@Override
+	public void loadActivity(int activityId) {
+		
+		// Fetch activity from DB
+		Activity activity = activity_model.getActivityById(activityId);
+		
+		// If activity not found
+		if(activity == null) {
+			
+			// Update view
+			this.view.updateLoadActivity(false, LanguageText.getConstant("ERROR_OCCURED"), null);
+			
+		// If activity found
+		} else {
+			
+			// Fetch member from DB
+			Member member = member_model.getMemberById(activity.getMemberId());
+			
+			// Assign member to activity
+			activity.setMember(member);
+			
+			// Update view
+			this.view.updateLoadActivity(true, null, activity);
+		}
+	}
 
 }//end of Activity Controller Class

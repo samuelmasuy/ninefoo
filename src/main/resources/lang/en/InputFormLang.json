@@ -18,6 +18,7 @@
 		"LOGOUT" : "Logout",
 		"REGISTER" : "Register",
 		"CREATE" : "Create",
+		"UPDATE" : "Update",
 		"ADD" : "Add",
 		"CLOSE" : "Close",
 		

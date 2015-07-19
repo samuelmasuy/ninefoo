@@ -134,6 +134,53 @@ public class Member_model extends AbstractModel{
 
         return null;
     }
+    
+    /**
+     * Returns all the members stored in the database for a project.
+     * @return List of Member objects.
+     */
+    public List<Member> getAllMembersForAProject(int projectId) {
+    	
+    	// Open
+    	this.open();
+    	
+        List<Member> allMembers = new ArrayList<>();
+        
+        // Query
+        sql = 		"SELECT m.member_id AS member_id, first_name, last_name, username, password, register_date "
+        		+ 	"FROM member m, project_member pm WHERE m.member_id = pm.member_id AND pm.project_id = ?";
+        try {
+        	
+        	// Prepare
+        	this.prepareStatement();
+        	
+        	// Data
+        	ps.setInt(1, projectId);
+        	
+        	// Run
+            result = ps.executeQuery();
+            
+            // Get all
+            while (result.next()) {
+                Member nextMember = getNextMember(result);
+
+                if (nextMember != null)
+                    allMembers.add(nextMember);
+            }
+
+            return allMembers;
+
+        // Error
+        } catch (SQLException e) {
+            LOGGER.error("Could not get members from db --- detailed info: " + e.getMessage());
+        
+        // Close
+        } finally {
+        	this.close();
+        }
+
+        return null;
+    }
 
     /**
      * Returns the Member object from the database that is associated with the specified ID.

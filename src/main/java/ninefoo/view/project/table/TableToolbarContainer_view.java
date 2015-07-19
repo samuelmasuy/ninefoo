@@ -62,6 +62,13 @@ public class TableToolbarContainer_view extends JPanel{
 	}
 	
 	/**
+	 * Refresh the table data
+	 */
+	public void refreshTable(){
+		this.populateTable();
+	}
+	
+	/**
 	 * Set table tools listener
 	 * @param tableToolsListener
 	 */

@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import ninefoo.lib.component.PMButton;
 import ninefoo.lib.lang.LanguageText;
+import ninefoo.model.object.Activity;
 import ninefoo.view.project.table.dialog.CreateActivityDialog;
 import ninefoo.view.project.table.dialog.EditActivityDialog;
 import ninefoo.view.project.table.dialog.ViewActivityDetailsDialog;
@@ -101,13 +102,16 @@ public class TableToolbar_view extends JPanel {
 				// If listener set
 				if(toolbarListener != null){
 					
+					// Store selected activity
+					Activity selectedActivity = toolbarListener.getSelectedActivity();
+					
 					// If no activity selected, show error
-					if(toolbarListener.getSelectedActivity() == null){
+					if(selectedActivity == null){
 						JOptionPane.showMessageDialog(parentFrame, String.format(LanguageText.getConstant("MISSING_EDIT_ACT"),LanguageText.getConstant("ACTIVITY_ACT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
 					
 					// If activity selected
 					} else {
-						new EditActivityDialog(parentFrame, tableToolsListener);
+						new EditActivityDialog(parentFrame, tableToolsListener, selectedActivity.getActivityId());
 					}
 				}
 			}

@@ -91,6 +91,20 @@ public class MultiDropdown extends JPanel{
 	}
 	
 	/**
+	 * Enable or disable adding or removing dependencies
+	 * @param enable
+	 */
+	public void setEnabled(boolean enable){
+		
+		// Disable add button
+		this.addButton.setEnabled(enable);
+		
+		// Disable remove button
+		for(int i=0; i < listBoxRemoveWrapper.size(); i++)
+			listBoxRemoveWrapper.get(i).removeButton.setEnabled(enable);
+	}
+	
+	/**
 	 * Get only the correct data
 	 * @return array of the valid data
 	 */
@@ -101,6 +115,19 @@ public class MultiDropdown extends JPanel{
 				data.add(listBoxRemoveWrapper.get(i).getText());
 		
 		return data.toArray(new String[data.size()]);
+	}
+	
+	/**
+	 * Get only the correct data index
+	 * @return array of the index of the valid data
+	 */
+	public Integer[] getDataIndex(){
+		ArrayList<Integer> dataIndex = new ArrayList<>();
+		for(int i = 0; i < listBoxRemoveWrapper.size(); i++)
+			if(listBoxRemoveWrapper.get(i).getText() != null)
+				dataIndex.add(listBoxRemoveWrapper.get(i).getIndexInList());
+		
+		return dataIndex.toArray(new Integer[dataIndex.size()]);
 	}
 	
 	/**
@@ -169,6 +196,14 @@ public class MultiDropdown extends JPanel{
 		 */
 		public String getText(){
 			return boxField.checkAndGetText();
+		}
+		
+		/**
+		 * Get index of the field
+		 * @return index or -1 if element doesn't exist in the list
+		 */
+		public int getIndexInList(){
+			return boxField.checkAndGetIndex();
 		}
 	}
 }

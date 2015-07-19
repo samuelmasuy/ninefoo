@@ -156,8 +156,9 @@ public class Activity_model extends AbstractModel{
         List<Activity> prerequisites = new ArrayList<>();
         
         // Query
-        sql = "SELECT prereq_activity_id FROM activity_relation " +
-        "WHERE activity_id = ?";
+        sql = 		"SELECT ar.prereq_activity_id as activity_id, activity_label, description, duration, optimistic_duration, likely_duration, pessimistic_duration, create_date, update_date, start_date, finish_date, project_id, member_id, cost "
+        		+ 	"FROM activity_relation ar, activity a "
+        		+ 	"WHERE ar.prereq_activity_id = a.activity_id AND ar.activity_id = ?";
 
         try {
         	
@@ -172,7 +173,7 @@ public class Activity_model extends AbstractModel{
 
             // Get all
             while (result.next())
-                prerequisites.add(getActivityById(result.getInt("prereq_activity_id")));
+                prerequisites.add(getNextActivity(result));
          
         // Error
         } catch (SQLException e) {
@@ -263,7 +264,7 @@ public class Activity_model extends AbstractModel{
         List<Activity> projectActivities = new ArrayList<>();
         
         // Query
-        sql = "SELECT activity_id FROM activity WHERE project_id = ?";
+        sql = "SELECT * FROM activity WHERE project_id = ?";
 
         try {
         	
@@ -276,11 +277,9 @@ public class Activity_model extends AbstractModel{
         	// Run
             result = ps.executeQuery();
 
-            int activityId;
             Activity activity;
             while (result.next()) {
-                activityId = result.getInt("activity_id");
-                activity = getActivityById(activityId);
+                activity = getNextActivity(result);
 
                 if (activity != null)
                     projectActivities.add(activity);
@@ -412,5 +411,44 @@ public class Activity_model extends AbstractModel{
     	return this.insertPrerequisites(activityIdDependent, list);
     }
     
-    
+    /**
+     * Add prerequisite for activityId1
+     * activityId2 is prerequisite for acitivityId1
+     * @param activityId1
+     * @param activityId2
+     * @return true if the insert operation was successful. False otherwise.
+     */
+    public boolean addPrerequisite(int activityId1, int activityId2){
+    	// Open
+        this.open();
+
+        // Query
+        sql = "INSERT INTO activity_relation(activity_id, prereq_activity_id) VALUES (?, ?)";
+
+        try {
+
+            // Prepare
+            this.prepareStatement();
+
+            // Data
+            ps.setInt(1, activityId1);
+            ps.setInt(2, activityId2);
+
+            // Run
+            affectedRows = ps.executeUpdate();
+
+            // Check if deleted
+            return (affectedRows == 1);
+
+            // Error
+        } catch (SQLException e) {
+            LOGGER.error("Could not insert activity prerequisite --- detailed info: " + e.getMessage());
+
+            // Close
+        } finally {
+            this.close();
+        }
+
+        return false;
+    }
 }

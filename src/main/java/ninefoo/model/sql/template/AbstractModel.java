@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.apache.logging.log4j.LogManager;
@@ -16,8 +17,6 @@ import ninefoo.model.object.Activity;
 import ninefoo.model.object.Member;
 import ninefoo.model.object.Project;
 import ninefoo.model.object.Role;
-import ninefoo.model.sql.Member_model;
-import ninefoo.model.sql.Project_model;
 
 public abstract class AbstractModel {
 	
@@ -55,6 +54,10 @@ public abstract class AbstractModel {
 	 * @throws SQLException
 	 */
 	public final int getLastInsertId() throws SQLException{
+		
+		// Flush old query on console
+		if(sql != null && !sql.isEmpty())
+			LOGGER.debug(sql);
 		
 		// Query
 		sql = "SELECT last_insert_rowid()";
@@ -131,9 +134,6 @@ public abstract class AbstractModel {
         Activity activity = null;
 
         try {
-            Project_model projectModel = new Project_model();
-            Member_model memberModel = new Member_model();
-
             int activityId = activities.getInt("activity_id");
             String activityLabel = activities.getString("activity_label");
             String description = activities.getString("description");
@@ -147,8 +147,8 @@ public abstract class AbstractModel {
             int projectId = activities.getInt("project_id");
             int memberId = activities.getInt("member_id");
             double cost = activities.getDouble("cost");
-            Project project = projectModel.getProjectById(projectId);
-            Member member = memberModel.getMemberById(memberId);
+            Project project = null;
+            Member member = null;
 
             activity = new Activity(activityId, activityLabel, description, duration,
                     optimisticDuration, likelyDuration, pessimisticDuration,
@@ -156,6 +156,8 @@ public abstract class AbstractModel {
             activity.setCost(cost);
             activity.setStartDate(startDate);
             activity.setFinishDate(finishDate);
+            activity.setProjectId(projectId);
+            activity.setMemberId(memberId);
         } catch (SQLException e) {
             LOGGER.error("Could not get next activity from db --- detailed info: " + e.getMessage());
         }

@@ -100,6 +100,10 @@ public class TableChartSlider_view extends JPanel{
 		this.tableContainer.resetTable();
 	}
 	
+	public void refresh(){
+		this.tableContainer.refreshTable();
+	}
+	
 	/**
 	 * Set table tools listener
 	 * @param tableToolsListener

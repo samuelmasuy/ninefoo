@@ -35,6 +35,21 @@ public class Config {
 	
 	// Date format alpha version
 	public final static String DATE_FORMAT_ALPHA = "MMMMM d, yyyy";
+	
+	// Max title length
+	public final static int MAX_TITLE_LENGTH = 25;
+	
+	// Max description length
+	public final static int MAX_DESCRIPTION_LENGTH = 150;
+	
+	// Max date duration
+	public final static int MAX_DATE_DURATION = 100000;
+	
+	// Max money amount
+	public final static int MAX_MONEY_AMOUNT = 1000000000;
+	
+	// Invalid information
+	public final static int INVALID = -1;
 
 	/**
 	 * Auto load methods
