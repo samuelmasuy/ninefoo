@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import ninefoo.config.Annotation.FinalVersion;
+import ninefoo.config.Config;
 import ninefoo.config.RoleNames;
 import ninefoo.config.Session;
 import ninefoo.model.object.Activity;
@@ -442,6 +443,20 @@ public class MainView extends JFrame implements UpdatableView{
 	}
 	
 	/**
+	 * Remove project and clear the screen
+	 */
+	private void clearScreen(){
+		// Remove project
+		this.tableChartPanel.setProject(null);
+		
+		// Refresh
+		this.tableChartPanel.refresh();
+		
+		// Remove tool bar below table
+		this.tableChartPanel.setVisibleToolbar(false);
+	}
+	
+	/**
 	 * Set member listener
 	 * @param memberListener
 	 */
@@ -864,6 +879,13 @@ public class MainView extends JFrame implements UpdatableView{
 				
 				// Populate new list of projects
 				viewMyProjectsDialog.populateProjectList(projects);
+				
+				// If no more project opened
+				if(Session.getInstance().getProjectId() == Config.INVALID){
+					
+					// Clear screen
+					clearScreen();
+				}
 				
 			// If fails
 			} else {

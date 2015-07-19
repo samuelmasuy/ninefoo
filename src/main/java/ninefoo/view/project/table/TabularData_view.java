@@ -66,10 +66,14 @@ public class TabularData_view extends JPanel {
 		// Remove all existing rows
 		this.resetTable();
 		
-		// Add rows
-		List<Activity> activities = this.project.getAcitivies();
-		for(Activity activity : activities)
-			this.dataTable.addRow(ActivityHelper.getFilteredRow(activity));
+		// If project exists
+		if(project != null){
+			
+			// Add rows
+			List<Activity> activities = this.project.getAcitivies();
+			for(Activity activity : activities)
+				this.dataTable.addRow(ActivityHelper.getFilteredRow(activity));
+		}
 	}
 	
 	/**
