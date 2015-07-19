@@ -88,8 +88,7 @@ public class Activity_controller extends AbstractController implements ActivityL
 				
 				if(memberId == Config.INVALID){
 					
-					// TODO Add to language
-					setErrorMessage("Please select a member");
+					setErrorMessage(LanguageText.getConstant("MISSING_MEMBER"));
 					return false;
 				}
 				
@@ -114,8 +113,7 @@ public class Activity_controller extends AbstractController implements ActivityL
 				// Run redundancy test
 				if(prereqSet.size() != prerequisitesId.length){
 					
-					// TODO Add to language
-					setErrorMessage("Some activities are added as dependent multiple times.");
+					setErrorMessage(LanguageText.getConstant("MULTIPLE_DEPENDENT_ACTIVITY"));
 					return false;
 				}
 				return true;
@@ -259,9 +257,7 @@ public class Activity_controller extends AbstractController implements ActivityL
 			public boolean validate() {
 				
 				if(memberId == Config.INVALID){
-					
-					// TODO Add to language
-					setErrorMessage("Please select a member");
+					setErrorMessage(LanguageText.getConstant("MISSING_MEMBER"));
 					return false;
 				}
 				
@@ -287,17 +283,14 @@ public class Activity_controller extends AbstractController implements ActivityL
 				for(int i=0; i < prerequisitesId.length; i++){
 					if(activityId == prerequisitesId[i]){
 						
-						// TODO Add to language
-						setErrorMessage("You cannot choose a self dependent activity.");
+						setErrorMessage(LanguageText.getConstant("SELF_DEPENDENT_ACTIVITY"));
 						return false;
 					}
 				}
 				
 				// Run redundancy test
 				if(prereqSet.size() != prerequisitesId.length){
-					
-					// TODO Add to language
-					setErrorMessage("Some activities are added as dependent multiple times.");
+					setErrorMessage(LanguageText.getConstant("MULTIPLE_DEPENDENT_ACTIVITY"));
 					return false;
 				}
 				
@@ -332,7 +325,6 @@ public class Activity_controller extends AbstractController implements ActivityL
 					// If cycle detected
 					if(graph.isCyclic()) {
 						
-						// TODO Add to language
 						setErrorMessage("A cycle has been detected.");
 						return false;
 					}
@@ -393,7 +385,7 @@ public class Activity_controller extends AbstractController implements ActivityL
 			if ( !this.activity_model.updateActivity(activity)) {
 
 				// display error message
-				this.view.updateEditActivity(false,LanguageText.getConstant("ERROR_OCCURED"), null);
+				this.view.updateEditActivity(false, LanguageText.getConstant("ERROR_OCCURED"), null);
 			}// if
 				// if activity updated successfully, update the view because a new activity has been added to a project
 			else {
@@ -410,7 +402,7 @@ public class Activity_controller extends AbstractController implements ActivityL
 
 				// if unable to retrieve list of activities return an error message
 				if ((activitiesList = this.activity_model.getActivitiesByProject(project)) == null) {
-					this.view.updateEditActivity(false,LanguageText.getConstant("ERROR_OCCURED"), null);
+					this.view.updateEditActivity(false, LanguageText.getConstant("ERROR_OCCURED"), null);
 
 					// else assign the list to the project object
 				} else {
@@ -439,7 +431,7 @@ public class Activity_controller extends AbstractController implements ActivityL
 		} else {
 			
 			// Display error when validation error
-			this.view.updateEditActivity(false, activityValidation.getError(),null);
+			this.view.updateEditActivity(false, activityValidation.getError(), null);
 		}
 	}//end of editActivity
 

@@ -19,6 +19,7 @@
 		"OPERATION_SUCCESSFUL" : "Operation reussie",
 		"ERROR_OCCURED" : "Une erreur s'est produite",
 		"MISSING_OPEN" : "Selectionner un %s pour ouvrir",
+        "MISSING_MEMBER" : "Veuillez choisir un membre",
 		"MISSING_EDIT" : "Selectionner un %s pour modifier",
 		"MISSING_DELETE": "Selectionner un %s pour supprimer",
 		"MISSING_OPEN_ACT" : "Selectionner une %s pour ouvrir",
@@ -26,6 +27,8 @@
 		"MISSING_DELETE_ACT": "Selectionner une %s pour supprimer",
 		"MISSING_VIEW_ACT" :	"Selectionner une %s pour visionner",
 
+        "SELF_DEPENDENT_ACTIVITY": "Vous ne pouvez choisir une activite qui depend d'elle meme",
+        "MULTIPLE_DEPENDENT_ACTIVITY": "Certaines activites sont ajoutes comme dependante plusieurs fois.",
 
 		"DELETE_CONFIRMATION" : "Confirmation Supprimer",
 		"DELETE_CONFIRMATION_TEXT" : "Etes-vous sur de vouloir supprimer %s: %s",
