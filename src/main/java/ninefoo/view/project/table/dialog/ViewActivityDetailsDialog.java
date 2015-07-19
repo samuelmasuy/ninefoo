@@ -58,7 +58,7 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
 	public ViewActivityDetailsDialog(JFrame parentFrame, final TableToolsListener tableToolsListener) {
 		
 		// Initialize components
-		this.closeButton = new PMButton(LanguageText.getConstant("CLOSE"));
+		this.closeButton = new PMButton("CLOSE");
 		this.activityLabelInfo = new PMLabel();
 		this.descriptionInfo = new JTextArea();
 		this.durationInfo = new PMLabel();
@@ -98,43 +98,43 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
 				closeButton.setBorder(BorderFactory.createCompoundBorder(closeButton.getBorder(), inputPadding));
 				
 				// Add components
-				this.table.put(new PMLabel(LanguageText.getConstant("NAME")));
+				this.table.put(new PMLabel("NAME"));
 				this.table.put(activityLabelInfo);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("DESCRIPTION")));
+				this.table.put(new PMLabel("DESCRIPTION"));
 				this.table.put(new JScrollPane(descriptionInfo));
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("DURATION_ACT")));
+				this.table.put(new PMLabel("DURATION_ACT"));
 				this.table.put(durationInfo);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("OPTIMISTIC_ACT")));
+				this.table.put(new PMLabel("OPTIMISTIC_ACT"));
 				this.table.put(optimisticDurationInfo);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("LIKELY_ACT")));
+				this.table.put(new PMLabel("LIKELY_ACT"));
 				this.table.put(likelyDurationInfo);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("PESSIMISTIC_ACT")));
+				this.table.put(new PMLabel("PESSIMISTIC_ACT"));
 				this.table.put(pessimisticDurationInfo);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("COST_ACT")));
+				this.table.put(new PMLabel("COST_ACT"));
 				this.table.put(costInfo);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("START_ACT")));
+				this.table.put(new PMLabel("START_ACT"));
 				this.table.put(startDateInfo);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("FINISH_ACT")));
+				this.table.put(new PMLabel("FINISH_ACT"));
 				this.table.put(finishDateInfo);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("MEMBER_ACT")));
+				this.table.put(new PMLabel("MEMBER_ACT"));
 				this.table.put(memberInfo);
 				
 				
@@ -143,7 +143,7 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
 					
 					if (i == 0){
 						this.table.placeCenterTop();
-						this.table.put(new PMLabel(LanguageText.getConstant("PREREQ_ACT")));
+						this.table.put(new PMLabel("PREREQ_ACT"));
 					}else{
 						this.table.getGridBagConstraints().gridx++;
 					}

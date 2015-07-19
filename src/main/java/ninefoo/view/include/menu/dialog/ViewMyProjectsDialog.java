@@ -70,9 +70,9 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 		this.setTitle(LanguageText.getConstant("VIEW_MY_PROJECTS_PRO"));
 		
 		// Initialize components
-		this.openButton = new PMButton(LanguageText.getConstant("OPEN_PRO"));
-		this.editButton = new PMButton(LanguageText.getConstant("EDIT_PRO"));
-		this.deleteButton = new PMButton(LanguageText.getConstant("DELETE_PRO"));
+		this.openButton = new PMButton("OPEN_PRO");
+		this.editButton = new PMButton("EDIT_PRO");
+		this.deleteButton = new PMButton("DELETE_PRO");
 		this.roleBox = new JComboBox<String>(RoleNames.ROLES);
 		this.listModel = new DefaultListModel<>();
 		this.projectList = new JList<String>(listModel);
@@ -112,11 +112,11 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 				// Add components
 				this.table.placeCenterLeft();
 				this.table.paddingCell(5, 5, 5, 10);
-				this.table.put(new PMLabel("Role"));
+				this.table.put(new PMLabel("ROLE_PRO"));
 				this.table.put(roleBox);
 
 				this.table.newRow();
-				this.table.placeTopLeft();;
+				this.table.placeTopLeft();
 				this.table.put(scrollList, 2);
 				this.table.put(descriptionPanel);
 			}
@@ -388,27 +388,27 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog{
 			table.placeTopLeft();
 			
 			// Add components
-			table.put(new PMLabel(LanguageText.getConstant("PROJECT")));
+			table.put(new PMLabel("PROJECT"));
 			table.put(nameInfo);
 			
 			table.newRow();
-			table.put(new PMLabel(LanguageText.getConstant("BUDGET")));
+			table.put(new PMLabel("BUDGET"));
 			table.put(budgetInfo);
 			
 			table.newRow();
-			table.put(new PMLabel(LanguageText.getConstant("DATE_CREATED")));
+			table.put(new PMLabel("DATE_CREATED"));
 			table.put(createdDateInfo);
 			
 			table.newRow();
-			table.put(new PMLabel(LanguageText.getConstant("START_DATE")));
+			table.put(new PMLabel("START_DATE"));
 			table.put(startDateInfo);
 			
 			table.newRow();
-			table.put(new PMLabel(LanguageText.getConstant("DEADLINE")));
+			table.put(new PMLabel("DEADLINE"));
 			table.put(deadlineDateInfo);
 			
 			table.newRow();
-			table.put(new PMLabel(LanguageText.getConstant("DESCRIPTION")));
+			table.put(new PMLabel("DESCRIPTION"));
 			
 			table.newRow();
 			table.put(descriptionScroll, 2);

@@ -17,6 +17,7 @@ import javax.swing.JScrollPane;
 
 import ninefoo.helper.DateHelper;
 import ninefoo.config.Config;
+import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.object.Activity;
 
 /**
@@ -177,6 +178,18 @@ public class GanttChart_view extends JPanel{
 			g3.setColor(blue);
 			
 			String date = DateHelper.format(activityCal.getTime(), Config.DATE_FORMAT_ALPHA);
+			date = date.replace("January", LanguageText.getConstant("JANUARY"));
+			date = date.replace("February", LanguageText.getConstant("FEBRUARY"));
+			date = date.replace("March", LanguageText.getConstant("MARCH"));
+			date = date.replace("April", LanguageText.getConstant("APRIL"));
+			date = date.replace("May", LanguageText.getConstant("MAY"));
+			date = date.replace("June", LanguageText.getConstant("JUNE"));
+			date = date.replace("July", LanguageText.getConstant("JULY"));
+			date = date.replace("August", LanguageText.getConstant("AUGUST"));
+			date = date.replace("September", LanguageText.getConstant("SEPTEMBER"));
+			date = date.replace("October", LanguageText.getConstant("OCTOBER"));
+			date = date.replace("November", LanguageText.getConstant("NOVEMBER"));
+			date = date.replace("December", LanguageText.getConstant("DECEMBER"));
 			
 			int datePadding = 3;
 			g3.drawChars(date.toCharArray(), 0, date.length(), weeklyColumn + datePadding  , startRow);

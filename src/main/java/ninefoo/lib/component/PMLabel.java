@@ -5,6 +5,9 @@ import javax.swing.JLabel;
 
 import ninefoo.lib.lang.LanguageText;
 
+/**
+ * @author Sebouh Bardakjian
+ */
 public class PMLabel extends JLabel{
 
 	private String key;
@@ -22,7 +25,5 @@ public class PMLabel extends JLabel{
 		super(icon);
 	}
 	
-	public void setText(String key){
-		super.setText(LanguageText.getConstant(key));
-	}
+	
 }

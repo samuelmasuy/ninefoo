@@ -38,7 +38,7 @@ public class CreateProjectDialog extends CenterFormSouthButtonDialog{
 	public CreateProjectDialog(JFrame parentFrame, final ToolsListener toolsListener) {
 		
 		// Initialize components
-		this.createButton = new PMButton(LanguageText.getConstant("CREATE_PROJECT"));
+		this.createButton = new PMButton("CREATE_PROJECT");
 		this.name = new JTextField(10);
 		this.budget= new JTextField(10);
 		this.deadline = new DatePicker(8);
@@ -66,23 +66,23 @@ public class CreateProjectDialog extends CenterFormSouthButtonDialog{
 				start.setBorder(BorderFactory.createCompoundBorder(start.getBorder(), inputPadding));
 				
 				// Add components
-				this.table.put(new PMLabel(LanguageText.getConstant("NAME")));
+				this.table.put(new PMLabel("NAME"));
 				this.table.put(name);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("BUDGET")));
+				this.table.put(new PMLabel("BUDGET"));
 				this.table.put(budget);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("START_DATE")));
+				this.table.put(new PMLabel("START_DATE"));
 				this.table.put(start);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("DEADLINE")));
+				this.table.put(new PMLabel("DEADLINE"));
 				this.table.put(deadline);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("DESCRIPTION")));
+				this.table.put(new PMLabel("DESCRIPTION"));
 				this.table.put(new JScrollPane(description));
 			}
 		});

@@ -39,12 +39,12 @@ public class Register_view extends FormPanel{
 	public Register_view() {
 		
 		// Initialize components
-		this.registerButton = new PMButton(LanguageText.getConstant("REGISTER"));
+		this.registerButton = new PMButton("REGISTER");
 		this.firstName = new JTextField(10);
 		this.lastName = new JTextField(10);
 		this.usernameField = new JTextField(10);
 		this.passwordField = new JPasswordField(10);
-		this.loginText = new PMLabel(LanguageText.getConstant("LOGIN_LINK"));
+		this.loginText = new PMLabel("LOGIN_LINK");
 		
 		// Configure buttons
 		Border inputPadding = BorderFactory.createEmptyBorder(3, 3, 3, 3);
@@ -133,22 +133,22 @@ public class Register_view extends FormPanel{
 		fixedPanel.add(new PMLabel(new ImageIcon(getClass().getResource("/images/register_user.png"))), gc);
 		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
-		fixedPanel.add(new PMLabel(LanguageText.getConstant("FIRST_NAME")), gc);
+		fixedPanel.add(new PMLabel("FIRST_NAME"), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.firstName, gc);
 		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
-		fixedPanel.add(new PMLabel(LanguageText.getConstant("LAST_NAME")), gc);
+		fixedPanel.add(new PMLabel("LAST_NAME"), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.lastName, gc);
 		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
-		fixedPanel.add(new PMLabel(LanguageText.getConstant("USERNAME")), gc);
+		fixedPanel.add(new PMLabel("USERNAME"), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.usernameField, gc);
 		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
-		fixedPanel.add(new PMLabel(LanguageText.getConstant("PASSWORD")), gc);
+		fixedPanel.add(new PMLabel("PASSWORD"), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.passwordField, gc);
 		

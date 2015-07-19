@@ -43,7 +43,7 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 	public ViewAssignedActivitiesDialog(JFrame parentFrame, final ToolsListener toolsListener) {
 		
 		// Initialize components
-		this.close = new PMButton(LanguageText.getConstant("CLOSE"));
+		this.close = new PMButton("CLOSE");
 		
 		// Set title
 		this.setTitle(LanguageText.getConstant("MY_ASSIGNED_ACTIVITIES_ACT"));

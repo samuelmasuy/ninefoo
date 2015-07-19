@@ -40,7 +40,7 @@ public class CreateUserDialog extends CenterFormSouthButtonDialog{
 	public CreateUserDialog(JFrame parentFrame, final ToolsListener toolsListener) {
 		
 		// Initialize components
-		this.createButton = new PMButton(LanguageText.getConstant("CREATE_ADD_PRO"));
+		this.createButton = new PMButton("CREATE_ADD_PRO");
 		this.firstName = new JTextField(10);
 		this.lastName = new JTextField(10);
 		this.usernameField = new JTextField(10);
@@ -78,23 +78,23 @@ public class CreateUserDialog extends CenterFormSouthButtonDialog{
 				roleBox.setBorder(BorderFactory.createCompoundBorder(roleBox.getBorder(), inputPadding));
 				
 				// Add components
-				this.table.put(new PMLabel(LanguageText.getConstant("FIRST_NAME")));
+				this.table.put(new PMLabel("FIRST_NAME"));
 				this.table.put(firstName);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("LAST_NAME")));
+				this.table.put(new PMLabel("LAST_NAME"));
 				this.table.put(lastName);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("USERNAME")));
+				this.table.put(new PMLabel("USERNAME"));
 				this.table.put(usernameField);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("PASSWORD")));
+				this.table.put(new PMLabel("PASSWORD"));
 				this.table.put(passwordField);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("ROLE")));
+				this.table.put(new PMLabel("ROLE"));
 				this.table.put(roleBox);
 				
 			}

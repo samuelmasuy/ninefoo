@@ -14,7 +14,8 @@
 		"VIEW_PROJECTS_PRO"	: "Voir Projets",
 		"VIEW_MY_PROJECTS_PRO": "Voir mes projets",
 		"ADD_USER_PRO"		: "Ajouter Utilisateur",
-		"ASSIGN_USERS_TO_THE_PROJECT_PRO" : "Assigner utilisateur au projet"
+		"ASSIGN_USERS_TO_THE_PROJECT_PRO" : "Assigner utilisateur au projet",
+		"ROLE_PRO" 		: "Rôle"
 
 
 	}

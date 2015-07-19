@@ -4,6 +4,9 @@ import javax.swing.JMenuItem;
 
 import ninefoo.lib.lang.LanguageText;
 
+/**
+ * @author Sebouh Bardakjian
+ */
 public class PMMenuItem extends JMenuItem{
 
 	private String key;

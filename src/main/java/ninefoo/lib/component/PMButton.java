@@ -5,13 +5,24 @@ import javax.swing.JButton;
 
 import ninefoo.lib.lang.LanguageText;
 
+/**
+ * @author Sebouh Bardakjian
+ */
 public class PMButton extends JButton{
-
+	
+	private static final long serialVersionUID = 2967182422525479036L;
+	
 	private String key;
+	private String toolTipKey;
+	
+	public PMButton(){
+		super();
+	}
 	
 	public PMButton(String key){
-		super(LanguageText.getConstant(key));
+		super();
 		this.key = key;
+		super.setText(LanguageText.getConstant(key));
 	}
 	
 	public PMButton(ImageIcon icon){
@@ -19,7 +30,19 @@ public class PMButton extends JButton{
 	}
 	
 	public PMButton(String key, ImageIcon icon){
-		super(LanguageText.getConstant(key), icon);
+		super(icon);
+		this.key = key;
+		super.setText(LanguageText.getConstant(key));
+	}
+	
+	public void setText(String key){
+		super.setText(LanguageText.getConstant(key));
 		this.key = key;
 	}
+	
+	public void setToolTipText(String key){
+		super.setToolTipText(LanguageText.getConstant(key));
+		this.toolTipKey = key;
+	}
+	
 }

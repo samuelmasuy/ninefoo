@@ -70,7 +70,7 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 		tableToolsListener.loadActivitiesForCreateActivityDialog(this);
 		
 		// Initialize components
-		this.createButton = new PMButton(LanguageText.getConstant("CREATE"));
+		this.createButton = new PMButton("CREATE");
 		this.activityLabel = new JTextField(10);
 		this.description = new JTextArea(3,10);
 		this.duration = new JTextField(10);
@@ -81,7 +81,7 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 		this.startDate = new DatePicker(8);
 		this.finishDate = new DatePicker(8);
 		this.memberBox = new AutocompleteComboBox(membersName);
-		this.prerequisiteDropdown = new MultiDropdown(LanguageText.getConstant("ADD_DEPENDENCY_ACT"), activitiesLabel);
+		this.prerequisiteDropdown = new MultiDropdown("ADD_DEPENDENCY_ACT", activitiesLabel);
 		
 		// If first activity, disable add prerequisite button
 		if(activities_data.size() == 0)
@@ -181,48 +181,48 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
 				prerequisiteDropdown.setBorder(BorderFactory.createCompoundBorder(prerequisiteDropdown.getBorder(), inputPadding));
 				
 				// Add components
-				this.table.put(new PMLabel(LanguageText.getConstant("NAME")));
+				this.table.put(new PMLabel("NAME"));
 				this.table.put(activityLabel);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("DESCRIPTION")));
+				this.table.put(new PMLabel("DESCRIPTION"));
 				this.table.put(new JScrollPane(description));
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("DURATION_ACT")));
+				this.table.put(new PMLabel("DURATION_ACT"));
 				this.table.put(duration);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("OPTIMISTIC_ACT")));
+				this.table.put(new PMLabel("OPTIMISTIC_ACT"));
 				this.table.put(optimisticDuration);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("LIKELY_ACT")));
+				this.table.put(new PMLabel("LIKELY_ACT"));
 				this.table.put(likelyDuration);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("PESSIMISTIC_ACT")));
+				this.table.put(new PMLabel("PESSIMISTIC_ACT"));
 				this.table.put(pessimisticDuration);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("COST_ACT")));
+				this.table.put(new PMLabel("COST_ACT"));
 				this.table.put(cost);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("START_ACT")));
+				this.table.put(new PMLabel("START_ACT"));
 				this.table.put(startDate);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("FINISH_ACT")));
+				this.table.put(new PMLabel("FINISH_ACT"));
 				this.table.put(finishDate);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("MEMBER_ACT")));
+				this.table.put(new PMLabel("MEMBER_ACT"));
 				this.table.put(memberBox);
 				
 				this.table.newRow();
 				this.table.placeCenterTop();
-				this.table.put(new PMLabel(LanguageText.getConstant("PREREQ_ACT")));
+				this.table.put(new PMLabel("PREREQ_ACT"));
 				this.table.put(prerequisiteDropdown);
 			}
 		});
