@@ -60,6 +60,7 @@ public class ActivityHelper {
 		data[ActivityConfig.PLANNED_PERCENTAGE] = DateHelper.getToday().before(activity.getFinishDate()) ? "0%" : "100%";
 		data[ActivityConfig.START] = DateHelper.format(activity.getStartDate(), Config.DATE_FORMAT_SHORT);
 		data[ActivityConfig.PREREQ] = activity.getPrerequisitesAsString();
+		data[ActivityConfig.COST] = String.valueOf(activity.getCost());
 		
 		return data;
 	}
