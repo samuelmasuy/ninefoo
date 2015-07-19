@@ -9,14 +9,14 @@
 		"WRONG_DATE_AFTER_DATE" : "%s devrait etre au moins %s",
 		"MIN_LENGTH" : "%s longueur doit etre au moins %d.",
 		"MAX_LENGTH" : "%s longueur doit etre au plus %d.",
-		"REGISTRATION_SUCCESS" : "Inscription réussie! Connectez vous.",
+		"REGISTRATION_SUCCESS" : "Inscription rï¿½ussie! Connectez vous.",
 		"UNIQUE" : "%s doit etre unique",
-		"MAX_NUM_VALUE": "%s chiffre excède limite de %d",
+		"MAX_NUM_VALUE": "%s chiffre excï¿½de limite de %d",
 		"MIN_NUM_VALUE": "%s chiffre est moins que le minimum %d",
 
 		
-		"OPERATION_FAILED" : "L'opération a échoué",
-		"OPERATION_SUCCESSFUL" : "Opération réussie",
+		"OPERATION_FAILED" : "L'opï¿½ration a ï¿½chouï¿½",
+		"OPERATION_SUCCESSFUL" : "Opï¿½ration rï¿½ussie",
 		"ERROR_OCCURED" : "Une erreur s'est produite",
 		"MISSING_OPEN" : "Selectionner un %s pour ouvrir",
 		"MISSING_EDIT" : "Selectionner un %s pour modifier",
@@ -28,12 +28,12 @@
 
 
 		"DELETE_CONFIRMATION" : "Confirmation Supprimer",
-		"DELETE_CONFIRMATION_TEXT" : "Êtes-vous sûr de vouloir supprimer %s: %s",
+		"DELETE_CONFIRMATION_TEXT" : "ï¿½tes-vous sï¿½r de vouloir supprimer %s: %s",
 
 		
-		"UPDATED" : "%s mis à jour avec succès!",
-		"DELETED" : "%s supprime avec succès!",
-		"LOADED" : "%s charge avec succès!",
-		"CREATED" : "%s créé avec succès!"
+		"UPDATED" : "%s mis ï¿½ jour avec succï¿½s!",
+		"DELETED" : "%s supprime avec succï¿½s!",
+		"LOADED" : "%s charge avec succï¿½s!",
+		"CREATED" : "%s crï¿½ï¿½ avec succï¿½s!"
 	}	
 }
