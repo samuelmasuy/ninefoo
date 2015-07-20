@@ -14,7 +14,7 @@
     "MAX_NUM_VALUE": "%s Nummer Maximalwert von %d überschreitet",
     "MIN_NUM_VALUE": "%s Anzahl kleiner ist als Mindestwert von %d",
     "OPERATION_FAILED": "Der Vorgang ist fehlgeschlagen",
-    "OPERATION_SUCCESSFUL": "Operation successful",
+    "OPERATION_SUCCESSFUL": "Betrieb erfolgreich",
     "ERROR_OCCURED": "Ein Fehler ist aufgetreten",
     "MISSING_MEMBER": "Bitte wählen Sie ein Mitglied"
     "MISSING_OPEN": "Bitte wählen Sie ein %s zu öffnen",

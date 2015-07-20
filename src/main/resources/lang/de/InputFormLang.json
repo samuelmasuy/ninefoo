@@ -36,8 +36,8 @@
     "MANAGER": "Manager",
     "ROLE": "Rolle",
     "NAME": "Name",
-    "BUDGET": "Budget",
-    "DEADLINE": "Deadline",
+    "BUDGET": "Haushalt",
+    "DEADLINE": "Stichtag",
     "DESCRIPTION": "Beschreibung"
 
     "START_DATE": "Startdatum",
