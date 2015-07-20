@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * This class represents a project entity in the database.
  * Created on 29-May-2015.
+ *
  * @author Farzad MajidFayyaz
  */
 public class Project {
@@ -25,15 +26,16 @@ public class Project {
 
     /**
      * This constructor is only used when we want to convert db entities to Java classes
-     * @param projectName Name of the project
-     * @param createDate Date of creation
-     * @param updateDate Date of last update
-     * @param budget Budget of the project
+     *
+     * @param projectName  Name of the project
+     * @param createDate   Date of creation
+     * @param updateDate   Date of last update
+     * @param budget       Budget of the project
      * @param deadlineDate Deadline date defined for the project
-     * @param description Optional description for the project
+     * @param description  Optional description for the project
      */
     public Project(int projectId, String projectName, Date createDate, Date startDate,
-            Date updateDate, Double budget, Date deadlineDate, String description) {
+                   Date updateDate, Double budget, Date deadlineDate, String description) {
 
         this.projectId = projectId;
         this.projectName = projectName;
@@ -47,11 +49,12 @@ public class Project {
 
     /**
      * This constructor is used when creating a new project object in the Java code because
-     *      the ID of the project is determined when the project is added to the DB table.
-     * @param projectName Name of the project
-     * @param budget Budget of the project
+     * the ID of the project is determined when the project is added to the DB table.
+     *
+     * @param projectName  Name of the project
+     * @param budget       Budget of the project
      * @param deadlineDate Deadline date defined for the project
-     * @param description Optional description for the project
+     * @param description  Optional description for the project
      */
     public Project(String projectName, Double budget, Date startDate, Date deadlineDate, String description) {
 
@@ -61,7 +64,7 @@ public class Project {
         this.deadlineDate = deadlineDate;
         this.description = description;
     }
-    
+
     public int getProjectId() {
         return projectId;
     }
@@ -91,7 +94,7 @@ public class Project {
     }
 
     public void setBudget(Double budget) {
-    	this.budget = budget;
+        this.budget = budget;
     }
 
     public Date getDeadlineDate() {
@@ -105,35 +108,35 @@ public class Project {
     public String getDescription() {
         return description;
     }
-    
-    public void setDescription(String description){
-    	this.description = description;
+
+    public void setDescription(String description) {
+        this.description = description;
     }
-    
+
     public Date getStartDate() {
-		return startDate;
-	}
+        return startDate;
+    }
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
 
-	public String toString() {
+    public String toString() {
         return String.format("Project [ID: %d, Name: '%s', Create: '%s', " +
                         "Update: '%s', Budget: %.2f, Deadline: '%s']", projectId, projectName,
-                        DateHelper.format(createDate, Config.DATE_FORMAT),
-                        DateHelper.format(updateDate, Config.DATE_FORMAT),
-                        budget,
-                        DateHelper.format(deadlineDate, Config.DATE_FORMAT));
+                DateHelper.format(createDate, Config.DATE_FORMAT),
+                DateHelper.format(updateDate, Config.DATE_FORMAT),
+                budget,
+                DateHelper.format(deadlineDate, Config.DATE_FORMAT));
     }
 
-	public List<Activity> getAcitivies() {
-		return acitivies;
-	}
+    public List<Activity> getAcitivies() {
+        return acitivies;
+    }
 
-	public void setAcitivies(List<Activity> acitivies) {
-		this.acitivies = acitivies;
-	}
+    public void setAcitivies(List<Activity> acitivies) {
+        this.acitivies = acitivies;
+    }
 
     public Date getFinishDate() {
         return finishDate;

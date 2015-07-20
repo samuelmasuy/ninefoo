@@ -4,6 +4,7 @@ import java.util.Date;
 
 /**
  * Created on 30-May-2015.
+ *
  * @author Farzad MajidFayyaz
  */
 public class ActivityLog {
@@ -60,11 +61,11 @@ public class ActivityLog {
         this.activity = activity;
     }
 
-	public Date getCreateDate() {
-		return create_date;
-	}
+    public Date getCreateDate() {
+        return create_date;
+    }
 
-	public void setCreateDate(Date create_date) {
-		this.create_date = create_date;
-	}
+    public void setCreateDate(Date create_date) {
+        this.create_date = create_date;
+    }
 }

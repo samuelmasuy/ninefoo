@@ -3,6 +3,7 @@ package ninefoo.model.object;
 /**
  * This class represents a role entity in the database.
  * Created on 30-May-2015.
+ *
  * @author Farzad MajidFayyaz
  */
 public class Role {
@@ -12,7 +13,8 @@ public class Role {
 
     /**
      * This constructor is used when converting db entities to Java classes.
-     * @param roleId ID of the role
+     *
+     * @param roleId   ID of the role
      * @param roleName Name of the role
      */
     public Role(int roleId, String roleName, String description) {
@@ -23,6 +25,7 @@ public class Role {
 
     /**
      * This constructor is used when creating a new role object from Java.
+     *
      * @param roleName Name of the role
      */
     public Role(String roleName, String description) {
