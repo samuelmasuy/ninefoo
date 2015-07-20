@@ -29,13 +29,13 @@ public class Autoload {
     // Logger
     private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 
-    @AutoloadAtRuntime(active=true)
+    @AutoloadAtRuntime(active = false)
     public void loadEngLanguage() {
         LanguageText.setLanguage(LanguageText.ENGLISH);
         LOGGER.info("Auto loaded language is: English");
     }
-    
-    @AutoloadAtRuntime(active = false)
+
+    @AutoloadAtRuntime(active = true)
     public void loadDeLanguage() {
         LanguageText.setLanguage(LanguageText.GERMAN);
         LOGGER.info("Auto loaded language is: German");
