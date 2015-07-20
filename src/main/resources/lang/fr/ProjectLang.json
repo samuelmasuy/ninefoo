@@ -1,24 +1,22 @@
 {
-	"name" : "Project language",
-	"description" : "Language related to Project. Include the suffix _PRO for each key",
-	"language" : {
-		"UPDATE_PROJECT" 	: "Mettre a jour projet",
-		"CREATE_ADD_PRO"		: "Creer et Ajouter",
-		"ADD_USER_PRO"		: "Ajouter utilisateur au projet",
-		"VIEW_MY_PROJECTS_PRO": "Voir mes projets",
-		"OPEN_PRO"			: "Ouvrir",
-		"EDIT_PRO"			: "Modifier",
-		"DELETE_PRO"		: "Supprimer"
-		"NEW_PROJECT_PRO"	: "Nouveau Projet",
-		"CREATE_A_NEW_PROJECT_PRO" : "Creer un nouveau projet",
-		"VIEW_PROJECTS_PRO"	: "Voir Projets",
-		"VIEW_MY_PROJECTS_PRO": "Voir mes projets",
-		"ADD_USER_PRO"		: "Ajouter Utilisateur",
-        "ADD_USER_SUCCESS_PRO": "Utilisateur a bien ete ajoute au projet.",
-        "ADD_USER_FAIL_PRO": "Utilisateur fait deja parti du projet",
-		"ASSIGN_USERS_TO_THE_PROJECT_PRO" : "Assigner utilisateur au projet",
-		"ROLE_PRO" 		: "Role"
-
-
-	}
+  "name": "Project language",
+  "description": "Language related to Project. Include the suffix _PRO for each key",
+  "language": {
+    "UPDATE_PROJECT": "Mettre a jour projet",
+    "CREATE_ADD_PRO": "Creer et Ajouter",
+    "ADD_USER_PRO": "Ajouter utilisateur au projet",
+    "VIEW_MY_PROJECTS_PRO": "Voir mes projets",
+    "OPEN_PRO": "Ouvrir",
+    "EDIT_PRO": "Modifier",
+    "DELETE_PRO": "Supprimer"
+    "NEW_PROJECT_PRO": "Nouveau Projet",
+    "CREATE_A_NEW_PROJECT_PRO": "Creer un nouveau projet",
+    "VIEW_PROJECTS_PRO": "Voir Projets",
+    "VIEW_MY_PROJECTS_PRO": "Voir mes projets",
+    "ADD_USER_PRO": "Ajouter Utilisateur",
+    "ADD_USER_SUCCESS_PRO": "Utilisateur a bien ete ajoute au projet.",
+    "ADD_USER_FAIL_PRO": "Utilisateur fait deja parti du projet",
+    "ASSIGN_USERS_TO_THE_PROJECT_PRO": "Assigner utilisateur au projet",
+    "ROLE_PRO": "Role"
+  }
 }

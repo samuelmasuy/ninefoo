@@ -1,36 +1,36 @@
 {
-"name": "Activity Sprache",
-"description": "Sprache, um Aktivität bezogen Fügen Sie das Suffix _ACT für jede Taste."
-"language": {
-"NEW_DEPENDENCY_ACT": "New Abhängigkeit",
-"ACTIVITY_DEPENDS_ACT": "Aktivität '%s' hängt",
-"ASSIGN_MEMBER_ACTIVITY_ACT": "Ordnen Sie Mitglied, um die Aktivität"
-"ACTIVITY_ACT": "Activity",
-"ASSIGN_ACT": "Assign",
-"MY_ASSIGNED_ACTIVITIES_ACT": "Meine Tätigkeit zugeordnet",
-"CREATE_ACTIVITY_ACT": "Erstellen Aktivität",
-"UPDATE_ACTIVITY_ACT": "Update-Aktivität",
-"ACTIVITY_ID_ACT": "Activity ID",
-"ACTIVITY_NAME_ACT": "Activity Name"
-"ACTIVITY_LABEL_ACT": "Activity-Label",
-"START_ACT": "Start",
-"FINISH_ACT": "Fertigstellen",
-"DURATION_ACT": "Dauer",
-"PLANNED_PERCENTAGE_ACT": "Plans. %",
-"OPTIMISTIC_ACT": "optimistisch",
-"LIKELY_ACT": "wahrscheinlich",
-"PESSIMISTIC_ACT": "pessimistisch",
-"COST_ACT": "Cost",
-"MEMBER_ACT": "Mitglied",
-"PREREQ_ACT": "Prereq.",
-"ADD_DEPENDENCY_ACT": "Abhängigkeit hinzufügen",
-"ADD_ACT": "Hinzufügen"
-"ADD_A_NEW_ACTIVITY_ACT": "Hinzufügen einer neuen Tätigkeit",
-"EDIT_ACT": "Edit",
-"EDIT_THE_ACTIVITY_PROPERTIES_ACT": "Bearbeiten Sie die Aktivitätseigenschaften",
-"REMOVE_ACT": "Entfernen",
-"REMOVE_THE_ACTIVITY_ACT": "Entfernen Sie die Aktivität aus dem Projekt",
-"VIEW_DETAILS_ACT": "Details anzeigen",
-"VIEW_ACTIVITY_DETAILS_ACT": "Aktivitätsdetailansicht"
-}
+  "name": "Activity Sprache",
+  "description": "Sprache, um Aktivität bezogen Fügen Sie das Suffix _ACT für jede Taste."
+  "language": {
+    "NEW_DEPENDENCY_ACT": "New Abhängigkeit",
+    "ACTIVITY_DEPENDS_ACT": "Aktivität '%s' hängt",
+    "ASSIGN_MEMBER_ACTIVITY_ACT": "Ordnen Sie Mitglied, um die Aktivität"
+    "ACTIVITY_ACT": "Activity",
+    "ASSIGN_ACT": "Assign",
+    "MY_ASSIGNED_ACTIVITIES_ACT": "Meine Tätigkeit zugeordnet",
+    "CREATE_ACTIVITY_ACT": "Erstellen Aktivität",
+    "UPDATE_ACTIVITY_ACT": "Update-Aktivität",
+    "ACTIVITY_ID_ACT": "Activity ID",
+    "ACTIVITY_NAME_ACT": "Activity Name"
+    "ACTIVITY_LABEL_ACT": "Activity-Label",
+    "START_ACT": "Start",
+    "FINISH_ACT": "Fertigstellen",
+    "DURATION_ACT": "Dauer",
+    "PLANNED_PERCENTAGE_ACT": "Plans. %",
+    "OPTIMISTIC_ACT": "optimistisch",
+    "LIKELY_ACT": "wahrscheinlich",
+    "PESSIMISTIC_ACT": "pessimistisch",
+    "COST_ACT": "Cost",
+    "MEMBER_ACT": "Mitglied",
+    "PREREQ_ACT": "Prereq.",
+    "ADD_DEPENDENCY_ACT": "Abhängigkeit hinzufügen",
+    "ADD_ACT": "Hinzufügen"
+    "ADD_A_NEW_ACTIVITY_ACT": "Hinzufügen einer neuen Tätigkeit",
+    "EDIT_ACT": "Edit",
+    "EDIT_THE_ACTIVITY_PROPERTIES_ACT": "Bearbeiten Sie die Aktivitätseigenschaften",
+    "REMOVE_ACT": "Entfernen",
+    "REMOVE_THE_ACTIVITY_ACT": "Entfernen Sie die Aktivität aus dem Projekt",
+    "VIEW_DETAILS_ACT": "Details anzeigen",
+    "VIEW_ACTIVITY_DETAILS_ACT": "Aktivitätsdetailansicht"
+  }
 }
