@@ -17,7 +17,7 @@ public class Menu extends JMenuBar {
     // Define components
     private PMMenu project,/* edit, member,*/
             help, language;
-    private JMenuItem exit, aboutInfo, english, french, importProject, exportProject;
+    private JMenuItem exit, aboutInfo, english, french, german, importProject, exportProject;
     /* newProject, openProject, saveProject, restart, editTitle, editMembers, editActivites,
     login, logout, allMember, newMember, assignProject, tourGuide; */
 
@@ -49,6 +49,7 @@ public class Menu extends JMenuBar {
         this.aboutInfo = new PMMenuItem("ABOUT");
         this.english = new PMMenuItem("ENGLISH");
         this.french = new PMMenuItem("FRENCH");
+        this.german = new PMMenuItem("GERMAN");
         this.importProject = new PMMenuItem("IMPORT_PROJECT");
         this.exportProject = new PMMenuItem("EXPORT_PROJECT");
 
@@ -72,6 +73,7 @@ public class Menu extends JMenuBar {
         this.help.add(this.aboutInfo);
         this.language.add(this.english);
         this.language.add(this.french);
+        this.language.add(this.german);
 
         // Add components
         this.add(project);
