@@ -51,9 +51,6 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 		// Load projects
 		toolsListener.loadAssignedActivitiesProject(this);
 		
-		// TODO Remove this line, just for testing before implementing the content of the controller
-		this.dummyData();
-		
 		// Add button listener
 		this.close.addActionListener(new ActionListener() {
 			
@@ -70,9 +67,11 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 
 			@Override
 			public void placeForm() {
-				for(Project project : projects){
-					this.table.newRow();
-					this.table.put(new ProjectActivityWrapper(project));
+				if(projects != null) {
+					for(Project project : projects){
+						this.table.newRow();
+						this.table.put(new ProjectActivityWrapper(project));
+					}
 				}
 			}
 		});
@@ -85,34 +84,6 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 		this.setLocationRelativeTo(parentFrame);
 		this.setResizable(false);
 		this.setVisible(true);
-	}
-	
-	// TODO Delete this method, for testing only
-	private void dummyData(){
-		
-		this.projects = new ArrayList<>();
-		
-		// Dummy projects
-		Project project1 = new Project("Project 1", Double.valueOf(100), null, null, "Hello");
-		Project project2 = new Project("Project 2", Double.valueOf(100), null, null, "Hello");
-		
-		Member member = new Member("Hello", "World", "", "");
-		
-		// Dummy activities
-		Activity activity1 = new Activity(1, "Act1", "Desc", 10, 10, 10, 10, null, project1, member, null);
-		Activity activity2 = new Activity(2, "Act2", "Desc", 10, 10, 10, 10, null, project1, member, null);
-		
-		List<Activity> acts = new ArrayList<>();
-		acts.add(activity1);
-		acts.add(activity2);
-		
-		project1.setAcitivies(acts);
-		project2.setAcitivies(acts);
-		
-		this.projects.add(project1);
-		this.projects.add(project2);
-		this.projects.add(project1);
-		this.projects.add(project2);
 	}
 	
 	/**
