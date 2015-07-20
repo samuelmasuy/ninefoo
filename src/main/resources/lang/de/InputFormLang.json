@@ -1,0 +1,72 @@
+{
+"name": "Eingabeformular"
+"description": "Sprache für Eingabeformular / Dialog zB Vorname, Nachname usw. ....",
+"language": {
+
+"WELCOME": "Welcome",
+"NEW_ACCOUNT": "New Account",
+
+"FIRST_NAME": "Vorname",
+"LAST_NAME": "Nachname",
+"Username": "Username",
+"PASSWORT": "Passwort"
+
+"REGISTRATION_LINK": "<html> Sie haben noch kein Konto ? <font color=\"#000099\"><u>Jetzt registrieren</u></font></html>",
+"LOGIN_LINK": "<html>Bereits registriert ? <font color=\"#000099\"><u>Jetzt einloggen</u></font></html>",
+
+"LANGUAGE" : "Sprache",
+"HELP" : "Hilfe",
+"IMPORT_PROJECT": "Import-Projekt",
+"EXPORT_PROJECT": "Projekt exportieren",
+"ENGLISH": "Englisch",
+"FRENCH": "Französisch",
+"GERMAN": "Deutsch",
+"Info": "About",
+"EXIT": "Ausgang",
+
+"LOGIN": "Einloggen",
+"LOGOUT": "Abmelden",
+"REGISTER": "Registrieren",
+"CREATE": "Erstellen",
+"UPDATE": "Aktualisieren",
+"ADD": "Hinzufügen"
+"CLOSE": "Schließen",
+
+"CREATE_NEW_PROJECT": "Neues Projekt",
+"CREATE_PROJECT": "Projekt erstellen",
+"DATE_CREATED": "Erstellungsdatum",
+"Projekt": "Projekt",
+"USER": "User",
+"MEMBER": "Mitglied",
+"MANAGER": "Manager",
+"ROLE": "Rolle",
+"NAME": "Name",
+"BUDGET": "Budget",
+"DEADLINE": "Deadline",
+"DESCRIPTION": "Beschreibung"
+
+"START_DATE": "Startdatum",
+
+"NEW_MEMBER": "Neues Mitglied"
+"REGISTER_A_NEW_MEMBER": "Jetzt ein neues Mitglied"
+"VIEW_ASSIGNED": "Ansicht zugeordnet",
+"VIEW_MY_ASSIGNED_ACTIVITIES": "My zugewiesen Aktivitäten anzeigen",
+
+"JANUARY"	  : "Januar",
+"FEBRUARY"  : "Februar",
+"MARCH"		  : "März",
+"APRIL"		  : "April",
+"MAY"			  : "Mai",
+"JUNE"		  : "Juni",
+"JULY"		  : "Juli",
+"AUGUST"	  : "August",
+"SEPTEMBER" : "September",
+"OCTOBER"	  : "Oktober",
+"NOVEMBER"  : "November",
+"DECEMBER"  : "Dezember",
+
+"SAMPLE_TEXT": "e.g. ein neues Projekt erfolgreich erstellt wurde"
+
+
+}
+}

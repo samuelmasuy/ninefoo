@@ -1,0 +1,40 @@
+{
+"name": "Validation Form"
+"description": "Fehler, Warnungen und Erfolgsmeldungen",
+"language": {
+"REQUIRED": "%s ist erforderlich."
+"WRONG_FORMAT": "%s ist ungültig."
+"WRONG_USERNAME_PASSWORD": "Falscher Benutzername oder Passwort."
+"WRONG_DATE_BEFORE_DATE": "%s sollte höchstens %s sein",
+"WRONG_DATE_AFTER_DATE": "%s sollte mindestens %s sein",
+"MIN_LENGTH": "%s Länge muss mindestens %d sein.",
+"MAX_LENGTH": "%s Länge darf höchstens %d sein.",
+"REGISTRATION_SUCCESS": "Registration successful Einloggen!.",
+"UNIQUE": "%s muss eindeutig sein",
+"MAX_NUM_VALUE": "%s Nummer Maximalwert von %d überschreitet",
+"MIN_NUM_VALUE": "%s Anzahl kleiner ist als Mindestwert von %d",
+
+"OPERATION_FAILED": "Der Vorgang ist fehlgeschlagen",
+"OPERATION_SUCCESSFUL": "Operation successful",
+"ERROR_OCCURED": "Ein Fehler ist aufgetreten",
+"MISSING_MEMBER": "Bitte wählen Sie ein Mitglied"
+"MISSING_OPEN": "Bitte wählen Sie ein %s zu öffnen",
+"MISSING_EDIT": "Bitte wählen Sie ein %s ändern",
+"MISSING_DELETE": "Bitte wählen Sie ein %s zu löschen",
+"MISSING_OPEN_ACT": "Bitte wählen Sie einen %s zu öffnen",
+"MISSING_EDIT_ACT": "Bitte wählen Sie einen %s ändern",
+"MISSING_DELETE_ACT": "Bitte wählen Sie einen %s zu löschen",
+"MISSING_VIEW_ACT": "Bitte wählen Sie einen %s, um anzuzeigen",
+
+"SELF_DEPENDENT_ACTIVITY": "Sie können nicht wählen, eine eigenverantwortliche Tätigkeit."
+"MULTIPLE_DEPENDENT_ACTIVITY": "Einige Aktivitäten werden als abhängige mehrfach gegeben.",
+
+"DELETE_CONFIRMATION": "Bestätigung Löschen"
+"DELETE_CONFIRMATION_TEXT": "Sind Sie sicher, Sie möchten, um %s zu löschen: %s",
+
+"UPDATED" : "%s erfolgreich aktualisiert!",
+"DELETED" : "%s wurde erfolgreich gelöscht!",
+"LOADED" :  "%s erfolgreich geladen!",
+"CREATED" : "%s erfolgreich angelegt!"
+}
+}
