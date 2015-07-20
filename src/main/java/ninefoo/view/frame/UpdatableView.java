@@ -39,8 +39,6 @@ public interface UpdatableView {
 
     public void updateLoadEditProjectFields(boolean success, String message, Project project);
 
-    public void updateLoadAssignedActivitiesProject(boolean success, String message, List<Project> projects);
-
     public void updateLoadActivitiesByProject(boolean success, String message, List<Activity> activities);
 
     public void updateAddUserToProject(boolean success, String message);
@@ -55,6 +53,8 @@ public interface UpdatableView {
 
     public void updateLoadActivity(boolean success, String message, Activity activity);
 
+    public void updateLoadActivitiesForAllProjectByMember(boolean success, String message, List<Project> projects);
+    
     // Set listeners. Start methods with prefix: set
     public void setMemberListener(MemberListener memberListener);
 

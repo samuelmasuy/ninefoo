@@ -117,13 +117,6 @@ public class MockUpdatableView implements UpdatableView {
     }
 
     @Override
-    public void updateLoadAssignedActivitiesProject(boolean success, String message, List<Project> projects) {
-        this.called_method = "updateLoadAssignedActivitiesProject";
-        this.success = String.valueOf(success);
-        this.message = message;
-    }
-
-    @Override
     public void updateLoadActivitiesByProject(boolean success, String message, List<Activity> activities) {
         this.called_method = "updateLoadActivitiesByProject";
         this.success = String.valueOf(success);
@@ -186,4 +179,10 @@ public class MockUpdatableView implements UpdatableView {
         this.success = String.valueOf(success);
         this.message = message;
     }
+
+	@Override
+	public void updateLoadActivitiesForAllProjectByMember(boolean success, String message, List<Project> projects) {
+		// TODO Auto-generated method stub
+		
+	}
 }

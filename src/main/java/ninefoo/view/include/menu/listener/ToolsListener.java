@@ -20,15 +20,11 @@ public interface ToolsListener {
 
     // Load
     public void loadAllMyProjectsByRole(ViewMyProjectsDialog viewMyProjectsDialog, String roleName);
-
     public void loadProject(ViewMyProjectsDialog viewMyProjectsDialog, int projectId);
-
     public void loadEditProjectFields(EditProjectDialog editProjectDialog, int projectId);
-
-    public void loadAssignedActivitiesProject(ViewAssignedActivitiesDialog dialog);
-
     public void loadAllMembersForAddUserToProjectDialog(AddUserToProjectDialog dialog);
-
+    public void loadAssignedActivitiesProject(ViewAssignedActivitiesDialog dialog);
+    
     // Update
     public void updateProject(ViewMyProjectsDialog parentDialog, EditProjectDialog dialog, int projectId, String name, String budget, String startDate, String deadline, String description);
 

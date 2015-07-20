@@ -255,10 +255,7 @@ public class Activity_model extends AbstractModel {
     }
 
     /**
-     * TODO Use one query to fetch activities and project
-     * <p/>
      * Gets the activities for the project corresponding to the project ID.
-     *
      * @param projectId ID of the project for which to get the activities.
      * @return List of Activity objects for the project, empty ArrayList if no activity
      * is found; NULL if there is a problem connecting to the database.
@@ -304,6 +301,55 @@ public class Activity_model extends AbstractModel {
         }
 
         return projectActivities;
+    }
+    
+    /**
+     * Gets the activities for the project corresponding to the member ID.
+     * @param memberId ID of the member for which to get the activities.
+     * @return List of Activity objects for the member, empty ArrayList if no activity
+     * is found; NULL if there is a problem connecting to the database.
+     */
+    public List<Activity> getActivitiesByMemberId(int memberId) {
+
+        // Open
+        this.open();
+
+        List<Activity> memberActivities = new ArrayList<>();
+
+        // Query
+        sql = "SELECT * FROM activity WHERE member_id = ?";
+
+        try {
+
+            // Prepare
+            this.prepareStatement();
+
+            // Data
+            ps.setInt(1, memberId);
+
+            // Run
+            result = ps.executeQuery();
+
+            Activity activity;
+            while (result.next()) {
+                activity = getNextActivity(result);
+
+                if (activity != null)
+                    memberActivities.add(activity);
+            }
+
+            // Error
+        } catch (SQLException e) {
+            LOGGER.error("Could not get activities for member with ID = " + memberId +
+                    " --- detailed info: " + e.getMessage());
+            memberActivities = null;
+
+            // Close
+        } finally {
+            this.close();
+        }
+
+        return memberActivities;
     }
 
     /**

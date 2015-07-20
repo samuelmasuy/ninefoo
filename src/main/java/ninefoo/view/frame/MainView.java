@@ -24,9 +24,11 @@ import ninefoo.view.project.table.dialog.CreateActivityDialog;
 import ninefoo.view.project.table.dialog.EditActivityDialog;
 import ninefoo.view.project.table.dialog.ViewActivityDetailsDialog;
 import ninefoo.view.project.table.listener.TableToolsListener;
+
 import org.apache.logging.log4j.LogManager;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.util.List;
 
@@ -266,17 +268,6 @@ public class MainView extends JFrame implements UpdatableView {
             }
 
             @Override
-            public void loadAssignedActivitiesProject(ViewAssignedActivitiesDialog dialog) {
-
-                // Set dialog
-                viewAssignedActivitiesDialog = dialog;
-
-                // Pass it to controller
-                if (projectListener != null)
-                    projectListener.loadAssignedActivitiesProject();
-            }
-
-            @Override
             @FinalVersion(version = "1.0")
             public void deleteProject(ViewMyProjectsDialog dialog, Project project) {
 
@@ -299,6 +290,16 @@ public class MainView extends JFrame implements UpdatableView {
                     memberListener.loadAllMembers();
                 }
             }
+
+			@Override
+			public void loadAssignedActivitiesProject(ViewAssignedActivitiesDialog dialog) {
+				
+				// Store dialog
+				viewAssignedActivitiesDialog = dialog;
+				
+				if(activityListener != null)
+					activityListener.loadActivitiesForAllProjectByMember(Session.getInstance().getUserId());
+			}
         });
 
         // Add listener to table chart slider
@@ -828,28 +829,6 @@ public class MainView extends JFrame implements UpdatableView {
     }
 
     @Override
-    public void updateLoadAssignedActivitiesProject(boolean success, String message, List<Project> projects) {
-
-        // If load successful
-        if (success) {
-
-            // Set projects
-            this.viewAssignedActivitiesDialog.setProjects(projects);
-
-        } else {
-
-            // Display error
-            this.viewAssignedActivitiesDialog.setErrorMessage(message);
-
-            // Close dialog
-            this.viewAssignedActivitiesDialog.dispose();
-
-            // Reset pointer
-            this.viewAssignedActivitiesDialog = null;
-        }
-    }
-
-    @Override
     @FinalVersion(version = "1.0")
     public void updateAddUserToProject(boolean success, String message) {
 
@@ -905,11 +884,38 @@ public class MainView extends JFrame implements UpdatableView {
             }
         }
     }
+    
+    @Override
+	public void updateLoadActivitiesForAllProjectByMember(boolean success, String message, List<Project> projects) {
+		
+    	// If dialog opened
+    	if(viewAssignedActivitiesDialog != null) {
+    		
+    		// If success
+    		if(success) {
+    			
+    			viewAssignedActivitiesDialog.setProjects(projects);
+    			
+    		// If fails
+    		} else {
+    			
+    			// Display message
+    			viewAssignedActivitiesDialog.setErrorMessage(message);
+    			
+    			// Close window
+    			viewAssignedActivitiesDialog.dispose();
+    		}
+    		
+    		// Reset pointer
+    		viewAssignedActivitiesDialog = null;
+    	}
+    	
+	}
 
     /************************************************************
-     * *
-     * ACITIVITY                           *
-     * *
+     *
+     * ACITIVITY                           
+     *
      *************************************************************/
 
     @Override

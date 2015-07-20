@@ -224,6 +224,7 @@ public class Activity_controller extends AbstractController implements ActivityL
      * @date July-05-2015
      */
     @Override
+    @FinalVersion(version="1.0")
     public void editActivity(final int activityId, String activityLabel, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, final int memberId, final int[] prerequisitesId) {
 
         /**
@@ -434,6 +435,7 @@ public class Activity_controller extends AbstractController implements ActivityL
     }//end of editActivity
 
     @Override
+    @FinalVersion(version="1.0")
     public void loadActivitiesByProject(int projectId) {
 
         // Load project
@@ -452,79 +454,65 @@ public class Activity_controller extends AbstractController implements ActivityL
 
     /**
      * Load all corresponding activities by memberID
-     * these activities are also classified by projec to which they are assigned
-     *
+     * these activities are also classified by project to which they are assigned
      * @param memberId the member Id is an integer
      */
     @Override
     public void loadActivitiesForAllProjectByMember(int memberId) {
-        //TODO implement a getActivitiesByMemberId method
-        //TODO implement getProjectId method
 
-        List<Project> projectByMember = this.project_model.getAllProjects();
+    	// Get member
+    	Member member = member_model.getMemberById(Session.getInstance().getUserId());
+    	
         //get all the activities associated with a memberId from the db
-        //	List<Activity> activitiesAssignedToMember =this.activity_model.getActivitiesByMemberId(memberId);//arraylist
-
-        //****temporary replacement for the code line above so it runs correctly****
-        List<Activity> activitiesAssignedToMember = new ArrayList<>();//arraylist
-
-        Member testMember = new Member("Melissa", "Duong", "meDuong", "password");
-        Project testProject = new Project("testProject", 200.00, DateHelper.parse("11-04-1234", Config.DATE_FORMAT_SHORT), DateHelper.parse("11-04-1236", Config.DATE_FORMAT_SHORT), "hello everybody");
-//		Activity testActivity=new Activity("testActivity", 1, DateHelper.parse("12-04-1234", Config.DATE_FORMAT_SHORT), DateHelper.parse("12-04-1236", Config.DATE_FORMAT_SHORT), testProject, testMember, (double) 1);
-
-//		activitiesAssignedToMember.add(testActivity);
-        //****temporary replacement for the code line above so it runs correctly****
-
-
-        //add project Ids associated with each activities
-        Set<Integer> projectIdSet = new HashSet<>();//set of integers
-
-        for (int i = 0; i < activitiesAssignedToMember.size(); i++) {
-            //projectIdSet.add(activitiesAssignedToMember.get(i).getProjectId());
-
-            //********here is a temporary replacement to the above line in comment to not cause errors******
-            projectIdSet.add(1);
-            //********here is a temporary replacement to not cause errors*******
-
+        List<Activity> activitiesAssignedToMember = this.activity_model.getActivitiesByMemberId(memberId);
+        
+        // Store project ids
+        Set<Integer> projectIdSet = new HashSet<>();
+        
+        // Set the member for the activities
+        for(Activity activity : activitiesAssignedToMember)
+        	activity.setMember(member);
+        	
+        // Loop on activities to store the projects
+        for(Activity activity : activitiesAssignedToMember)
+        	projectIdSet.add(activity.getProjectId());
+        
+        // Load projects
+        List<Project> projects = new ArrayList<>();
+        
+        // Fetch all the projects and add them the list
+        for(int i : projectIdSet)
+        	projects.add(project_model.getProjectById(i));
+        
+        // Loop on project
+        for(Project project : projects){
+        	
+        	// Create activity list
+        	List<Activity> _activities = new ArrayList<>();
+        	
+        	// Loop on activities
+        	for(Activity activity : activitiesAssignedToMember) {
+        		if(activity.getProjectId() == project.getProjectId()){
+        			
+        			// Get its list of prerequisites
+        			activity.setPrerequisites(activity_model.getActivityPrerequisites(activity));
+        			
+        			// Add to the list
+        			_activities.add(activity);
+        		}
+        	}
+        	
+        	// Assign the list to the project
+        	project.setAcitivies(_activities);
         }
-
-        //convert the set containing the project ids to a list so that we can do nested loops below
-        List<Integer> projectIdList = new ArrayList<>();
-        projectIdList.addAll(projectIdSet);
-
-        //create an arraylist containing all project objects with their projectId
-        List<Project> projectsAssignedToMemberList = new ArrayList<>();
-
-
-        for (int i = 0; i < projectIdSet.size(); i++) {
-            //add all projects assigned to a member into a list
-            projectsAssignedToMemberList.add(this.project_model.getProjectById(projectIdList.get(i)));
-
-
-            List<Activity> activitiesByProjectList = new ArrayList<>();
-
-            //loop through all activities assigned to a member and create a list of activities
-            //for a corresponding project. add the respective list of activities to the respective project
-            for (int j = 0; j < activitiesAssignedToMember.size(); j++) {
-                //if    (activitiesAssignedToMember.get(j).getProjectId())== projectIdList.get(i))
-
-                //********here is a temporary replacement to the above line in comment not cause errors******
-                if (true)
-                //********here is a temporary replacement to not cause errors******
-
-                {
-                    activitiesByProjectList.add(activitiesAssignedToMember.get(j));
-                    projectsAssignedToMemberList.get(i).setAcitivies(activitiesByProjectList);
-
-                }
-
-            }//end of loop through all activities- inner for loop
-        }//end of loop through project list- outer for loop
-
+        
+        // Update view
+        this.view.updateLoadActivitiesForAllProjectByMember(true, null, projects);
 
     }//end of loadActivitiesForAllProjectByMember
 
     @Override
+    @FinalVersion(version="1.0")
     public void loadActivity(int activityId) {
 
         // Fetch activity from DB

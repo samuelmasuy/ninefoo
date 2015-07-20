@@ -19,11 +19,7 @@ public interface ProjectListener {
 
     // Load
     public void loadEditProjectFields(int projectId);
-
-    public void loadAssignedActivitiesProject();
-
     public void loadAllProjectsByMemberAndRole(int memberId, String roleName);
-
     public void loadProject(int projectId);
 
     // Delete

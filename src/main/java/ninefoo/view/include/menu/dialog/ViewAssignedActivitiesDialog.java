@@ -14,6 +14,7 @@ import ninefoo.model.object.Project;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -65,9 +66,13 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 			@Override
 			public void placeForm() {
 				if(projects != null) {
-					for(Project project : projects){
-						this.table.newRow();
-						this.table.put(new ProjectActivityWrapper(project));
+					if(projects.size() == 0) {
+						this.table.put(new JLabel("<html><h1>No activities found!</h1></html>"));
+					} else {
+						for(Project project : projects){
+							this.table.newRow();
+							this.table.put(new ProjectActivityWrapper(project));
+						}
 					}
 				}
 			}
@@ -100,7 +105,7 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 		private static final long serialVersionUID = -9006410938025352835L;
 		
 		// Define components
-		private PMLabel title;
+		private JLabel title;
 		private NumberedExcelTable table;
 		private JScrollPane tableScrollPane;
 		
@@ -110,9 +115,12 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 			this.setLayout(new BorderLayout());
 			
 			// Initialize components
-			this.title = new PMLabel(project.getProjectName());
+			this.title = new JLabel(String.format("<html><h3>%s</h3></htlm>", project.getProjectName()));
 			this.table = new NumberedExcelTable(ActivityConfig.TABLE_HEADER);
 			this.tableScrollPane = this.table.getJScrollPane();
+			
+			// Configure components
+			this.title.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 			
 			// Add rows
 			List<Activity> activities = project.getAcitivies();
