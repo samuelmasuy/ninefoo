@@ -1,6 +1,7 @@
 package ninefoo.model;
 
 import static org.junit.Assert.*;
+
 import ninefoo.config.Config;
 import ninefoo.helper.DateHelper;
 import ninefoo.model.object.Member;

@@ -1,16 +1,5 @@
 package ninefoo.view.include.menu.dialog;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
 import ninefoo.config.ActivityConfig;
 import ninefoo.helper.ActivityHelper;
 import ninefoo.lib.component.PMButton;
@@ -24,8 +13,16 @@ import ninefoo.model.object.Member;
 import ninefoo.model.object.Project;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Dialog that shows lists of assigned activities in their respective projects
+ *
  * @author Sebouh Bardakjian, Amir El Bawab
  */
 
@@ -130,5 +127,4 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 			this.setPreferredSize(new Dimension(800, 300));
 		}
 	}
-	
 }

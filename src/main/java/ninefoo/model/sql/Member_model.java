@@ -1,8 +1,8 @@
 package ninefoo.model.sql;
 
-import ninefoo.helper.DateHelper;
 import ninefoo.config.Config;
 import ninefoo.config.Database;
+import ninefoo.helper.DateHelper;
 import ninefoo.model.object.Member;
 import ninefoo.model.sql.template.AbstractModel;
 
@@ -14,17 +14,19 @@ import java.util.List;
 
 /**
  * This class contains all the methods for manipulating members in our database. For example,
- *      to find a specific member by ID or username, delete a member, or get a list of all members.
+ * to find a specific member by ID or username, delete a member, or get a list of all members.
  * Created on 30-May-2015.
+ *
  * @author Farzad MajidFayyaz
  */
-public class Member_model extends AbstractModel{
+public class Member_model extends AbstractModel {
 
     /**
      * Inserts a new member into the database.
+     *
      * @param member Member object to be inserted to the database.
      * @return The ID (primary key) of the newly inserted record, <code>Database.ERROR</code> if the insertion
-     *         was not successful.
+     * was not successful.
      */
     // ------------------------------------ Testing notes ------------------------------
     // NOTE: to make sure there is not already a member with the same username as the
@@ -44,41 +46,41 @@ public class Member_model extends AbstractModel{
     //  4. Try to add the user again using this method.
     //  5. The return value should be 0.
     public int insertNewMember(Member member) {
-    	
-    	// Open
-    	this.open();
 
-    	// Query
+        // Open
+        this.open();
+
+        // Query
         sql = "INSERT INTO " +
                 "member(first_name, last_name, username, password) " +
                 "VALUES (?, ?, ?, ?)";
-        
+
         try {
-        	// Prepare
-        	this.prepareStatement();
-        	
-        	// Data
-        	ps.setString(1, member.getFirstName());
-        	ps.setString(2, member.getLastName());
-        	ps.setString(3, member.getUsername());
-        	ps.setString(4, member.getPassword());
-        	
-        	// Run
+            // Prepare
+            this.prepareStatement();
+
+            // Data
+            ps.setString(1, member.getFirstName());
+            ps.setString(2, member.getLastName());
+            ps.setString(3, member.getUsername());
+            ps.setString(4, member.getPassword());
+
+            // Run
             affectedRows = ps.executeUpdate();
 
             // Check insert
             if (affectedRows == 1)
-            	return this.getLastInsertId();
+                return this.getLastInsertId();
 
             LOGGER.warn("Updated row count was not equal to 1");
 
-        // Error
+            // Error
         } catch (SQLException e) {
             LOGGER.error("Could not add member to db --- detailed info: " + e.getMessage());
-        
-        // Close
+
+            // Close
         } finally {
-        	this.close();
+            this.close();
         }
 
         return Database.ERROR;
@@ -86,6 +88,7 @@ public class Member_model extends AbstractModel{
 
     /**
      * Returns all the members stored in the database.
+     *
      * @return List of Member objects.
      */
     // ------------------------------------ Testing notes ------------------------------
@@ -97,22 +100,22 @@ public class Member_model extends AbstractModel{
     //  5. The difference between the new List's size and the old one should be equal
     //     to the number of users you created in step 2.
     public List<Member> getAllMembers() {
-    	
-    	// Open
-    	this.open();
-    	
+
+        // Open
+        this.open();
+
         List<Member> allMembers = new ArrayList<>();
-        
+
         // Query
         sql = "SELECT * FROM member";
         try {
-        	
-        	// Prepare
-        	this.prepareStatement();
-        	
-        	// Run
+
+            // Prepare
+            this.prepareStatement();
+
+            // Run
             result = ps.executeQuery();
-            
+
             // Get all
             while (result.next()) {
                 Member nextMember = getNextMember(result);
@@ -123,43 +126,44 @@ public class Member_model extends AbstractModel{
 
             return allMembers;
 
-        // Error
+            // Error
         } catch (SQLException e) {
             LOGGER.error("Could not get members from db --- detailed info: " + e.getMessage());
-        
-        // Close
+
+            // Close
         } finally {
-        	this.close();
+            this.close();
         }
 
         return null;
     }
-    
+
     /**
      * Returns all the members stored in the database for a project.
+     *
      * @return List of Member objects.
      */
     public List<Member> getAllMembersForAProject(int projectId) {
-    	
-    	// Open
-    	this.open();
-    	
+
+        // Open
+        this.open();
+
         List<Member> allMembers = new ArrayList<>();
-        
+
         // Query
-        sql = 		"SELECT m.member_id AS member_id, first_name, last_name, username, password, register_date "
-        		+ 	"FROM member m, project_member pm WHERE m.member_id = pm.member_id AND pm.project_id = ?";
+        sql = "SELECT m.member_id AS member_id, first_name, last_name, username, password, register_date "
+                + "FROM member m, project_member pm WHERE m.member_id = pm.member_id AND pm.project_id = ?";
         try {
-        	
-        	// Prepare
-        	this.prepareStatement();
-        	
-        	// Data
-        	ps.setInt(1, projectId);
-        	
-        	// Run
+
+            // Prepare
+            this.prepareStatement();
+
+            // Data
+            ps.setInt(1, projectId);
+
+            // Run
             result = ps.executeQuery();
-            
+
             // Get all
             while (result.next()) {
                 Member nextMember = getNextMember(result);
@@ -170,13 +174,13 @@ public class Member_model extends AbstractModel{
 
             return allMembers;
 
-        // Error
+            // Error
         } catch (SQLException e) {
             LOGGER.error("Could not get members from db --- detailed info: " + e.getMessage());
-        
-        // Close
+
+            // Close
         } finally {
-        	this.close();
+            this.close();
         }
 
         return null;
@@ -184,6 +188,7 @@ public class Member_model extends AbstractModel{
 
     /**
      * Returns the Member object from the database that is associated with the specified ID.
+     *
      * @param memberId integer representing the ID of the member to be found.
      * @return Member object if it exists in the DB, NULL otherwise.
      */
@@ -193,25 +198,25 @@ public class Member_model extends AbstractModel{
     //  2. (Assuming the returned value of insertNewMember is not zero) Run this method
     //     to make sure the returned value is not NULL.
     public Member getMemberById(int memberId) {
-    	
-    	// Open
-    	this.open();
 
-    	// Query
-        sql = "	SELECT * FROM member " + 
-        		"WHERE member_id = ?";
+        // Open
+        this.open();
+
+        // Query
+        sql = "	SELECT * FROM member " +
+                "WHERE member_id = ?";
 
         try {
-        	
-        	// Prepare
-        	this.prepareStatement();
-        	
-        	// Data
-        	ps.setInt(1, memberId);
-        	
-        	// Run
+
+            // Prepare
+            this.prepareStatement();
+
+            // Data
+            ps.setInt(1, memberId);
+
+            // Run
             result = ps.executeQuery();
-            
+
             // Get single
             if (result.next()) {
                 Member member = getNextMember(result);
@@ -219,15 +224,15 @@ public class Member_model extends AbstractModel{
                 if (member != null)
                     return member;
             }
-            
-        // Error
+
+            // Error
         } catch (SQLException e) {
             LOGGER.error("Could not get member with member_id = " + memberId + " --- " +
-                         "detailed info: " + e.getMessage());
-        
-        // Close
+                    "detailed info: " + e.getMessage());
+
+            // Close
         } finally {
-        	this.close();
+            this.close();
         }
 
         return null;
@@ -235,6 +240,7 @@ public class Member_model extends AbstractModel{
 
     /**
      * Returns the Member object from the database that has the specified username.
+     *
      * @param username String representing the username of the member.
      * @return Member object having the username, NULL if no member with this username is found.
      */
@@ -242,21 +248,22 @@ public class Member_model extends AbstractModel{
     // Suggested test case:
     //  I think exactly the same as the first suggested one for insertNewMember.
     public Member getMemberByUsername(String username) {
-    	
-    	// Open
-    	this.open();
 
-    	// Query
+        // Open
+        this.open();
+
+        // Query
         sql = "SELECT * FROM member WHERE username = ?";
 
         try {
-        	// Prepare
-        	this.prepareStatement();
-        	
-        	// Data
-        	ps.setString(1, username);;
-        	
-        	// Run
+            // Prepare
+            this.prepareStatement();
+
+            // Data
+            ps.setString(1, username);
+            ;
+
+            // Run
             result = ps.executeQuery();
 
             // Get single
@@ -266,15 +273,15 @@ public class Member_model extends AbstractModel{
                 if (member != null)
                     return member;
             }
-            
-        // Error
+
+            // Error
         } catch (SQLException e) {
             LOGGER.error("Could not get member with username = '" + username + "' --- " +
                     "detailed info: " + e.getMessage());
-        
-        // Close
+
+            // Close
         } finally {
-        	this.close();
+            this.close();
         }
 
         return null;
@@ -282,6 +289,7 @@ public class Member_model extends AbstractModel{
 
     /**
      * Deletes a member from DB corresponding to the specified Member object.
+     *
      * @param member Member object to be deleted from DB.
      * @return True if a record was deleted; False otherwise.
      */
@@ -302,8 +310,8 @@ public class Member_model extends AbstractModel{
     }
 
     /**
-     *
      * Deletes a member from DB corresponding to the specified member ID.
+     *
      * @param memberId integer representing the ID of the member to be deleted.
      * @return True if a record was deleted; False otherwise.
      */
@@ -314,32 +322,32 @@ public class Member_model extends AbstractModel{
     //  2. Use this method to delete that member.
     //  3. Query again to make sure the result is NULL.
     public boolean deleteMemberById(int memberId) {
-    	
-    	// Open
-    	this.open();
-    	
-    	// Query
+
+        // Open
+        this.open();
+
+        // Query
         sql = "DELETE FROM member WHERE member_id = ?";
 
         try {
-        	
-        	// Prepare
-        	this.prepareStatement();
-        	
-        	// Data
-        	ps.setInt(1, memberId);
-        	
-        	// Run
+
+            // Prepare
+            this.prepareStatement();
+
+            // Data
+            ps.setInt(1, memberId);
+
+            // Run
             affectedRows = ps.executeUpdate();
             return (affectedRows == 1);
 
-        // Error
+            // Error
         } catch (SQLException e) {
             LOGGER.error("Could not delete member --- detailed info: " + e.getMessage());
-        
-        // Close
+
+            // Close
         } finally {
-        	this.close();
+            this.close();
         }
 
         return false;
@@ -347,6 +355,7 @@ public class Member_model extends AbstractModel{
 
     /**
      * Deletes a member from DB corresponding to the specified username.
+     *
      * @param username String representing the username of the member to be deleted.
      * @return True if a record was deleted; False otherwise.
      */
@@ -354,37 +363,37 @@ public class Member_model extends AbstractModel{
     // Suggested test case:
     //  Same as deleteMemberById, but considering username instead of the ID.
     public boolean deleteMemberByUsername(String username) {
-    	
-    	// Open
-    	this.open();
 
-    	// Query
+        // Open
+        this.open();
+
+        // Query
         sql = "DELETE FROM member WHERE username LIKE ?";
-        
+
         try {
-        	// Prepare
-        	this.prepareStatement();
-        	
-        	// Data
-        	ps.setString(1, username);
-        	
-        	// Run
+            // Prepare
+            this.prepareStatement();
+
+            // Data
+            ps.setString(1, username);
+
+            // Run
             affectedRows = ps.executeUpdate();
             return (affectedRows == 1);
 
-        // Error
+            // Error
         } catch (SQLException e) {
             LOGGER.error("MELISSA Could not delete member --- detailed info: " + e.getMessage());
-        
-        // Close
+
+            // Close
         } finally {
-        	this.close();
+            this.close();
         }
 
         return false;
     }
-    
- // Utility method used to get the next member from the DB ResultSet object.
+
+    // Utility method used to get the next member from the DB ResultSet object.
     // ------------------------------------ Testing notes ------------------------------
     // No need to test this method because it's not "public".
     private Member getNextMember(ResultSet members) {

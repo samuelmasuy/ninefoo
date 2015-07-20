@@ -7,41 +7,46 @@ import java.lang.annotation.Target;
 
 /**
  * Custom annotation for the application
+ *
  * @author Amir EL Bawab
  */
 public class Annotation {
-	
-	/**
-	 * Auto load methods on program load
-	 * @param active Check if method should be executed
-	 * @param priority Priority of execution (High priority = 0, by default 0)
-	 */
-	@Retention(RetentionPolicy.RUNTIME)
-	@Target(ElementType.METHOD)
-	public @interface AutoloadAtRuntime{
-		boolean active() default true;
-		int priority() default 0;
-	}
-	
-	/**
-	 * Configure the auto load
-	 * @param lowestPriority The lowest possible priority (default 0)
-	 */
-	@Retention(RetentionPolicy.RUNTIME)
-	@Target(ElementType.TYPE)
-	public @interface AutoloadConfig{
-		int lowestPriority() default 0;
-	}
-	
-	/**
-	 * Methods and classes that have this annotation should not be modified in this version.
-	 * If any changes are required, mention it in the @param changesRequiredInNextVersion
-	 */
-	@Retention(RetentionPolicy.SOURCE)
-	@Target({ElementType.METHOD, ElementType.TYPE})
-	public @interface FinalVersion {
-		String version();
-		String[] changesRequiredInNextVersion() default {};
-	}
-	
+
+    /**
+     * Auto load methods on program load
+     *
+     * @param active   Check if method should be executed
+     * @param priority Priority of execution (High priority = 0, by default 0)
+     */
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.METHOD)
+    public @interface AutoloadAtRuntime {
+        boolean active() default true;
+
+        int priority() default 0;
+    }
+
+    /**
+     * Configure the auto load
+     *
+     * @param lowestPriority The lowest possible priority (default 0)
+     */
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE)
+    public @interface AutoloadConfig {
+        int lowestPriority() default 0;
+    }
+
+    /**
+     * Methods and classes that have this annotation should not be modified in this version.
+     * If any changes are required, mention it in the @param changesRequiredInNextVersion
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    public @interface FinalVersion {
+        String version();
+
+        String[] changesRequiredInNextVersion() default {};
+    }
+
 }

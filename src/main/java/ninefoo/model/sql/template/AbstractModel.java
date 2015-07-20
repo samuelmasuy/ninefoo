@@ -1,15 +1,5 @@
 package ninefoo.model.sql.template;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import ninefoo.config.Config;
 import ninefoo.config.Database;
 import ninefoo.helper.DateHelper;
@@ -17,97 +7,107 @@ import ninefoo.model.object.Activity;
 import ninefoo.model.object.Member;
 import ninefoo.model.object.Project;
 import ninefoo.model.object.Role;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
 
 public abstract class AbstractModel {
-	
-	// Variables
-	protected Database db;
-	protected Connection conn;
-	protected PreparedStatement ps;
-	protected String sql;
-	protected int affectedRows;
-	protected ResultSet result;
-	
-	// Logger
-	protected static final Logger LOGGER = LogManager.getLogger();
 
-	/**
-	 * Constructor
-	 */
-	public AbstractModel() {
-		
-		// Set the database
-		this.db = Database.getInstance();
-	}
-	
-	/**
-	 * Prepare statement
-	 * @throws SQLException
-	 */
-	public void prepareStatement() throws SQLException{
-		ps = this.conn.prepareStatement(sql);
-	}
-	
-	/**
-	 * Get last inserted id
-	 * @return Id or ERROR
-	 * @throws SQLException
-	 */
-	public final int getLastInsertId() throws SQLException{
-		
-		// Flush old query on console
-		if(sql != null && !sql.isEmpty())
-			LOGGER.debug(sql);
-		
-		// Query
-		sql = "SELECT last_insert_rowid()";
-		
-		// Prepare
-		this.prepareStatement();
-		
-		// Run
-		result = ps.executeQuery();
-		
-		// Get id
-		if (result.next())
-	        return result.getInt("last_insert_rowid()");
-		return Database.ERROR;
-	}
-	
-	/**
-	 * Open connection
-	 */
-	protected final void open(){
-		this.conn = db.openConnection();
-	}
-	
-	/**
-	 * Close prepared statement and connection
-	 */
-	protected final void close(){
-		
-		// Logger
-		LOGGER.debug(sql);
-		
-		// Close prepared statement
-		if(ps != null)
-			try {
-				ps.close();
-			} catch (SQLException e) {
-				LOGGER.error("Prepared statement was not closed: " + e.getMessage());
-			}
-		
-		// Close connection
-		if(db != null)
-			db.closeConnection();
-		
-		// Clean the variables
-		sql = null;
-		affectedRows = 0;
-		result = null;
-	}
-	
-	// Helper method to get the next Project object from the DB ResultSet object.
+    // Variables
+    protected Database db;
+    protected Connection conn;
+    protected PreparedStatement ps;
+    protected String sql;
+    protected int affectedRows;
+    protected ResultSet result;
+
+    // Logger
+    protected static final Logger LOGGER = LogManager.getLogger();
+
+    /**
+     * Constructor
+     */
+    public AbstractModel() {
+
+        // Set the database
+        this.db = Database.getInstance();
+    }
+
+    /**
+     * Prepare statement
+     *
+     * @throws SQLException
+     */
+    public void prepareStatement() throws SQLException {
+        ps = this.conn.prepareStatement(sql);
+    }
+
+    /**
+     * Get last inserted id
+     *
+     * @return Id or ERROR
+     * @throws SQLException
+     */
+    public final int getLastInsertId() throws SQLException {
+
+        // Flush old query on console
+        if (sql != null && !sql.isEmpty())
+            LOGGER.debug(sql);
+
+        // Query
+        sql = "SELECT last_insert_rowid()";
+
+        // Prepare
+        this.prepareStatement();
+
+        // Run
+        result = ps.executeQuery();
+
+        // Get id
+        if (result.next())
+            return result.getInt("last_insert_rowid()");
+        return Database.ERROR;
+    }
+
+    /**
+     * Open connection
+     */
+    protected final void open() {
+        this.conn = db.openConnection();
+    }
+
+    /**
+     * Close prepared statement and connection
+     */
+    protected final void close() {
+
+        // Logger
+        LOGGER.debug(sql);
+
+        // Close prepared statement
+        if (ps != null)
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                LOGGER.error("Prepared statement was not closed: " + e.getMessage());
+            }
+
+        // Close connection
+        if (db != null)
+            db.closeConnection();
+
+        // Clean the variables
+        sql = null;
+        affectedRows = 0;
+        result = null;
+    }
+
+    // Helper method to get the next Project object from the DB ResultSet object.
     protected Project getNextProject(ResultSet projects) {
 
         try {
@@ -119,7 +119,7 @@ public abstract class AbstractModel {
             Date deadlineDate = DateHelper.parse(projects.getString("deadline_date"), Config.DATE_FORMAT);
             String description = projects.getString("description");
             Date startDate = DateHelper.parse(projects.getString("start_date"), Config.DATE_FORMAT);
-            
+
             return new Project(projectId, projectName, createDate, startDate, updateDate, budget, deadlineDate, description);
 
         } catch (SQLException e) {
@@ -128,7 +128,7 @@ public abstract class AbstractModel {
 
         return null;
     }
-    
+
     // Helper function to read the next Activity object from the specified ResultSet object.
     protected Activity getNextActivity(ResultSet activities) {
         Activity activity = null;
@@ -164,7 +164,7 @@ public abstract class AbstractModel {
 
         return activity;
     }
-    
+
     // Helper method to get the next Role object from the DB ResultSet object.
     protected Role getNextRole(ResultSet roles) {
         try {

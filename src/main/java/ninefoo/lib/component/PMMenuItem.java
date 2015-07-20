@@ -1,18 +1,18 @@
 package ninefoo.lib.component;
 
-import javax.swing.JMenuItem;
-
 import ninefoo.lib.lang.LanguageText;
+
+import javax.swing.*;
 
 /**
  * @author Sebouh Bardakjian
  */
-public class PMMenuItem extends JMenuItem{
+public class PMMenuItem extends JMenuItem {
 
-	private String key;
-	
-	public PMMenuItem(String key){
-		super(LanguageText.getConstant(key));
-		this.key = key;
-	}
+    private String key;
+
+    public PMMenuItem(String key) {
+        super(LanguageText.getConstant(key));
+        this.key = key;
+    }
 }

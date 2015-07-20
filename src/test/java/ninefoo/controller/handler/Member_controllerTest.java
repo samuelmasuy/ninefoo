@@ -43,7 +43,7 @@ public class Member_controllerTest {
         member_controller.login("XXXXX", "password");
         assertEquals("login username is invalid method", "updateLogin", mockUpdatableView.get_called_method());
         assertEquals("login username is invalid success", "false", mockUpdatableView.get_success());
-        assertEquals("login username is invalid message", LanguageText.getConstant("WRONG_USERNAME_PASSWORD") , mockUpdatableView.get_message());
+        assertEquals("login username is invalid message", LanguageText.getConstant("WRONG_USERNAME_PASSWORD"), mockUpdatableView.get_message());
     }
 
     @Test
@@ -53,7 +53,7 @@ public class Member_controllerTest {
         member_controller.login("username", "XXXXX");
         assertEquals("login password is invalid method", "updateLogin", mockUpdatableView.get_called_method());
         assertEquals("login password is invalid success", "false", mockUpdatableView.get_success());
-        assertEquals("login password is invalid message", LanguageText.getConstant("WRONG_USERNAME_PASSWORD") , mockUpdatableView.get_message());
+        assertEquals("login password is invalid message", LanguageText.getConstant("WRONG_USERNAME_PASSWORD"), mockUpdatableView.get_message());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class Member_controllerTest {
         member_controller.login("XXXXX", "XXXXX");
         assertEquals("login credentials are invalid method", "updateLogin", mockUpdatableView.get_called_method());
         assertEquals("login credentials are invalid success", "false", mockUpdatableView.get_success());
-        assertEquals("login credentials are invalid message", LanguageText.getConstant("WRONG_USERNAME_PASSWORD") , mockUpdatableView.get_message());
+        assertEquals("login credentials are invalid message", LanguageText.getConstant("WRONG_USERNAME_PASSWORD"), mockUpdatableView.get_message());
     }
 
     @Test
