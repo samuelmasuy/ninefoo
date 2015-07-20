@@ -34,7 +34,8 @@ public class LanguageText {
 	
 	// Store current language
 	public static final String ENGLISH = "en";
-	public static final String FRENCH = "fr";
+        public static final String FRENCH = "fr";
+	public static final String GERMAN = "de";
 	private String currentLanguage;
 	
 	
@@ -47,7 +48,8 @@ public class LanguageText {
 		
 		// Add languages
 		languages.add(ENGLISH);
-		languages.add(FRENCH);
+                languages.add(FRENCH);
+		languages.add(GERMAN);
 		
 	}
 	
