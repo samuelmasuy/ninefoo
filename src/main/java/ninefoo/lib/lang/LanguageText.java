@@ -121,6 +121,9 @@ public class LanguageText {
 	public static void setLanguage(String language){
 		switch(language){
 		case ENGLISH:
+			case GERMAN:
+				LanguageText.instance.currentLanguage = language;
+				LOGGER.info("Language set to: " + language);
 		case FRENCH:
 			LanguageText.instance.currentLanguage = language;
 			LOGGER.info("Language set to: " + language);
