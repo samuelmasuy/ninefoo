@@ -43,10 +43,10 @@ public class Login_view extends FormPanel{
 		super();
 		
 		// Initialize components
-		this.loginButton = new PMButton(LanguageText.getConstant("LOGIN"));
+		this.loginButton = new PMButton("LOGIN");
 		this.usernameField = new JTextField(10);
 		this.passwordField = new JPasswordField(10);
-		this.registerText = new PMLabel(LanguageText.getConstant("REGISTRATION_LINK"));
+		this.registerText = new PMLabel("REGISTRATION_LINK");
 		
 		// Configure buttons
 		Border inputPadding = BorderFactory.createEmptyBorder(3, 3, 3, 3);
@@ -116,12 +116,12 @@ public class Login_view extends FormPanel{
 		fixedPanel.add(new PMLabel(new ImageIcon(getClass().getResource("/images/login_user.png"))), gc);
 		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
-		fixedPanel.add(new PMLabel(LanguageText.getConstant("USERNAME")), gc);
+		fixedPanel.add(new PMLabel("USERNAME"), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.usernameField, gc);
 		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
-		fixedPanel.add(new PMLabel(LanguageText.getConstant("PASSWORD")), gc);
+		fixedPanel.add(new PMLabel("PASSWORD"), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.passwordField, gc);
 		

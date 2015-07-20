@@ -115,6 +115,9 @@ public class NumberedExcelTable extends JTable {
 	 */
 	public void empty(){
 		this.counter = 0;
-		this.removeAll();
+		
+		DefaultTableModel model = (DefaultTableModel) getModel();
+		while(model.getRowCount() > 0)
+			model.removeRow(0);
 	}
 }

@@ -20,7 +20,7 @@
 		"OPTIMISTIC_ACT"            : "Optimistic",
 		"LIKELY_ACT"                : "Likely",
 		"PESSIMISTIC_ACT"           : "Pessimistic",
-		"COST_ACT"				 : "Cost",
+		"COST_ACT"				 	: "Cost",
 		"MEMBER_ACT"                : "Member",
 		"PREREQ_ACT"                : "Prereq.",
 		"ADD_DEPENDENCY_ACT"		: "Add dependency",

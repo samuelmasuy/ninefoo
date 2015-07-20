@@ -135,7 +135,7 @@ public class ValidationRule {
 	 * @return ValidationRule
 	 */
 	public ValidationRule doTrim(){
-		this.value.trim();
+		this.value = this.value.trim();
 		return this;
 	}
 	
@@ -158,6 +158,7 @@ public class ValidationRule {
 	 */
 	private int maxValue;
 	public ValidationRule checkMaxNumValue(int maxValue) {
+		this.checkDouble();
 		maxNumChecker=true;
 		this.maxValue=maxValue;
 		return this;
@@ -171,7 +172,9 @@ public class ValidationRule {
 	 * @return ValidationRule
 	 */
 	private int minValue;
-	public ValidationRule checkMinNumValue(int minValue) {
+	public ValidationRule checkMinNumValue(int minValue) 
+	{
+		this.checkDouble();
 		minNumChecker=true;
 		this.minValue=minValue;
 		return this;
@@ -254,8 +257,6 @@ public class ValidationRule {
 			}
 		}
 		
-	
-		
 		// If date after checker is enabled, check if current date is after target date
 		if(this.dateAfterChecker){
 			
@@ -292,8 +293,8 @@ public class ValidationRule {
 
 			// If values are not empty
 			if (!this.value.isEmpty()) {
-				if (Integer.parseInt(this.value) > this.maxValue){
-					errorMessage = String.format(LanguageText.getConstant("MAX_NUM_VALUE"), this.name, Integer.parseInt(this.value));
+				if (Double.parseDouble(this.value) > this.maxValue){
+					errorMessage = String.format(LanguageText.getConstant("MAX_NUM_VALUE"), this.name, this.maxValue);
 					return false;
 				}
 			}
@@ -304,8 +305,8 @@ public class ValidationRule {
 
 			// If values are not empty
 			if (!this.value.isEmpty()) {
-				if (Integer.parseInt(this.value) < this.minValue){
-					errorMessage = String.format(LanguageText.getConstant("MIN_NUM_VALUE"), this.name, Integer.parseInt(this.value));
+				if (Double.parseDouble(this.value) < this.minValue){
+					errorMessage = String.format(LanguageText.getConstant("MIN_NUM_VALUE"), this.name, this.minValue);
 					return false;
 				}
 			}

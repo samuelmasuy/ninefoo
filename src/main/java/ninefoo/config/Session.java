@@ -1,7 +1,5 @@
 package ninefoo.config;
 
-import ninefoo.model.object.Project;
-
 import org.apache.logging.log4j.LogManager;
 
 /**
@@ -87,7 +85,8 @@ public class Session {
 	public void close(){
 		if(this.open == true){
 			this.open = false;
-			this.userId = 0;
+			this.userId = Config.INVALID;
+			this.currentProject = Config.INVALID;
 			LOGGER.info("Session closed");
 		}
 	}

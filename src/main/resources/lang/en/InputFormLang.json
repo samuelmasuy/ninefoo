@@ -14,10 +14,20 @@
 		"REGISTRATION_LINK" : "<html>Don't have an account ? <font color=\"#000099\"><u>Register now</u></font></html>",
 		"LOGIN_LINK" : "<html>Already registered ? <font color=\"#000099\"><u>Login now</u></font></html>",
 		
+		"LANGUAGE" : "Language",
+		"HELP" : "Help",
+		"IMPORT_PROJECT" : "Import project",
+		"EXPORT_PROJECT" : "Export project",
+		"ENGLISH" : "English",
+		"FRENCH" : "French",
+		"ABOUT" : "About",
+		"EXIT" : "Exit",
+
 		"LOGIN" : "Login",
 		"LOGOUT" : "Logout",
 		"REGISTER" : "Register",
 		"CREATE" : "Create",
+		"UPDATE" : "Update",
 		"ADD" : "Add",
 		"CLOSE" : "Close",
 		
@@ -39,6 +49,23 @@
 		"NEW_MEMBER" : "New Member",
 		"REGISTER_A_NEW_MEMBER" : "Register a new member",
 		"VIEW_ASSIGNED" : "View Assigned",
-		"VIEW_MY_ASSIGNED_ACTIVITIES" : "View my assigned activities"
+		"VIEW_MY_ASSIGNED_ACTIVITIES" : "View my assigned activities", 
+
+		"JANUARY"		: "January",
+		"FEBRUARY"		: "February",
+		"MARCH"		: "March",
+		"APRIL"		: "April",
+		"MAY"			: "May",
+		"JUNE"		: "June",
+		"JULY"		: "July",
+		"AUGUST"		: "August",
+		"SEPTEMBER"	: "September",
+		"OCTOBER"		: "October",
+		"NOVEMBER"		: "November",
+		"DECEMBER"		: "December",
+
+		"SAMPLE_TEXT" : "e.g. A new project has been successfully created"
+
+
 	}
 }

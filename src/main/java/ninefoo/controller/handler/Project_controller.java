@@ -14,6 +14,7 @@ import ninefoo.model.object.Activity;
 import ninefoo.model.object.Project;
 import ninefoo.model.object.Role;
 import ninefoo.model.sql.Activity_model;
+import ninefoo.model.sql.Member_model;
 import ninefoo.model.sql.ProjectMember_model;
 import ninefoo.model.sql.Project_model;
 import ninefoo.model.sql.Role_model;
@@ -35,6 +36,7 @@ public class Project_controller extends AbstractController implements ProjectLis
 	private ProjectMember_model projectMember_model = new ProjectMember_model();
 	private Role_model role_model = new Role_model();
 	private Activity_model activity_model = new Activity_model();
+	private Member_model member_model = new Member_model();
 	
 	/**
 	 * Constructor
@@ -59,9 +61,9 @@ public class Project_controller extends AbstractController implements ProjectLis
 		ValidationRule descriptionRule = new ValidationRule(LanguageText.getConstant("DESCRIPTION"), description);
 		
 		// Set restrictions - should be the same as edit
-		nameRule.checkEmpty().checkMaxLength(25);
-		descriptionRule.checkMaxLength(150);
-		budgetRule.checkDouble().checkMaxLength(15);
+		nameRule.checkEmpty().checkMaxLength(Config.MAX_TITLE_LENGTH);
+		descriptionRule.checkMaxLength(Config.MAX_DESCRIPTION_LENGTH);
+		budgetRule.checkDouble().checkMaxLength(15); // TODO Change this to max money amount
 		startDateRule.checkDateBefore(deadline);
 		
 		// Set rules
@@ -201,10 +203,14 @@ public class Project_controller extends AbstractController implements ProjectLis
 			
 			// Load activities and all their prerequisite
 			List<Activity> actList = this.activity_model.getActivitiesByProjectId(projectId);
-			for(Activity activity : actList)
+			for(Activity activity : actList){
+				
+				// Set member
+				activity.setMember(member_model.getMemberById(activity.getMemberId()));
 				
 				// Set prerequisites
 				activity.setPrerequisites(this.activity_model.getActivityPrerequisites(activity));
+			}
 			
 			// Load activities for this project
 			project.setAcitivies(actList);
@@ -262,8 +268,7 @@ public class Project_controller extends AbstractController implements ProjectLis
 			// If insert is successful
 			if(projectMember_model.addMemberToProject(projectId, memberId, role)){
 				
-				// TODO Add to the language
-				this.view.updateAddUserToProject(true, "Member successfully added");
+				this.view.updateAddUserToProject(true, LanguageText.getConstant("ADD_USER_SUCCESS_PRO"));
 			
 			// If failed
 			} else {
@@ -275,8 +280,7 @@ public class Project_controller extends AbstractController implements ProjectLis
 		// If user already assigned
 		} else {
 			
-			// TODO add to the language
-			this.view.updateAddUserToProject(false, "User already assigned!");
+			this.view.updateAddUserToProject(false, LanguageText.getConstant("ADD_USER_FAIL_PRO"));
 		}
 	}
 	
@@ -292,6 +296,10 @@ public class Project_controller extends AbstractController implements ProjectLis
 			
 			// Load the list of projects
 			List<Project> projects = projectMember_model.getAllProjectsByMemberAndRole(Session.getInstance().getUserId(), role.getRoleId());
+			
+			// If project to be deleted is now opened
+			if(Session.getInstance().getProjectId() == project.getProjectId())
+				Session.getInstance().setProjectId(Config.INVALID);
 			
 			// Update view
 			this.view.updateDeleteProject(true, String.format("Project %s deleted successfully", project.getProjectName()), projects);

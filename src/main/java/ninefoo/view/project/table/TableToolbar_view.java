@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import ninefoo.lib.component.PMButton;
 import ninefoo.lib.lang.LanguageText;
+import ninefoo.model.object.Activity;
 import ninefoo.view.project.table.dialog.CreateActivityDialog;
 import ninefoo.view.project.table.dialog.EditActivityDialog;
 import ninefoo.view.project.table.dialog.ViewActivityDetailsDialog;
@@ -50,29 +51,29 @@ public class TableToolbar_view extends JPanel {
 		this.viewActivity.setContentAreaFilled(false); 
 		this.viewActivity.setFocusPainted(false); 
 		this.viewActivity.setOpaque(false);
-		this.viewActivity.setText(LanguageText.getConstant("VIEW_DETAILS_ACT"));
-		this.viewActivity.setToolTipText(LanguageText.getConstant("VIEW_ACTIVITY_DETAILS_ACT"));
+		this.viewActivity.setText("VIEW_DETAILS_ACT");
+		this.viewActivity.setToolTipText("VIEW_ACTIVITY_DETAILS_ACT");
 		
 		this.addActivity.setBorderPainted(false); 
 		this.addActivity.setContentAreaFilled(false); 
 		this.addActivity.setFocusPainted(false); 
 		this.addActivity.setOpaque(false);
-		this.addActivity.setText(LanguageText.getConstant("ADD_ACT"));
-		this.addActivity.setToolTipText(LanguageText.getConstant("ADD_A_NEW_ACTIVITY_ACT"));
+		this.addActivity.setText("ADD_ACT");
+		this.addActivity.setToolTipText("ADD_A_NEW_ACTIVITY_ACT");
 		
 		this.editActivity.setBorderPainted(false); 
 		this.editActivity.setContentAreaFilled(false); 
 		this.editActivity.setFocusPainted(false); 
 		this.editActivity.setOpaque(false);
-		this.editActivity.setText(LanguageText.getConstant("EDIT_ACT"));
-		this.editActivity.setToolTipText(LanguageText.getConstant("EDIT_THE_ACTIVITY_PROPERTIES_ACT"));
+		this.editActivity.setText("EDIT_ACT");
+		this.editActivity.setToolTipText("EDIT_THE_ACTIVITY_PROPERTIES_ACT");
 		
 		this.deleteActivity.setBorderPainted(false); 
 		this.deleteActivity.setContentAreaFilled(false); 
 		this.deleteActivity.setFocusPainted(false); 
 		this.deleteActivity.setOpaque(false);
-		this.deleteActivity.setText(LanguageText.getConstant("REMOVE_ACT"));
-		this.deleteActivity.setToolTipText(LanguageText.getConstant("REMOVE_THE_ACTIVITY_ACT"));
+		this.deleteActivity.setText("REMOVE_ACT");
+		this.deleteActivity.setToolTipText("REMOVE_THE_ACTIVITY_ACT");
 		
 		// Add component
 		this.add(addActivity);
@@ -101,13 +102,16 @@ public class TableToolbar_view extends JPanel {
 				// If listener set
 				if(toolbarListener != null){
 					
+					// Store selected activity
+					Activity selectedActivity = toolbarListener.getSelectedActivity();
+					
 					// If no activity selected, show error
-					if(toolbarListener.getSelectedActivity() == null){
+					if(selectedActivity == null){
 						JOptionPane.showMessageDialog(parentFrame, String.format(LanguageText.getConstant("MISSING_EDIT_ACT"),LanguageText.getConstant("ACTIVITY_ACT").toLowerCase()), LanguageText.getConstant("OPERATION_FAILED"), JOptionPane.ERROR_MESSAGE);
 					
 					// If activity selected
 					} else {
-						new EditActivityDialog(parentFrame, tableToolsListener);
+						new EditActivityDialog(parentFrame, tableToolsListener, selectedActivity.getActivityId());
 					}
 				}
 			}
@@ -143,7 +147,7 @@ public class TableToolbar_view extends JPanel {
 				// If activity selected
 				} else {
 					String activityName = "'" + toolbarListener.getSelectedActivity().getActivityLabel() + "'";
-					int reply = JOptionPane.showConfirmDialog(parentFrame, String.format(LanguageText.getConstant("DELETE_CONFIRMATION_ACT"), LanguageText.getConstant("ACTIVITY_ACT").toLowerCase(), activityName ) , LanguageText.getConstant("DELETE_CONFIRMATION"), JOptionPane.YES_NO_OPTION);
+					int reply = JOptionPane.showConfirmDialog(parentFrame, String.format(LanguageText.getConstant("DELETE_CONFIRMATION_TEXT"), LanguageText.getConstant("ACTIVITY_ACT").toLowerCase(), activityName ) , LanguageText.getConstant("DELETE_CONFIRMATION"), JOptionPane.YES_NO_OPTION);
 					if (reply == JOptionPane.YES_OPTION){
 					    tableToolsListener.deleteActivity(parentFrame, toolbarListener.getSelectedActivity());
 					}

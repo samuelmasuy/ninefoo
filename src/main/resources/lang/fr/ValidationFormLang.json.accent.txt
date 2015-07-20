@@ -9,17 +9,16 @@
 		"WRONG_DATE_AFTER_DATE" : "%s devrait etre au moins %s",
 		"MIN_LENGTH" : "%s longueur doit etre au moins %d.",
 		"MAX_LENGTH" : "%s longueur doit etre au plus %d.",
-		"REGISTRATION_SUCCESS" : "Inscription reussie! Connectez vous.",
+		"REGISTRATION_SUCCESS" : "Inscription réussie! Connectez vous.",
 		"UNIQUE" : "%s doit etre unique",
-		"MAX_NUM_VALUE": "%s chiffre excede limite de %d",
+		"MAX_NUM_VALUE": "%s chiffre excède limite de %d",
 		"MIN_NUM_VALUE": "%s chiffre est moins que le minimum %d",
 
 		
-		"OPERATION_FAILED" : "L'operation a echoue",
-		"OPERATION_SUCCESSFUL" : "Operation reussie",
+		"OPERATION_FAILED" : "L'opération a échoué",
+		"OPERATION_SUCCESSFUL" : "Opération réussie",
 		"ERROR_OCCURED" : "Une erreur s'est produite",
 		"MISSING_OPEN" : "Selectionner un %s pour ouvrir",
-        "MISSING_MEMBER" : "Veuillez choisir un membre",
 		"MISSING_EDIT" : "Selectionner un %s pour modifier",
 		"MISSING_DELETE": "Selectionner un %s pour supprimer",
 		"MISSING_OPEN_ACT" : "Selectionner une %s pour ouvrir",
@@ -27,16 +26,14 @@
 		"MISSING_DELETE_ACT": "Selectionner une %s pour supprimer",
 		"MISSING_VIEW_ACT" :	"Selectionner une %s pour visionner",
 
-        "SELF_DEPENDENT_ACTIVITY": "Vous ne pouvez choisir une activite qui depend d'elle meme",
-        "MULTIPLE_DEPENDENT_ACTIVITY": "Certaines activites sont ajoutes comme dependante plusieurs fois.",
 
 		"DELETE_CONFIRMATION" : "Confirmation Supprimer",
-		"DELETE_CONFIRMATION_TEXT" : "Etes-vous sur de vouloir supprimer %s: %s",
+		"DELETE_CONFIRMATION_TEXT" : "Êtes-vous sûr de vouloir supprimer %s: %s",
 
 		
-		"UPDATED" : "%s mis a jour avec succes!",
-		"DELETED" : "%s supprime avec succes!",
-		"LOADED" : "%s charge avec succes!",
-		"CREATED" : "%s cree avec succes!"
+		"UPDATED" : "%s mis à jour avec succès!",
+		"DELETED" : "%s supprime avec succès!",
+		"LOADED" : "%s charge avec succès!",
+		"CREATED" : "%s créé avec succès!"
 	}	
 }

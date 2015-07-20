@@ -46,7 +46,7 @@ public class AddUserToProjectDialog extends CenterFormSouthButtonDialog{
 		toolsListener.loadAllMembersForAddUserToProjectDialog(AddUserToProjectDialog.this);
 		
 		// Initialize components
-		this.addButton = new PMButton(LanguageText.getConstant("ADD"));
+		this.addButton = new PMButton("ADD");
 		this.memberBox = new AutocompleteComboBox(usersName);
 		this.roleBox = new JComboBox<>(RoleNames.ROLES);
 		
@@ -85,11 +85,11 @@ public class AddUserToProjectDialog extends CenterFormSouthButtonDialog{
 				roleBox.setBorder(BorderFactory.createCompoundBorder(roleBox.getBorder(), inputPadding));
 
 				// Add components
-				this.table.put(new PMLabel(LanguageText.getConstant("USER")));
+				this.table.put(new PMLabel("USER"));
 				this.table.put(memberBox);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("ROLE")));
+				this.table.put(new PMLabel("ROLE"));
 				this.table.put(roleBox);
 			}
 		});

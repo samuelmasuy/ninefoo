@@ -14,7 +14,10 @@
 		"VIEW_PROJECTS_PRO"	: "View Projects",
 		"VIEW_MY_PROJECTS_PRO": "View my projects",
 		"ADD_USER_PRO"		: "Add User",
-		"ASSIGN_USERS_TO_THE_PROJECT_PRO" : "Assign users to the project"
+	    "ADD_USER_SUCCESS_PRO": "Member successfully added",
+	    "ADD_USER_FAIL_PRO": "User already assigned!",
+		"ASSIGN_USERS_TO_THE_PROJECT_PRO" : "Assign users to the project",
+		"ROLE_PRO" 		: "Role"
 		
 	}
 }

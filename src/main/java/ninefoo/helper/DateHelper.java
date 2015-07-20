@@ -2,6 +2,7 @@ package ninefoo.helper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -119,5 +120,34 @@ public class DateHelper {
 		return (int)(diff / (24 * 60 * 60 * 1000));
 	}
 	
+	/**
+	 * Get today date
+	 * @return Date today
+	 */
+	public static Date getToday(){
+		Calendar defaultCal = Calendar.getInstance();
+		return defaultCal.getTime();
+	}
 	
+	/**
+	 * Get a date after/before x days from today
+	 * @param day
+	 * @return date
+	 */
+	public static Date getDateRelativeToToday(int day){
+		return getDateRelativeToDate(getToday(), day);
+	}
+	
+	/**
+	 * Get a date after/before x days from date n
+	 * @param date
+	 * @param day
+	 * @return date
+	 */
+	public static Date getDateRelativeToDate(Date date, int day){
+		Calendar c = Calendar.getInstance(); 
+		c.setTime(date);
+		c.add(Calendar.DATE, day);
+		return c.getTime();
+	}
 }

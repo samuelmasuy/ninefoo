@@ -167,7 +167,22 @@ public class MockUpdatableView implements UpdatableView {
 
 	@Override
 	public void updateDeleteProject(boolean success, String message, List<Project> projects) {
-		// TODO Auto-generated method stub
-		
+        this.called_method = "updateDeleteProject";
+        this.success = String.valueOf(success);
+        this.message = message;
+	}
+
+	@Override
+	public void updateLoadAllMembersForAProject(boolean success, String message, List<Member> users) {
+        this.called_method = "updateLoadAllMembersForAProject";
+        this.success = String.valueOf(success);
+        this.message = message;
+	}
+
+	@Override
+	public void updateLoadActivity(boolean success, String message, Activity activity) {
+        this.called_method = "updateLoadActivity";
+        this.success = String.valueOf(success);
+        this.message = message;
 	}
 }

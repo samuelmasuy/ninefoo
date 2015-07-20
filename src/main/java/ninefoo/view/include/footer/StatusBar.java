@@ -26,7 +26,7 @@ public class StatusBar extends JPanel{
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		
 		// Initialize components
-		this.status = new PMLabel("e.g. A new project has been created successfully");
+		this.status = new PMLabel("SAMPLE_TEXT");
 		
 		// Add components
 		this.add(this.status);

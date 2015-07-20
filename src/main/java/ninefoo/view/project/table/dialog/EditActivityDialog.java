@@ -11,7 +11,12 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
+import ninefoo.config.Config;
+import ninefoo.helper.ActivityHelper;
+import ninefoo.helper.DateHelper;
 import ninefoo.lib.autocompleteComboBox.AutocompleteComboBox;
 import ninefoo.lib.component.PMButton;
 import ninefoo.lib.component.PMLabel;
@@ -25,12 +30,12 @@ import ninefoo.model.object.Member;
 import ninefoo.view.project.table.listener.TableToolsListener;
 
 /**
- * Dialog for editing an activity
- * @author Sebouh Bardakjian
+ * Dialog for creating an activity
+ * @author Sebouh Bardakjian, Amir El Bawab
  */
 public class EditActivityDialog extends CenterScrollSouthButtonDialog {
 	
-	private static final long serialVersionUID = -3817935790634099734L;
+	private static final long serialVersionUID = -3895150614923358876L;
 	
 	// Define components
 	private PMButton updateButton;
@@ -43,22 +48,26 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
 	private JTextField cost;
 	private DatePicker startDate;
 	private DatePicker finishDate;
-	private ArrayList<Member> members_data;
-	private ArrayList<Activity> activities_data;
 	private AutocompleteComboBox memberBox;
 	private MultiDropdown prerequisiteDropdown;
+	
+	// Variables
+	private List<Member> members_data;
+	private List<Activity> activities_data;
+	private String[] membersName;
+	private String[] activitiesLabel;
 	
 	/** 
 	 *  Constructor
 	 */
-	public EditActivityDialog(JFrame parentFrame, final TableToolsListener tableToolsListener) {
+	public EditActivityDialog(final JFrame parentFrame, final TableToolsListener tableToolsListener, final int activityId) {
 		
-		// Dummy data
-		String[] members_dummy = new String[] {"Mem1", "Member2BlaBlaBla"};
-				
+		// Load data
+		tableToolsListener.loadAllMembersForEditActivityDialog(this);
+		tableToolsListener.loadActivitiesForEditActivityDialog(this);
 		
 		// Initialize components
-		this.updateButton = new PMButton(LanguageText.getConstant("UPDATE_ACTIVITY_ACT"));
+		this.updateButton = new PMButton("UPDATE");
 		this.activityLabel = new JTextField(10);
 		this.description = new JTextArea(3,10);
 		this.duration = new JTextField(10);
@@ -68,18 +77,81 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
 		this.cost = new JTextField(10);
 		this.startDate = new DatePicker(8);
 		this.finishDate = new DatePicker(8);
-		this.memberBox = new AutocompleteComboBox(members_dummy);
-		this.prerequisiteDropdown = new MultiDropdown(LanguageText.getConstant("ADD_DEPENDENCY_ACT"), new String[]{"One", "Two"});
+		this.memberBox = new AutocompleteComboBox(membersName);
+		this.prerequisiteDropdown = new MultiDropdown("ADD_DEPENDENCY_ACT", activitiesLabel);
 		
+		// If first activity, disable add prerequisite button
+		if(activities_data.size() == 0)
+			prerequisiteDropdown.setEnabled(false);
+		
+		// Load fields
+		tableToolsListener.loadActivity(this, activityId);
+		
+		// Set title
 		this.setTitle(LanguageText.getConstant("UPDATE_ACTIVITY_ACT"));
+		
+		// Set default values
+		this.startDate.setToday();
+		this.finishDate.setDate(DateHelper.getDateRelativeToToday(1));
+		this.duration.setText("1");
+		this.duration.setEditable(false);
+		
+		// Set listener to the dates
+		this.startDate.getJFormattedTextField().getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateDuration();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateDuration();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateDuration();
+			}
+		});
+		
+		this.finishDate.getJFormattedTextField().getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateDuration();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateDuration();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateDuration();
+			}
+		});
 		
 		// Add button listener
 		this.updateButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				// Get the member
+				int member = Config.INVALID;
+				if(memberBox.checkAndGetText() != null)
+					member = members_data.get(memberBox.checkAndGetIndex()).getMemberId();
+					
+				// Get the prerequisites
+				Integer[] prerequisiteDataIndex = prerequisiteDropdown.getDataIndex();
+				int[] activitiesPrereqId = new int[prerequisiteDataIndex.length];
+				for(int i=0; i < prerequisiteDataIndex.length; i++)
+					activitiesPrereqId[i] = activities_data.get(prerequisiteDataIndex[i]).getActivityId();
+					
 				if (tableToolsListener != null)
-					tableToolsListener.updateActivity();
+					tableToolsListener.updateActivity(EditActivityDialog.this, activityId, activityLabel.getText(), description.getText(), duration.getText(), optimisticDuration.getText(), likelyDuration.getText(), pessimisticDuration.getText(), cost.getText(), startDate.getText(), finishDate.getText(), member, activitiesPrereqId);
 			}
 		});
 		
@@ -92,7 +164,7 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
 			public void placeForm() {
 				
 				// Set border title
-				this.titledBorder.setTitle(LanguageText.getConstant("UPDATE_ACTIVITY_ACT"));
+				this.titledBorder.setTitle(LanguageText.getConstant("EDIT_THE_ACTIVITY_PROPERTIES_ACT"));
 				
 				// Set input border
 				updateButton.setBorder(BorderFactory.createCompoundBorder(updateButton.getBorder(), inputPadding));
@@ -102,55 +174,55 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
 				optimisticDuration.setBorder(BorderFactory.createCompoundBorder(optimisticDuration.getBorder(), inputPadding));
 				likelyDuration.setBorder(BorderFactory.createCompoundBorder(likelyDuration.getBorder(), inputPadding));
 				pessimisticDuration.setBorder(BorderFactory.createCompoundBorder(pessimisticDuration.getBorder(), inputPadding));
-				cost.setBorder(BorderFactory.createCompoundBorder(pessimisticDuration.getBorder(), inputPadding));
+				cost.setBorder(BorderFactory.createCompoundBorder(cost.getBorder(), inputPadding));
 				startDate.setBorder(BorderFactory.createCompoundBorder(startDate.getBorder(), inputPadding));
 				finishDate.setBorder(BorderFactory.createCompoundBorder(finishDate.getBorder(), inputPadding));
 				memberBox.setBorder(BorderFactory.createCompoundBorder(memberBox.getBorder(), inputPadding));
 				prerequisiteDropdown.setBorder(BorderFactory.createCompoundBorder(prerequisiteDropdown.getBorder(), inputPadding));
 				
 				// Add components
-				this.table.put(new PMLabel(LanguageText.getConstant("NAME")));
+				this.table.put(new PMLabel("NAME"));
 				this.table.put(activityLabel);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("DESCRIPTION")));
+				this.table.put(new PMLabel("DESCRIPTION"));
 				this.table.put(new JScrollPane(description));
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("DURATION_ACT")));
+				this.table.put(new PMLabel("DURATION_ACT"));
 				this.table.put(duration);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("OPTIMISTIC_ACT")));
+				this.table.put(new PMLabel("OPTIMISTIC_ACT"));
 				this.table.put(optimisticDuration);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("LIKELY_ACT")));
+				this.table.put(new PMLabel("LIKELY_ACT"));
 				this.table.put(likelyDuration);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("PESSIMISTIC_ACT")));
+				this.table.put(new PMLabel("PESSIMISTIC_ACT"));
 				this.table.put(pessimisticDuration);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("COST_ACT")));
+				this.table.put(new PMLabel("COST_ACT"));
 				this.table.put(cost);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("START_ACT")));
+				this.table.put(new PMLabel("START_ACT"));
 				this.table.put(startDate);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("FINISH_ACT")));
+				this.table.put(new PMLabel("FINISH_ACT"));
 				this.table.put(finishDate);
 				
 				this.table.newRow();
-				this.table.put(new PMLabel(LanguageText.getConstant("MEMBER_ACT")));
+				this.table.put(new PMLabel("MEMBER_ACT"));
 				this.table.put(memberBox);
 				
 				this.table.newRow();
 				this.table.placeCenterTop();
-				this.table.put(new PMLabel(LanguageText.getConstant("PREREQ_ACT")));
+				this.table.put(new PMLabel("PREREQ_ACT"));
 				this.table.put(prerequisiteDropdown);
 			}
 		});
@@ -165,73 +237,92 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
 		this.setVisible(true);
 	}
 	
-	//TODO Add refresh
-		/**
-		 * Populate list
-		 * @param users
-		 */
-		public void populateMemberList(List<Member> members){
-			
-			// Reset array
-			this.members_data = new ArrayList<>();
-			
-			// If a list was returned
-			if(members != null){
-				
-				// Add projects
-				this.members_data.addAll(members);
+	/**
+	 * Update the duration field
+	 */
+	private void updateDuration(){
+		int diff;
+		if(startDate.getText() == null || startDate.getText().isEmpty() || finishDate.getText() == null || finishDate.getText().isEmpty()){
+			diff = 0;
+		} else {
+			try{
+				diff = DateHelper.getDifferenceDates(DateHelper.parse(startDate.getText(), Config.DATE_FORMAT_SHORT), DateHelper.parse(finishDate.getText(), Config.DATE_FORMAT_SHORT));
+			} catch(IllegalArgumentException e) {
+				diff = 0;
 			}
+		}
+		duration.setText( String.valueOf(diff));
+	}
+	
+	/**
+	 * Populate list
+	 * @param users
+	 */
+	public void populateMemberList(List<Member> members){
+		
+		// Reset array
+		this.members_data = new ArrayList<>();
+		
+		// If a list was returned
+		if(members != null){
 			
-			// Refresh list
-			//this.refreshList();
+			// Add projects
+			this.members_data.addAll(members);
 		}
 		
-		//TODO Add refresh
-		/**
-		 * Populate list
-		 * @param activities
-		 */
-		public void populateActivityList(List<Activity> activities){
+		// Create a list of members
+		this.membersName = new String[members.size()];
+		
+		// Populate list of user names
+		for(int i=0; i < members.size(); i++)
+			this.membersName[i] = members.get(i).getUsername();
+	}
+	
+	/**
+	 * Populate list
+	 * @param activities
+	 */
+	public void populateActivityList(List<Activity> activities){
+		
+		// Reset array
+		this.activities_data = new ArrayList<>();
+		
+		// If a list was returned
+		if(activities != null){
 			
-			// Reset array
-			this.activities_data = new ArrayList<>();
-			
-			// If a list was returned
-			if(activities != null){
-				
-				// Add projects
-				this.activities_data.addAll(activities);
-			}
-			
-			// Refresh list
-			//this.refreshList();
+			// Add projects
+			this.activities_data.addAll(activities);
 		}
 		
-		//TODO Add refresh
-		/**
-		 * Populate activity fields data
-		 * @param activity
-		 */
-		public void populateFields(Activity activity){
-			
-			// If an activity was returned
-			if(activity != null){
-				
-				// Add data to fields
-				this.activityLabel.setText(activity.getActivityLabel());
-				this.description.setText(activity.getDescription());
-				this.duration.setText(activity.getDuration() + "");
-				this.optimisticDuration.setText(activity.getOptimisticDuration() + "");
-				this.likelyDuration.setText(activity.getLikelyDuration() + "");
-				this.pessimisticDuration.setText(activity.getPessimisticDuration() + "");
-				this.cost.setText(activity.getCost() + "");
-				this.startDate.setDate(activity.getStartDate());
-				this.finishDate.setDate(activity.getFinishDate());
-				//this.memberBox = new AutocompleteComboBox(members_dummy);
-				//this.prerequisiteDropdown = new MultiDropdown("Add dependency", new String[]{"One", "Two"});
-			}
-			
-			// Refresh list
-			//this.refreshList();
-		}
+		// Create a list of members
+		this.activitiesLabel = new String[activities.size()];
+		
+		// Populate list of user names
+		for(int i=0; i < activities.size(); i++)
+			this.activitiesLabel[i] = ActivityHelper.getIdAndName(activities.get(i));
+	}
+	
+	/**
+	 * Populate fields
+	 * @param activity
+	 */
+	public void populateFields(Activity activity){
+		
+		this.activityLabel.setText(activity.getActivityLabel());
+		this.description.setText(activity.getDescription());
+		this.optimisticDuration.setText(String.valueOf(activity.getOptimisticDuration()));
+		this.likelyDuration.setText(String.valueOf(activity.getLikelyDuration()));
+		this.pessimisticDuration.setText(String.valueOf(activity.getPessimisticDuration()));
+		this.cost.setText(String.valueOf(activity.getCost()));
+		this.startDate.setDate(activity.getStartDate());
+		this.finishDate.setDate(activity.getFinishDate());
+		this.memberBox.getTextComponent().setText(activity.getMember().getUsername());
+		
+		// Update duration
+		this.updateDuration();
+		
+		// Set prerequisites
+		for(Activity crreutnActivity : activity.getPrerequisites())
+			this.prerequisiteDropdown.addDropdown(ActivityHelper.getIdAndName(crreutnActivity));
+	}
 }

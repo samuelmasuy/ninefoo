@@ -17,6 +17,7 @@
 		"OPERATION_FAILED" : "Operation failed",
 		"OPERATION_SUCCESSFUL" : "Operation successful",
 		"ERROR_OCCURED" : "An error occurred",
+        "MISSING_MEMBER" : "Please select a member",
 		"MISSING_OPEN" : "Please select a %s to open",
 		"MISSING_EDIT" : "Please select a %s to edit",
 		"MISSING_DELETE": "Please select a %s to delete",
@@ -25,6 +26,8 @@
 		"MISSING_DELETE_ACT": "Please select an %s to delete",
 		"MISSING_VIEW_ACT" :	"Please select an %s to view",
 
+	    "SELF_DEPENDENT_ACTIVITY": "You cannot choose a self dependent activity.",
+	    "MULTIPLE_DEPENDENT_ACTIVITY": "Some activities are added as dependent multiple times.",
 
 		"DELETE_CONFIRMATION" : "Delete Confirmation",
 		"DELETE_CONFIRMATION_TEXT" : "Are you sure you would like to delete %s: %s",
