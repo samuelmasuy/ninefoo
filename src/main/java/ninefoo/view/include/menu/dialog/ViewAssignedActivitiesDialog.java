@@ -67,7 +67,7 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 			public void placeForm() {
 				if(projects != null) {
 					if(projects.size() == 0) {
-						this.table.put(new JLabel("<html><h1>No activities found!</h1></html>"));
+						this.table.put(new JLabel(String.format("<html><h1>%s</h1></html>", LanguageText.getConstant("NO_ACTIVITIES_FOUND_ACT"))));
 					} else {
 						for(Project project : projects){
 							this.table.newRow();
