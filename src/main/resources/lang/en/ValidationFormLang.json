@@ -31,6 +31,7 @@
     "UPDATED": "%s updated successfully!",
     "DELETED": "%s deleted successfully!",
     "LOADED": "%s loaded successfully!",
-    "CREATED": "%s created successfully!"
+    "CREATED": "%s created successfully!",
+    "CYCLE": "A cycle has been detected."
   }
 }

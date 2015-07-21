@@ -31,6 +31,7 @@
     "UPDATED": "%s mis a jour avec succes!",
     "DELETED": "%s supprime avec succes!",
     "LOADED": "%s charge avec succes!",
-    "CREATED": "%s cree avec succes!"
+    "CREATED": "%s cree avec succes!",
+    "CYCLE": "Un cycle a ete detecte."
   }
 }

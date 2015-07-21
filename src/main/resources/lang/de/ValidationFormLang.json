@@ -31,6 +31,7 @@
     "UPDATED": "%s erfolgreich aktualisiert!",
     "DELETED": "%s wurde erfolgreich gelöscht!",
     "LOADED": "%s erfolgreich geladen!",
-    "CREATED": "%s erfolgreich angelegt!"
+    "CREATED": "%s erfolgreich angelegt!",
+    "CYCLE": "Ein Zyklus wurde erkannt."
   }
 }
