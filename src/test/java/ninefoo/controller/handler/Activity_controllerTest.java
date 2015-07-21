@@ -145,8 +145,8 @@ public class Activity_controllerTest {
     public void testLoadActivity_unknown_activity() throws Exception {
         Session.getInstance().setProjectId(1);
         activity_controller.loadActivity(999);
-        assertEquals("load unknown activiy method", "updateLoadActivity", mockUpdatableView.get_called_method());
-        assertEquals("load unknown activiy success", "false", mockUpdatableView.get_success());
-        assertEquals("load unknown activiy message",  LanguageText.getConstant("ERROR_OCCURED"), mockUpdatableView.get_message());
+        assertEquals("load unknown activity method", "updateLoadActivity", mockUpdatableView.get_called_method());
+        assertEquals("load unknown activity success", "false", mockUpdatableView.get_success());
+        assertEquals("load unknown activity message", LanguageText.getConstant("ERROR_OCCURED"), mockUpdatableView.get_message());
     }
 }
