@@ -356,9 +356,11 @@ public class MainView extends JFrame implements UpdatableView {
             }
 
             @Override
-            public void deleteActivity(JFrame parentFrame, Activity activity) {
-                // TODO Auto-generated method stub
-                System.out.println("Delete activity confirmed...");
+            public void deleteActivity(int activityId) {
+            	
+            	// Try to delete
+            	if(activityListener != null)
+            		activityListener.deleteActivity(activityId);
             }
 
             @Override
@@ -644,7 +646,6 @@ public class MainView extends JFrame implements UpdatableView {
 
     /**
      * Try to create the project
-     *
      * @param success
      * @param message
      */
@@ -908,6 +909,25 @@ public class MainView extends JFrame implements UpdatableView {
     		
     		// Reset pointer
     		viewAssignedActivitiesDialog = null;
+    	}
+	}
+    
+    @Override
+	public void updateDeleteActivity(boolean success, String message, Project project) {
+		
+    	// If succes
+    	if(success) {
+    		
+    		// Display success
+    		this.tableChartPanel.setProject(project);
+    		
+    		// Refresh
+    		this.tableChartPanel.refresh();
+    		
+    	} else {
+    		
+    		// Dsiplay error
+    		this.tableChartPanel.setErrorMessage(message);
     	}
     	
 	}

@@ -31,7 +31,7 @@ public interface TableToolsListener {
     public void updateActivity(EditActivityDialog dialog, int activityId, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, int[] prerequisitesId);
 
     // Delete
-    public void deleteActivity(JFrame parentFrame, Activity activity);
+    public void deleteActivity(int activityId);
 
     // View details
     public void viewActivityDetails();

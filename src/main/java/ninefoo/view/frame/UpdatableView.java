@@ -55,6 +55,8 @@ public interface UpdatableView {
 
     public void updateLoadActivitiesForAllProjectByMember(boolean success, String message, List<Project> projects);
     
+    public void updateDeleteActivity(boolean success, String message, Project project);
+    
     // Set listeners. Start methods with prefix: set
     public void setMemberListener(MemberListener memberListener);
 

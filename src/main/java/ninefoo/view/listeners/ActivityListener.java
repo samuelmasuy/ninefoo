@@ -18,4 +18,7 @@ public interface ActivityListener {
     public void loadActivitiesForAllProjectByMember(int memberId);
 
     public void loadActivity(int activityId);
+    
+    // Delete
+    public void deleteActivity(int activityId);
 }

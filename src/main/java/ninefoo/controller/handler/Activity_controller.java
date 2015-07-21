@@ -544,4 +544,34 @@ public class Activity_controller extends AbstractController implements ActivityL
         }
     }
 
+	@Override
+	public void deleteActivity(int activityId) {
+		
+		// If delete successful
+		if(activity_model.deleteActivityById(activityId)){
+			
+			// Load project
+			Project project = project_model.getProjectById(Session.getInstance().getProjectId());
+			
+			// Load activity
+			List<Activity> activities = activity_model.getActivitiesByProjectId(project.getProjectId());
+					
+			// Get prerequisites and member
+			for(Activity activity : activities){
+				activity.setMember(member_model.getMemberById(activity.getMemberId()));
+				activity.setPrerequisites(activity_model.getActivityPrerequisites(activity));
+			}
+			// Set activities
+			project.setAcitivies(activities);
+			
+			// Display success
+			this.view.updateDeleteActivity(true, null, project);
+			
+		} else {
+			
+			// Display error
+			this.view.updateDeleteActivity(false, LanguageText.getConstant("ERROR_OCCURED"), null);
+		}
+	}
+
 }//end of Activity Controller Class
