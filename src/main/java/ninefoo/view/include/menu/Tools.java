@@ -32,12 +32,12 @@ public class Tools extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
         // Initialize components
-        this.newProject = new PMButton(new ImageIcon(getClass().getResource("/images/new_project.png")));
-        this.newMember = new PMButton(new ImageIcon(getClass().getResource("/images/new_user.png")));
-        this.logout = new PMButton(new ImageIcon(getClass().getResource("/images/logout.png")));
-        this.viewProject = new PMButton(new ImageIcon(getClass().getResource("/images/view_project.png")));
-        this.addUser = new PMButton(new ImageIcon(getClass().getResource("/images/assign.png")));
-        this.viewAssigned = new PMButton(new ImageIcon(getClass().getResource("/images/view_project.png")));
+		this.newProject = new PMButton(new ImageIcon(getClass().getResource("/images/new_project.png")), true);
+		this.newMember = new PMButton(new ImageIcon(getClass().getResource("/images/new_user.png")), true);
+		this.logout = new PMButton(new ImageIcon(getClass().getResource("/images/logout.png")), true);
+		this.viewProject = new PMButton(new ImageIcon(getClass().getResource("/images/view_project.png")), true);
+		this.addUser = new PMButton(new ImageIcon(getClass().getResource("/images/assign.png")), true);
+		this.viewAssigned = new PMButton(new ImageIcon(getClass().getResource("/images/view_project.png")), true);
 
         // Customize buttons
         this.newProject.setContentAreaFilled(false);
