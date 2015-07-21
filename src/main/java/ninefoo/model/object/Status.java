@@ -3,6 +3,7 @@ package ninefoo.model.object;
 /**
  * This class represents a status entity in the database.
  * Created on 30-May-2015.
+ *
  * @author Farzad MajidFayyaz
  */
 public class Status {

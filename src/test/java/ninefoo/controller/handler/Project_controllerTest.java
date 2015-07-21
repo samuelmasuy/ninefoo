@@ -76,15 +76,6 @@ public class Project_controllerTest {
     }
 
     @Test
-    @Ignore
-    public void testCreateProject_invalid_date_format() throws Exception {
-        project_controller.createProject("foo", "0", "1/1/1112", "1/1/111a", "description");
-        assertEquals("project has an invalid date method", "updateCreateProject", mockUpdatableView.get_called_method());
-        assertEquals("project has an invalid date success", "false", mockUpdatableView.get_success());
-        assertEquals("project has an invalid date message", "Invalid date!", mockUpdatableView.get_message());
-    }
-
-    @Test
     public void testEditProject_success() throws Exception {
         project_controller.createProject("name", "0", "1/1/1111", "1/1/1112", "description");
         mockUpdatableView.reset_default();

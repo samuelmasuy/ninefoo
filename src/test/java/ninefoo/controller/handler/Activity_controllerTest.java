@@ -7,7 +7,6 @@ import ninefoo.config.Session;
 import ninefoo.lib.lang.LanguageText;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -51,59 +50,6 @@ public class Activity_controllerTest {
         assertEquals("create activity is successful method", "updateCreateActivity", mockUpdatableView.get_called_method());
         assertEquals("create activity is successful success", "true", mockUpdatableView.get_success());
         assertEquals("create activity is successful message", String.format(LanguageText.getConstant("CREATED"), LanguageText.getConstant("ACTIVITY_ACT")), mockUpdatableView.get_message());
-
-    }
-
-    @Test
-    @Ignore
-    public void testCreateActivity_no_duration() throws Exception {
-        Session.getInstance().setProjectId(1);
-        activity_controller.createActivity("label", "", "", "", "", "", "", "11/11/1111", "12/11/1111", 1, new int[]{});
-        assertEquals("create activity has no duration method", "updateCreateActivity", mockUpdatableView.get_called_method());
-        assertEquals("create activity has no duration success", "false", mockUpdatableView.get_success());
-        assertEquals("create activity has no duration message", String.format(LanguageText.getConstant("REQUIRED"), LanguageText.getConstant("DURATION_ACT")), mockUpdatableView.get_message());
-
-    }
-
-    @Test
-    @Ignore
-    public void testCreateActivity_invalid_duration() throws Exception {
-        Session.getInstance().setProjectId(1);
-        activity_controller.createActivity("label", "", "xx", "", "", "", "", "11/11/1111", "12/11/1111", 1, new int[]{});
-        assertEquals("create activity has invalid duration method", "updateCreateActivity", mockUpdatableView.get_called_method());
-        assertEquals("create activity has invalid duration success", "false", mockUpdatableView.get_success());
-        assertEquals("create activity has invalid duration message", String.format(LanguageText.getConstant("WRONG_FORMAT"), LanguageText.getConstant("DURATION_ACT")), mockUpdatableView.get_message());
-
-    }
-
-    @Test
-    public void testCreateActivity_invalid_member() throws Exception {
-//        Session.getInstance().setProjectId(1);
-//        activity_controller.createActivity("label", "", "5", "", "", "", "", "11/11/1111", "12/11/1111", 999, new int[]{});
-//        assertEquals("create activity has invalid member method", "updateCreateActivity", mockUpdatableView.get_called_method());
-//        assertEquals("create activity has invalid member success", "false", mockUpdatableView.get_success());
-//        assertEquals("create activity has invalid member message", LanguageText.getConstant("ERROR_OCCURED"), mockUpdatableView.get_message());
-
-    }
-
-    @Test
-    public void testCreateActivity_invalid_project() throws Exception {
-//        Session.getInstance().setProjectId(99);
-//        activity_controller.createActivity("label", "", "5", "", "", "", "", "11/11/1111", "12/11/1111", 1, new int[]{});
-//        assertEquals("create activity has invalid project method", "updateCreateActivity", mockUpdatableView.get_called_method());
-//        assertEquals("create activity has invalid project success", "false", mockUpdatableView.get_success());
-//        assertEquals("create activity has invalid project message", LanguageText.getConstant("ERROR_OCCURED"), mockUpdatableView.get_message());
-
-    }
-
-    @Test
-    public void testCreateActivity_prereqs() throws Exception {
-        // TODO prereqs that does not exist
-//        Session.getInstance().setProjectId(1);
-//        activity_controller.createActivity("label", "description", "5", "6", "7", "8", "100", "11/11/1111", "12/11/1111", 1, new Integer[]{5});
-//        assertEquals("login is successful method", "updateCreateActivity", mockUpdatableView.get_called_method());
-//        assertEquals("login is successful success", "true", mockUpdatableView.get_success());
-//        assertEquals("login is successful message", LanguageText.getConstant("CREATED"), mockUpdatableView.get_message());
 
     }
 

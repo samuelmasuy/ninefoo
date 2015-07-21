@@ -1,16 +1,5 @@
 package ninefoo.view.include.menu.dialog;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
 import ninefoo.config.ActivityConfig;
 import ninefoo.helper.ActivityHelper;
 import ninefoo.lib.component.PMButton;
@@ -24,8 +13,17 @@ import ninefoo.model.object.Member;
 import ninefoo.model.object.Project;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
+import javax.swing.*;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Dialog that shows lists of assigned activities in their respective projects
+ *
  * @author Sebouh Bardakjian, Amir El Bawab
  */
 
@@ -51,9 +49,6 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 		// Load projects
 		toolsListener.loadAssignedActivitiesProject(this);
 		
-		// TODO Remove this line, just for testing before implementing the content of the controller
-		this.dummyData();
-		
 		// Add button listener
 		this.close.addActionListener(new ActionListener() {
 			
@@ -70,9 +65,15 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 
 			@Override
 			public void placeForm() {
-				for(Project project : projects){
-					this.table.newRow();
-					this.table.put(new ProjectActivityWrapper(project));
+				if(projects != null) {
+					if(projects.size() == 0) {
+						this.table.put(new JLabel("<html><h1>No activities found!</h1></html>"));
+					} else {
+						for(Project project : projects){
+							this.table.newRow();
+							this.table.put(new ProjectActivityWrapper(project));
+						}
+					}
 				}
 			}
 		});
@@ -85,34 +86,6 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 		this.setLocationRelativeTo(parentFrame);
 		this.setResizable(false);
 		this.setVisible(true);
-	}
-	
-	// TODO Delete this method, for testing only
-	private void dummyData(){
-		
-		this.projects = new ArrayList<>();
-		
-		// Dummy projects
-		Project project1 = new Project("Project 1", Double.valueOf(100), null, null, "Hello");
-		Project project2 = new Project("Project 2", Double.valueOf(100), null, null, "Hello");
-		
-		Member member = new Member("Hello", "World", "", "");
-		
-		// Dummy activities
-		Activity activity1 = new Activity(1, "Act1", "Desc", 10, 10, 10, 10, null, project1, member, null);
-		Activity activity2 = new Activity(2, "Act2", "Desc", 10, 10, 10, 10, null, project1, member, null);
-		
-		List<Activity> acts = new ArrayList<>();
-		acts.add(activity1);
-		acts.add(activity2);
-		
-		project1.setAcitivies(acts);
-		project2.setAcitivies(acts);
-		
-		this.projects.add(project1);
-		this.projects.add(project2);
-		this.projects.add(project1);
-		this.projects.add(project2);
 	}
 	
 	/**
@@ -132,7 +105,7 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 		private static final long serialVersionUID = -9006410938025352835L;
 		
 		// Define components
-		private PMLabel title;
+		private JLabel title;
 		private NumberedExcelTable table;
 		private JScrollPane tableScrollPane;
 		
@@ -142,9 +115,12 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 			this.setLayout(new BorderLayout());
 			
 			// Initialize components
-			this.title = new PMLabel(project.getProjectName());
+			this.title = new JLabel(String.format("<html><h3>%s</h3></htlm>", project.getProjectName()));
 			this.table = new NumberedExcelTable(ActivityConfig.TABLE_HEADER);
 			this.tableScrollPane = this.table.getJScrollPane();
+			
+			// Configure components
+			this.title.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 			
 			// Add rows
 			List<Activity> activities = project.getAcitivies();
@@ -159,5 +135,4 @@ public class ViewAssignedActivitiesDialog extends CenterScrollSouthButtonDialog{
 			this.setPreferredSize(new Dimension(800, 300));
 		}
 	}
-	
 }

@@ -10,49 +10,51 @@ import java.util.List;
 
 /**
  * Created on 02-Jun-2015.
+ *
  * @author Farzad MajidFayyaz
  */
-public class Role_model extends AbstractModel{
+public class Role_model extends AbstractModel {
 
     /**
      * Inserts a new role into the database.
+     *
      * @param role the Role object to be stored in the database.
      * @return True if successful, false otherwise.
      */
     public int insertNewRole(Role role) {
-    	
-    	// Open
-    	this.open();
 
-    	// Query
+        // Open
+        this.open();
+
+        // Query
         sql = "INSERT INTO " +
-              "role(role_name, description) VALUES(?, ?)";
+                "role(role_name, description) VALUES(?, ?)";
 
         try {
-        	
-        	// Prepare
-        	this.prepareStatement();
-        	
-        	// Data
-        	ps.setString(1, role.getRoleName());
-        	ps.setString(2, role.getDescription());
-        	
-        	// Run
+
+            // Prepare
+            this.prepareStatement();
+
+            // Data
+            ps.setString(1, role.getRoleName());
+            ps.setString(2, role.getDescription());
+
+            // Run
             affectedRows = ps.executeUpdate();
 
             // If inserted
-            if (affectedRows == 1) 
-            	return this.getLastInsertId();
+            if (affectedRows == 1)
+                return this.getLastInsertId();
 
             LOGGER.warn("Updated row count was not equal to 1");
 
-        // Error
+            // Error
         } catch (SQLException e) {
             LOGGER.error("Could not add member to db --- detailed info: " + e.getMessage());
-        
-        // Close
+
+            // Close
         } finally {
-        	this.close();
+            this.close();
         }
 
         return Database.ERROR;
@@ -60,26 +62,27 @@ public class Role_model extends AbstractModel{
 
     /**
      * Returns the Role object from the database that is associated with the specified ID.
+     *
      * @param roleId the ID of the role to be searched for.
      * @return Role object corresponding to the ID, NULL if no role can be found for the specified ID.
      */
     public Role getRoleById(int roleId) {
-    	
-    	// Open
-    	this.open();
 
-    	// Query
+        // Open
+        this.open();
+
+        // Query
         sql = "SELECT * FROM role WHERE role_id = ?";
 
         try {
-        	
-        	// Prepare
-        	this.prepareStatement();
-        	
-        	// Data
-        	ps.setInt(1, roleId);
-        	
-        	// Run
+
+            // Prepare
+            this.prepareStatement();
+
+            // Data
+            ps.setInt(1, roleId);
+
+            // Run
             result = ps.executeQuery();
 
             // Get role
@@ -90,14 +93,14 @@ public class Role_model extends AbstractModel{
                     return role;
             }
 
-        // Error
+            // Error
         } catch (SQLException e) {
             LOGGER.error("Could not get role for id " + roleId + " from db --- " +
                     "detailed info: " + e.getMessage());
-        
-        // Close
+
+            // Close
         } finally {
-        	this.close();
+            this.close();
         }
 
         return null;
@@ -105,26 +108,27 @@ public class Role_model extends AbstractModel{
 
     /**
      * Returns the Role object having the specified name (role_name column in UNIQUE in DB).
+     *
      * @param roleName name of the role to be searched for.
      * @return Role object corresponding to the name, NULL if no role can be found for the specified name.
      */
     public Role getRoleByName(String roleName) {
-    	
-    	// Open
-    	this.open();
-    	
-    	// Query
+
+        // Open
+        this.open();
+
+        // Query
         sql = "SELECT * FROM role WHERE role_name = ?";
 
         try {
-        	
-        	// Prepare
-        	this.prepareStatement();
-        	
-        	// Data
-        	ps.setString(1, roleName);
-        	
-        	// Run
+
+            // Prepare
+            this.prepareStatement();
+
+            // Data
+            ps.setString(1, roleName);
+
+            // Run
             result = ps.executeQuery();
 
             // Get role
@@ -135,14 +139,14 @@ public class Role_model extends AbstractModel{
                     return role;
             }
 
-        // Error
+            // Error
         } catch (SQLException e) {
             LOGGER.error("Could not get role for name '" + roleName + "' from db --- " +
                     "detailed info: " + e.getMessage());
-        
-        // Close
+
+            // Close
         } finally {
-        	this.close();
+            this.close();
         }
 
         return null;
@@ -150,23 +154,24 @@ public class Role_model extends AbstractModel{
 
     /**
      * Returns all the roles stored in the database.
+     *
      * @return List of Role objects; empty ArrayList if there are no roles in the database; NULL
-     *         if there is an error connecting to the database.
+     * if there is an error connecting to the database.
      */
     public List<Role> getAllRoles() {
-    	
-    	// Open
-    	this.open();
-    	
+
+        // Open
+        this.open();
+
         List<Role> allRoles = new ArrayList<>();
 
         // Query
         sql = "SELECT * FROM Role";
         try {
-        	// Prepare
-        	this.prepareStatement();
-        	
-        	// Run
+            // Prepare
+            this.prepareStatement();
+
+            // Run
             result = ps.executeQuery();
 
             // Get all
@@ -179,13 +184,13 @@ public class Role_model extends AbstractModel{
 
             return allRoles;
 
-        // Error
+            // Error
         } catch (SQLException e) {
             LOGGER.error("Could not get members from db --- detailed info: " + e.getMessage());
-        
-        // Close
+
+            // Close
         } finally {
-        	this.close();
+            this.close();
         }
 
         return null;

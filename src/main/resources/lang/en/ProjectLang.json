@@ -1,21 +1,22 @@
 {
-	"name" : "Project language",
-	"description" : "Language related to Project. Include the suffix _PRO for each key",
-	"language" : {
-		"UPDATE_PROJECT" 	: "Update project",
-		"CREATE_ADD_PRO"		: "Create and Add",
-		"ADD_USER_PRO"		: "Add user to project",
-		"VIEW_MY_PROJECTS_PRO": "View my projects",
-		"OPEN_PRO"			: "Open",
-		"EDIT_PRO"			: "Edit",
-		"DELETE_PRO"		: "Delete",
-		"NEW_PROJECT_PRO"	: "New Project",
-		"CREATE_A_NEW_PROJECT_PRO" : "Create a new project",
-		"VIEW_PROJECTS_PRO"	: "View Projects",
-		"VIEW_MY_PROJECTS_PRO": "View my projects",
-		"ADD_USER_PRO"		: "Add User",
-		"ASSIGN_USERS_TO_THE_PROJECT_PRO" : "Assign users to the project",
-		"ROLE_PRO" 		: "Role"
-		
-	}
+  "name": "Project language",
+  "description": "Language related to Project. Include the suffix _PRO for each key",
+  "language": {
+    "UPDATE_PROJECT": "Update project",
+    "CREATE_ADD_PRO": "Create and Add",
+    "ADD_USER_PRO": "Add user to project",
+    "VIEW_MY_PROJECTS_PRO": "View my projects",
+    "OPEN_PRO": "Open",
+    "EDIT_PRO": "Edit",
+    "DELETE_PRO": "Delete",
+    "NEW_PROJECT_PRO": "New Project",
+    "CREATE_A_NEW_PROJECT_PRO": "Create a new project",
+    "VIEW_PROJECTS_PRO": "View Projects",
+    "VIEW_MY_PROJECTS_PRO": "View my projects",
+    "ADD_USER_PRO": "Add User",
+    "ADD_USER_SUCCESS_PRO": "Member successfully added",
+    "ADD_USER_FAIL_PRO": "User already assigned!",
+    "ASSIGN_USERS_TO_THE_PROJECT_PRO": "Assign users to the project",
+    "ROLE_PRO": "Role"
+  }
 }

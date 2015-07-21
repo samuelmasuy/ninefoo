@@ -4,8 +4,9 @@ import ninefoo.model.object.Activity;
 
 /**
  * Listener to events from the excel table
+ *
  * @author Amir El Bawab
  */
 public interface ToolbarListener {
-	public Activity getSelectedActivity(); 
+    public Activity getSelectedActivity();
 }

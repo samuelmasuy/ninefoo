@@ -1,39 +1,36 @@
 {
-	"name" : "Validation form",
-	"description" : "Error, warning and success messages",
-	"language" : {
-		"REQUIRED" : "%s est requis.",
-		"WRONG_FORMAT" : "%s est invalide.",
-		"WRONG_USERNAME_PASSWORD" : "Nom d'utilisateur ou mot de passe invalide.",
-		"WRONG_DATE_BEFORE_DATE" : "%s devrait etre au plus %s",
-		"WRONG_DATE_AFTER_DATE" : "%s devrait etre au moins %s",
-		"MIN_LENGTH" : "%s longueur doit etre au moins %d.",
-		"MAX_LENGTH" : "%s longueur doit etre au plus %d.",
-		"REGISTRATION_SUCCESS" : "Inscription reussie! Connectez vous.",
-		"UNIQUE" : "%s doit etre unique",
-		"MAX_NUM_VALUE": "%s chiffre excede limite de %d",
-		"MIN_NUM_VALUE": "%s chiffre est moins que le minimum %d",
-
-		
-		"OPERATION_FAILED" : "L'operation a echoue",
-		"OPERATION_SUCCESSFUL" : "Operation reussie",
-		"ERROR_OCCURED" : "Une erreur s'est produite",
-		"MISSING_OPEN" : "Selectionner un %s pour ouvrir",
-		"MISSING_EDIT" : "Selectionner un %s pour modifier",
-		"MISSING_DELETE": "Selectionner un %s pour supprimer",
-		"MISSING_OPEN_ACT" : "Selectionner une %s pour ouvrir",
-		"MISSING_EDIT_ACT" : "Selectionner une %s pour modifier",
-		"MISSING_DELETE_ACT": "Selectionner une %s pour supprimer",
-		"MISSING_VIEW_ACT" :	"Selectionner une %s pour visionner",
-
-
-		"DELETE_CONFIRMATION" : "Confirmation Supprimer",
-		"DELETE_CONFIRMATION_TEXT" : "Etes-vous sur de vouloir supprimer %s: %s",
-
-		
-		"UPDATED" : "%s mis a jour avec succes!",
-		"DELETED" : "%s supprime avec succes!",
-		"LOADED" : "%s charge avec succes!",
-		"CREATED" : "%s cree avec succes!"
-	}	
+  "name": "Validation form",
+  "description": "Error, warning and success messages",
+  "language": {
+    "REQUIRED": "%s est requis.",
+    "WRONG_FORMAT": "%s est invalide.",
+    "WRONG_USERNAME_PASSWORD": "Nom d'utilisateur ou mot de passe invalide.",
+    "WRONG_DATE_BEFORE_DATE": "%s devrait etre au plus %s",
+    "WRONG_DATE_AFTER_DATE": "%s devrait etre au moins %s",
+    "MIN_LENGTH": "%s longueur doit etre au moins %d.",
+    "MAX_LENGTH": "%s longueur doit etre au plus %d.",
+    "REGISTRATION_SUCCESS": "Inscription reussie! Connectez vous.",
+    "UNIQUE": "%s doit etre unique",
+    "MAX_NUM_VALUE": "%s chiffre excede limite de %d",
+    "MIN_NUM_VALUE": "%s chiffre est moins que le minimum %d",
+    "OPERATION_FAILED": "L'operation a echoue",
+    "OPERATION_SUCCESSFUL": "Operation reussie",
+    "ERROR_OCCURED": "Une erreur s'est produite",
+    "MISSING_OPEN": "Selectionner un %s pour ouvrir",
+    "MISSING_MEMBER": "Veuillez choisir un membre",
+    "MISSING_EDIT": "Selectionner un %s pour modifier",
+    "MISSING_DELETE": "Selectionner un %s pour supprimer",
+    "MISSING_OPEN_ACT": "Selectionner une %s pour ouvrir",
+    "MISSING_EDIT_ACT": "Selectionner une %s pour modifier",
+    "MISSING_DELETE_ACT": "Selectionner une %s pour supprimer",
+    "MISSING_VIEW_ACT": "Selectionner une %s pour visionner",
+    "SELF_DEPENDENT_ACTIVITY": "Vous ne pouvez choisir une activite qui depend d'elle meme",
+    "MULTIPLE_DEPENDENT_ACTIVITY": "Certaines activites sont ajoutes comme dependante plusieurs fois.",
+    "DELETE_CONFIRMATION": "Confirmation Supprimer",
+    "DELETE_CONFIRMATION_TEXT": "Etes-vous sur de vouloir supprimer %s: %s",
+    "UPDATED": "%s mis a jour avec succes!",
+    "DELETED": "%s supprime avec succes!",
+    "LOADED": "%s charge avec succes!",
+    "CREATED": "%s cree avec succes!"
+  }
 }

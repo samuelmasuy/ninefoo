@@ -30,6 +30,7 @@ public class MockUpdatableView implements UpdatableView {
         this.message = null;
         this.success = null;
     }
+
     public String get_called_method() {
         return this.called_method;
     }
@@ -116,13 +117,6 @@ public class MockUpdatableView implements UpdatableView {
     }
 
     @Override
-    public void updateLoadAssignedActivitiesProject(boolean success, String message, List<Project> projects) {
-        this.called_method = "updateLoadAssignedActivitiesProject";
-        this.success = String.valueOf(success);
-        this.message = message;
-    }
-
-    @Override
     public void updateLoadActivitiesByProject(boolean success, String message, List<Activity> activities) {
         this.called_method = "updateLoadActivitiesByProject";
         this.success = String.valueOf(success);
@@ -165,24 +159,30 @@ public class MockUpdatableView implements UpdatableView {
         this.called_method = "setActivityListener";
     }
 
-	@Override
-	public void updateDeleteProject(boolean success, String message, List<Project> projects) {
+    @Override
+    public void updateDeleteProject(boolean success, String message, List<Project> projects) {
         this.called_method = "updateDeleteProject";
         this.success = String.valueOf(success);
         this.message = message;
-	}
+    }
 
-	@Override
-	public void updateLoadAllMembersForAProject(boolean success, String message, List<Member> users) {
+    @Override
+    public void updateLoadAllMembersForAProject(boolean success, String message, List<Member> users) {
         this.called_method = "updateLoadAllMembersForAProject";
         this.success = String.valueOf(success);
         this.message = message;
-	}
+    }
 
-	@Override
-	public void updateLoadActivity(boolean success, String message, Activity activity) {
+    @Override
+    public void updateLoadActivity(boolean success, String message, Activity activity) {
         this.called_method = "updateLoadActivity";
         this.success = String.valueOf(success);
         this.message = message;
+    }
+
+	@Override
+	public void updateLoadActivitiesForAllProjectByMember(boolean success, String message, List<Project> projects) {
+		// TODO Auto-generated method stub
+		
 	}
 }

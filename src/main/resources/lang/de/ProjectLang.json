@@ -1,0 +1,22 @@
+{
+  "name": "Projektsprache",
+  "description": ". Sprache zu Projektbezogene Fügen Sie das Suffix _PRO für jede Taste",
+  "language": {
+    "UPDATE_PROJECT": "Update-Projekt",
+    "CREATE_ADD_PRO": "Erstellen und Hinzufügen",
+    "ADD_USER_PRO": "Benutzer zu Projekt hinzufügen",
+    "VIEW_MY_PROJECTS_PRO": "Meine Projekte anzeigen",
+    "OPEN_PRO": "Geöffnet",
+    "EDIT_PRO": "Bearbeiten",
+    "DELETE_PRO": "Löschen",
+    "NEW_PROJECT_PRO": "Neues Projekt",
+    "CREATE_A_NEW_PROJECT_PRO": "Neues Projekt",
+    "VIEW_PROJECTS_PRO": "Projekte Ansicht",
+    "VIEW_MY_PROJECTS_PRO": "Meine Projekte anzeigen",
+    "ADD_USER_PRO": "Benutzer hinzufügen",
+    "ADD_USER_SUCCESS_PRO": "Die Mitglied erfolgreich hinzugefügt",
+    "ADD_USER_FAIL_PRO": "User bereits vergeben!",
+    "ASSIGN_USERS_TO_THE_PROJECT_PRO": "Ordnen Sie Benutzer für das Projekt",
+    "ROLE_PRO": "Rolle"
+  }
+}
