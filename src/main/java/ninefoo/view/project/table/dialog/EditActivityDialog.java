@@ -87,9 +87,6 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
         this.setTitle(LanguageText.getConstant("UPDATE_ACTIVITY_ACT"));
 
         // Set default values
-        this.startDate.setToday();
-        this.finishDate.setDate(DateHelper.getDateRelativeToToday(1));
-        this.duration.setText("1");
         this.duration.setEditable(false);
 
         // Set listener to the dates

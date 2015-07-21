@@ -37,7 +37,7 @@ public class Tools extends JPanel {
 		this.logout = new PMButton(new ImageIcon(getClass().getResource("/images/logout.png")), true);
 		this.viewProject = new PMButton(new ImageIcon(getClass().getResource("/images/view_project.png")), true);
 		this.addUser = new PMButton(new ImageIcon(getClass().getResource("/images/assign.png")), true);
-		this.viewAssigned = new PMButton(new ImageIcon(getClass().getResource("/images/view_project.png")), true);
+		this.viewAssigned = new PMButton(new ImageIcon(getClass().getResource("/images/view_activities.png")), true);
 
         // Customize buttons
         this.newProject.setContentAreaFilled(false);
