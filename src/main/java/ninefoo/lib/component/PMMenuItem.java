@@ -10,19 +10,19 @@ import ninefoo.lib.lang.LanguageText;
 /**
  * @author Sebouh Bardakjian
  */
-public class PMMenuItem extends JMenuItem{
+public class PMMenuItem extends JMenuItem implements Refreshable{
 
-	static List<PMMenuItem> menuItemList = new ArrayList<PMMenuItem>(); 
+	//static List<PMMenuItem> menuItemList = new ArrayList<PMMenuItem>(); 
 	
 	private String key;
 	
 	public PMMenuItem(String key){
 		super(LanguageText.getConstant(key));
 		this.key = key;
-		menuItemList.add(this);
+		componentList.add(this);
 	}
 	
-	public void Refresh(){
+	public void refresh(){
 		this.setText(LanguageText.getConstant(key));
 	}
 }

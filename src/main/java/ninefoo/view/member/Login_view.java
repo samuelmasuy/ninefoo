@@ -33,6 +33,7 @@ public class Login_view extends FormPanel{
 	private PMButton loginButton;
 	private JTextField usernameField;
 	private JPasswordField passwordField;
+	private PMLabel welcomeTitle;
 	private PMLabel registerText;
 	private LoginListener loginListener;
 	
@@ -43,10 +44,11 @@ public class Login_view extends FormPanel{
 		super();
 		
 		// Initialize components
-		this.loginButton = new PMButton("LOGIN");
+		this.loginButton = new PMButton("LOGIN", true);
 		this.usernameField = new JTextField(10);
 		this.passwordField = new JPasswordField(10);
-		this.registerText = new PMLabel("REGISTRATION_LINK");
+		this.welcomeTitle = new PMLabel("WELCOME", true);
+		this.registerText = new PMLabel("REGISTRATION_LINK", true);
 		
 		// Configure buttons
 		Border inputPadding = BorderFactory.createEmptyBorder(3, 3, 3, 3);
@@ -55,7 +57,7 @@ public class Login_view extends FormPanel{
 		this.registerText.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		
 		// Set border name
-		this.titledBorder.setTitle(LanguageText.getConstant("WELCOME") + "!");
+		//this.titledBorder.setTitle(LanguageText.getConstant("WELCOME") + "!");
 		
 		// Add listeners for the login button
 		loginButton.addActionListener(new ActionListener() {
@@ -112,16 +114,20 @@ public class Login_view extends FormPanel{
 		
 		// Add components to fixedPanel
 		int row = 0;
+		LayoutHelper.gcGrid(gc, row, 0, 2);
+		fixedPanel.add(new PMLabel("WELCOME", true), gc);
+		int logoHeight = 5;
+		row += logoHeight;
 		LayoutHelper.gcGrid(gc, row++, 0, 2);
 		fixedPanel.add(new PMLabel(new ImageIcon(getClass().getResource("/images/login_user.png"))), gc);
 		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
-		fixedPanel.add(new PMLabel("USERNAME"), gc);
+		fixedPanel.add(new PMLabel("USERNAME", true), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.usernameField, gc);
 		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
-		fixedPanel.add(new PMLabel("PASSWORD"), gc);
+		fixedPanel.add(new PMLabel("PASSWORD", true), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.passwordField, gc);
 		

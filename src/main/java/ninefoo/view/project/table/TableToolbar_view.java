@@ -41,10 +41,10 @@ public class TableToolbar_view extends JPanel {
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
 		// Initialize components
-		this.viewActivity = new PMButton(new ImageIcon(getClass().getResource("/images/buttons/general/eye.png")));
-		this.addActivity = new PMButton(new ImageIcon(getClass().getResource("/images/buttons/general/add.png")));
-		this.editActivity = new PMButton(new ImageIcon(getClass().getResource("/images/buttons/general/edit.png")));
-		this.deleteActivity = new PMButton(new ImageIcon(getClass().getResource("/images/buttons/general/remove.png")));
+		this.viewActivity = new PMButton(new ImageIcon(getClass().getResource("/images/buttons/general/eye.png")), true);
+		this.addActivity = new PMButton(new ImageIcon(getClass().getResource("/images/buttons/general/add.png")), true);
+		this.editActivity = new PMButton(new ImageIcon(getClass().getResource("/images/buttons/general/edit.png")), true);
+		this.deleteActivity = new PMButton(new ImageIcon(getClass().getResource("/images/buttons/general/remove.png")), true);
 		
 		// Configure buttons
 		this.viewActivity.setBorderPainted(false); 

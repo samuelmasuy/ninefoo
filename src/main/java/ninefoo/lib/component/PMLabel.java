@@ -11,29 +11,33 @@ import ninefoo.lib.lang.LanguageText;
 /**
  * @author Sebouh Bardakjian
  */
-public class PMLabel extends JLabel{
+public class PMLabel extends JLabel implements Refreshable {
 
-	static List<PMLabel> labelList = new ArrayList<PMLabel>(); 
+	//static List<PMLabel> labelList = new ArrayList<PMLabel>(); 
 	
 	private String key;
 	
 	public PMLabel(String key){
-		super(LanguageText.getConstant(key));
-		this.key = key;
-		labelList.add(this);
+		this(key, false);
 	}
 	
 	public PMLabel(){
 		super();
-		labelList.add(this);
 	}
 	
 	public PMLabel(ImageIcon icon){
 		super(icon);
-		labelList.add(this);
 	}
 	
-	public void Refresh(){
+	public PMLabel(String key, boolean addToList) {
+		super(LanguageText.getConstant(key));
+		this.key = key;
+		if (addToList){
+			componentList.add(this);
+		}	
+	}
+
+	public void refresh(){
 		this.setText(LanguageText.getConstant(key));
 	}
 	

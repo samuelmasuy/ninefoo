@@ -39,12 +39,12 @@ public class Register_view extends FormPanel{
 	public Register_view() {
 		
 		// Initialize components
-		this.registerButton = new PMButton("REGISTER");
+		this.registerButton = new PMButton("REGISTER", true);
 		this.firstName = new JTextField(10);
 		this.lastName = new JTextField(10);
 		this.usernameField = new JTextField(10);
 		this.passwordField = new JPasswordField(10);
-		this.loginText = new PMLabel("LOGIN_LINK");
+		this.loginText = new PMLabel("LOGIN_LINK", true);
 		
 		// Configure buttons
 		Border inputPadding = BorderFactory.createEmptyBorder(3, 3, 3, 3);
@@ -55,7 +55,7 @@ public class Register_view extends FormPanel{
 		this.loginText.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		
 		// Set Border title
-		titledBorder.setTitle(LanguageText.getConstant("NEW_ACCOUNT"));
+		//titledBorder.setTitle(LanguageText.getConstant("NEW_ACCOUNT"));
 		
 		// Add listeners for the register button
 		registerButton.addActionListener(new ActionListener() {
@@ -129,26 +129,30 @@ public class Register_view extends FormPanel{
 		
 		// Add components to fixedPanel
 		int row = 0;
+		LayoutHelper.gcGrid(gc, row, 0, 2);
+		fixedPanel.add(new PMLabel("NEW_ACCOUNT", true), gc);
+		int logoHeight = 5;
+		row += logoHeight;
 		LayoutHelper.gcGrid(gc, row++, 0, 2);
 		fixedPanel.add(new PMLabel(new ImageIcon(getClass().getResource("/images/register_user.png"))), gc);
 		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
-		fixedPanel.add(new PMLabel("FIRST_NAME"), gc);
+		fixedPanel.add(new PMLabel("FIRST_NAME", true), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.firstName, gc);
 		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
-		fixedPanel.add(new PMLabel("LAST_NAME"), gc);
+		fixedPanel.add(new PMLabel("LAST_NAME", true), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.lastName, gc);
 		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
-		fixedPanel.add(new PMLabel("USERNAME"), gc);
+		fixedPanel.add(new PMLabel("USERNAME", true), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.usernameField, gc);
 		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
-		fixedPanel.add(new PMLabel("PASSWORD"), gc);
+		fixedPanel.add(new PMLabel("PASSWORD", true), gc);
 		LayoutHelper.gcGrid(gc, row++, 1, 1);
 		fixedPanel.add(this.passwordField, gc);
 		

@@ -170,7 +170,7 @@ public class MultiDropdown extends JPanel{
 			
 			// Initialize components
 			this.boxField = new AutocompleteComboBox(data);
-			this.removeButton = new PMButton(new ImageIcon(getClass().getResource("/images/buttons/general/remove.png")));
+			this.removeButton = new PMButton(new ImageIcon(getClass().getResource("/images/buttons/general/remove.png")), false);
 			
 			// Configure button
 			this.removeButton.setBorderPainted(false); 
