@@ -324,7 +324,7 @@ public class Activity_controller extends AbstractController implements ActivityL
                     // If cycle detected
                     if (graph.isCyclic()) {
 
-                        setErrorMessage("A cycle has been detected.");
+                        setErrorMessage(LanguageText.getConstant("CYCLE"));
                         return false;
                     }
                 }

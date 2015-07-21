@@ -18,17 +18,20 @@ public class MockUpdatableView implements UpdatableView {
     private String called_method;
     private String message;
     private String success;
+    private Object object_loaded;
 
     public MockUpdatableView() {
         this.called_method = null;
         this.message = null;
         this.success = null;
+        this.object_loaded = null;
     }
 
     public void reset_default() {
         this.called_method = null;
         this.message = null;
         this.success = null;
+        this.object_loaded = null;
     }
 
     public String get_called_method() {
@@ -41,6 +44,9 @@ public class MockUpdatableView implements UpdatableView {
 
     public String get_message() {
         return this.message;
+    }
+    public Object get_object_loaded() {
+        return this.object_loaded;
     }
 
     @Override
@@ -88,6 +94,7 @@ public class MockUpdatableView implements UpdatableView {
         this.called_method = "updateLoadProject";
         this.success = String.valueOf(success);
         this.message = message;
+
     }
 
     @Override
@@ -178,6 +185,7 @@ public class MockUpdatableView implements UpdatableView {
         this.called_method = "updateLoadActivity";
         this.success = String.valueOf(success);
         this.message = message;
+        this.object_loaded = activity;
     }
 
 	@Override
