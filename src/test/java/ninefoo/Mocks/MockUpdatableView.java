@@ -199,4 +199,10 @@ public class MockUpdatableView implements UpdatableView {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void updateRemoveMemberFromProject(boolean success, String message) {
+		// TODO Auto-generated method stub
+		
+	}
 }

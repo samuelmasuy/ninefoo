@@ -1,5 +1,6 @@
 package ninefoo.view.include.menu.listener;
 
+import ninefoo.config.Session;
 import ninefoo.model.object.Project;
 import ninefoo.view.include.menu.dialog.*;
 
@@ -30,7 +31,8 @@ public interface ToolsListener {
 
     //Delete
     public void deleteProject(ViewMyProjectsDialog parentDialog, Project project);
-
+    public void removeMemberFromProject(AddUserToProjectDialog dialog, int memberId, int projectId);
+    
     // Logout
     public void logout();
 

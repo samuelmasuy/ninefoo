@@ -24,4 +24,5 @@ public interface ProjectListener {
 
     // Delete
     public void deleteProject(Project project);
+    public void removeMemberFromProject(int memberId, int projectId);;
 }

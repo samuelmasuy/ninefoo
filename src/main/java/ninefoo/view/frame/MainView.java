@@ -300,6 +300,17 @@ public class MainView extends JFrame implements UpdatableView {
 				if(activityListener != null)
 					activityListener.loadActivitiesForAllProjectByMember(Session.getInstance().getUserId());
 			}
+
+			@Override
+			public void removeMemberFromProject(AddUserToProjectDialog dialog, int memberId, int projectId) {
+				
+				// Store dialog
+				addUserToProjectDialog = dialog;
+				
+				// Pass to controller
+				if(projectListener != null)
+					projectListener.removeMemberFromProject(memberId, projectId);
+			}
         });
 
         // Add listener to table chart slider
@@ -943,6 +954,28 @@ public class MainView extends JFrame implements UpdatableView {
     	}
     	
 	}
+    
+    @Override
+	public void updateRemoveMemberFromProject(boolean success, String message) {
+		
+    	// If dialog is open
+    	if(addUserToProjectDialog != null) {
+    		
+    		// If success
+    		if(success){
+    			
+    			// Display success
+    			addUserToProjectDialog.setSuccessMessage(message);
+    			
+    		} else {
+    			
+    			// Display error
+    			addUserToProjectDialog.setErrorMessage(message);
+    		}
+    		
+    	}
+    	
+	}
 
     /************************************************************
      *
@@ -1116,4 +1149,6 @@ public class MainView extends JFrame implements UpdatableView {
         	viewActivityDetailsDialog = null;
         }
     }
+
+	
 }

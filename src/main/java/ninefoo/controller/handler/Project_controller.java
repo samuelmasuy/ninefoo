@@ -318,4 +318,30 @@ public class Project_controller extends AbstractController implements ProjectLis
             this.view.updateDeleteProject(false, LanguageText.getConstant("ERROR_OCCURED"), null);
         }
     }
+
+	@Override
+	public void removeMemberFromProject(int memberId, int projectId) {
+		
+		// If user assigned
+		if(projectMember_model.getAssignedAnyRole(memberId, projectId)){
+				
+			// If deleted
+			if(projectMember_model.removeMemberFromProject(memberId, projectId)){
+		
+				// TODO Add to language
+				this.view.updateRemoveMemberFromProject(true, "User deleted form project");
+			
+			// If DB error
+			} else {
+				
+				this.view.updateRemoveMemberFromProject(false, LanguageText.getConstant("ERROR_OCCURED"));
+			}
+		// If not
+		} else {
+			
+			// If not in DB
+			this.view.updateRemoveMemberFromProject(false, "User not assigned");
+		}
+		
+	}
 }

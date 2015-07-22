@@ -29,7 +29,7 @@ public class AddUserToProjectDialog extends CenterFormSouthButtonDialog {
 
     private static final long serialVersionUID = 4530177660846739513L;
     // Define components
-    private PMButton addButton;
+    private PMButton addButton, deleteButton;
     private AutocompleteComboBox memberBox;
     private JComboBox<String> roleBox;
     private ArrayList<Member> users;
@@ -45,6 +45,7 @@ public class AddUserToProjectDialog extends CenterFormSouthButtonDialog {
 
         // Initialize components
         this.addButton = new PMButton("ADD");
+        this.deleteButton = new PMButton("DELETE_PRO");
         this.memberBox = new AutocompleteComboBox(usersName);
         this.roleBox = new JComboBox<>(RoleNames.ROLES);
 
@@ -67,6 +68,28 @@ public class AddUserToProjectDialog extends CenterFormSouthButtonDialog {
                 }
             }
         });
+        
+        // Add delete button
+        this.deleteButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if (toolsListener != null) {
+                    if (memberBox.checkAndGetText() == null || memberBox.getSelectedIndex() < 0) {
+                        // TODO put this in the language file
+                        AddUserToProjectDialog.this.setErrorMessage("Please choose a member!");
+                    } else {
+                        int memberId = users.get(memberBox.getSelectedIndex()).getMemberId();
+                        
+                        if(memberId == Session.getInstance().getUserId())
+                        	AddUserToProjectDialog.this.setErrorMessage("You cannot delete yourself!");
+                        else
+                        	toolsListener.removeMemberFromProject(AddUserToProjectDialog.this, memberId, Session.getInstance().getProjectId());
+                    }
+                }
+			}
+		});
 
         // Add center form
         this.setCenterPanel(new FormDialog() {
@@ -94,6 +117,7 @@ public class AddUserToProjectDialog extends CenterFormSouthButtonDialog {
 
         // Add component to south panel
         this.southPanel.add(addButton);
+        this.southPanel.add(deleteButton);
 
         // Configure dialog
         this.setSize(new Dimension(300, 350));
