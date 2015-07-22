@@ -37,7 +37,7 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog {
     private JList<String> projectList;
     private DefaultListModel<String> listModel;
     private JScrollPane scrollList;
-    private PMLabel nameInfo, budgetInfo, createdDateInfo, startDateInfo, deadlineDateInfo;
+    private JLabel nameInfo, budgetInfo, createdDateInfo, startDateInfo, deadlineDateInfo;
     private JTextArea descriptionInfo;
     private ArrayList<Project> projects;
 
@@ -66,12 +66,12 @@ public class ViewMyProjectsDialog extends CenterFormSouthButtonDialog {
         this.listModel = new DefaultListModel<>();
         this.projectList = new JList<String>(listModel);
         this.scrollList = new JScrollPane(this.projectList);
-        this.nameInfo = new PMLabel();
-        this.budgetInfo = new PMLabel();
+        this.nameInfo = new JLabel();
+        this.budgetInfo = new JLabel();
         this.descriptionInfo = new JTextArea();
-        this.createdDateInfo = new PMLabel();
-        this.startDateInfo = new PMLabel();
-        this.deadlineDateInfo = new PMLabel();
+        this.createdDateInfo = new JLabel();
+        this.startDateInfo = new JLabel();
+        this.deadlineDateInfo = new JLabel();
 
         // Set listeners
         this.toolsListener = toolsListener;

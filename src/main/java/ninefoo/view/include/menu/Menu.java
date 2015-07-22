@@ -1,7 +1,12 @@
 package ninefoo.view.include.menu;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import ninefoo.lib.component.PMMenu;
 import ninefoo.lib.component.PMMenuItem;
+import ninefoo.lib.component.Refreshable;
+import ninefoo.lib.lang.LanguageText;
 
 import javax.swing.*;
 
@@ -74,6 +79,37 @@ public class Menu extends JMenuBar {
         this.language.add(this.english);
         this.language.add(this.french);
         this.language.add(this.german);
+        
+        // Add actions to buttons
+        this.english.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LanguageText.setLanguage(LanguageText.ENGLISH);
+				for(Refreshable component : Refreshable.componentList)
+					component.refresh();
+			}
+		});
+        
+		this.french.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						LanguageText.setLanguage(LanguageText.FRENCH);
+						for(Refreshable component : Refreshable.componentList)
+							component.refresh();
+					}
+				});
+		
+		this.german.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LanguageText.setLanguage(LanguageText.GERMAN);
+				for(Refreshable component : Refreshable.componentList)
+					component.refresh();
+			}
+		});
 
         // Add components
         this.add(project);

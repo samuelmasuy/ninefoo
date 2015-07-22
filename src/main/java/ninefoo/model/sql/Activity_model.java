@@ -550,4 +550,44 @@ public class Activity_model extends AbstractModel {
 
         return false;
     }
+    
+    /**
+     * Delete all prerequisites for an activity
+     *
+     * @param activityId
+     * @return true if successful, false otherwise.
+     */
+    public boolean deleteAllRelationshipsForAnActivity(int activityId) {
+        // Open
+        this.open();
+
+        // Query
+        sql = "DELETE FROM activity_relation WHERE activity_id = ? OR prereq_activity_id = ?";
+
+        try {
+
+            // Prepare
+            this.prepareStatement();
+
+            // Data
+            ps.setInt(1, activityId);
+            ps.setInt(2, activityId);
+
+            // Run
+            affectedRows = ps.executeUpdate();
+
+            // Check if deleted
+            return true;
+
+            // Error
+        } catch (SQLException e) {
+            LOGGER.error("Could not delete relationshipts for activity --- detailed info: " + e.getMessage());
+
+            // Close
+        } finally {
+            this.close();
+        }
+
+        return false;
+    }
 }

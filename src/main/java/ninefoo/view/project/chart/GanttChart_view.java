@@ -118,6 +118,14 @@ public class GanttChart_view extends JPanel {
 
         panel.repaint();
     }
+    
+    /**
+     * Clear gantt chart
+     */
+    public void clear(){
+    	this.activities = new ArrayList<>();
+    	panel.repaint();
+    }
 
     /**
      * Get Minimum Date

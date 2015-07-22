@@ -1,8 +1,5 @@
 package ninefoo.lib.component;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ninefoo.lib.lang.LanguageText;
 
 import javax.swing.*;
@@ -12,9 +9,9 @@ import javax.swing.*;
  */
 public class PMMenuItem extends JMenuItem implements Refreshable{
 
-	//static List<PMMenuItem> menuItemList = new ArrayList<PMMenuItem>(); 
+	private static final long serialVersionUID = 6683646410309115224L;
 	
-    private String key;
+	private String key;
 
     public PMMenuItem(String key) {
         super(LanguageText.getConstant(key));

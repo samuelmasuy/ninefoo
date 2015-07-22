@@ -11,6 +11,7 @@ import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.validationForm.ValidationForm;
 import ninefoo.lib.validationForm.ValidationRule;
 import ninefoo.model.object.Activity;
+import ninefoo.model.object.Member;
 import ninefoo.model.object.Project;
 import ninefoo.model.object.Role;
 import ninefoo.model.sql.*;
@@ -283,6 +284,22 @@ public class Project_controller extends AbstractController implements ProjectLis
         // If delete successful
         if (project_model.deleteProject(project)) {
 
+        	// Delete all activities related
+        	List<Activity> activities = activity_model.getActivitiesByProject(project);
+        	
+        	// Delete activities
+        	for(Activity activity : activities) {
+        		activity_model.deleteActivityById(activity.getActivityId());
+        		activity_model.deleteAllRelationshipsForAnActivity(activity.getActivityId());
+        	}
+        	
+        	// Delete membered assigned to those projects
+        	List<Member> members = member_model.getAllMembersForAProject(project.getProjectId());
+        	
+        	// Delete members
+        	for(Member member : members)
+        		projectMember_model.removeMemberFromProject(member.getMemberId(), project.getProjectId());
+        	
             // Get role
             Role role = role_model.getRoleByName(RoleNames.MANAGER);
 

@@ -237,4 +237,42 @@ public class ProjectMember_model extends AbstractModel {
 
         return false;
     }
+    
+    /**
+     * Remove member from a project
+     * @param memberId
+     * @param projectId
+     * @return boolean
+     */
+    public boolean removeMemberFromProject(int memberId, int projectId) {
+
+        // Open
+        this.open();
+
+        // Query
+        sql = "DELETE FROM project_member WHERE member_id = ? AND project_id = ?";
+
+        try {
+
+            // Prepare
+            this.prepareStatement();
+
+            // Set data
+            ps.setInt(1, memberId);
+            ps.setInt(2, projectId);
+
+            // Run
+            affectedRows = ps.executeUpdate();
+
+            // Get single
+            return affectedRows == 1;
+
+        } catch (SQLException e) {
+            LOGGER.error("Error occured: " + e.getMessage());
+        } finally {
+            this.close();
+        }
+
+        return false;
+    }
 }

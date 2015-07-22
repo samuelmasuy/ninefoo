@@ -550,6 +550,9 @@ public class Activity_controller extends AbstractController implements ActivityL
 		// If delete successful
 		if(activity_model.deleteActivityById(activityId)){
 			
+			// Delete all relationship
+			activity_model.deleteAllRelationshipsForAnActivity(activityId);
+			
 			// Load project
 			Project project = project_model.getProjectById(Session.getInstance().getProjectId());
 			

@@ -103,6 +103,8 @@ public class TableChartSlider_view extends JPanel {
 
         if (project != null)
             this.chartPanel.populateGanttChart(project.getAcitivies());
+        else
+        	this.chartPanel.clear();
     }
 
     /**

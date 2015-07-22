@@ -1,8 +1,5 @@
 package ninefoo.lib.component;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ninefoo.lib.lang.LanguageText;
 
 import javax.swing.*;
@@ -14,8 +11,6 @@ public class PMButton extends JButton implements Refreshable{
 
     private static final long serialVersionUID = 2967182422525479036L;
 
-	//static List<PMButton> buttonList = new ArrayList<PMButton>(); 
-	
     private String key;
     private String toolTipKey;
 
@@ -56,8 +51,8 @@ public class PMButton extends JButton implements Refreshable{
 	}
 	
 	public void refresh(){
-		this.setText(LanguageText.getConstant(key));
-		this.setToolTipText(LanguageText.getConstant(toolTipKey));
+		this.setText(key);
+		this.setToolTipText(toolTipKey);
     }
 
 }

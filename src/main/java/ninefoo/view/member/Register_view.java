@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -134,7 +135,7 @@ public class Register_view extends FormPanel{
 		int logoHeight = 5;
 		row += logoHeight;
 		LayoutHelper.gcGrid(gc, row++, 0, 2);
-		fixedPanel.add(new PMLabel(new ImageIcon(getClass().getResource("/images/register_user.png"))), gc);
+		fixedPanel.add(new JLabel(new ImageIcon(getClass().getResource("/images/register_user.png"))), gc);
 		
 		LayoutHelper.gcGrid(gc, row, 0, 1);
 		fixedPanel.add(new PMLabel("FIRST_NAME", true), gc);

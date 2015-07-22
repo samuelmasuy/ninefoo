@@ -9,6 +9,7 @@ import ninefoo.view.member.listeners.LoginListener;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -118,7 +119,7 @@ public class Login_view extends FormPanel {
 		int logoHeight = 5;
 		row += logoHeight;
         LayoutHelper.gcGrid(gc, row++, 0, 2);
-        fixedPanel.add(new PMLabel(new ImageIcon(getClass().getResource("/images/login_user.png"))), gc);
+        fixedPanel.add(new JLabel(new ImageIcon(getClass().getResource("/images/login_user.png"))), gc);
 
         LayoutHelper.gcGrid(gc, row, 0, 1);
 		fixedPanel.add(new PMLabel("USERNAME", true), gc);
