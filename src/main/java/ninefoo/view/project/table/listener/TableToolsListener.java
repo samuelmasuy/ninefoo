@@ -3,6 +3,7 @@ package ninefoo.view.project.table.listener;
 import ninefoo.model.object.Activity;
 import ninefoo.view.project.table.dialog.CreateActivityDialog;
 import ninefoo.view.project.table.dialog.EditActivityDialog;
+import ninefoo.view.project.table.dialog.ViewActivityDetailsDialog;
 
 import javax.swing.*;
 
@@ -27,6 +28,8 @@ public interface TableToolsListener {
 
     public void loadActivity(EditActivityDialog dialog, int activityId);
 
+    public void loadActivityForViewDetails(ViewActivityDetailsDialog dialog, int activityId);
+    
     // Edit
     public void updateActivity(EditActivityDialog dialog, int activityId, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, int[] prerequisitesId);
 

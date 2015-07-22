@@ -224,7 +224,7 @@ public class CreateActivityDialog extends CenterScrollSouthButtonDialog {
         this.southPanel.add(this.createButton);
 
         // Configure dialog
-        this.setSize(new Dimension(360, 500));
+        this.setSize(new Dimension(400, 500));
         this.setLocationRelativeTo(parentFrame);
         this.setResizable(false);
         this.setVisible(true);

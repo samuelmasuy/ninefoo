@@ -395,6 +395,18 @@ public class MainView extends JFrame implements UpdatableView {
                 if (activityListener != null)
                     activityListener.loadActivity(activityId);
             }
+
+			@Override
+			public void loadActivityForViewDetails(ViewActivityDetailsDialog dialog, int activityId) {
+				
+				// Store dialog
+				viewActivityDetailsDialog = dialog;
+				
+				// Pass to controller
+				if(activityListener != null)
+					activityListener.loadActivity(activityId);;
+				
+			}
         });
 
         // Configure the JFrame
@@ -1083,6 +1095,25 @@ public class MainView extends JFrame implements UpdatableView {
 
             // Reset pointer
             editActivityDialog = null;
+        
+        // If view details dialog opened
+        } else {
+        	
+        	// If success
+        	if(success) {
+        		
+        		// Populate
+        		viewActivityDetailsDialog.populateActivityData(activity);
+        		
+        	// If fails
+        	} else {
+        		
+        		// Display error
+        		viewActivityDetailsDialog.setErrorMessage(message);
+        	}
+        	
+        	// Reset pointer
+        	viewActivityDetailsDialog = null;
         }
     }
 }

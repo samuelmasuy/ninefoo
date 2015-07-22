@@ -53,7 +53,7 @@ public class Activity_controller extends AbstractController implements ActivityL
      */
     @Override
     @FinalVersion(version = "1.0")
-    public void createActivity(String activityLabel, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, final int memberId, final int[] prerequisitesId) {
+    public void createActivity(String activityLabel, String description, String duration, String optimistic, String likely, String pessimistic, String cost, final String startDate, String finishDate, final int memberId, final int[] prerequisitesId) {
 
         /**
          * This validation form should be same for editActivity().
@@ -113,6 +113,21 @@ public class Activity_controller extends AbstractController implements ActivityL
                     setErrorMessage(LanguageText.getConstant("MULTIPLE_DEPENDENT_ACTIVITY"));
                     return false;
                 }
+                
+                // Check if the dependent date make sense
+                for(int i=0; i < prerequisitesId.length; i++){
+                	
+                	// Load activity
+                	Activity _activity = activity_model.getActivityById(prerequisitesId[i]);
+                	
+                	// Run the date test
+                	if(_activity.getFinishDate().after(DateHelper.parse(startDate, Config.DATE_FORMAT_SHORT))){
+                		
+                		setErrorMessage("A dependent activity cannot finish after the start date of this activity");
+                		return false;
+                	}
+                }
+                
                 return true;
             }
         };
@@ -225,7 +240,7 @@ public class Activity_controller extends AbstractController implements ActivityL
      */
     @Override
     @FinalVersion(version="1.0")
-    public void editActivity(final int activityId, String activityLabel, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, final int memberId, final int[] prerequisitesId) {
+    public void editActivity(final int activityId, String activityLabel, String description, String duration, String optimistic, String likely, String pessimistic, String cost, final String startDate, String finishDate, final int memberId, final int[] prerequisitesId) {
 
         /**
          * This validation form should be same for createActivity().
@@ -292,7 +307,22 @@ public class Activity_controller extends AbstractController implements ActivityL
                     setErrorMessage(LanguageText.getConstant("MULTIPLE_DEPENDENT_ACTIVITY"));
                     return false;
                 }
+                
+                // Check if the dependent date make sense
+                for(int i=0; i < prerequisitesId.length; i++){
+                	
+                	// Load activity
+                	Activity _activity = activity_model.getActivityById(prerequisitesId[i]);
+                	
+                	// Run the date test
+                	if(_activity.getFinishDate().after(DateHelper.parse(startDate, Config.DATE_FORMAT_SHORT))){
+                		
+                		setErrorMessage("A dependent activity cannot finish after the start date of this activity");
+                		return false;
+                	}
+                }
 
+                // TODO Might not be needed because the previous test is verifying the date.
                 // Detect cycle
                 if (prerequisitesId.length > 0) {
 

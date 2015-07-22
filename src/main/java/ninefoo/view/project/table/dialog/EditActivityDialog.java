@@ -224,7 +224,7 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
         this.southPanel.add(this.updateButton);
 
         // Configure dialog
-        this.setSize(new Dimension(360, 500));
+        this.setSize(new Dimension(400, 500));
         this.setLocationRelativeTo(parentFrame);
         this.setResizable(false);
         this.setVisible(true);

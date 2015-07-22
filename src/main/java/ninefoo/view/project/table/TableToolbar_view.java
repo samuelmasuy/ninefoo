@@ -126,7 +126,7 @@ public class TableToolbar_view extends JPanel {
 
                     // If activity selected
                 } else {
-                    new ViewActivityDetailsDialog(parentFrame, tableToolsListener);
+                    new ViewActivityDetailsDialog(parentFrame, tableToolsListener, toolbarListener.getSelectedActivity());
                 }
             }
         });

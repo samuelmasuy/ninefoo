@@ -27,41 +27,47 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
 
     // Define components
     private PMButton closeButton;
-    private PMLabel activityLabelInfo;
-    private JTextArea descriptionInfo;
-    private PMLabel durationInfo;
-    private PMLabel optimisticDurationInfo;
-    private PMLabel likelyDurationInfo;
-    private PMLabel pessimisticDurationInfo;
-    private PMLabel costInfo;
-    private PMLabel startDateInfo;
-    private PMLabel finishDateInfo;
+    private JLabel activityLabelInfo;
+    private JLabel descriptionInfo;
+    private JLabel durationInfo;
+    private JLabel optimisticDurationInfo;
+    private JLabel likelyDurationInfo;
+    private JLabel pessimisticDurationInfo;
+    private JLabel costInfo;
+    private JLabel startDateInfo;
+    private JLabel finishDateInfo;
     private ArrayList<Activity> activities_data;
-    private PMLabel memberInfo;
+    private JLabel memberInfo;
     private ArrayList<PMLabel> prerequisiteList;
-
-
+    private JScrollPane descScroll;
+    
     /**
      * Constructor
      */
-    public ViewActivityDetailsDialog(JFrame parentFrame, final TableToolsListener tableToolsListener) {
+    public ViewActivityDetailsDialog(JFrame parentFrame, final TableToolsListener tableToolsListener, Activity activity) {
 
         // Initialize components
         this.closeButton = new PMButton("CLOSE");
-        this.activityLabelInfo = new PMLabel();
-        this.descriptionInfo = new JTextArea();
-        this.durationInfo = new PMLabel();
-        this.optimisticDurationInfo = new PMLabel();
-        this.likelyDurationInfo = new PMLabel();
-        this.pessimisticDurationInfo = new PMLabel();
-        this.costInfo = new PMLabel();
-        this.startDateInfo = new PMLabel();
-        this.finishDateInfo = new PMLabel();
-        this.memberInfo = new PMLabel();
+        this.activityLabelInfo = new JLabel();
+        this.descriptionInfo = new JLabel();
+        this.durationInfo = new JLabel();
+        this.optimisticDurationInfo = new JLabel();
+        this.likelyDurationInfo = new JLabel();
+        this.pessimisticDurationInfo = new JLabel();
+        this.costInfo = new JLabel();
+        this.startDateInfo = new JLabel();
+        this.finishDateInfo = new JLabel();
+        this.memberInfo = new JLabel();
         this.prerequisiteList = new ArrayList<PMLabel>();
-
+        this.descScroll = new JScrollPane(descriptionInfo);
+        descScroll.setPreferredSize(new Dimension(100,100));
+        
+        // Set title
         this.setTitle(LanguageText.getConstant("VIEW_ACTIVITY_DETAILS_ACT"));
 
+        // Load activity
+        tableToolsListener.loadActivityForViewDetails(this, activity.getActivityId());
+        
         // Add button listener
         this.closeButton.addActionListener(new ActionListener() {
 
@@ -89,10 +95,6 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
                 // Add components
                 this.table.put(new PMLabel("NAME"));
                 this.table.put(activityLabelInfo);
-
-                this.table.newRow();
-                this.table.put(new PMLabel("DESCRIPTION"));
-                this.table.put(new JScrollPane(descriptionInfo));
 
                 this.table.newRow();
                 this.table.put(new PMLabel("DURATION_ACT"));
@@ -126,6 +128,10 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
                 this.table.put(new PMLabel("MEMBER_ACT"));
                 this.table.put(memberInfo);
 
+                this.table.newRow();
+                this.table.put(new PMLabel("DESCRIPTION"));
+                this.table.put(descScroll);
+
 
                 for (int i = 0; i < prerequisiteList.size(); i++) {
                     this.table.newRow();
@@ -154,7 +160,7 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
     /**
      * Populate activity data
      */
-    private void populateActivityData(Activity activity) {
+    public void populateActivityData(Activity activity) {
         this.activityLabelInfo.setText(String.format("<html><div>%s</div></html>", activity.getActivityLabel()));
         this.descriptionInfo.setText(activity.getDescription());
         this.durationInfo.setText(activity.getDuration() + "");
@@ -164,7 +170,7 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
         this.costInfo.setText(activity.getCost() + "");
         this.startDateInfo.setText(DateHelper.format(activity.getStartDate(), Config.DATE_FORMAT_SHORT));
         this.finishDateInfo.setText(DateHelper.format(activity.getFinishDate(), Config.DATE_FORMAT_SHORT));
-        this.memberInfo.setText(activity.getMember() + "");
+        this.memberInfo.setText(activity.getMember().getFirstName() + " " + activity.getMember().getLastName());
 
         List<Activity> prerequisites = activity.getPrerequisites();
 
