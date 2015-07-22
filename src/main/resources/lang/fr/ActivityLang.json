@@ -31,6 +31,8 @@
     "REMOVE_ACT": "Supprimer",
     "REMOVE_THE_ACTIVITY_ACT": "Supprimer l'activite du projet",
     "VIEW_DETAILS_ACT": "Voir details",
-    "VIEW_ACTIVITY_DETAILS_ACT": "Voir les details de l'activite"
+    "VIEW_ACTIVITY_DETAILS_ACT": "Voir les details de l'activite",
+    "NO_ACTIVITIES_FOUND_ACT" : "Aucun activite trouve"
+
   }
 }
