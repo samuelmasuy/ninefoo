@@ -309,7 +309,7 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
         this.optimisticDuration.setText(String.valueOf(activity.getOptimisticDuration()));
         this.likelyDuration.setText(String.valueOf(activity.getLikelyDuration()));
         this.pessimisticDuration.setText(String.valueOf(activity.getPessimisticDuration()));
-        this.cost.setText(String.valueOf(activity.getCost()));
+        this.cost.setText(String.valueOf(activity.getPlannedCost()));
         this.startDate.setDate(activity.getStartDate());
         this.finishDate.setDate(activity.getFinishDate());
         this.memberBox.getTextComponent().setText(activity.getMember().getUsername());

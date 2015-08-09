@@ -167,7 +167,7 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
         this.optimisticDurationInfo.setText(activity.getOptimisticDuration() + "");
         this.likelyDurationInfo.setText(activity.getLikelyDuration() + "");
         this.pessimisticDurationInfo.setText(activity.getPessimisticDuration() + "");
-        this.costInfo.setText(activity.getCost() + "");
+        this.costInfo.setText(activity.getPlannedCost() + "");
         this.startDateInfo.setText(DateHelper.format(activity.getStartDate(), Config.DATE_FORMAT_SHORT));
         this.finishDateInfo.setText(DateHelper.format(activity.getFinishDate(), Config.DATE_FORMAT_SHORT));
         this.memberInfo.setText(activity.getMember().getFirstName() + " " + activity.getMember().getLastName());

@@ -58,7 +58,7 @@ public class Activity_model extends AbstractModel {
             ps.setInt(8, activity.getMember().getMemberId());
             ps.setString(9, DateHelper.format(activity.getStartDate(), Config.DATE_FORMAT));
             ps.setString(10, DateHelper.format(activity.getFinishDate(), Config.DATE_FORMAT));
-            ps.setDouble(11, activity.getCost());
+            ps.setDouble(11, activity.getPlannedCost());
 
             // Run
             affectedRows = ps.executeUpdate();
@@ -392,7 +392,7 @@ public class Activity_model extends AbstractModel {
             ps.setInt(8, activity.getProject().getProjectId());
             ps.setString(9, DateHelper.format(activity.getStartDate(), Config.DATE_FORMAT));
             ps.setString(10, DateHelper.format(activity.getFinishDate(), Config.DATE_FORMAT));
-            ps.setDouble(11, activity.getCost());
+            ps.setDouble(11, activity.getPlannedCost());
             ps.setInt(12, activity.getMember().getMemberId());
             ps.setInt(13, activityId);
 
