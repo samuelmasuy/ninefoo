@@ -60,6 +60,11 @@ public class TableChartSlider_view extends JPanel {
     public void setProject(Project project) {
         this.project = project;
         this.tableContainer.setProject(project);
+        
+        if(project != null)
+        	this.chartPanel.populateGanttChart(project.getAcitivies());
+        else 
+        	this.chartPanel.populateGanttChart(null);
     }
 
     /**
@@ -96,6 +101,7 @@ public class TableChartSlider_view extends JPanel {
      */
     public void reset() {
         this.tableContainer.resetTable();
+        this.chartPanel.populateGanttChart(null);
     }
 
     public void refresh() {
