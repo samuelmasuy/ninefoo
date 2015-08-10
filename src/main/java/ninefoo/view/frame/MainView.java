@@ -65,7 +65,8 @@ public class MainView extends JFrame implements UpdatableView {
     private CreateActivityDialog createActivityDialog;
     private EditActivityDialog editActivityDialog;
     private ViewActivityDetailsDialog viewActivityDetailsDialog;
-
+    private EarnedValueAnalysisDialog earnedValueAnalysisDialog;
+    
     // Define variables
     private JPanel currentCenterPanel;
 
@@ -311,6 +312,17 @@ public class MainView extends JFrame implements UpdatableView {
 				if(projectListener != null)
 					projectListener.removeMemberFromProject(memberId, projectId);
 			}
+
+			@Override
+			public void loadEarnedValueData(EarnedValueAnalysisDialog dialog, int projectId) {
+				
+				// Store dialog
+				earnedValueAnalysisDialog = dialog;
+				
+				// Pass to contructor
+				if(projectListener != null)
+					projectListener.loadEarnedValueData(projectId);
+			}
         });
 
         // Add listener to table chart slider
@@ -363,9 +375,7 @@ public class MainView extends JFrame implements UpdatableView {
 
                 // Pass to controller
                 if (activityListener != null)
-                	System.out.println("what the.....");
                     activityListener.editActivity(activityId, name, description, duration, optimistic, likely, pessimistic, cost, startDate, finishDate, memberId, prerequisitesId, actualCost, actualPercent);
-                    System.out.println("FUCKKKKK!");
             }
 
             @Override
@@ -1156,5 +1166,29 @@ public class MainView extends JFrame implements UpdatableView {
         }
     }
 
-	
+	@Override
+	public void updateLoadEarnedValueData(boolean success, String message, Project project) {
+		
+		// If dialog exist
+		if(earnedValueAnalysisDialog != null) {
+			
+			if(success) {
+				
+				// Populate
+				earnedValueAnalysisDialog.populateEarnedValueData(project);
+				
+			} else {
+				
+				// Error
+				earnedValueAnalysisDialog.setErrorMessage(message);
+				
+				// Close
+				earnedValueAnalysisDialog.dispose();
+			}
+			
+			// Reset
+			earnedValueAnalysisDialog = null;
+		}
+		
+	}
 }

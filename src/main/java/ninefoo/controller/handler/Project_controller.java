@@ -344,4 +344,13 @@ public class Project_controller extends AbstractController implements ProjectLis
 		}
 		
 	}
+
+	@Override
+	public void loadEarnedValueData(int projectId) {
+		
+		// TODO: Do the calculation
+		Project project = project_model.getProjectById(projectId);
+		
+		this.view.updateLoadEarnedValueData(true, null, project);
+	}
 }
