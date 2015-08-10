@@ -146,18 +146,22 @@ public abstract class AbstractModel {
             Date finishDate = DateHelper.parse(activities.getString("finish_date"), Config.DATE_FORMAT);
             int projectId = activities.getInt("project_id");
             int memberId = activities.getInt("member_id");
-            double cost = activities.getDouble("planned_cost");
+            double planned_cost = activities.getDouble("planned_cost");
+            double actual_cost = activities.getDouble("actual_cost");
+            int actual_percentage = activities.getInt("actual_percentage");
             Project project = null;
             Member member = null;
 
             activity = new Activity(activityId, activityLabel, description, duration,
                     optimisticDuration, likelyDuration, pessimisticDuration,
                     createDate, project, member, null);
-            activity.setCost(cost);
+            activity.setCost(planned_cost);
             activity.setStartDate(startDate);
             activity.setFinishDate(finishDate);
             activity.setProjectId(projectId);
             activity.setMemberId(memberId);
+            activity.setActualCost(actual_cost);
+            activity.setActualPercentage(actual_percentage);
         } catch (SQLException e) {
             LOGGER.error("Could not get next activity from db --- detailed info: " + e.getMessage());
         }
