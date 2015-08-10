@@ -175,6 +175,10 @@ public class Activity_controller extends AbstractController implements ActivityL
 
             // Set member
             activity.setMember(member);
+            
+            // Set actual cost and actual percentage to default 0
+            activity.setActualCost(0);
+            activity.setActualPercentage(0);
 
             // add a new activity to the activity model
             // if insert failed
@@ -254,7 +258,10 @@ public class Activity_controller extends AbstractController implements ActivityL
         ValidationRule activityStartDateRule = new ValidationRule(LanguageText.getConstant("START_ACT"), startDate);
         ValidationRule activityFinishDateRule = new ValidationRule(LanguageText.getConstant("FINISH_ACT"), finishDate);
         ValidationRule activityCostRule = new ValidationRule(LanguageText.getConstant("COST_ACT"), cost);
-
+        ValidationRule activityActualCostRule = new ValidationRule(LanguageText.getConstant("ACTUAL_COST_ACT"), actualCost);
+        ValidationRule activityActualPercentageRule = new ValidationRule(LanguageText.getConstant("ACTUAL_PERCENTAGE_ACT"), actualPercentage);
+        
+        
         // set restrictions for those rules
         activityLabelRule.doTrim().checkEmpty().checkMaxLength(Config.MAX_TITLE_LENGTH);
         activityDescriptionRule.checkMaxLength(Config.MAX_DESCRIPTION_LENGTH);
@@ -264,6 +271,8 @@ public class Activity_controller extends AbstractController implements ActivityL
         activityStartDateRule.checkEmpty().checkDateBefore(finishDate);
         activityFinishDateRule.checkEmpty();
         activityCostRule.checkDouble().checkMaxNumValue(Config.MAX_MONEY_AMOUNT).checkMinNumValue(0);
+        activityActualCostRule.checkDouble().checkMaxNumValue(Config.MAX_MONEY_AMOUNT).checkMinNumValue(0);
+        activityActualPercentageRule.checkMaxNumValue(100).checkMinNumValue(0);
 
         // Custom rule for member
         ValidationRule activityMemberRule = new ValidationRule(LanguageText.getConstant("MEMBER_ACT"), String.valueOf(memberId)) {
@@ -377,7 +386,9 @@ public class Activity_controller extends AbstractController implements ActivityL
         activityValidation.setRule(activityCostRule);
         activityValidation.setRule(activityMemberRule);
         activityValidation.setRule(activityPrerequisitesRule);
-
+        activityValidation.setRule(activityActualCostRule);
+        activityValidation.setRule(activityActualPercentageRule);
+        
         // if all the parameters passed respect the restrictions, add a new
         // activity object in this if statement
         if (activityValidation.validate()) {
@@ -387,6 +398,8 @@ public class Activity_controller extends AbstractController implements ActivityL
             Member member = this.member_model.getMemberById(memberId);
 
             // Fix values
+            int intActualPercentage = StringHelper.zeroOrInteger(actualPercentage);
+            double doubleActualCost = StringHelper.zeroOrDouble(actualCost);
             double doubleCost = StringHelper.zeroOrDouble(cost);
             int intDuration = StringHelper.zeroOrInteger(duration);
             int intOptimistic = StringHelper.zeroOrInteger(optimistic);
@@ -394,6 +407,7 @@ public class Activity_controller extends AbstractController implements ActivityL
             int intPessimistic = StringHelper.zeroOrInteger(pessimistic);
             Date DateStartDate = DateHelper.parse(startDate, Config.DATE_FORMAT_SHORT);
             Date DateFinishDate = DateHelper.parse(finishDate, Config.DATE_FORMAT_SHORT);
+          
 
             // Get the project
             Project project = this.project_model.getProjectById(Session.getInstance().getProjectId());
@@ -410,6 +424,11 @@ public class Activity_controller extends AbstractController implements ActivityL
             // Set member
             activity.setMember(member);
 
+            // Set actual cost and actual percentage
+            activity.setActualCost(doubleActualCost);
+            activity.setActualPercentage(intActualPercentage);
+            
+            
             // if update failed
             if (!this.activity_model.updateActivity(activity)) {
 

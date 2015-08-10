@@ -21,6 +21,8 @@
     "LIKELY_ACT": "Likely",
     "PESSIMISTIC_ACT": "Pessimistic",
     "COST_ACT": "Cost",
+    "ACTUAL_COST_ACT" : "Actual cost",
+    "ACTUAL_PERCENTAGE_ACT" : "Actual %",
     "MEMBER_ACT": "Member",
     "PREREQ_ACT": "Prereq.",
     "ADD_DEPENDENCY_ACT": "Add dependency",
