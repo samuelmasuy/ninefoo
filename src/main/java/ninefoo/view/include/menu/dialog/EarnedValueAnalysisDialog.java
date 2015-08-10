@@ -1,14 +1,12 @@
 package ninefoo.view.include.menu.dialog;
 
-import ninefoo.config.Config;
-import ninefoo.helper.ActivityHelper;
-import ninefoo.helper.DateHelper;
+import ninefoo.config.Session;
 import ninefoo.lib.component.PMButton;
 import ninefoo.lib.component.PMLabel;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.layout.dialog.CenterScrollSouthButtonDialog;
 import ninefoo.lib.layout.dialog.FormDialog;
-import ninefoo.model.object.Activity;
+import ninefoo.model.object.Project;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
 import javax.swing.*;
@@ -16,8 +14,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Dialog for displaying earned value analysis
@@ -26,21 +22,21 @@ import java.util.List;
  */
 public class EarnedValueAnalysisDialog extends CenterScrollSouthButtonDialog {
 
-    // Define components
+	private static final long serialVersionUID = 238786251669316509L;
+
+	// Define components
     private PMButton closeButton;
-    private JLabel activityLabelInfo;
-    private JLabel descriptionInfo;
-    private JLabel durationInfo;
-    private JLabel optimisticDurationInfo;
-    private JLabel likelyDurationInfo;
-    private JLabel pessimisticDurationInfo;
-    private JLabel costInfo;
-    private JLabel startDateInfo;
-    private JLabel finishDateInfo;
-    private ArrayList<Activity> activities_data;
-    private JLabel memberInfo;
-    private ArrayList<PMLabel> prerequisiteList;
-    private JScrollPane descScroll;
+    private JLabel projectLabel;
+    private JLabel totalCost;
+    private JLabel totalPV;
+    private JLabel totalAC;
+    private JLabel totalEV;
+    private JLabel costVariance;
+    private JLabel scheduleVariance;
+    private JLabel cpi;
+    private JLabel spi;
+    private JLabel EAC;
+    private JLabel ETC;
     
     /**
      * Constructor
@@ -49,23 +45,24 @@ public class EarnedValueAnalysisDialog extends CenterScrollSouthButtonDialog {
 
         // Initialize components
         this.closeButton = new PMButton("CLOSE");
-        this.activityLabelInfo = new JLabel();
-        this.descriptionInfo = new JLabel();
-        this.durationInfo = new JLabel();
-        this.optimisticDurationInfo = new JLabel();
-        this.likelyDurationInfo = new JLabel();
-        this.pessimisticDurationInfo = new JLabel();
-        this.costInfo = new JLabel();
-        this.startDateInfo = new JLabel();
-        this.finishDateInfo = new JLabel();
-        this.memberInfo = new JLabel();
-        this.prerequisiteList = new ArrayList<PMLabel>();
-        this.descScroll = new JScrollPane(descriptionInfo);
-        descScroll.setPreferredSize(new Dimension(100,100));
+        this.projectLabel = new JLabel();
+        this.totalCost = new JLabel();
+        this.totalPV = new JLabel();
+        this.totalAC = new JLabel();
+        this.totalEV = new JLabel();
+        this.costVariance = new JLabel();
+        this.scheduleVariance = new JLabel();
+        this.cpi = new JLabel();
+        this.spi = new JLabel();
+        this.EAC = new JLabel();
+        this.ETC = new JLabel();
         
         // Set title
         this.setTitle(LanguageText.getConstant("EARNED_VALUE_ANALYSIS"));
 
+        // Load fields
+        toolsListener.loadEarnedValueData(this, Session.getInstance().getProjectId());;
+        
         // Add button listener
         this.closeButton.addActionListener(new ActionListener() {
 
@@ -89,57 +86,49 @@ public class EarnedValueAnalysisDialog extends CenterScrollSouthButtonDialog {
                 closeButton.setBorder(BorderFactory.createCompoundBorder(closeButton.getBorder(), inputPadding));
 
                 // Add components
-                this.table.put(new PMLabel("NAME"));
-                this.table.put(activityLabelInfo);
+                this.table.put(new PMLabel("PROJECT"));
+                this.table.put(projectLabel);
 
                 this.table.newRow();
-                this.table.put(new PMLabel("DURATION_ACT"));
-                this.table.put(durationInfo);
+                this.table.put(new PMLabel("COST"));
+                this.table.put(totalCost);
 
                 this.table.newRow();
-                this.table.put(new PMLabel("OPTIMISTIC_ACT"));
-                this.table.put(optimisticDurationInfo);
+                this.table.put(new PMLabel("PV"));
+                this.table.put(totalPV);
 
                 this.table.newRow();
-                this.table.put(new PMLabel("LIKELY_ACT"));
-                this.table.put(likelyDurationInfo);
+                this.table.put(new PMLabel("AC"));
+                this.table.put(totalAC);
 
                 this.table.newRow();
-                this.table.put(new PMLabel("PESSIMISTIC_ACT"));
-                this.table.put(pessimisticDurationInfo);
+                this.table.put(new PMLabel("EV"));
+                this.table.put(totalEV);
 
                 this.table.newRow();
-                this.table.put(new PMLabel("COST_ACT"));
-                this.table.put(costInfo);
+                this.table.put(new PMLabel("COST_VARIANCE"));
+                this.table.put(costVariance);
 
                 this.table.newRow();
-                this.table.put(new PMLabel("START_ACT"));
-                this.table.put(startDateInfo);
+                this.table.put(new PMLabel("SCHEDULE_VARIANCE"));
+                this.table.put(scheduleVariance);
 
                 this.table.newRow();
-                this.table.put(new PMLabel("FINISH_ACT"));
-                this.table.put(finishDateInfo);
+                this.table.put(new PMLabel("CPI"));
+                this.table.put(cpi);
 
                 this.table.newRow();
-                this.table.put(new PMLabel("MEMBER_ACT"));
-                this.table.put(memberInfo);
+                this.table.put(new PMLabel("SPI"));
+                this.table.put(spi);
 
                 this.table.newRow();
-                this.table.put(new PMLabel("DESCRIPTION"));
-                this.table.put(descScroll);
+                this.table.put(new PMLabel("EAC"));
+                this.table.put(EAC);
+                
+                this.table.newRow();
+                this.table.put(new PMLabel("ETC"));
+                this.table.put(ETC);
 
-
-                for (int i = 0; i < prerequisiteList.size(); i++) {
-                    this.table.newRow();
-
-                    if (i == 0) {
-                        this.table.placeCenterTop();
-                        this.table.put(new PMLabel("PREREQ_ACT"));
-                    } else {
-                        this.table.getGridBagConstraints().gridx++;
-                    }
-                    this.table.put(prerequisiteList.get(i));
-                }
             }
         });
 
@@ -156,22 +145,18 @@ public class EarnedValueAnalysisDialog extends CenterScrollSouthButtonDialog {
     /**
      * Populate activity data
      */
-    public void populateActivityData(Activity activity) {
-        this.activityLabelInfo.setText(String.format("<html><div>%s</div></html>", activity.getActivityLabel()));
-        this.descriptionInfo.setText(activity.getDescription());
-        this.durationInfo.setText(activity.getDuration() + "");
-        this.optimisticDurationInfo.setText(activity.getOptimisticDuration() + "");
-        this.likelyDurationInfo.setText(activity.getLikelyDuration() + "");
-        this.pessimisticDurationInfo.setText(activity.getPessimisticDuration() + "");
-        this.costInfo.setText(activity.getPlannedCost() + "");
-        this.startDateInfo.setText(DateHelper.format(activity.getStartDate(), Config.DATE_FORMAT_SHORT));
-        this.finishDateInfo.setText(DateHelper.format(activity.getFinishDate(), Config.DATE_FORMAT_SHORT));
-        this.memberInfo.setText(activity.getMember().getFirstName() + " " + activity.getMember().getLastName());
+    public void populateEarnedValueData(Project project) {
 
-        List<Activity> prerequisites = activity.getPrerequisites();
-
-        for (int i = 0; i < prerequisites.size(); i++) {
-            this.prerequisiteList.get(i).setText(ActivityHelper.getIdAndName(prerequisites.get(i)));
-        }
+    	this.projectLabel.setText(project.getProjectName());
+    	this.totalCost.setText(String.valueOf(project.getTotalCost()));
+    	this.totalPV.setText(String.valueOf(project.getTotalPV()));
+    	this.totalAC.setText(String.valueOf(project.getTotalAC()));
+    	this.totalEV.setText(String.valueOf(project.getTotalEV()));
+    	this.costVariance.setText(String.valueOf(project.getCostVariance()));
+    	this.scheduleVariance.setText(String.valueOf(project.getScheduleVariance()));
+    	this.cpi.setText(String.valueOf(project.getCpi()));
+    	this.spi.setText(String.valueOf(project.getSpi()));
+    	this.EAC.setText(String.valueOf(project.getEAC()));
+    	this.ETC.setText(String.valueOf(project.getETC()));
     }
 }
