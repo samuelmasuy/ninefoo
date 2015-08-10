@@ -1,6 +1,7 @@
 package ninefoo.controller.logic;
 
 import ninefoo.model.object.Activity;
+import ninefoo.model.object.Project;
 
 /**
  * This class will make the needed calculations for earned value 
@@ -10,6 +11,18 @@ import ninefoo.model.object.Activity;
  */
 public class EarnedValueAnalysis 
 {
+	private Project project;
+	
+	public EarnedValueAnalysis()
+	{
+		
+	}
+	
+	public EarnedValueAnalysis(Project project)
+	{
+		this.project = project;
+	}
+	
 	/**
 	 * calculates the expected duration. t = (a + 4m + b) / 6
 	 * @param Activity
