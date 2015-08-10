@@ -1,8 +1,12 @@
 package ninefoo.lib.graph;
 
+import ninefoo.model.object.Activity;
 import org.apache.logging.log4j.LogManager;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 /**
  * Adjacency list graph.
@@ -15,15 +19,19 @@ public class Graph {
     private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 
     // Variables
-    private int[][] graph;
-    private int[] degree;
+    private int[][] graph, graphReversed;
+    private int[] degree, degreeReversed;
     private HashMap<Integer, Integer> idMapper;
     private int index = 0;
+
+
+    private List<Activity> activityCriticalList = new LinkedList<>();
 
     // Constants
     private final int UNVISITED = 0;
     private final int VISITING = 1;
     private final int VISITED = 2;
+    private int[] virtualToRealMapping;
 
     /**
      * Constructor
@@ -34,12 +42,21 @@ public class Graph {
 
         // Store graph connection
         this.graph = new int[size][size - 1];
+        this.graphReversed = new int[size][size - 1];
 
         // Store out going edges
         this.degree = new int[size];
+        this.degreeReversed = new int[size];
 
         // Store virtual id
         this.idMapper = new HashMap<>(size);
+
+        this.virtualToRealMapping = new int[size];
+    }
+
+    public Graph(int size, List<Activity> activityList) {
+        this(size);
+        this.activityCriticalList = activityList;
     }
 
     /**
@@ -51,12 +68,16 @@ public class Graph {
     public void addEdge(int from, int to) {
 
         // If the 'from' id is not in the hash map, add it
-        if (idMapper.get(from) == null)
-            this.idMapper.put(from, this.index++);
+        if (idMapper.get(from) == null) {
+            this.idMapper.put(from, this.index);
+            this.virtualToRealMapping[index++] = from;
+        }
 
         // If the 'to' id is not in the hash map, add it
-        if (idMapper.get(to) == null)
-            this.idMapper.put(to, this.index++);
+        if (idMapper.get(to) == null) {
+            this.idMapper.put(to, this.index);
+            this.virtualToRealMapping[index++] = to;
+        }
 
         // Get virtual id
         int virtualFrom = idMapper.get(from);
@@ -65,15 +86,30 @@ public class Graph {
         try {
 
             // Check if edge already exist
-            for (int i = 0; i < this.degree[virtualFrom]; i++) {
+            boolean found = false;
+            for (int i = 0; i < this.degree[virtualFrom] && !found; i++) {
                 if (this.graph[virtualFrom][i] == virtualTo)
-                    return;
+                    found = true;
             }
 
             // Create edge
-            this.graph[virtualFrom][this.degree[virtualFrom]] = virtualTo;
-            this.degree[virtualFrom]++;
+            if(!found) {
+                this.graph[virtualFrom][this.degree[virtualFrom]] = virtualTo;
+                this.degree[virtualFrom]++;
+            }
 
+            found = false;
+            for (int i = 0; i < this.degreeReversed[virtualTo] && !found; i++) {
+                if (this.graphReversed[virtualTo][i] == virtualFrom)
+                    found = true;
+            }
+
+            // Create edge
+            if(!found) {
+                this.graphReversed[virtualTo][this.degreeReversed[virtualTo]] = virtualFrom;
+                this.degreeReversed[virtualTo]++;
+            }
+            System.out.println(printGraphReversed());
         } catch (IndexOutOfBoundsException e) {
             LOGGER.error(String.format("Cannot add edge: %d -> %d", from, to));
         }
@@ -117,6 +153,59 @@ public class Graph {
         return false;
     }
 
+    public void bfs(boolean forward) {
+        initCriticalPath();
+        Queue<Integer> queue = new LinkedList<>();
+        int[] visited = new int[degree.length];
+
+        visited[0] = VISITING;
+
+        queue.offer(0);
+
+        while (!queue.isEmpty()) {
+            int currentPoll = queue.poll();
+            visited[currentPoll] = VISITED;
+
+            for (int i = 0; i < degree[currentPoll]; i++) {
+                int neighbour = graph[currentPoll][i];
+                setCriticalPath(neighbour, currentPoll, forward);
+                if (visited[neighbour] == UNVISITED) {
+                    queue.offer(neighbour);
+                    visited[neighbour] = VISITING;
+                }
+            }
+        }
+    }
+
+    private void initCriticalPath() {
+        getActivityByVirtualID(0).setEarliestStart(0);
+        getActivityByVirtualID(0).setEarliestFinish(getActivityByVirtualID(0).getDuration());
+    }
+
+    private void setCriticalPath(int neighbour, int current, boolean forward) {
+        // find corresponding activity
+        Activity activityCriticalNeighbor = getActivityByVirtualID(neighbour);
+        Activity activityCriticalCurrent = getActivityByVirtualID(current);
+        // evaluate all previous
+        if (forward) {
+            activityCriticalNeighbor.setEarliestStart(Math.max(activityCriticalNeighbor.getEarliestStart(), activityCriticalCurrent.getEarliestFinish()));
+            activityCriticalNeighbor.setEarliestFinish(activityCriticalNeighbor.getEarliestStart() + activityCriticalNeighbor.getDuration());
+        } else {
+            activityCriticalNeighbor.setLatestFinish(Math.max(activityCriticalNeighbor.getLatestFinish(), activityCriticalCurrent.getEarliestFinish()));
+            activityCriticalNeighbor.setLatestStart(activityCriticalNeighbor.getEarliestStart() + activityCriticalNeighbor.getDuration());
+        }
+    }
+
+    private Activity getActivityByVirtualID(int target) {
+        int realTarget = virtualToRealMapping[target];
+        for (Activity activity: this.activityCriticalList) {
+           if (activity.getActivityId() == realTarget) {
+              return activity;
+           }
+        }
+        return null;
+    }
+
     /**
      * Checks if there's a cycle in the graph. The approach used is Depth First Search.
      *
@@ -157,5 +246,24 @@ public class Graph {
             output += "\n";
         }
         return output;
+    }
+    public String printGraphReversed() {
+        String output = "";
+        for (int row = 0; row < this.graphReversed.length; row++) {
+
+            output += String.format("Node %d\t| Connected to: ", row);
+
+            for (int col = 0; col < this.degreeReversed[row]; col++) {
+                if (col > 0)
+                    output += ", ";
+                output += getActivityByVirtualID(this.graphReversed[row][col]).getActivityId();
+            }
+
+            output += "\n";
+        }
+        return output;
+    }
+    public List<Activity> getActivityCriticalList() {
+        return activityCriticalList;
     }
 }

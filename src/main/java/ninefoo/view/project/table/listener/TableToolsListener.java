@@ -31,7 +31,7 @@ public interface TableToolsListener {
     public void loadActivityForViewDetails(ViewActivityDetailsDialog dialog, int activityId);
     
     // Edit
-    public void updateActivity(EditActivityDialog dialog, int activityId, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, int[] prerequisitesId);
+    public void updateActivity(EditActivityDialog dialog, int activityId, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, int[] prerequisitesId, String actualCost, String actualPercentage);
 
     // Delete
     public void deleteActivity(int activityId);

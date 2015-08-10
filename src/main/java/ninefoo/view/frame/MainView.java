@@ -65,7 +65,8 @@ public class MainView extends JFrame implements UpdatableView {
     private CreateActivityDialog createActivityDialog;
     private EditActivityDialog editActivityDialog;
     private ViewActivityDetailsDialog viewActivityDetailsDialog;
-
+    private EarnedValueAnalysisDialog earnedValueAnalysisDialog;
+    
     // Define variables
     private JPanel currentCenterPanel;
 
@@ -100,10 +101,10 @@ public class MainView extends JFrame implements UpdatableView {
         this.setJMenuBar(menu);
 
         // By default, load login view
-        Session.getInstance().open();
-        Session.getInstance().setUserId(1);
-        this.loadView(tableChartPanel);
-//		this.loadView(loginPanel);
+//        Session.getInstance().open();
+//        Session.getInstance().setUserId(1);
+//        this.loadView(tableChartPanel);
+		this.loadView(loginPanel);
 
         // Add listener to login panel
         this.loginPanel.setLoginListener(new LoginListener() {
@@ -311,6 +312,17 @@ public class MainView extends JFrame implements UpdatableView {
 				if(projectListener != null)
 					projectListener.removeMemberFromProject(memberId, projectId);
 			}
+
+			@Override
+			public void loadEarnedValueData(EarnedValueAnalysisDialog dialog, int projectId) {
+				
+				// Store dialog
+				earnedValueAnalysisDialog = dialog;
+				
+				// Pass to contructor
+				if(projectListener != null)
+					projectListener.loadEarnedValueData(projectId);
+			}
         });
 
         // Add listener to table chart slider
@@ -356,14 +368,14 @@ public class MainView extends JFrame implements UpdatableView {
             }
 
             @Override
-            public void updateActivity(EditActivityDialog dialog, int activityId, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, int[] prerequisitesId) {
+            public void updateActivity(EditActivityDialog dialog, int activityId, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, int[] prerequisitesId, String actualCost, String actualPercent) {
 
                 // Set dialog
                 editActivityDialog = dialog;
 
                 // Pass to controller
                 if (activityListener != null)
-                    activityListener.editActivity(activityId, name, description, duration, optimistic, likely, pessimistic, cost, startDate, finishDate, memberId, prerequisitesId);
+                    activityListener.editActivity(activityId, name, description, duration, optimistic, likely, pessimistic, cost, startDate, finishDate, memberId, prerequisitesId, actualCost, actualPercent);
             }
 
             @Override
@@ -579,6 +591,7 @@ public class MainView extends JFrame implements UpdatableView {
         this.tableChartPanel.reset();
         this.toolsPanel.setNewMemberEnabled(false);
         this.toolsPanel.setAddUserEnabled(false);
+        this.toolsPanel.setEarnedValueAnalysisEnabled(false);
         this.tableChartPanel.setProject(null);
         this.tableChartPanel.setVisibleToolbar(false);
         LOGGER.info("Logout successful");
@@ -608,7 +621,7 @@ public class MainView extends JFrame implements UpdatableView {
     @Override
     public void updateLoadAllMembersForAProject(boolean success, String message, List<Member> users) {
 
-        // If called from create activity dialgo
+        // If called from create activity dialog
         if (createActivityDialog != null) {
 
             // If success
@@ -699,6 +712,7 @@ public class MainView extends JFrame implements UpdatableView {
                 // Enable manager buttons
                 this.toolsPanel.setNewMemberEnabled(true);
                 this.toolsPanel.setAddUserEnabled(true);
+                this.toolsPanel.setEarnedValueAnalysisEnabled(true);
                 this.tableChartPanel.setAddActivityEnabled(true);
 
                 // Enable tool bar below table
@@ -742,6 +756,7 @@ public class MainView extends JFrame implements UpdatableView {
                     // Top tool bar
                     this.toolsPanel.setNewMemberEnabled(true);
                     this.toolsPanel.setAddUserEnabled(true);
+                    this.toolsPanel.setEarnedValueAnalysisEnabled(true);
 
                     // Bottom tool bar
                     this.tableChartPanel.setAddActivityEnabled(true);
@@ -753,6 +768,7 @@ public class MainView extends JFrame implements UpdatableView {
                     // Top tool bar
                     this.toolsPanel.setNewMemberEnabled(false);
                     this.toolsPanel.setAddUserEnabled(false);
+                    this.toolsPanel.setEarnedValueAnalysisEnabled(false);
 
                     // Bottom tool bar
                     this.tableChartPanel.setAddActivityEnabled(false);
@@ -1150,5 +1166,29 @@ public class MainView extends JFrame implements UpdatableView {
         }
     }
 
-	
+	@Override
+	public void updateLoadEarnedValueData(boolean success, String message, Project project) {
+		
+		// If dialog exist
+		if(earnedValueAnalysisDialog != null) {
+			
+			if(success) {
+				
+				// Populate
+				earnedValueAnalysisDialog.populateEarnedValueData(project);
+				
+			} else {
+				
+				// Error
+				earnedValueAnalysisDialog.setErrorMessage(message);
+				
+				// Close
+				earnedValueAnalysisDialog.dispose();
+			}
+			
+			// Reset
+			earnedValueAnalysisDialog = null;
+		}
+		
+	}
 }

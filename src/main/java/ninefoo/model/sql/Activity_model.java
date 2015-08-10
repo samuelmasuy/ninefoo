@@ -40,7 +40,8 @@ public class Activity_model extends AbstractModel {
         // Query
         sql = "INSERT INTO activity(activity_label, description, duration, " +
                 "optimistic_duration, likely_duration, pessimistic_duration, " +
-                "project_id, member_id, start_date, finish_date, cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "project_id, member_id, start_date, finish_date, planned_cost, " +
+                "actual_cost, actual_percentage) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
 
@@ -59,7 +60,9 @@ public class Activity_model extends AbstractModel {
             ps.setString(9, DateHelper.format(activity.getStartDate(), Config.DATE_FORMAT));
             ps.setString(10, DateHelper.format(activity.getFinishDate(), Config.DATE_FORMAT));
             ps.setDouble(11, activity.getPlannedCost());
-
+            ps.setDouble(12, activity.getActualCost());
+            ps.setInt(13, activity.getActualPercentage());
+            
             // Run
             affectedRows = ps.executeUpdate();
 
@@ -160,7 +163,7 @@ public class Activity_model extends AbstractModel {
         List<Activity> prerequisites = new ArrayList<>();
 
         // Query
-        sql = "SELECT ar.prereq_activity_id as activity_id, activity_label, description, duration, optimistic_duration, likely_duration, pessimistic_duration, create_date, update_date, start_date, finish_date, project_id, member_id, cost "
+        sql = "SELECT ar.prereq_activity_id as activity_id, activity_label, description, duration, optimistic_duration, likely_duration, pessimistic_duration, create_date, update_date, start_date, finish_date, project_id, member_id, planned_cost, actual_cost, actual_percentage "
                 + "FROM activity_relation ar, activity a "
                 + "WHERE ar.prereq_activity_id = a.activity_id AND ar.activity_id = ?";
 
@@ -366,14 +369,15 @@ public class Activity_model extends AbstractModel {
 
         // Open
         this.open();
-
+        
+        
         // Query
         sql = "UPDATE activity " +
                 "SET    activity_label = ?, description = ?, " +
                 "       duration = ?, optimistic_duration = ?, likely_duration = ?, " +
                 "       pessimistic_duration = ?, update_date = ?, project_id = ?, " +
-                "		start_date = ?, finish_date = ?, cost = ?," +
-                "		member_id = ? " +
+                "		start_date = ?, finish_date = ?, planned_cost = ?," +
+                "		member_id = ?, actual_cost = ?, actual_percentage = ? " +
                 " 		WHERE activity_id = ?";
 
         try {
@@ -394,7 +398,9 @@ public class Activity_model extends AbstractModel {
             ps.setString(10, DateHelper.format(activity.getFinishDate(), Config.DATE_FORMAT));
             ps.setDouble(11, activity.getPlannedCost());
             ps.setInt(12, activity.getMember().getMemberId());
-            ps.setInt(13, activityId);
+            ps.setDouble(13, activity.getActualCost());
+            ps.setInt(14, activity.getActualPercentage());
+            ps.setInt(15, activityId);
 
             // Run
             affectedRows = ps.executeUpdate();

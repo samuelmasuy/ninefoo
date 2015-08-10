@@ -21,8 +21,9 @@ public interface ProjectListener {
     public void loadEditProjectFields(int projectId);
     public void loadAllProjectsByMemberAndRole(int memberId, String roleName);
     public void loadProject(int projectId);
+    public void loadEarnedValueData(int projectId);
 
     // Delete
     public void deleteProject(Project project);
-    public void removeMemberFromProject(int memberId, int projectId);;
+    public void removeMemberFromProject(int memberId, int projectId);
 }

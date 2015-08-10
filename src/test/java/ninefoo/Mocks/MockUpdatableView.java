@@ -205,4 +205,10 @@ public class MockUpdatableView implements UpdatableView {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void updateLoadEarnedValueData(boolean success, String message, Project project) {
+		// TODO Auto-generated method stub
+		
+	}
 }
