@@ -363,9 +363,7 @@ public class MainView extends JFrame implements UpdatableView {
 
                 // Pass to controller
                 if (activityListener != null)
-                	System.out.println("what the.....");
                     activityListener.editActivity(activityId, name, description, duration, optimistic, likely, pessimistic, cost, startDate, finishDate, memberId, prerequisitesId, actualCost, actualPercent);
-                    System.out.println("FUCKKKKK!");
             }
 
             @Override

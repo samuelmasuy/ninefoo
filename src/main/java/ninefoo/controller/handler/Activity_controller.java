@@ -428,7 +428,6 @@ public class Activity_controller extends AbstractController implements ActivityL
             activity.setActualCost(doubleActualCost);
             activity.setActualPercentage(intActualPercentage);
             
-            
             // if update failed
             if (!this.activity_model.updateActivity(activity)) {
 
