@@ -369,7 +369,8 @@ public class Activity_model extends AbstractModel {
 
         // Open
         this.open();
-
+        
+        
         // Query
         sql = "UPDATE activity " +
                 "SET    activity_label = ?, description = ?, " +
@@ -397,7 +398,7 @@ public class Activity_model extends AbstractModel {
             ps.setString(10, DateHelper.format(activity.getFinishDate(), Config.DATE_FORMAT));
             ps.setDouble(11, activity.getPlannedCost());
             ps.setInt(12, activity.getMember().getMemberId());
-            ps.setInt(13, activity.getActualCost());
+            ps.setDouble(13, activity.getActualCost());
             ps.setInt(14, activity.getActualPercentage());
             ps.setInt(15, activityId);
 
