@@ -40,7 +40,7 @@ public class Activity_model extends AbstractModel {
         // Query
         sql = "INSERT INTO activity(activity_label, description, duration, " +
                 "optimistic_duration, likely_duration, pessimistic_duration, " +
-                "project_id, member_id, start_date, finish_date, cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "project_id, member_id, start_date, finish_date, planned_cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
 
@@ -160,7 +160,7 @@ public class Activity_model extends AbstractModel {
         List<Activity> prerequisites = new ArrayList<>();
 
         // Query
-        sql = "SELECT ar.prereq_activity_id as activity_id, activity_label, description, duration, optimistic_duration, likely_duration, pessimistic_duration, create_date, update_date, start_date, finish_date, project_id, member_id, cost "
+        sql = "SELECT ar.prereq_activity_id as activity_id, activity_label, description, duration, optimistic_duration, likely_duration, pessimistic_duration, create_date, update_date, start_date, finish_date, project_id, member_id, planned_cost "
                 + "FROM activity_relation ar, activity a "
                 + "WHERE ar.prereq_activity_id = a.activity_id AND ar.activity_id = ?";
 
@@ -372,7 +372,7 @@ public class Activity_model extends AbstractModel {
                 "SET    activity_label = ?, description = ?, " +
                 "       duration = ?, optimistic_duration = ?, likely_duration = ?, " +
                 "       pessimistic_duration = ?, update_date = ?, project_id = ?, " +
-                "		start_date = ?, finish_date = ?, cost = ?," +
+                "		start_date = ?, finish_date = ?, planned_cost = ?," +
                 "		member_id = ? " +
                 " 		WHERE activity_id = ?";
 

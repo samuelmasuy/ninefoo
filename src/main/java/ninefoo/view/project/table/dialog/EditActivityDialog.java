@@ -41,7 +41,9 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
     private JTextField optimisticDuration;
     private JTextField likelyDuration;
     private JTextField pessimisticDuration;
-    private JTextField cost;
+    private JTextField plannedCost;
+    private JTextField actualCost;
+    private JTextField actualPercent;
     private DatePicker startDate;
     private DatePicker finishDate;
     private AutocompleteComboBox memberBox;
@@ -70,11 +72,12 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
         this.optimisticDuration = new JTextField(10);
         this.likelyDuration = new JTextField(10);
         this.pessimisticDuration = new JTextField(10);
-        this.cost = new JTextField(10);
+        this.plannedCost = new JTextField(10);
         this.startDate = new DatePicker(8);
         this.finishDate = new DatePicker(8);
         this.memberBox = new AutocompleteComboBox(membersName);
         this.prerequisiteDropdown = new MultiDropdown("ADD_DEPENDENCY_ACT", activitiesLabel);
+        
 
         // If first activity, disable add prerequisite button
         if (activities_data.size() == 0)
@@ -144,7 +147,7 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
                     activitiesPrereqId[i] = activities_data.get(prerequisiteDataIndex[i]).getActivityId();
 
                 if (tableToolsListener != null)
-                    tableToolsListener.updateActivity(EditActivityDialog.this, activityId, activityLabel.getText(), description.getText(), duration.getText(), optimisticDuration.getText(), likelyDuration.getText(), pessimisticDuration.getText(), cost.getText(), startDate.getText(), finishDate.getText(), member, activitiesPrereqId);
+                    tableToolsListener.updateActivity(EditActivityDialog.this, activityId, activityLabel.getText(), description.getText(), duration.getText(), optimisticDuration.getText(), likelyDuration.getText(), pessimisticDuration.getText(), plannedCost.getText(), startDate.getText(), finishDate.getText(), member, activitiesPrereqId, actualCost.getText(), actualPercent.getText());
             }
         });
 
@@ -167,7 +170,7 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
                 optimisticDuration.setBorder(BorderFactory.createCompoundBorder(optimisticDuration.getBorder(), inputPadding));
                 likelyDuration.setBorder(BorderFactory.createCompoundBorder(likelyDuration.getBorder(), inputPadding));
                 pessimisticDuration.setBorder(BorderFactory.createCompoundBorder(pessimisticDuration.getBorder(), inputPadding));
-                cost.setBorder(BorderFactory.createCompoundBorder(cost.getBorder(), inputPadding));
+                plannedCost.setBorder(BorderFactory.createCompoundBorder(plannedCost.getBorder(), inputPadding));
                 startDate.setBorder(BorderFactory.createCompoundBorder(startDate.getBorder(), inputPadding));
                 finishDate.setBorder(BorderFactory.createCompoundBorder(finishDate.getBorder(), inputPadding));
                 memberBox.setBorder(BorderFactory.createCompoundBorder(memberBox.getBorder(), inputPadding));
@@ -199,7 +202,7 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
 
                 this.table.newRow();
                 this.table.put(new PMLabel("COST_ACT"));
-                this.table.put(cost);
+                this.table.put(plannedCost);
 
                 this.table.newRow();
                 this.table.put(new PMLabel("START_ACT"));
@@ -309,7 +312,7 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
         this.optimisticDuration.setText(String.valueOf(activity.getOptimisticDuration()));
         this.likelyDuration.setText(String.valueOf(activity.getLikelyDuration()));
         this.pessimisticDuration.setText(String.valueOf(activity.getPessimisticDuration()));
-        this.cost.setText(String.valueOf(activity.getPlannedCost()));
+        this.plannedCost.setText(String.valueOf(activity.getPlannedCost()));
         this.startDate.setDate(activity.getStartDate());
         this.finishDate.setDate(activity.getFinishDate());
         this.memberBox.getTextComponent().setText(activity.getMember().getUsername());

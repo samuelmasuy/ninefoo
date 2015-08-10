@@ -240,7 +240,7 @@ public class Activity_controller extends AbstractController implements ActivityL
      */
     @Override
     @FinalVersion(version="1.0")
-    public void editActivity(final int activityId, String activityLabel, String description, String duration, String optimistic, String likely, String pessimistic, String cost, final String startDate, String finishDate, final int memberId, final int[] prerequisitesId) {
+    public void editActivity(final int activityId, String activityLabel, String description, String duration, String optimistic, String likely, String pessimistic, String cost, final String startDate, String finishDate, final int memberId, final int[] prerequisitesId, String actualCost, String actualPercentage) {
 
         /**
          * This validation form should be same for createActivity().

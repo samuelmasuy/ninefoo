@@ -105,7 +105,7 @@ public class Activity_controllerTest {
     @Test
     public void testEditActivity_self_dependant_activity() throws Exception {
         Session.getInstance().setProjectId(1);
-        activity_controller.editActivity(activityID1, "label", "", "5", "", "", "", "", "11/11/1111", "12/11/1111", 1, new int[]{activityID1});
+        activity_controller.editActivity(activityID1, "label", "", "5", "", "", "", "", "11/11/1111", "12/11/1111", 1, new int[]{activityID1}, "", "");
         assertEquals("edit activity with prereqs that are dependant on themselves method", "updateEditActivity", mockUpdatableView.get_called_method());
         assertEquals("edit activity with prereqs that are dependant on themselves success", "false", mockUpdatableView.get_success());
         assertEquals("edit activity with prereqs that are dependant on themselves message", LanguageText.getConstant("SELF_DEPENDENT_ACTIVITY"), mockUpdatableView.get_message());
@@ -115,7 +115,7 @@ public class Activity_controllerTest {
     public void testEditActivity_cycle_activity() throws Exception {
         // TODO understand why this does not produce a cycle
         Session.getInstance().setProjectId(1);
-        activity_controller.editActivity(activityID1, "label", "", "5", "", "", "", "", "11/11/1111", "12/11/1111", 1, new int[]{activityID2});
+        activity_controller.editActivity(activityID1, "label", "", "5", "", "", "", "", "11/11/1111", "12/11/1111", 1, new int[]{activityID2}, "", "");
         assertEquals("edit activity with prereqs that cycle method", "updateEditActivity", mockUpdatableView.get_called_method());
         assertEquals("edit activity with prereqs that cycle success", "false", mockUpdatableView.get_success());
         assertEquals("edit activity with prereqs that cycle message", LanguageText.getConstant("CYCLE"), mockUpdatableView.get_message());

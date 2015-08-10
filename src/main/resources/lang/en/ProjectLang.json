@@ -17,6 +17,8 @@
     "ADD_USER_SUCCESS_PRO": "Member successfully added",
     "ADD_USER_FAIL_PRO": "User already assigned!",
     "ASSIGN_USERS_TO_THE_PROJECT_PRO": "Assign users to the project",
-    "ROLE_PRO": "Role"
+    "ROLE_PRO": "Role",
+	"EARNED_VALUE_ANALYSIS" : "Earned Value Analysis",
+	"CALCULATE_EARNED_VALUE_ANALYSIS" : "Calculate earned value analysis"
   }
 }
