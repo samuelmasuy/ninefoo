@@ -1,4 +1,4 @@
-package ninefoo.view.project.table.dialog;
+package ninefoo.view.include.menu.dialog;
 
 import ninefoo.config.Config;
 import ninefoo.helper.ActivityHelper;
@@ -9,9 +9,10 @@ import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.layout.dialog.CenterScrollSouthButtonDialog;
 import ninefoo.lib.layout.dialog.FormDialog;
 import ninefoo.model.object.Activity;
-import ninefoo.view.project.table.listener.TableToolsListener;
+import ninefoo.view.include.menu.listener.ToolsListener;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,11 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Dialog for editing an activity
+ * Dialog for displaying earned value analysis
  *
  * @author Sebouh Bardakjian
  */
-public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
+public class EarnedValueAnalysisDialog extends CenterScrollSouthButtonDialog {
 
     // Define components
     private PMButton closeButton;
@@ -44,7 +45,7 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
     /**
      * Constructor
      */
-    public ViewActivityDetailsDialog(JFrame parentFrame, final TableToolsListener tableToolsListener, Activity activity) {
+    public EarnedValueAnalysisDialog(JFrame parentFrame, final ToolsListener toolsListener) {
 
         // Initialize components
         this.closeButton = new PMButton("CLOSE");
@@ -63,17 +64,14 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
         descScroll.setPreferredSize(new Dimension(100,100));
         
         // Set title
-        this.setTitle(LanguageText.getConstant("VIEW_ACTIVITY_DETAILS_ACT"));
+        this.setTitle(LanguageText.getConstant("EARNED_VALUE_ANALYSIS"));
 
-        // Load activity
-        tableToolsListener.loadActivityForViewDetails(this, activity.getActivityId());
-        
         // Add button listener
         this.closeButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (tableToolsListener != null)
+                if (toolsListener != null)
                     dispose();
             }
         });
@@ -81,13 +79,11 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
         // Add center scroll
         this.setCenterPanel(new FormDialog() {
 
-            private static final long serialVersionUID = -2943549344497607196L;
-
-            @Override
+			@Override
             public void placeForm() {
 
                 // Set border title
-                this.titledBorder.setTitle(LanguageText.getConstant("VIEW_ACTIVITY_DETAILS_ACT"));
+                this.titledBorder.setTitle(LanguageText.getConstant("EARNED_VALUE_ANALYSIS"));
 
                 // Set input border
                 closeButton.setBorder(BorderFactory.createCompoundBorder(closeButton.getBorder(), inputPadding));
@@ -151,7 +147,7 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
         this.southPanel.add(this.closeButton);
 
         // Configure dialog
-        this.setSize(new Dimension(360, 500));
+        this.setSize(new Dimension(400, 500));
         this.setLocationRelativeTo(parentFrame);
         this.setResizable(false);
         this.setVisible(true);

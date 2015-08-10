@@ -146,7 +146,7 @@ public abstract class AbstractModel {
             Date finishDate = DateHelper.parse(activities.getString("finish_date"), Config.DATE_FORMAT);
             int projectId = activities.getInt("project_id");
             int memberId = activities.getInt("member_id");
-            double cost = activities.getDouble("cost");
+            double cost = activities.getDouble("planned_cost");
             Project project = null;
             Member member = null;
 

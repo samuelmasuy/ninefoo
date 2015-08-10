@@ -28,8 +28,11 @@ public class Activity {
 
     private Member member;
     private List<Activity> prerequisites;
-    private double cost;
-    private int projectId;
+    private double plannedCost;
+    private double actualCost;
+    private int actualPercentage;
+
+	private int projectId;
     private int memberId;
 
     private int earliestStart;
@@ -117,7 +120,7 @@ public class Activity {
         this.optimisticDuration = optimistic;
         this.likelyDuration = likely;
         this.pessimisticDuration = pessimistic;
-        this.cost = cost;
+        this.plannedCost = cost;
         this.startDate = startDate;
         this.finishDate = finishDate;
         this.memberId = memberId;
@@ -298,12 +301,12 @@ public class Activity {
         return Arrays.toString(preId.toArray());
     }
 
-    public Double getCost() {
-        return cost;
+    public Double getPlannedCost() {
+        return plannedCost;
     }
 
-    public void setCost(Double cost) {
-        this.cost = cost;
+    public void setCost(Double plannedCost) {
+        this.plannedCost = plannedCost;
     }
 
     public int getProjectId() {
@@ -337,7 +340,6 @@ public class Activity {
                 ", finishDate=" + finishDate +
                 ", project=" + project +
                 ", member=" + member +
-                ", cost=" + cost +
                 ", projectId=" + projectId +
                 ", memberId=" + memberId +
                 ", earliestStart=" + earliestStart +
@@ -347,4 +349,20 @@ public class Activity {
                 ", isCritical=" + isCritical +
                 '}';
     }
+    
+    public double getActualCost() {
+		return actualCost;
+	}
+
+	public void setActualCost(double actualCost) {
+		this.actualCost = actualCost;
+	}
+	
+	public int getActualPercentage() {
+		return actualPercentage;
+	}
+
+	public void setActualPercentage(int actualPercentage) {
+		this.actualPercentage = actualPercentage;
+	}
 }

@@ -10,7 +10,7 @@ public interface ActivityListener {
     // Create
     public void createActivity(String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, int[] prerequisitesId);
 
-    public void editActivity(int activityId, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, int[] prerequisitesId);
+    public void editActivity(int activityId, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, int[] prerequisitesId, String actualCost, String actualPercentage);
 
     // Load
     public void loadActivitiesByProject(int projectId);
@@ -21,4 +21,5 @@ public interface ActivityListener {
     
     // Delete
     public void deleteActivity(int activityId);
+    
 }

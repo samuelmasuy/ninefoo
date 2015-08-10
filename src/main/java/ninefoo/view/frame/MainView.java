@@ -356,14 +356,14 @@ public class MainView extends JFrame implements UpdatableView {
             }
 
             @Override
-            public void updateActivity(EditActivityDialog dialog, int activityId, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, int[] prerequisitesId) {
+            public void updateActivity(EditActivityDialog dialog, int activityId, String name, String description, String duration, String optimistic, String likely, String pessimistic, String cost, String startDate, String finishDate, int memberId, int[] prerequisitesId, String actualCost, String actualPercent) {
 
                 // Set dialog
                 editActivityDialog = dialog;
 
                 // Pass to controller
                 if (activityListener != null)
-                    activityListener.editActivity(activityId, name, description, duration, optimistic, likely, pessimistic, cost, startDate, finishDate, memberId, prerequisitesId);
+                    activityListener.editActivity(activityId, name, description, duration, optimistic, likely, pessimistic, cost, startDate, finishDate, memberId, prerequisitesId, actualCost, actualPercent);
             }
 
             @Override
@@ -579,6 +579,7 @@ public class MainView extends JFrame implements UpdatableView {
         this.tableChartPanel.reset();
         this.toolsPanel.setNewMemberEnabled(false);
         this.toolsPanel.setAddUserEnabled(false);
+        this.toolsPanel.setEarnedValueAnalysisEnabled(false);
         this.tableChartPanel.setProject(null);
         this.tableChartPanel.setVisibleToolbar(false);
         LOGGER.info("Logout successful");
@@ -608,7 +609,7 @@ public class MainView extends JFrame implements UpdatableView {
     @Override
     public void updateLoadAllMembersForAProject(boolean success, String message, List<Member> users) {
 
-        // If called from create activity dialgo
+        // If called from create activity dialog
         if (createActivityDialog != null) {
 
             // If success
@@ -699,6 +700,7 @@ public class MainView extends JFrame implements UpdatableView {
                 // Enable manager buttons
                 this.toolsPanel.setNewMemberEnabled(true);
                 this.toolsPanel.setAddUserEnabled(true);
+                this.toolsPanel.setEarnedValueAnalysisEnabled(true);
                 this.tableChartPanel.setAddActivityEnabled(true);
 
                 // Enable tool bar below table
@@ -742,6 +744,7 @@ public class MainView extends JFrame implements UpdatableView {
                     // Top tool bar
                     this.toolsPanel.setNewMemberEnabled(true);
                     this.toolsPanel.setAddUserEnabled(true);
+                    this.toolsPanel.setEarnedValueAnalysisEnabled(true);
 
                     // Bottom tool bar
                     this.tableChartPanel.setAddActivityEnabled(true);
@@ -753,6 +756,7 @@ public class MainView extends JFrame implements UpdatableView {
                     // Top tool bar
                     this.toolsPanel.setNewMemberEnabled(false);
                     this.toolsPanel.setAddUserEnabled(false);
+                    this.toolsPanel.setEarnedValueAnalysisEnabled(false);
 
                     // Bottom tool bar
                     this.tableChartPanel.setAddActivityEnabled(false);
