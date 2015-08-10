@@ -59,10 +59,13 @@ public class ActivityHelper {
         data[ActivityConfig.MEMBER] = activity.getMember().getFirstName() + " " + activity.getMember().getLastName();
         data[ActivityConfig.OPTIMISTIC] = String.valueOf(activity.getOptimisticDuration());
         data[ActivityConfig.PESSIMISTIC] = String.valueOf(activity.getPessimisticDuration());
+        //TODO fix planned percentage algorithm
         data[ActivityConfig.PLANNED_PERCENTAGE] = DateHelper.getToday().before(activity.getFinishDate()) ? "0%" : "100%";
+        data[ActivityConfig.ACTUAL_PERCENTAGE] = String.valueOf(activity.getActualPercentage());
         data[ActivityConfig.START] = DateHelper.format(activity.getStartDate(), Config.DATE_FORMAT_SHORT);
         data[ActivityConfig.PREREQ] = activity.getPrerequisitesAsString();
         data[ActivityConfig.COST] = String.valueOf(activity.getPlannedCost());
+        data[ActivityConfig.ACTUAL_COST] = String.valueOf(activity.getActualCost());
 
         return data;
     }
