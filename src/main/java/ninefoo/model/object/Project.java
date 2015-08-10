@@ -23,6 +23,18 @@ public class Project {
     private Date deadlineDate;
     private String description;
     private List<Activity> acitivies;
+    
+    // Analysis value
+    private double totalCost;
+    private double totalPV;
+    private double totalAC;
+    private double totalEV;
+    private double costVariance;
+    private double scheduleVariance;
+    private double cpi;
+    private double spi;
+    private double EAC;
+    private double ETC;
 
     /**
      * This constructor is only used when we want to convert db entities to Java classes
@@ -145,4 +157,88 @@ public class Project {
     public void setFinishDate(Date finishDate) {
         this.finishDate = finishDate;
     }
+
+    /************************************\
+     * GETTER AND SETTERS FOR ANALYSIS
+     ************************************/
+    
+    public double getTotalCost() {
+		return totalCost;
+	}
+
+	public void setTotalCost(double totalCost) {
+		this.totalCost = totalCost;
+	}
+
+	public double getTotalPV() {
+		return totalPV;
+	}
+
+	public void setTotalPV(double totalPV) {
+		this.totalPV = totalPV;
+	}
+
+	public double getTotalAC() {
+		return totalAC;
+	}
+
+	public void setTotalAC(double totalAC) {
+		this.totalAC = totalAC;
+	}
+
+	public double getTotalEV() {
+		return totalEV;
+	}
+
+	public void setTotalEV(double totalEV) {
+		this.totalEV = totalEV;
+	}
+
+	public double getCostVariance() {
+		return costVariance;
+	}
+
+	public void setCostVariance(double costVariance) {
+		this.costVariance = costVariance;
+	}
+
+	public double getScheduleVariance() {
+		return scheduleVariance;
+	}
+
+	public void setScheduleVariance(double scheduleVariance) {
+		this.scheduleVariance = scheduleVariance;
+	}
+
+	public double getCpi() {
+		return cpi;
+	}
+
+	public void setCpi(double cpi) {
+		this.cpi = cpi;
+	}
+
+	public double getSpi() {
+		return spi;
+	}
+
+	public void setSpi(double spi) {
+		this.spi = spi;
+	}
+
+	public double getEAC() {
+		return EAC;
+	}
+
+	public void setEAC(double eAC) {
+		EAC = eAC;
+	}
+
+	public double getETC() {
+		return ETC;
+	}
+
+	public void setETC(double eTC) {
+		ETC = eTC;
+	}
 }
