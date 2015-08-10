@@ -77,6 +77,8 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
         this.finishDate = new DatePicker(8);
         this.memberBox = new AutocompleteComboBox(membersName);
         this.prerequisiteDropdown = new MultiDropdown("ADD_DEPENDENCY_ACT", activitiesLabel);
+        this.actualCost = new JTextField(10);
+        this.actualPercent = new JTextField(10);
         
 
         // If first activity, disable add prerequisite button
@@ -175,7 +177,9 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
                 finishDate.setBorder(BorderFactory.createCompoundBorder(finishDate.getBorder(), inputPadding));
                 memberBox.setBorder(BorderFactory.createCompoundBorder(memberBox.getBorder(), inputPadding));
                 prerequisiteDropdown.setBorder(BorderFactory.createCompoundBorder(prerequisiteDropdown.getBorder(), inputPadding));
-
+                actualCost.setBorder(BorderFactory.createCompoundBorder(actualCost.getBorder(), inputPadding));
+                actualPercent.setBorder(BorderFactory.createCompoundBorder(actualPercent.getBorder(), inputPadding));
+                
                 // Add components
                 this.table.put(new PMLabel("NAME"));
                 this.table.put(activityLabel);
@@ -204,6 +208,14 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
                 this.table.put(new PMLabel("COST_ACT"));
                 this.table.put(plannedCost);
 
+                this.table.newRow();
+                this.table.put(new PMLabel("ACTUAL_COST_ACT"));
+                this.table.put(actualCost);
+                
+                this.table.newRow();
+                this.table.put(new PMLabel("ACTUAL_PERCENTAGE_ACT"));
+                this.table.put(actualPercent);
+                
                 this.table.newRow();
                 this.table.put(new PMLabel("START_ACT"));
                 this.table.put(startDate);
@@ -316,12 +328,14 @@ public class EditActivityDialog extends CenterScrollSouthButtonDialog {
         this.startDate.setDate(activity.getStartDate());
         this.finishDate.setDate(activity.getFinishDate());
         this.memberBox.getTextComponent().setText(activity.getMember().getUsername());
+        this.actualCost.setText(String.valueOf(activity.getActualCost()));
+        this.actualPercent.setText(String.valueOf(activity.getActualPercentage()));
 
         // Update duration
         this.updateDuration();
 
         // Set prerequisites
-        for (Activity crreutnActivity : activity.getPrerequisites())
-            this.prerequisiteDropdown.addDropdown(ActivityHelper.getIdAndName(crreutnActivity));
+        for (Activity currentActivity : activity.getPrerequisites())
+            this.prerequisiteDropdown.addDropdown(ActivityHelper.getIdAndName(currentActivity));
     }
 }
