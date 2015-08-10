@@ -59,6 +59,8 @@ public interface UpdatableView {
     
     public void updateRemoveMemberFromProject(boolean success, String message);
     
+    public void updateLoadEarnedValueData(boolean success, String message, Project project);
+    
     // Set listeners. Start methods with prefix: set
     public void setMemberListener(MemberListener memberListener);
 

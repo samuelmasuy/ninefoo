@@ -1,8 +1,6 @@
 package ninefoo.view.include.menu.dialog;
 
-import ninefoo.config.Config;
-import ninefoo.helper.ActivityHelper;
-import ninefoo.helper.DateHelper;
+import ninefoo.config.Session;
 import ninefoo.lib.component.PMButton;
 import ninefoo.lib.component.PMLabel;
 import ninefoo.lib.lang.LanguageText;
@@ -16,8 +14,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Dialog for displaying earned value analysis
@@ -26,7 +22,9 @@ import java.util.List;
  */
 public class EarnedValueAnalysisDialog extends CenterScrollSouthButtonDialog {
 
-    // Define components
+	private static final long serialVersionUID = 238786251669316509L;
+
+	// Define components
     private PMButton closeButton;
     private JLabel projectLabel;
     private JLabel totalCost;
@@ -62,6 +60,9 @@ public class EarnedValueAnalysisDialog extends CenterScrollSouthButtonDialog {
         // Set title
         this.setTitle(LanguageText.getConstant("EARNED_VALUE_ANALYSIS"));
 
+        // Load fields
+        toolsListener.loadEarnedValueData(this, Session.getInstance().getProjectId());;
+        
         // Add button listener
         this.closeButton.addActionListener(new ActionListener() {
 
@@ -145,27 +146,17 @@ public class EarnedValueAnalysisDialog extends CenterScrollSouthButtonDialog {
      * Populate activity data
      */
     public void populateEarnedValueData(Project project) {
-//        this.activityLabelInfo.setText(String.format("<html><div>%s</div></html>", activity.getActivityLabel()));
-//        this.descriptionInfo.setText(activity.getDescription());
-//        this.durationInfo.setText(activity.getDuration() + "");
-//        this.optimisticDurationInfo.setText(activity.getOptimisticDuration() + "");
-//        this.likelyDurationInfo.setText(activity.getLikelyDuration() + "");
-//        this.pessimisticDurationInfo.setText(activity.getPessimisticDuration() + "");
-//        this.costInfo.setText(activity.getPlannedCost() + "");
-//        this.startDateInfo.setText(DateHelper.format(activity.getStartDate(), Config.DATE_FORMAT_SHORT));
-//        this.finishDateInfo.setText(DateHelper.format(activity.getFinishDate(), Config.DATE_FORMAT_SHORT));
-//        this.memberInfo.setText(activity.getMember().getFirstName() + " " + activity.getMember().getLastName());
 
-        this.projectLabel.setText(project.getProjectName());
-        this.totalCost = new JLabel();
-        this.totalPV = new JLabel();
-        this.totalAC = new JLabel();
-        this.totalEV = new JLabel();
-        this.costVariance = new JLabel();
-        this.scheduleVariance = new JLabel();
-        this.cpi = new JLabel();
-        this.spi = new JLabel();
-        this.EAC = new JLabel();
-        this.ETC = new JLabel();
+    	this.projectLabel.setText(project.getProjectName());
+    	this.totalCost.setText(String.valueOf(project.getTotalCost()));
+    	this.totalPV.setText(String.valueOf(project.getTotalPV()));
+    	this.totalAC.setText(String.valueOf(project.getTotalAC()));
+    	this.totalEV.setText(String.valueOf(project.getTotalEV()));
+    	this.costVariance.setText(String.valueOf(project.getCostVariance()));
+    	this.scheduleVariance.setText(String.valueOf(project.getScheduleVariance()));
+    	this.cpi.setText(String.valueOf(project.getCpi()));
+    	this.spi.setText(String.valueOf(project.getSpi()));
+    	this.EAC.setText(String.valueOf(project.getEAC()));
+    	this.ETC.setText(String.valueOf(project.getETC()));
     }
 }
