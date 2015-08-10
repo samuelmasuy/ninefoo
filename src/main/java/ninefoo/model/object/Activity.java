@@ -24,11 +24,19 @@ public class Activity {
     private Date updateDate;
     private Date finishDate;
     private Project project;
+
+
     private Member member;
     private List<Activity> prerequisites;
     private double cost;
     private int projectId;
     private int memberId;
+
+    private int earliestStart;
+    private int earliestFinish;
+    private int latestStart;
+    private int latestFinish;
+    private boolean isCritical; // (LS-ES == 0)
 
     /**
      * This constructor is used when converting DB entities to Java classes.
@@ -189,21 +197,54 @@ public class Activity {
         this.member = member;
     }
 
+
+    public int getEarliestStart() {
+        return earliestStart;
+    }
+
+    public int getEarliestFinish() {
+        return earliestFinish;
+    }
+
+    public int getLatestStart() {
+        return latestStart;
+    }
+
+    public int getLatestFinish() {
+        return latestFinish;
+    }
+    public boolean isCritical() {
+        return isCritical;
+    }
+
+    public void setEarliestStart(int earliestStart) {
+        this.earliestStart = earliestStart;
+    }
+
+    public void setEarliestFinish(int earliestFinish) {
+        this.earliestFinish = earliestFinish;
+    }
+
+    public void setLatestStart(int latestStart) {
+        this.latestStart = latestStart;
+    }
+
+    public void setLatestFinish(int latestFinish) {
+        this.latestFinish = latestFinish;
+    }
+
+    public void setIsCritical(boolean isCritical) {
+        this.isCritical = isCritical;
+    }
+
     public List<Activity> getPrerequisites() {
-        return prerequisites;
+        return this.prerequisites;
     }
 
     public void setPrerequisites(List<Activity> prerequisites) {
         this.prerequisites = prerequisites;
     }
 
-    public String toString() {
-        return String.format("Activity [ID: %d, Label: '%s', Desc: '%s', Dur: %d, " +
-                        "OptDur: %d, LikeDur: %d, PessDur: %d, ProjID: %d, MemID: %d, PrereqCount: %d]",
-                activityId, activityLabel, description, duration, optimisticDuration,
-                likelyDuration, pessimisticDuration, project.getProjectId(),
-                member.getMemberId(), prerequisites == null ? 0 : prerequisites.size());
-    }
 
     public Date getStartDate() {
         return startDate;
@@ -279,5 +320,31 @@ public class Activity {
 
     public void setMemberId(int memberId) {
         this.memberId = memberId;
+    }
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "activityId=" + activityId +
+                ", activityLabel='" + activityLabel + '\'' +
+                ", description='" + description + '\'' +
+                ", duration=" + duration +
+                ", optimisticDuration=" + optimisticDuration +
+                ", likelyDuration=" + likelyDuration +
+                ", pessimisticDuration=" + pessimisticDuration +
+                ", createDate=" + createDate +
+                ", startDate=" + startDate +
+                ", updateDate=" + updateDate +
+                ", finishDate=" + finishDate +
+                ", project=" + project +
+                ", member=" + member +
+                ", cost=" + cost +
+                ", projectId=" + projectId +
+                ", memberId=" + memberId +
+                ", earliestStart=" + earliestStart +
+                ", earliestFinish=" + earliestFinish +
+                ", latestStart=" + latestStart +
+                ", latestFinish=" + latestFinish +
+                ", isCritical=" + isCritical +
+                '}';
     }
 }
