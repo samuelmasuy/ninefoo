@@ -12,6 +12,7 @@ import java.awt.geom.Line2D;
 public class Line extends Line2D.Double{
 	private Point p1, p2;
 	private PertShape c1, c2;
+	public int expectedDuration, standardDeviation;
 	
 	/**
 	 * Set points objects

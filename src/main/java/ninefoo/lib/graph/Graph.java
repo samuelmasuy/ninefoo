@@ -22,7 +22,7 @@ public class Graph {
     private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 
     // Variables
-    private int[][] graph, graphReversed;
+    private int[][] graph, graphReversed, weight;
     private int[] degree, degreeReversed;
     private HashMap<Integer, Integer> idMapper;
     private int index = 0;
@@ -46,6 +46,7 @@ public class Graph {
         // Store graph connection
         this.graph = new int[size][size - 1];
         this.graphReversed = new int[size][size - 1];
+        this.weight = new int[size][size - 1];
 
         // Store out going edges
         this.degree = new int[size];

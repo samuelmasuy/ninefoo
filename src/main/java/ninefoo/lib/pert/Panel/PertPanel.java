@@ -173,6 +173,10 @@ public class PertPanel extends JPanel {
 		    g3.translate( (int)x , (int)y);
 		    g3.rotate((angle-Math.PI/2d));
 		    g3.fill(arrowHead);
+		    
+		    g2.drawString("t=" + lines.get(i).expectedDuration, (float)x-20, (float)y - 20);
+		    g2.drawString("s=" + lines.get(i).standardDeviation, (float)x-20, (float)y - 10);
+		    
 		}
 		
 		// Reset color to black
