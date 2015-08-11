@@ -23,20 +23,8 @@ public class EarnedValueAnalysis
 		this.project = project;
 	}
 	
-	/**
-	 * calculates the expected duration. t = (a + 4m + b) / 6
-	 * @param Activity
-	 * @return Expected Duration
-	 */
-	public float calculateExpectedDuration(Activity activity)
-	{
-		return (
-			   (activity.getOptimisticDuration() +
-			   (activity.getLikelyDuration() * 4) +
-			    activity.getPessimisticDuration()) 
-				/ 6
-				);
-	}
+	
+
 	
 	
 }

@@ -19,8 +19,12 @@ public class Graph {
     private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 
     // Variables
-    private int[][] graph, graphReversed;
-    private int[] degree, degreeReversed;
+    protected int[][] graph;
+
+	private int[][] graphReversed;
+    protected int[] degree;
+
+	private int[] degreeReversed;
     private HashMap<Integer, Integer> idMapper;
     private int index = 0;
 
@@ -28,9 +32,9 @@ public class Graph {
     private List<Activity> activityCriticalList = new LinkedList<>();
 
     // Constants
-    private final int UNVISITED = 0;
-    private final int VISITING = 1;
-    private final int VISITED = 2;
+    protected final int UNVISITED = 0;
+    protected final int VISITING = 1;
+    protected final int VISITED = 2;
     private int[] virtualToRealMapping;
 
     /**
@@ -196,7 +200,7 @@ public class Graph {
         }
     }
 
-    private Activity getActivityByVirtualID(int target) {
+    protected Activity getActivityByVirtualID(int target) {
         int realTarget = virtualToRealMapping[target];
         for (Activity activity: this.activityCriticalList) {
            if (activity.getActivityId() == realTarget) {
