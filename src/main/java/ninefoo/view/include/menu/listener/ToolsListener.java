@@ -22,7 +22,8 @@ public interface ToolsListener {
     // Load
     public void loadAllMyProjectsByRole(ViewMyProjectsDialog viewMyProjectsDialog, String roleName);
     public void loadProject(ViewMyProjectsDialog viewMyProjectsDialog, int projectId);
-    public void loadEditProjectFields(EditProjectDialog editProjectDialog, int projectId);
+    public void loadProject(ActivityOnNodeDialog dialog, int projectId);
+     public void loadEditProjectFields(EditProjectDialog editProjectDialog, int projectId);
     public void loadAllMembersForAddUserToProjectDialog(AddUserToProjectDialog dialog);
     public void loadAssignedActivitiesProject(ViewAssignedActivitiesDialog dialog);
     public void loadEarnedValueData(EarnedValueAnalysisDialog dialog, int projectId);

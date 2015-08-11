@@ -10,8 +10,7 @@ public class PertShape extends RoundRectangle2D.Double{
 	private Point centerPoint;
 	
 	// Data
-	public int eventNumber;
-	public double targetDate, expectedDate, standardDerivation;
+	public int id, ES, EF, LS, LF;
 		
 	/**
 	 * Constructor
@@ -30,9 +29,6 @@ public class PertShape extends RoundRectangle2D.Double{
 		setXY(x,y);
 		width = DIAMETER;
 		height = DIAMETER * heightPercentage;
-		archeight = DIAMETER/3;
-		arcwidth = archeight;
-		
 	}
 	
 	/**

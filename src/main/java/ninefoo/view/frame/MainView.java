@@ -66,6 +66,7 @@ public class MainView extends JFrame implements UpdatableView {
     private EditActivityDialog editActivityDialog;
     private ViewActivityDetailsDialog viewActivityDetailsDialog;
     private EarnedValueAnalysisDialog earnedValueAnalysisDialog;
+    private ActivityOnNodeDialog activityOnNodeDialog;
     
     // Define variables
     private JPanel currentCenterPanel;
@@ -322,6 +323,15 @@ public class MainView extends JFrame implements UpdatableView {
 				// Pass to contructor
 				if(projectListener != null)
 					projectListener.loadEarnedValueData(projectId);
+			}
+
+			@Override
+			public void loadProject(ActivityOnNodeDialog dialog, int projectId) {
+				activityOnNodeDialog = dialog;
+				
+				if(projectListener != null)
+					projectListener.loadProject(projectId);
+				
 			}
         });
 
@@ -798,6 +808,20 @@ public class MainView extends JFrame implements UpdatableView {
 
             // Reset pointer so it cannot be used anywhere else
             this.viewMyProjectsDialog = null;
+        
+        
+        } else if(activityOnNodeDialog != null){
+        	
+        	if(success) {
+        		
+        		activityOnNodeDialog.setProject(project);
+        		
+        	}else{
+        		
+        		activityOnNodeDialog.setErrorMessage(message);
+        	}
+        	
+        	activityOnNodeDialog = null;
         }
     }
 

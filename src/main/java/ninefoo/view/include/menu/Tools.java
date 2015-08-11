@@ -21,7 +21,7 @@ public class Tools extends JPanel {
     private static final long serialVersionUID = -1862085076331720213L;
 
     // Create components
-    private PMButton newProject, newMember, logout, viewProject, addUser, viewAssigned, earnedValueAnalysis, pert;
+    private PMButton newProject, newMember, logout, viewProject, addUser, viewAssigned, earnedValueAnalysis, pert, activityOnNode;
 
     // Create listener
     private ToolsListener toolsListener;
@@ -41,6 +41,7 @@ public class Tools extends JPanel {
 		this.viewAssigned = new PMButton(new ImageIcon(getClass().getResource("/images/view_activities.png")), true);
 		this.earnedValueAnalysis = new PMButton(new ImageIcon(getClass().getResource("/images/view_activities.png")), true);
 		this.pert = new PMButton(new ImageIcon(getClass().getResource("/images/pert.png")), true);
+		this.activityOnNode = new PMButton(new ImageIcon(getClass().getResource("/images/activity-node.png")), true);
 		
         // Customize buttons
         this.newProject.setContentAreaFilled(false);
@@ -96,12 +97,20 @@ public class Tools extends JPanel {
         this.pert.setVerticalTextPosition(SwingConstants.BOTTOM);
         this.pert.setHorizontalTextPosition(SwingConstants.CENTER);
         this.pert.setText("PERT_CHART");
+
+        this.activityOnNode.setContentAreaFilled(false);
+        this.activityOnNode.setBorder(null);
+        this.activityOnNode.setVerticalTextPosition(SwingConstants.BOTTOM);
+        this.activityOnNode.setHorizontalTextPosition(SwingConstants.CENTER);
+        this.activityOnNode.setText("ACTIVITY_CHART");
         
         // Disable buttons at start
         this.addUser.setEnabled(false);
         this.newMember.setEnabled(false);
         this.earnedValueAnalysis.setEnabled(false);
 //        this.pert.setEnabled(false);
+//        this.activityOnNode.setEnabled(false);
+        
 
         // Add new project listener
         this.newProject.addActionListener(new ActionListener() {
@@ -181,6 +190,15 @@ public class Tools extends JPanel {
 					new PertDialog(parentFrame, toolsListener);
 			}
 		});
+        
+        this.activityOnNode.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(toolsListener != null)
+					new ActivityOnNodeDialog(parentFrame, toolsListener);
+			}
+		});
 
         // Add components
         int spacing = 20;
@@ -198,6 +216,8 @@ public class Tools extends JPanel {
         this.add(this.earnedValueAnalysis);
         this.add(Box.createRigidArea(new Dimension(spacing, 0)));
         this.add(pert);
+        this.add(Box.createRigidArea(new Dimension(spacing, 0)));
+        this.add(activityOnNode);
         this.add(Box.createRigidArea(new Dimension(spacing, 0)));
         this.add(this.logout);
 

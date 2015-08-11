@@ -173,10 +173,6 @@ public class PertPanel extends JPanel {
 		    g3.translate( (int)x , (int)y);
 		    g3.rotate((angle-Math.PI/2d));
 		    g3.fill(arrowHead);
-		    
-		    g2.drawString("t=" + lines.get(i).expectedDuration, (float)x-20, (float)y - 20);
-		    g2.drawString("s=" + lines.get(i).standardDeviation, (float)x-20, (float)y - 10);
-		    
 		}
 		
 		// Reset color to black
@@ -197,32 +193,49 @@ public class PertPanel extends JPanel {
 			Line2D.Double line;
 			Point from, to;
 			
-			// Vertical
+			int topMargin = (int) (current.height * 0.20);
+			int leftMargin = (int) (current.width * 0.20);
+			
+			// Left
 			line = new Line2D.Double();
-			from = new Point(current.getCenter().x, current.getCenter().y + PertShape.HEIGHT/2);
-			to = new Point(current.getCenter().x, current.getCenter().y - PertShape.HEIGHT/2);
+			from = new Point(current.getCenter().x - leftMargin, current.getCenter().y + PertShape.HEIGHT/2);
+			to = new Point(current.getCenter().x - leftMargin, current.getCenter().y - PertShape.HEIGHT/2);
 			line.setLine(from, to);
 			g2.draw(line);
 			
-			// Horizontal
+			// Right
 			line = new Line2D.Double();
-			from = new Point(current.getCenter().x + PertShape.DIAMETER/2, current.getCenter().y);
-			to = new Point(current.getCenter().x - PertShape.DIAMETER/2, current.getCenter().y);
+			from = new Point(current.getCenter().x + leftMargin, current.getCenter().y + PertShape.HEIGHT/2);
+			to = new Point(current.getCenter().x + leftMargin, current.getCenter().y - PertShape.HEIGHT/2);
+			line.setLine(from, to);
+			g2.draw(line);
+			
+			// Top
+			line = new Line2D.Double();
+			from = new Point(current.getCenter().x + PertShape.DIAMETER/2, current.getCenter().y - topMargin);
+			to = new Point(current.getCenter().x - PertShape.DIAMETER/2, current.getCenter().y - topMargin);
+			line.setLine(from, to);
+			g2.draw(line);
+			
+			// Bottom
+			line = new Line2D.Double();
+			from = new Point(current.getCenter().x + PertShape.DIAMETER/2, current.getCenter().y + topMargin);
+			to = new Point(current.getCenter().x - PertShape.DIAMETER/2, current.getCenter().y + topMargin);
 			line.setLine(from, to);
 			g2.draw(line);
 			
 			// Values
 			String value;
-			value = current.eventNumber + "";
+			value = current.ES + "";
 			g2.drawString(value, current.getCenter().x - (PertShape.DIAMETER/4) - g2.getFontMetrics().stringWidth(value)/2, current.getCenter().y - (PertShape.HEIGHT/4) + 6);
 
-			value = current.targetDate + "";
+			value = current.LS + "";
 			g2.drawString(value, current.getCenter().x + (PertShape.DIAMETER/4) - g2.getFontMetrics().stringWidth(value)/2, current.getCenter().y - (PertShape.HEIGHT/4) + 6);
 
-			value = current.expectedDate + "";
+			value = current.EF + "";
 			g2.drawString(value, current.getCenter().x - (PertShape.DIAMETER/4) - g2.getFontMetrics().stringWidth(value)/2, current.getCenter().y + (PertShape.HEIGHT/4) + 6);
 
-			value = current.standardDerivation + "";
+			value = current.LF + "";
 			g2.drawString(value, current.getCenter().x + (PertShape.DIAMETER/4) - g2.getFontMetrics().stringWidth(value)/2, current.getCenter().y + (PertShape.HEIGHT/4) + 6);
 		}
 	}
@@ -299,5 +312,9 @@ public class PertPanel extends JPanel {
 			x += xGap;
 		}
 		repaint();
+	}
+	
+	public void refeshValues(){
+		graph.setCriticalPath();
 	}
 }

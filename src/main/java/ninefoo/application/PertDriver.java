@@ -22,9 +22,6 @@ public class PertDriver {
 		PertShape p6 = pertPanel.addNode();
 		PertShape p7 = pertPanel.addNode();
 		
-		p0.eventNumber = 1;
-		p0.expectedDate = 1.2;
-		
 		pertPanel.addEdge(p0, p1);
 		pertPanel.addEdge(p0, p2);
 		pertPanel.addEdge(p0, p3);

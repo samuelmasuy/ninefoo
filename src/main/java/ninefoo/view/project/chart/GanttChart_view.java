@@ -2,10 +2,12 @@ package ninefoo.view.project.chart;
 
 import ninefoo.config.Config;
 import ninefoo.helper.DateHelper;
+import ninefoo.lib.graph.Graph;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.model.object.Activity;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -73,7 +75,7 @@ public class GanttChart_view extends JPanel {
                         int startDateCol = DateHelper.getDifferenceDates(getMinDate(), activities.get(i).getStartDate());
                         int activityLenght = DateHelper.getDifferenceDates(activities.get(i).getStartDate(), activities.get(i).getFinishDate());
 
-                        drawActivity(g2, i, startDateCol, activityLenght, activities.get(i).getActivityLabel());
+                        drawActivity(g2, i, startDateCol, activityLenght, activities.get(i).getActivityLabel(), activities.get(i).isCritical());
                     }
                 }
 
@@ -105,6 +107,8 @@ public class GanttChart_view extends JPanel {
 
         // If activity is not null, sort it
         if (this.activities != null) {
+        	
+        	// Sort
             for (int i = 0; i < activities.size(); i++) {
                 for (int j = 0; j < activities.size() - 1; j++) {
                     if (activities.get(j).getStartDate().after(activities.get(j + 1).getStartDate())) {
@@ -112,6 +116,25 @@ public class GanttChart_view extends JPanel {
                         activities.set(j, activities.get(j + 1));
                         activities.set(j + 1, act);
                     }
+                }
+            }
+            
+            // Set critical path
+            if(activities.size() > 0){
+            	Graph graph = new Graph(activities.size(), activities);
+            	boolean edgeFound = false;
+                for(Activity current : activities){
+                	if(current.getPrerequisites() != null) {
+                		for(Activity neighbor: current.getPrerequisites()){
+                        	graph.addEdge(neighbor.getActivityId(), current.getActivityId());
+                        	edgeFound = true;
+                        }
+                	}
+                }
+                if(edgeFound) {
+                	try{
+                		graph.setCriticalPath();
+                	} catch(Exception e){}
                 }
             }
         }
@@ -172,7 +195,7 @@ public class GanttChart_view extends JPanel {
      * @param end
      * @param activity
      */
-    public void drawActivity(Graphics2D g2, int row, int start, int end, String activity) {
+    public void drawActivity(Graphics2D g2, int row, int start, int end, String activity, boolean isCritical) {
         Graphics2D g3 = (Graphics2D) g2.create();
 
         // Adjust the position
@@ -183,7 +206,9 @@ public class GanttChart_view extends JPanel {
         end = end * columnSize;
 
         // Adjust row and graphics
-        g3.setColor(new Color(0, 127, 255, 180));
+    	g3.setColor(new Color(0, 127, 255, 180));
+        if(isCritical)
+        	g3.setColor(Color.DARK_GRAY);
 
         // Draw rectangle
         g3.fillRect(start, row, end, rowSize);

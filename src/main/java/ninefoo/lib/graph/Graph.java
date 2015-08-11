@@ -50,8 +50,8 @@ public class Graph {
     public Graph(int size) {
 
         // Store graph connection
-        this.graph = new int[size][size - 1];
-        this.graphReversed = new int[size][size - 1];
+        this.graph = new int[size][size];
+        this.graphReversed = new int[size][size];
 
         // Store out going edges
         this.degree = new int[size];
@@ -301,6 +301,8 @@ public class Graph {
         return activityCriticalList;
     }
     public void setCriticalPath() {
+    	bfs(true);
+    	bfs(false);
         for (Activity a: activityCriticalList) {
             a.setIsCritical(a.getLatestFinish() == a.getEarliestFinish());
         }

@@ -56,6 +56,7 @@
     "NOVEMBER": "Novembre",
     "DECEMBER": "Decembre",
     "SAMPLE_TEXT": "e.g. Un nouveau projet a ete cree avec succes",
-    "PERT_CHART": "Pert chart"
+    "PERT_CHART": "Pert chart",
+    "ACTIVITY_CHART": "Activity on node"
   }
 }
