@@ -17,9 +17,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
+import ninefoo.lib.graph.Graph;
 import ninefoo.lib.pert.Shape.Line;
 import ninefoo.lib.pert.Shape.PertShape;
 
@@ -27,22 +29,29 @@ public class PertPanel extends JPanel {
 	
 	private static final long serialVersionUID = 1297243587767588319L;
 	private Line edgeTmp;
-	private MouseAdapter dragListener, currentListener;
 	private Dimension dim = new Dimension(500,500);
 	private ArrayList<Line> lines;
 	private ArrayList<PertShape> circles;
+	private Graph graph;
+	
+	// Constants
+	int startX = 100;
+	int startY = 100;
+	int xGap = 200;
+	int yGap = 200;
 	
 	// Arrow position relative to the edge
 	private final double position = 1d/3;
 	
-	public PertPanel() {
+	public PertPanel(int size) {
 		
 		// Initialize lists
 		lines = new ArrayList<>();
 		circles = new ArrayList<>();
+		graph = new Graph(size);
 		
 		// Drag node listener
-		dragListener = new MouseAdapter() {
+		MouseAdapter dragListener = new MouseAdapter() {
 			PertShape activeCircle;
 			
 			public void mousePressed(MouseEvent e) {
@@ -86,6 +95,10 @@ public class PertPanel extends JPanel {
 				}
 			}
 		};
+		
+		// Add listener
+		addMouseListener(dragListener);
+		addMouseMotionListener(dragListener);
 		
 		// Panel size
 		setPreferredSize(dim);
@@ -234,28 +247,12 @@ public class PertPanel extends JPanel {
 	}
 	
 	/**
-	 * Drag node mode
-	 */
-	public void dragNodeMode(){
-		// Remove old listeners
-		if(currentListener != null){
-			removeMouseListener(currentListener);
-			removeMouseMotionListener(currentListener);
-		}
-		
-		// Add new one
-		currentListener = dragListener;
-		addMouseListener(currentListener);
-		addMouseMotionListener(currentListener);
-	}
-	
-	/**
 	 * Add node
 	 * @param point
 	 * @return
 	 */
-	public PertShape addNode(Point point){
-		PertShape circle = new PertShape(point.x, point.y);
+	public PertShape addNode(){
+		PertShape circle = new PertShape();
 		circles.add(circle);
 		return circle;
 	}
@@ -269,5 +266,34 @@ public class PertPanel extends JPanel {
 		Line line = new Line();
 		line.setEdge(from, to);
 		lines.add(line);
+		
+		// Search for from and to
+		int fromIndex = -1;
+		int toIndex = -1;
+		for(int i=0; i<circles.size(); i++){
+			if(circles.get(i) == from)
+				fromIndex = i;
+			if(circles.get(i) == to)
+				toIndex = i;
+		}
+		
+		// Add to the graph
+		graph.addEdge(fromIndex, toIndex);
+	}
+	
+	public void prettify(){
+		int depth = 0;
+		int x = startX;
+		int y = startY;
+		while(graph.nDepth(depth).size() > 0){
+			List<Integer> nodes = graph.nDepth(depth++);
+			y = startY;
+			for(int i=0; i<nodes.size(); i++){
+				circles.get(nodes.get(i)).setXY(x, y);
+				y += yGap;
+			}
+			x += xGap;
+		}
+		repaint();
 	}
 }
