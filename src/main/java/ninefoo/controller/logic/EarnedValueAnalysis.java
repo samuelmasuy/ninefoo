@@ -1,5 +1,6 @@
 package ninefoo.controller.logic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ninefoo.helper.DateHelper;
@@ -17,11 +18,6 @@ public class EarnedValueAnalysis
 {
 	private Project project;
 
-	public EarnedValueAnalysis()
-	{
-
-	}
-
 	public EarnedValueAnalysis(Project project)
 	{
 		this.project = project;
@@ -34,11 +30,10 @@ public class EarnedValueAnalysis
 		float totalPlannedValue = 0;
 
 		for(Activity activity : activities){
-			totalPlannedValue += activity.getPlannedCost();
 
 			//Check the earned value for an activity
 			boolean isComplete = !activity.getFinishDate().after(DateHelper.getToday()) ? true : false;
-
+			
 			if (isComplete){
 				totalPlannedValue += activity.getPlannedCost();
 			}
@@ -109,7 +104,10 @@ public class EarnedValueAnalysis
 		float earnedValue = this.calculateTotalEarnedValue();
 		float actualCost = this.calculateTotalActualCost();
 		
-		return (earnedValue / actualCost);
+		if (actualCost == 0)
+			return 0;
+		else
+			return (earnedValue / actualCost);
 	}
 	
 	public float calculateSchedulePerformanceIndex()
@@ -117,7 +115,10 @@ public class EarnedValueAnalysis
 		float earnedValue = this.calculateTotalEarnedValue();
 		float plannedValue = this.calculateBudgetAtCompletion();
 		
-		return (earnedValue / plannedValue);
+		if (plannedValue == 0)
+			return 0;
+		else
+			return (earnedValue / plannedValue);
 	}
 	
 	public float calculateEstimateAtCompletion()
@@ -125,7 +126,10 @@ public class EarnedValueAnalysis
 		float BAC = this.calculateBudgetAtCompletion();
 		float CPI = this.calculateCostPerformanceIndex();
 		
-		return (BAC / CPI);
+		if (CPI == 0)
+			return 0;
+		else
+			return (BAC / CPI);
 	}
 	
 	public float calculateEstimateToComplete()

@@ -351,9 +351,19 @@ public class Project_controller extends AbstractController implements ProjectLis
 		
 		// TODO: Do the calculation
 		Project project = project_model.getProjectById(projectId);
+		project.setAcitivies(activity_model.getActivitiesByProject(project));
 		
 		EarnedValueAnalysis eva = new EarnedValueAnalysis(project);
-		
+		project.setTotalCost(eva.calculateTotalPlannedCost());
+		project.setTotalPV(eva.calculateBudgetAtCompletion());
+		project.setTotalAC(eva.calculateTotalActualCost());
+		project.setTotalEV(eva.calculateTotalEarnedValue());
+		project.setCostVariance(eva.calculateTotalCostVariance());
+		project.setScheduleVariance(eva.calculateTotalScheduleVariance());
+		project.setCpi(eva.calculateCostPerformanceIndex());
+		project.setSpi(eva.calculateSchedulePerformanceIndex());
+		project.setEAC(eva.calculateEstimateAtCompletion());
+		project.setETC(eva.calculateEstimateToComplete());
 		
 		this.view.updateLoadEarnedValueData(true, null, project);
 	}

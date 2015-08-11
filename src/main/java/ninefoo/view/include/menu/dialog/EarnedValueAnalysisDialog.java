@@ -148,15 +148,15 @@ public class EarnedValueAnalysisDialog extends CenterScrollSouthButtonDialog {
     public void populateEarnedValueData(Project project) {
 
     	this.projectLabel.setText(project.getProjectName());
-    	this.totalCost.setText(String.valueOf(project.getTotalCost()));
-    	this.totalPV.setText(String.valueOf(project.getTotalPV()));
-    	this.totalAC.setText(String.valueOf(project.getTotalAC()));
-    	this.totalEV.setText(String.valueOf(project.getTotalEV()));
-    	this.costVariance.setText(String.valueOf(project.getCostVariance()));
-    	this.scheduleVariance.setText(String.valueOf(project.getScheduleVariance()));
-    	this.cpi.setText(String.valueOf(project.getCpi()));
-    	this.spi.setText(String.valueOf(project.getSpi()));
-    	this.EAC.setText(String.valueOf(project.getEAC()));
-    	this.ETC.setText(String.valueOf(project.getETC()));
+    	this.totalCost.setText(String.format("%.2f" ,project.getTotalCost()));
+    	this.totalPV.setText(String.format("%.2f" ,project.getTotalPV()));
+    	this.totalAC.setText(String.format("%.2f" ,project.getTotalAC()));
+    	this.totalEV.setText(String.format("%.2f" ,project.getTotalEV()));
+    	this.costVariance.setText(String.format("%.2f" ,project.getCostVariance()));
+    	this.scheduleVariance.setText(String.format("%.2f" ,project.getScheduleVariance()));
+    	this.cpi.setText(String.format("%.2f" ,project.getCpi()));
+    	this.spi.setText(String.format("%.2f" ,project.getSpi()));
+    	this.EAC.setText(String.format("%.2f" ,project.getEAC()));
+    	this.ETC.setText(String.format("%.2f" ,project.getETC()));
     }
 }

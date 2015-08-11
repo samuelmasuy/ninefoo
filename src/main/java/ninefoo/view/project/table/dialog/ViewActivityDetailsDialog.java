@@ -34,8 +34,13 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
     private JLabel likelyDurationInfo;
     private JLabel pessimisticDurationInfo;
     private JLabel costInfo;
+    private JLabel actualCostInfo;
+    private JLabel plannedPercentage;
+    private JLabel actualPercentage;
     private JLabel startDateInfo;
     private JLabel finishDateInfo;
+    private JLabel plannedValue;
+    private JLabel earnedValue;
     private ArrayList<Activity> activities_data;
     private JLabel memberInfo;
     private ArrayList<PMLabel> prerequisiteList;
@@ -61,6 +66,11 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
         this.prerequisiteList = new ArrayList<PMLabel>();
         this.descScroll = new JScrollPane(descriptionInfo);
         descScroll.setPreferredSize(new Dimension(100,100));
+        this.actualCostInfo = new JLabel();
+        this.plannedPercentage = new JLabel();
+        this.actualPercentage = new JLabel();
+        this.earnedValue = new JLabel();
+        this.plannedValue = new JLabel();
         
         // Set title
         this.setTitle(LanguageText.getConstant("VIEW_ACTIVITY_DETAILS_ACT"));
@@ -117,6 +127,26 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
                 this.table.put(costInfo);
 
                 this.table.newRow();
+                this.table.put(new PMLabel("ACTUAL_COST_ACT"));
+                this.table.put(actualCostInfo);
+                
+                this.table.newRow();
+                this.table.put(new PMLabel("PLANNED_PERCENTAGE_ACT"));
+                this.table.put(plannedPercentage);
+                
+                this.table.newRow();
+                this.table.put(new PMLabel("ACTUAL_PERCENTAGE_ACT"));
+                this.table.put(actualPercentage);
+                
+                this.table.newRow();
+                this.table.put(new PMLabel("PV_PRO"));
+                this.table.put(plannedValue);
+                
+                this.table.newRow();
+                this.table.put(new PMLabel("EV_PRO"));
+                this.table.put(earnedValue);
+                
+                this.table.newRow();
                 this.table.put(new PMLabel("START_ACT"));
                 this.table.put(startDateInfo);
 
@@ -171,7 +201,12 @@ public class ViewActivityDetailsDialog extends CenterScrollSouthButtonDialog {
         this.startDateInfo.setText(DateHelper.format(activity.getStartDate(), Config.DATE_FORMAT_SHORT));
         this.finishDateInfo.setText(DateHelper.format(activity.getFinishDate(), Config.DATE_FORMAT_SHORT));
         this.memberInfo.setText(activity.getMember().getFirstName() + " " + activity.getMember().getLastName());
-
+        this.actualCostInfo.setText(activity.getActualCost() + "");
+        this.plannedPercentage.setText(String.valueOf(!activity.getFinishDate().after(DateHelper.getToday()) ? 100 : 0));
+        this.actualPercentage.setText(activity.getActualPercentage() + "");
+        this.plannedValue.setText(String.valueOf(!activity.getFinishDate().after(DateHelper.getToday()) ? activity.getPlannedCost() : 0));
+        this.earnedValue.setText(String.valueOf(activity.getActualPercentage() == 100 ? activity.getPlannedCost() : 0));
+        
         List<Activity> prerequisites = activity.getPrerequisites();
 
         for (int i = 0; i < prerequisites.size(); i++) {
