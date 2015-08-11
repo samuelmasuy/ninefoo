@@ -81,7 +81,7 @@ public class PERTAnalysis extends Graph {
 
 	            for (int i = 0; i < degree[currentPoll]; i++) {
 	                int neighbour = graph[currentPoll][i];
-	                //set ExpectedValue
+	               setPERTpath(neighbour,currentPoll,forward);
 	                if (visited[neighbour] == UNVISITED) {
 	                    queue.offer(neighbour);
 	                    visited[neighbour] = VISITING;
@@ -92,6 +92,20 @@ public class PERTAnalysis extends Graph {
 	}
 	
 	
-	
+	 public void setPERTpath(int neighbour, int current, boolean forward){
+	        // find corresponding activity
+	        Activity activityCriticalNeighbor = getActivityByVirtualID(neighbour);
+	        Activity activityCriticalCurrent = getActivityByVirtualID(current);
+            System.out.println("neighbor before" + activityCriticalNeighbor);
+            System.out.println("current" + activityCriticalCurrent);
+            
+           // addExpectedDurations(activityCriticalCurrent,activityCriticalNeighbor);
+           // addStandardDeviations(activityCriticalCurrent,activityCriticalNeighbor);
+            
+            //////////////
+            System.out.println("neighbor after" + activityCriticalNeighbor);
+
+	        System.out.println();
+	    }
 
 }
