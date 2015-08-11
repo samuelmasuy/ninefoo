@@ -55,6 +55,7 @@
     "OCTOBER": "October",
     "NOVEMBER": "November",
     "DECEMBER": "December",
-    "SAMPLE_TEXT": "e.g. A new project has been successfully created"
+    "SAMPLE_TEXT": "e.g. A new project has been successfully created",
+    "PERT_CHART": "Pert chart"
   }
 }

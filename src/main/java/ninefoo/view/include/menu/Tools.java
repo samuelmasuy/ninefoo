@@ -5,6 +5,7 @@ import ninefoo.view.include.menu.dialog.*;
 import ninefoo.view.include.menu.listener.ToolsListener;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +21,7 @@ public class Tools extends JPanel {
     private static final long serialVersionUID = -1862085076331720213L;
 
     // Create components
-    private PMButton newProject, newMember, logout, viewProject, addUser, viewAssigned, earnedValueAnalysis;
+    private PMButton newProject, newMember, logout, viewProject, addUser, viewAssigned, earnedValueAnalysis, pert;
 
     // Create listener
     private ToolsListener toolsListener;
@@ -39,6 +40,7 @@ public class Tools extends JPanel {
 		this.addUser = new PMButton(new ImageIcon(getClass().getResource("/images/assign.png")), true);
 		this.viewAssigned = new PMButton(new ImageIcon(getClass().getResource("/images/view_activities.png")), true);
 		this.earnedValueAnalysis = new PMButton(new ImageIcon(getClass().getResource("/images/view_activities.png")), true);
+		this.pert = new PMButton(new ImageIcon(getClass().getResource("/images/pert.png")), true);
 		
         // Customize buttons
         this.newProject.setContentAreaFilled(false);
@@ -89,10 +91,17 @@ public class Tools extends JPanel {
         this.earnedValueAnalysis.setText("EARNED_VALUE_ANALYSIS");
         this.earnedValueAnalysis.setToolTipText("CALCULATE_EARNED_VALUE_ANALYSIS");
         
+        this.pert.setContentAreaFilled(false);
+        this.pert.setBorder(null);
+        this.pert.setVerticalTextPosition(SwingConstants.BOTTOM);
+        this.pert.setHorizontalTextPosition(SwingConstants.CENTER);
+        this.pert.setText("PERT_CHART");
+        
         // Disable buttons at start
         this.addUser.setEnabled(false);
         this.newMember.setEnabled(false);
         this.earnedValueAnalysis.setEnabled(false);
+//        this.pert.setEnabled(false);
 
         // Add new project listener
         this.newProject.addActionListener(new ActionListener() {
@@ -163,6 +172,15 @@ public class Tools extends JPanel {
                     new EarnedValueAnalysisDialog(parentFrame, toolsListener);
 			}
 		});
+        
+        this.pert.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(toolsListener != null)
+					new PertDialog(parentFrame, toolsListener);
+			}
+		});
 
         // Add components
         int spacing = 20;
@@ -178,6 +196,8 @@ public class Tools extends JPanel {
         this.add(this.addUser);
         this.add(Box.createRigidArea(new Dimension(spacing, 0)));
         this.add(this.earnedValueAnalysis);
+        this.add(Box.createRigidArea(new Dimension(spacing, 0)));
+        this.add(pert);
         this.add(Box.createRigidArea(new Dimension(spacing, 0)));
         this.add(this.logout);
 
@@ -220,6 +240,10 @@ public class Tools extends JPanel {
      */
     public void setEarnedValueAnalysisEnabled(boolean enable) {
         this.earnedValueAnalysis.setEnabled(enable);
+    }
+    
+    public void setPertEnabled(boolean enable) {
+    	this.pert.setEnabled(enable);
     }
 
 }
