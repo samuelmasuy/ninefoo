@@ -22,8 +22,17 @@ public class Graph {
     private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 
     // Variables
+<<<<<<< HEAD
     private int[][] graph, graphReversed, weight;
     private int[] degree, degreeReversed;
+=======
+    protected int[][] graph, weight;
+
+	private int[][] graphReversed;
+    protected int[] degree;
+
+	private int[] degreeReversed;
+>>>>>>> 19ffaedd13de98574ee1bbd46f99f2dcf5e14b83
     private HashMap<Integer, Integer> idMapper;
     private int index = 0;
 
@@ -31,9 +40,9 @@ public class Graph {
     private List<Activity> activityCriticalList = new LinkedList<>();
 
     // Constants
-    private final int UNVISITED = 0;
-    private final int VISITING = 1;
-    private final int VISITED = 2;
+    protected final int UNVISITED = 0;
+    protected final int VISITING = 1;
+    protected final int VISITED = 2;
     private int[] virtualToRealMapping;
 
     /**
@@ -46,8 +55,12 @@ public class Graph {
         // Store graph connection
         this.graph = new int[size][size - 1];
         this.graphReversed = new int[size][size - 1];
+<<<<<<< HEAD
         this.weight = new int[size][size - 1];
 
+=======
+        
+>>>>>>> 19ffaedd13de98574ee1bbd46f99f2dcf5e14b83
         // Store out going edges
         this.degree = new int[size];
         this.degreeReversed = new int[size];
@@ -224,7 +237,7 @@ public class Graph {
         System.out.println();
     }
 
-    private Activity getActivityByVirtualID(int target) {
+    protected Activity getActivityByVirtualID(int target) {
         int realTarget = virtualToRealMapping[target];
         for (Activity activity: this.activityCriticalList) {
            if (activity.getActivityId() == realTarget) {

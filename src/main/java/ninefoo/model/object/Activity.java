@@ -40,6 +40,8 @@ public class Activity {
     private int latestStart;
     private int latestFinish;
     private boolean isCritical; // (LS-ES == 0)
+    private double expectedDuration;
+    private double standardDeviation;
 
     /**
      * This constructor is used when converting DB entities to Java classes.
@@ -72,6 +74,8 @@ public class Activity {
         this.project = project;
         this.member = member;
         this.prerequisites = prerequisites;
+        this.expectedDuration=calculateExpectedDuration();
+        this.standardDeviation=standardDeviation();
     }
 
     /**
@@ -100,6 +104,8 @@ public class Activity {
         this.project = project;
         this.member = member;
         this.prerequisites = prerequisites;
+        this.expectedDuration=calculateExpectedDuration();
+        this.standardDeviation=standardDeviation();
     }
 
     /**
@@ -126,6 +132,8 @@ public class Activity {
         this.memberId = memberId;
         this.prerequisites = prerequisites;
         this.projectId = projectId;
+        this.expectedDuration=calculateExpectedDuration();
+        this.standardDeviation=standardDeviation();
     }
 
     public int getActivityId() {
@@ -364,5 +372,37 @@ public class Activity {
 
 	public void setActualPercentage(int actualPercentage) {
 		this.actualPercentage = actualPercentage;
+	}
+
+	public double getExpectedDuration() {
+		return expectedDuration;
+	}
+
+
+	public double getStandardDeviation() {
+		return standardDeviation;
+	}
+
+	
+	/**
+	 * calculates the expected duration. t = (a + 4m + b) / 6
+	 * @param Activity
+	 * @return Expected Duration
+	 */
+	public double calculateExpectedDuration()
+	{
+		return (
+			   (this.getOptimisticDuration() +  (this.getLikelyDuration() * 4) + this.getPessimisticDuration()) 
+				/ 6	);
+	}
+	/**
+	 * calculates the expected duration. w = (b-a) / 6
+	 * @param Activity
+	 * @return Standard Deviation
+	 */
+	public double standardDeviation()
+	{
+		return (
+			   (this.getPessimisticDuration()- this.getOptimisticDuration()) / 6	);
 	}
 }
