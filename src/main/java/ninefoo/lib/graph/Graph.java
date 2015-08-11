@@ -160,20 +160,33 @@ public class Graph {
     }
 
     public void bfs(boolean forward) {
-        initCriticalPath();
+        int[][] currentGraph;
+        int[] currentDegree;
         Queue<Integer> queue = new LinkedList<>();
+
         int[] visited = new int[degree.length];
+        if (forward) {
+            currentGraph = this.graph;
+            currentDegree = this.degree;
+            initCriticalPathForward();
+            visited[0] = VISITING;
+            queue.offer(0);
+        } else {
+            currentGraph = this.graphReversed;
+            currentDegree = this.degreeReversed;
+            initCriticalPathBackward();
+            visited[currentDegree.length - 1] = VISITING;
+            queue.offer(currentDegree.length - 1);
+        }
 
-        visited[0] = VISITING;
-
-        queue.offer(0);
 
         while (!queue.isEmpty()) {
             int currentPoll = queue.poll();
+            System.out.println("current poll:" + currentPoll);
             visited[currentPoll] = VISITED;
 
-            for (int i = 0; i < degree[currentPoll]; i++) {
-                int neighbour = graph[currentPoll][i];
+            for (int i = 0; i < currentDegree[currentPoll]; i++) {
+                int neighbour = currentGraph[currentPoll][i];
                 setCriticalPath(neighbour, currentPoll, forward);
                 if (visited[neighbour] == UNVISITED) {
                     queue.offer(neighbour);
@@ -183,9 +196,17 @@ public class Graph {
         }
     }
 
-    private void initCriticalPath() {
+    private void initCriticalPathForward() {
         getActivityByVirtualID(0).setEarliestStart(0);
         getActivityByVirtualID(0).setEarliestFinish(getActivityByVirtualID(0).getDuration());
+    }
+
+    private void initCriticalPathBackward() {
+        for (Activity a: activityCriticalList) {
+            a.setLatestFinish(Integer.MAX_VALUE);
+        }
+        getActivityByVirtualID(this.activityCriticalList.size()-1).setLatestFinish(getActivityByVirtualID(this.activityCriticalList.size() - 1).getEarliestFinish());
+        getActivityByVirtualID(this.activityCriticalList.size()-1).setLatestStart(getActivityByVirtualID(this.activityCriticalList.size() - 1).getLatestFinish() - getActivityByVirtualID(this.activityCriticalList.size() - 1).getDuration());
     }
 
     private void setCriticalPath(int neighbour, int current, boolean forward) {
@@ -197,9 +218,13 @@ public class Graph {
             activityCriticalNeighbor.setEarliestStart(Math.max(activityCriticalNeighbor.getEarliestStart(), activityCriticalCurrent.getEarliestFinish()));
             activityCriticalNeighbor.setEarliestFinish(activityCriticalNeighbor.getEarliestStart() + activityCriticalNeighbor.getDuration());
         } else {
-            activityCriticalNeighbor.setLatestFinish(Math.max(activityCriticalNeighbor.getLatestFinish(), activityCriticalCurrent.getEarliestFinish()));
-            activityCriticalNeighbor.setLatestStart(activityCriticalNeighbor.getEarliestStart() + activityCriticalNeighbor.getDuration());
+            System.out.println("neighbor before" + activityCriticalNeighbor);
+            System.out.println("current" + activityCriticalCurrent);
+            activityCriticalNeighbor.setLatestFinish(Math.min(activityCriticalNeighbor.getLatestFinish(), activityCriticalCurrent.getLatestStart()));
+            activityCriticalNeighbor.setLatestStart(activityCriticalNeighbor.getLatestFinish() - activityCriticalNeighbor.getDuration());
+            System.out.println("neighbor after" + activityCriticalNeighbor);
         }
+        System.out.println();
     }
 
     protected Activity getActivityByVirtualID(int target) {
@@ -273,6 +298,11 @@ public class Graph {
     public List<Activity> getActivityCriticalList() {
         return activityCriticalList;
     }
+    public void setCriticalPath() {
+        for (Activity a: activityCriticalList) {
+            a.setIsCritical(a.getLatestFinish() == a.getEarliestFinish());
+        }
+    }
     
     /**
      * Get the list of nodes a depth n
@@ -316,5 +346,4 @@ public class Graph {
     	// Mark visited
     	visited[node] = VISITED;
     }
-    
 }

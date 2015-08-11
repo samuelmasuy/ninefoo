@@ -336,20 +336,20 @@ public class Activity {
     public String toString() {
         return "Activity{" +
                 "activityId=" + activityId +
-                ", activityLabel='" + activityLabel + '\'' +
-                ", description='" + description + '\'' +
+//                ", activityLabel='" + activityLabel + '\'' +
+//                ", description='" + description + '\'' +
                 ", duration=" + duration +
-                ", optimisticDuration=" + optimisticDuration +
-                ", likelyDuration=" + likelyDuration +
-                ", pessimisticDuration=" + pessimisticDuration +
-                ", createDate=" + createDate +
-                ", startDate=" + startDate +
-                ", updateDate=" + updateDate +
-                ", finishDate=" + finishDate +
-                ", project=" + project +
-                ", member=" + member +
-                ", projectId=" + projectId +
-                ", memberId=" + memberId +
+//                ", optimisticDuration=" + optimisticDuration +
+//                ", likelyDuration=" + likelyDuration +
+//                ", pessimisticDuration=" + pessimisticDuration +
+//                ", createDate=" + createDate +
+//                ", startDate=" + startDate +
+//                ", updateDate=" + updateDate +
+//                ", finishDate=" + finishDate +
+//                ", project=" + project +
+//                ", member=" + member +
+//                ", projectId=" + projectId +
+//                ", memberId=" + memberId +
                 ", earliestStart=" + earliestStart +
                 ", earliestFinish=" + earliestFinish +
                 ", latestStart=" + latestStart +
