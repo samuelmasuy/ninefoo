@@ -1,12 +1,15 @@
 package ninefoo.lib.graph;
 
 import ninefoo.model.object.Activity;
+
 import org.apache.logging.log4j.LogManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * Adjacency list graph.
@@ -287,6 +290,7 @@ public class Graph {
         }
         return output;
     }
+    
     public List<Activity> getActivityCriticalList() {
         return activityCriticalList;
     }
@@ -294,5 +298,48 @@ public class Graph {
         for (Activity a: activityCriticalList) {
             a.setIsCritical(a.getLatestFinish() == a.getEarliestFinish());
         }
+    }
+    
+    /**
+     * Get the list of nodes a depth n
+     * @param n
+     * @return List
+     */
+    public List<Integer> nDepth(int n) {
+    	List<Integer> list = new ArrayList<>();
+    	int[] visited = new int[degree.length];
+    	_nDepth(list, n, 0, visited);
+    	return list;
+    }
+    
+    /**
+     * Recursive method to get the element at level n
+     * @param list
+     * @param nDepth
+     * @param node
+     * @param visited
+     */
+    private void _nDepth(List<Integer> list, int nDepth, int node, int[] visited){
+    	
+    	// Mark visiting
+    	visited[node] = VISITING;
+    	
+    	// Check the depth
+    	if(nDepth == 0){
+    		list.add(node);
+    		return;
+    	}
+    	
+    	// Loop on neightbors
+    	for(int i=0; i<degree[node]; i++){
+    		
+    		int neighbor = graph[node][i];
+    		if(visited[neighbor] == UNVISITED) {
+    			_nDepth(list, nDepth-1, neighbor, visited);
+    		}
+    	}
+    	
+    	// Mark visited
+    	visited[node] = VISITED;
     }
 }
