@@ -19,6 +19,16 @@
     "ASSIGN_USERS_TO_THE_PROJECT_PRO": "Assign users to the project",
     "ROLE_PRO": "Role",
 	"EARNED_VALUE_ANALYSIS" : "Earned Value Analysis",
-	"CALCULATE_EARNED_VALUE_ANALYSIS" : "Calculate earned value analysis"
+	"CALCULATE_EARNED_VALUE_ANALYSIS" : "Calculate earned value analysis",
+	"PLANNED_COST_PRO" : "Total cost",
+	"PV_PRO" : "Planned value",
+	"AC_PRO" : "Actual cost",
+	"EV_PRO" : "Earned value",
+	"COST_VARIANCE_PRO" : "Cost variance",
+	"SCHEDULE_VARIANCE_PRO" : "Schedule variance",
+	"CPI_PRO" : "Cost performance index",
+	"SPI_PRO" : "Schedule performance index",
+	"EAC_PRO" : "Estimate at completion",
+	"ETC_PRO" : "Estimate to complete"
   }
 }
