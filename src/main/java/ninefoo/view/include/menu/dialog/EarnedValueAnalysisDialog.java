@@ -37,6 +37,10 @@ public class EarnedValueAnalysisDialog extends CenterScrollSouthButtonDialog {
     private JLabel spi;
     private JLabel EAC;
     private JLabel ETC;
+    private JLabel costVariancePerformance;
+    private JLabel scheduleVariancePerformance;
+    private JLabel cpiPerformance;
+    private JLabel spiPerformance;
     
     /**
      * Constructor
@@ -56,6 +60,10 @@ public class EarnedValueAnalysisDialog extends CenterScrollSouthButtonDialog {
         this.spi = new JLabel();
         this.EAC = new JLabel();
         this.ETC = new JLabel();
+        this.costVariancePerformance = new JLabel();
+        this.scheduleVariancePerformance = new JLabel();
+        this.cpiPerformance = new JLabel();
+        this.spiPerformance = new JLabel();
         
         // Set title
         this.setTitle(LanguageText.getConstant("EARNED_VALUE_ANALYSIS"));
@@ -108,18 +116,23 @@ public class EarnedValueAnalysisDialog extends CenterScrollSouthButtonDialog {
                 this.table.newRow();
                 this.table.put(new PMLabel("COST_VARIANCE_PRO"));
                 this.table.put(costVariance);
+                this.table.put(costVariancePerformance);
 
                 this.table.newRow();
                 this.table.put(new PMLabel("SCHEDULE_VARIANCE_PRO"));
                 this.table.put(scheduleVariance);
+                this.table.put(scheduleVariancePerformance);
 
                 this.table.newRow();
                 this.table.put(new PMLabel("CPI_PRO"));
                 this.table.put(cpi);
+                this.table.put(cpiPerformance);
 
                 this.table.newRow();
                 this.table.put(new PMLabel("SPI_PRO"));
                 this.table.put(spi);
+                this.table.put(spiPerformance);
+
 
                 this.table.newRow();
                 this.table.put(new PMLabel("EAC_PRO"));
@@ -136,7 +149,7 @@ public class EarnedValueAnalysisDialog extends CenterScrollSouthButtonDialog {
         this.southPanel.add(this.closeButton);
 
         // Configure dialog
-        this.setSize(new Dimension(400, 500));
+        this.setSize(new Dimension(550, 500));
         this.setLocationRelativeTo(parentFrame);
         this.setResizable(false);
         this.setVisible(true);
@@ -158,5 +171,30 @@ public class EarnedValueAnalysisDialog extends CenterScrollSouthButtonDialog {
     	this.spi.setText(String.format("%.2f" ,project.getSpi()));
     	this.EAC.setText(String.format("%.2f" ,project.getEAC()));
     	this.ETC.setText(String.format("%.2f" ,project.getETC()));
+    	
+    	double costVar = project.getCostVariance();
+    	double schedVar = project.getScheduleVariance();
+    	double spiVar = project.getSpi();
+    	double cpiVar = project.getCpi();
+    	
+    	if (costVar > 0){
+    		this.costVariancePerformance.setText(LanguageText.getConstant("UNDER_BUDGET"));
+    	} else if (costVar < 0) {
+    		this.costVariancePerformance.setText(LanguageText.getConstant("OVER_BUDGET"));
+    	} else {
+    		this.costVariancePerformance.setText(LanguageText.getConstant("ON_BUDGET"));
+    	}
+    	
+    	if (schedVar > 0){
+    		this.scheduleVariancePerformance.setText(LanguageText.getConstant("AHEAD_SCHEDULE"));
+    	} else if (schedVar < 0) {
+    		this.scheduleVariancePerformance.setText(LanguageText.getConstant("BEHIND_SCHEDULE"));
+    	} else {
+    		this.scheduleVariancePerformance.setText(LanguageText.getConstant("ON_SCHEDULE"));
+    	}
+    	
+    	this.cpiPerformance.setText(String.format(LanguageText.getConstant("EARNING_FOR_SPENT"), String.format("%.2f", cpiVar)));
+    	this.spiPerformance.setText(String.format("Current status is " + String.format("%.2f", (spiVar * 100)) + "%% of what was planned"));
+    
     }
 }

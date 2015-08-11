@@ -29,7 +29,15 @@
 	"CPI_PRO" : "Cost performance index",
 	"SPI_PRO" : "Schedule performance index",
 	"EAC_PRO" : "Estimate at completion",
-	"ETC_PRO" : "Estimate to complete"
+	"ETC_PRO" : "Estimate to complete",
+	"UNDER_BUDGET" : "Under budget",
+	"OVER_BUDGET" : "Over budget",
+	"ON_BUDGET" : "On budget",
+	"AHEAD_SCHEDULE" : "Ahead of schedule",
+	"BEHIND_SCHEDULE" : "Behind schedule",
+	"ON_SCHEDULE" : "On schedule",
+	"EARNING_FOR_SPENT" : "Earning $%s for each $1.00 spent"
+
 
   }
 }
