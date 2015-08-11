@@ -67,6 +67,7 @@ public class MainView extends JFrame implements UpdatableView {
     private ViewActivityDetailsDialog viewActivityDetailsDialog;
     private EarnedValueAnalysisDialog earnedValueAnalysisDialog;
     private ActivityOnNodeDialog activityOnNodeDialog;
+    private PertDialog pertDialog;
     
     // Define variables
     private JPanel currentCenterPanel;
@@ -102,10 +103,10 @@ public class MainView extends JFrame implements UpdatableView {
         this.setJMenuBar(menu);
 
         // By default, load login view
-        Session.getInstance().open();
-        Session.getInstance().setUserId(1);
-        this.loadView(tableChartPanel);
-//		this.loadView(loginPanel);
+//        Session.getInstance().open();
+//        Session.getInstance().setUserId(1);
+//        this.loadView(tableChartPanel);
+		this.loadView(loginPanel);
 
         // Add listener to login panel
         this.loginPanel.setLoginListener(new LoginListener() {
@@ -332,6 +333,14 @@ public class MainView extends JFrame implements UpdatableView {
 				if(projectListener != null)
 					projectListener.loadProject(projectId);
 				
+			}
+
+			@Override
+			public void loadProjectForPert(PertDialog dialog, int projectId) {
+				pertDialog = dialog;
+				
+				if(projectListener != null)
+					projectListener.loadProject(projectId);
 			}
         });
 
@@ -602,6 +611,8 @@ public class MainView extends JFrame implements UpdatableView {
         this.toolsPanel.setNewMemberEnabled(false);
         this.toolsPanel.setAddUserEnabled(false);
         this.toolsPanel.setEarnedValueAnalysisEnabled(false);
+        this.toolsPanel.setPertEnabled(false);
+        this.toolsPanel.setActivityOnNodeEnabled(false);
         this.tableChartPanel.setProject(null);
         this.tableChartPanel.setVisibleToolbar(false);
         LOGGER.info("Logout successful");
@@ -724,6 +735,8 @@ public class MainView extends JFrame implements UpdatableView {
                 this.toolsPanel.setAddUserEnabled(true);
                 this.toolsPanel.setEarnedValueAnalysisEnabled(true);
                 this.tableChartPanel.setAddActivityEnabled(true);
+//                this.toolsPanel.setActivityOnNodeEnabled(true);
+                this.toolsPanel.setPertEnabled(true);
 
                 // Enable tool bar below table
                 this.tableChartPanel.setVisibleToolbar(true);
@@ -822,6 +835,16 @@ public class MainView extends JFrame implements UpdatableView {
         	}
         	
         	activityOnNodeDialog = null;
+        
+        } else if(pertDialog != null){
+        	if(success) {
+        		pertDialog.setProject(project);
+        	
+        	} else {
+        		pertDialog.setErrorMessage(message);
+        	}
+        	
+        	pertDialog = null;
         }
     }
 

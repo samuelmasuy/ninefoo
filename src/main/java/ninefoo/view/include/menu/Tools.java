@@ -103,13 +103,14 @@ public class Tools extends JPanel {
         this.activityOnNode.setVerticalTextPosition(SwingConstants.BOTTOM);
         this.activityOnNode.setHorizontalTextPosition(SwingConstants.CENTER);
         this.activityOnNode.setText("ACTIVITY_CHART");
+        this.activityOnNode.setVisible(false);
         
         // Disable buttons at start
         this.addUser.setEnabled(false);
         this.newMember.setEnabled(false);
         this.earnedValueAnalysis.setEnabled(false);
-//        this.pert.setEnabled(false);
-//        this.activityOnNode.setEnabled(false);
+        this.pert.setEnabled(false);
+        this.activityOnNode.setEnabled(false);
         
 
         // Add new project listener
@@ -265,5 +266,8 @@ public class Tools extends JPanel {
     public void setPertEnabled(boolean enable) {
     	this.pert.setEnabled(enable);
     }
-
+    
+    public void setActivityOnNodeEnabled(boolean enable) {
+    	this.activityOnNode.setEnabled(enable);
+    }
 }
