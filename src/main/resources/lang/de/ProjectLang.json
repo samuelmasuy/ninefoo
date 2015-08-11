@@ -17,6 +17,9 @@
     "ADD_USER_SUCCESS_PRO": "Die Mitglied erfolgreich hinzugefügt",
     "ADD_USER_FAIL_PRO": "User bereits vergeben!",
     "ASSIGN_USERS_TO_THE_PROJECT_PRO": "Ordnen Sie Benutzer für das Projekt",
-    "ROLE_PRO": "Rolle"
+    "ROLE_PRO": "Rolle",
+    "EARNED_VALUE_ANALYSIS" : "Fortschrittsanalyse",
+    "CALCULATE_EARNED_VALUE_ANALYSIS" : "Berechnung Fortschrittsanalyse"
+
   }
 }

@@ -17,6 +17,9 @@
     "ADD_USER_SUCCESS_PRO": "Utilisateur a bien ete ajoute au projet.",
     "ADD_USER_FAIL_PRO": "Utilisateur fait deja parti du projet",
     "ASSIGN_USERS_TO_THE_PROJECT_PRO": "Assigner utilisateur au projet",
-    "ROLE_PRO": "Role"
+    "ROLE_PRO": "Role",
+    "EARNED_VALUE_ANALYSIS" : "Analyse valeur acquise",
+    "CALCULATE_EARNED_VALUE_ANALYSIS" : "Calculer analyse valeur acquise"
+
   }
 }
