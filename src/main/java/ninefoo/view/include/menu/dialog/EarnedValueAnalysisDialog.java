@@ -90,43 +90,43 @@ public class EarnedValueAnalysisDialog extends CenterScrollSouthButtonDialog {
                 this.table.put(projectLabel);
 
                 this.table.newRow();
-                this.table.put(new PMLabel("COST"));
+                this.table.put(new PMLabel("PLANNED_COST_PRO"));
                 this.table.put(totalCost);
 
                 this.table.newRow();
-                this.table.put(new PMLabel("PV"));
+                this.table.put(new PMLabel("PV_PRO"));
                 this.table.put(totalPV);
 
                 this.table.newRow();
-                this.table.put(new PMLabel("AC"));
+                this.table.put(new PMLabel("AC_PRO"));
                 this.table.put(totalAC);
 
                 this.table.newRow();
-                this.table.put(new PMLabel("EV"));
+                this.table.put(new PMLabel("EV_PRO"));
                 this.table.put(totalEV);
 
                 this.table.newRow();
-                this.table.put(new PMLabel("COST_VARIANCE"));
+                this.table.put(new PMLabel("COST_VARIANCE_PRO"));
                 this.table.put(costVariance);
 
                 this.table.newRow();
-                this.table.put(new PMLabel("SCHEDULE_VARIANCE"));
+                this.table.put(new PMLabel("SCHEDULE_VARIANCE_PRO"));
                 this.table.put(scheduleVariance);
 
                 this.table.newRow();
-                this.table.put(new PMLabel("CPI"));
+                this.table.put(new PMLabel("CPI_PRO"));
                 this.table.put(cpi);
 
                 this.table.newRow();
-                this.table.put(new PMLabel("SPI"));
+                this.table.put(new PMLabel("SPI_PRO"));
                 this.table.put(spi);
 
                 this.table.newRow();
-                this.table.put(new PMLabel("EAC"));
+                this.table.put(new PMLabel("EAC_PRO"));
                 this.table.put(EAC);
                 
                 this.table.newRow();
-                this.table.put(new PMLabel("ETC"));
+                this.table.put(new PMLabel("ETC_PRO"));
                 this.table.put(ETC);
 
             }

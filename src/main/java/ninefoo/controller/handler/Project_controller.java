@@ -6,6 +6,7 @@ import ninefoo.config.Database;
 import ninefoo.config.RoleNames;
 import ninefoo.config.Session;
 import ninefoo.controller.handler.template.AbstractController;
+import ninefoo.controller.logic.EarnedValueAnalysis;
 import ninefoo.helper.DateHelper;
 import ninefoo.lib.lang.LanguageText;
 import ninefoo.lib.validationForm.ValidationForm;
@@ -350,6 +351,9 @@ public class Project_controller extends AbstractController implements ProjectLis
 		
 		// TODO: Do the calculation
 		Project project = project_model.getProjectById(projectId);
+		
+		EarnedValueAnalysis eva = new EarnedValueAnalysis(project);
+		
 		
 		this.view.updateLoadEarnedValueData(true, null, project);
 	}

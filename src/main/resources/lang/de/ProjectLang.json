@@ -19,7 +19,17 @@
     "ASSIGN_USERS_TO_THE_PROJECT_PRO": "Ordnen Sie Benutzer für das Projekt",
     "ROLE_PRO": "Rolle",
     "EARNED_VALUE_ANALYSIS" : "Fortschrittsanalyse",
-    "CALCULATE_EARNED_VALUE_ANALYSIS" : "Berechnung Fortschrittsanalyse"
+    "CALCULATE_EARNED_VALUE_ANALYSIS" : "Berechnung Fortschrittsanalyse",
+	"PLANNED_COST_PRO" : "Total cost",
+	"PV_PRO" : "Planned value",
+	"AC_PRO" : "Actual cost",
+	"EV_PRO" : "Earned value",
+	"COST_VARIANCE_PRO" : "Cost variance",
+	"SCHEDULE_VARIANCE_PRO" : "Schedule variance",
+	"CPI_PRO" : "Cost performance index",
+	"SPI_PRO" : "Schedule performance index",
+	"EAC_PRO" : "Estimate at completion",
+	"ETC_PRO" : "Estimate to complete"
 
   }
 }
