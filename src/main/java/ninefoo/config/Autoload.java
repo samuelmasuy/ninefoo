@@ -114,7 +114,7 @@ public class Autoload {
         LOGGER.info(String.format("Roles %s added to the database", rolesCreated));
     }
 
-    @AutoloadAtRuntime(active = false, priority = 2)
+    @AutoloadAtRuntime(active = true, priority = 2)
     public void addDummyProject() {
         Project_model project_model = new Project_model();
         int id = project_model.insertNewProject(new Project("Amir", Double.valueOf(100), null, null, null));
