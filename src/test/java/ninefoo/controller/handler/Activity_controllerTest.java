@@ -28,10 +28,25 @@ import static org.junit.Assert.assertTrue;
  */
 public class Activity_controllerTest {
 
-
+	static Activity_model activity_model;
+	static Member member;
+	static Project project;
+	static Project_model project_model;
+	static Member_model member_model;
+	
+	
+	private Activity activity2;
+	
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
         Config.autoload();
+        activity_model = new Activity_model();
+        Session.getInstance().open();
+        Session.getInstance().setUserId(1);
+        
+        member = member_model.getMemberById(1);
+        project = project_model.getProjectById(1);
+        
     }
 
     @Before
