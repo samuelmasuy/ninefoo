@@ -20,16 +20,24 @@
     "ROLE_PRO": "Role",
     "EARNED_VALUE_ANALYSIS" : "Analyse valeur acquise",
     "CALCULATE_EARNED_VALUE_ANALYSIS" : "Calculer analyse valeur acquise",
-	"PLANNED_COST_PRO" : "Total cost",
-	"PV_PRO" : "Planned value",
-	"AC_PRO" : "Actual cost",
-	"EV_PRO" : "Earned value",
-	"COST_VARIANCE_PRO" : "Cost variance",
-	"SCHEDULE_VARIANCE_PRO" : "Schedule variance",
-	"CPI_PRO" : "Cost performance index",
-	"SPI_PRO" : "Schedule performance index",
-	"EAC_PRO" : "Estimate at completion",
-	"ETC_PRO" : "Estimate to complete"
+	"PLANNED_COST_PRO" : "Cout total",
+	"PV_PRO" : "Valeur planifie",
+	"AC_PRO" : "Cout actuel",
+	"EV_PRO" : "Valeur acquise",
+	"COST_VARIANCE_PRO" : "Variance de cout",
+	"SCHEDULE_VARIANCE_PRO" : "Variance d'horaire",
+	"CPI_PRO" : "Index cout performance",
+	"SPI_PRO" : "Index horaire performance",
+	"EAC_PRO" : "Estimation a completion",
+	"ETC_PRO" : "Estimation pour completer",
+	"UNDER_BUDGET" : "Under budget",
+	"OVER_BUDGET" : "Over budget",
+	"ON_BUDGET" : "On budget",
+	"AHEAD_SCHEDULE" : "Ahead of schedule",
+	"BEHIND_SCHEDULE" : "Behind schedule",
+	"ON_SCHEDULE" : "On schedule",
+	"EARNING_FOR_SPENT" : "Earning $%s for each $1.00 spent"
+
 
 
   }

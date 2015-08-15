@@ -403,6 +403,6 @@ public class Activity {
 	public double standardDeviation()
 	{
 		return (
-			   (this.getPessimisticDuration()- this.getOptimisticDuration()) / 6	);
+			   (this.getPessimisticDuration()- this.getOptimisticDuration()) / 6.0	);
 	}
 }

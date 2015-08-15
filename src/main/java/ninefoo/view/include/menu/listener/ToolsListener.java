@@ -27,7 +27,8 @@ public interface ToolsListener {
     public void loadAllMembersForAddUserToProjectDialog(AddUserToProjectDialog dialog);
     public void loadAssignedActivitiesProject(ViewAssignedActivitiesDialog dialog);
     public void loadEarnedValueData(EarnedValueAnalysisDialog dialog, int projectId);
-    
+	public void loadProjectForPert(PertDialog pertDialog, int projectId);
+
     // Update
     public void updateProject(ViewMyProjectsDialog parentDialog, EditProjectDialog dialog, int projectId, String name, String budget, String startDate, String deadline, String description);
 
@@ -37,6 +38,7 @@ public interface ToolsListener {
     
     // Logout
     public void logout();
+
 
 
 }
