@@ -4,6 +4,9 @@ import junit.framework.TestCase;
 import ninefoo.config.Database;
 import ninefoo.config.Session;
 import ninefoo.helper.DateHelper;
+import ninefoo.model.object.Activity;
+import ninefoo.model.object.Member;
+import ninefoo.model.object.Project;
 import ninefoo.model.sql.Activity_model;
 import ninefoo.model.sql.Member_model;
 import ninefoo.model.sql.Project_model;
@@ -25,20 +28,17 @@ public class ActivityTest extends TestCase {
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
         ninefoo.config.Config.autoload();
-        activity_model = new Activity_model();
-        member_model = new Member_model();
-        project_model = new Project_model();
-        activity_model = new Activity_model();
         Session.getInstance().open();
         Session.getInstance().setUserId(1);
-
-        member = member_model.getMemberById(1);
-        project = project_model.getProjectById(1);
-
     }
 
     @Before
     public void setUp() throws Exception {
+        activity_model = new Activity_model();
+        member_model = new Member_model();
+        project_model = new Project_model();
+        member = member_model.getMemberById(1);
+        project = project_model.getProjectById(1);
     }
 
     @Test

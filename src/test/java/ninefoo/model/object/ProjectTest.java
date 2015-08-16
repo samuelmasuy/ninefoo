@@ -7,6 +7,8 @@ import ninefoo.config.Session;
 import ninefoo.controller.handler.Project_controller;
 import ninefoo.helper.DateHelper;
 import ninefoo.lib.lang.LanguageText;
+import ninefoo.model.object.Member;
+import ninefoo.model.object.Project;
 import ninefoo.model.sql.Member_model;
 import ninefoo.model.sql.Project_model;
 import org.junit.Before;
@@ -26,16 +28,16 @@ public class ProjectTest extends TestCase {
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
         ninefoo.config.Config.autoload();
-        member_model = new Member_model();
-        project_model = new Project_model();
         Session.getInstance().open();
         Session.getInstance().setUserId(1);
 
-        member = member_model.getMemberById(1);
     }
 
     @Before
     public void setUp() throws Exception {
+        member_model = new Member_model();
+        project_model = new Project_model();
+        member = member_model.getMemberById(1);
     }
 
     @Test
