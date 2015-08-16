@@ -57,7 +57,7 @@ public class LanguageText {
      *
      * @param className
      */
-    private void addLanguageToInstance(String className) {
+    private boolean addLanguageToInstance(String className) {
 
         // Load class
         for (String language : languages) {
@@ -76,14 +76,17 @@ public class LanguageText {
                     iter.remove();
                 }
                 LOGGER.info(String.format("\"%s\" version of \"%s\" was loaded succesfully!", language, lang.name));
+                return true;
             } catch (JsonParseException e) {
                 LOGGER.error(String.format("Parsing error in language file: '%s'", classPath));
             } catch (JsonMappingException e) {
                 LOGGER.error(String.format("Mapping error in language file: '%s'", classPath));
+                
             } catch (IOException e) {
                 LOGGER.error(String.format("Error loading language file: '%s'", classPath));
             }
         }
+        return false;
     }
 
     /**
@@ -91,8 +94,8 @@ public class LanguageText {
      *
      * @param className
      */
-    public static void addLanguage(String className) {
-        LanguageText.instance.addLanguageToInstance(className);
+    public static boolean addLanguage(String className) {
+    	return LanguageText.instance.addLanguageToInstance(className);
     }
 
     /**

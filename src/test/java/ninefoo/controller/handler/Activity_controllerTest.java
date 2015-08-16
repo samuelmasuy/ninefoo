@@ -12,6 +12,8 @@ import ninefoo.model.object.Project;
 import ninefoo.model.sql.Activity_model;
 import ninefoo.model.sql.Member_model;
 import ninefoo.model.sql.Project_model;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -116,5 +118,47 @@ public class Activity_controllerTest {
         assertEquals("load unknown activity method", "updateLoadActivity", mockUpdatableView.get_called_method());
         assertEquals("load unknown activity success", "false", mockUpdatableView.get_success());
         assertEquals("load unknown activity message", LanguageText.getConstant("ERROR_OCCURED"), mockUpdatableView.get_message());
+    }
+    
+    @Test
+    public void testCreateActivity_invalid_input() {
+    	activity_controller.createActivity("", "", "1", "13", "10", "9", "-1", "17/08/2015", "16/08/2015", 1, new int[]{});
+        assertEquals("create unknown activity method", "updateCreateActivity", mockUpdatableView.get_called_method());
+        assertEquals("create unknown activity success", "false", mockUpdatableView.get_success());
+        assertEquals("create unknown activity message","Activity label is required.<br>Start should be at most 16/08/2015<br>Cost number is smaller than minimum value of 0",mockUpdatableView.get_message());
+    }
+    
+    @Test
+    public void testCreateActivity_success_creation() {
+    	activity_controller.createActivity("Activity A", "", "14", "13", "10", "9", "1", DateHelper.format(DateHelper.getDateRelativeToToday(0), Config.DATE_FORMAT_SHORT), DateHelper.format(DateHelper.getDateRelativeToToday(1), Config.DATE_FORMAT_SHORT), 1, new int[]{});
+        assertEquals("create unknown activity method", "updateCreateActivity", mockUpdatableView.get_called_method());
+        assertEquals("create unknown activity success", "true", mockUpdatableView.get_success());
+        assertEquals("create unknown activity success", String.format(LanguageText.getConstant("CREATED"), LanguageText.getConstant("ACTIVITY_ACT")), mockUpdatableView.get_message());
+    }
+    
+    @Test
+    public void testEditActivity_invalid_input() {
+    	activity_controller.editActivity(1, "", "", "1", "13", "10", "9", "-1", "17/08/2015", "16/08/2015", 1, new int[]{},"","");
+        assertEquals("edit unknown activity method", "updateEditActivity", mockUpdatableView.get_called_method());
+        assertEquals("edit unknown activity success", "false", mockUpdatableView.get_success());
+        assertEquals("edit unknown activity message","Activity label is required.<br>Start should be at most 16/08/2015<br>Cost number is smaller than minimum value of 0",mockUpdatableView.get_message());
+    }
+    
+    @Test
+    public void testCreateActivity_success_edit() {
+    	activity_controller.editActivity(1, "Activity A", "Desc", "1", "13", "10", "9", "10", DateHelper.format(DateHelper.getDateRelativeToToday(0), Config.DATE_FORMAT_SHORT), DateHelper.format(DateHelper.getDateRelativeToToday(1), Config.DATE_FORMAT_SHORT), 1, new int[]{},"10","50");
+        assertEquals("edit unknown activity method", "updateEditActivity", mockUpdatableView.get_called_method());
+        assertEquals("edit unknown activity success", "true", mockUpdatableView.get_success());
+        assertEquals("edit unknown activity success", String.format(LanguageText.getConstant("UPDATED"), LanguageText.getConstant("ACTIVITY_ACT")), mockUpdatableView.get_message());
+    }
+    
+    @Test
+    public void testCreateActivity_success_edit_with_at_least_two_activities_in_database() {
+    	activity_controller.createActivity("Activity A", "", "14", "13", "10", "9", "1", DateHelper.format(DateHelper.getDateRelativeToToday(0), Config.DATE_FORMAT_SHORT), DateHelper.format(DateHelper.getDateRelativeToToday(1), Config.DATE_FORMAT_SHORT), 1, new int[]{});
+    	activity_controller.createActivity("Activity B", "", "14", "13", "10", "9", "1", DateHelper.format(DateHelper.getDateRelativeToToday(0), Config.DATE_FORMAT_SHORT), DateHelper.format(DateHelper.getDateRelativeToToday(1), Config.DATE_FORMAT_SHORT), 1, new int[]{});
+    	activity_controller.editActivity(2, "Activity A", "Desc", "1", "13", "10", "9", "10", DateHelper.format(DateHelper.getDateRelativeToToday(0), Config.DATE_FORMAT_SHORT), DateHelper.format(DateHelper.getDateRelativeToToday(1), Config.DATE_FORMAT_SHORT), 1, new int[]{1},"10","50");
+        assertEquals("edit unknown activity method", "updateEditActivity", mockUpdatableView.get_called_method());
+        assertEquals("edit unknown activity success", "true", mockUpdatableView.get_success());
+        assertEquals("edit unknown activity success", String.format(LanguageText.getConstant("UPDATED"), LanguageText.getConstant("ACTIVITY_ACT")), mockUpdatableView.get_message());
     }
 }

@@ -2,7 +2,10 @@ package ninefoo.controller.handler;
 
 import ninefoo.Mocks.MockUpdatableView;
 import ninefoo.config.Config;
+import ninefoo.config.RoleNames;
+import ninefoo.helper.DateHelper;
 import ninefoo.lib.lang.LanguageText;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -128,5 +131,41 @@ public class Project_controllerTest {
         assertEquals("load edit project with invalid project id method", "updateLoadEditProjectFields", mockUpdatableView.get_called_method());
         assertEquals("load edit project with invalid project id success", "false", mockUpdatableView.get_success());
         assertEquals("load edit project with invalid project id message", LanguageText.getConstant("ERROR_OCCURED"), mockUpdatableView.get_message());
+    }
+    
+    @Test
+    public void testCreateProject_invalid_input() {
+    	project_controller.createProject("", "Budget", "17/08/2015", "16/08/2015", "");
+        assertEquals("create project with invalid project id method", "updateCreateProject", mockUpdatableView.get_called_method());
+        assertEquals("create project with invalid project id success", "false", mockUpdatableView.get_success());
+        assertEquals("create project with invalid project id message", "Name is required.<br>Budget is not valid.<br>Start date should be at most 16/08/2015", mockUpdatableView.get_message());
+    }
+    
+    @Test
+    public void testCreateProject_success_creation() {
+    	project_controller.createProject("Project A", "1", DateHelper.format(DateHelper.getDateRelativeToToday(0), Config.DATE_FORMAT_SHORT), DateHelper.format(DateHelper.getDateRelativeToToday(1), Config.DATE_FORMAT_SHORT), "Description");
+        assertEquals("create project with invalid project id method", "updateCreateProject", mockUpdatableView.get_called_method());
+        assertEquals("create project with invalid project id success", "true", mockUpdatableView.get_success());
+        assertEquals("create project with invalid project id message", String.format(LanguageText.getConstant("CREATED"), LanguageText.getConstant("PROJECT")), mockUpdatableView.get_message());
+    }
+    
+    @Test
+    public void testLoadProject_no_dialog() {
+    	project_controller.loadProject(-1);
+        assertEquals("create project with invalid project id method", "updateLoadProject", mockUpdatableView.get_called_method());
+        assertEquals("create project with invalid project id success", "false", mockUpdatableView.get_success());
+        assertEquals("create project with invalid project id message", LanguageText.getConstant("ERROR_OCCURED"), mockUpdatableView.get_message());
+    }
+    
+    @Test
+    public void testLoadProject_by_manager_role_success() {
+    	project_controller.loadAllProjectsByMemberAndRole(1, RoleNames.MANAGER);
+        assertEquals("load projects for a member with Manager role", "updateLoadAllProjectsByMemberAndRole", mockUpdatableView.get_called_method());
+    }
+    
+    @Test
+    public void testLoadProject_by_member_role_success() {
+    	project_controller.loadAllProjectsByMemberAndRole(1, RoleNames.MEMBER);
+        assertEquals("load projects for a member with member role", "updateLoadAllProjectsByMemberAndRole", mockUpdatableView.get_called_method());
     }
 }
