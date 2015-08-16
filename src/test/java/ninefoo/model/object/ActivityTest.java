@@ -4,9 +4,6 @@ import junit.framework.TestCase;
 import ninefoo.config.Database;
 import ninefoo.config.Session;
 import ninefoo.helper.DateHelper;
-import ninefoo.model.object.Activity;
-import ninefoo.model.object.Member;
-import ninefoo.model.object.Project;
 import ninefoo.model.sql.Activity_model;
 import ninefoo.model.sql.Member_model;
 import ninefoo.model.sql.Project_model;
@@ -16,6 +13,8 @@ import org.junit.Test;
 
 /**
  * Created by samuel on 2015-08-15.
+ * <p/>
+ * Black box testing for createActiviy and updateActivity.
  */
 public class ActivityTest extends TestCase {
 

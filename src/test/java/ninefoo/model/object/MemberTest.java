@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  * Created by samuel on 2015-08-15.
- *
+ * <p/>
  * Black box testing for createMember.
  */
 public class MemberTest extends TestCase {

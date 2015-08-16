@@ -7,8 +7,6 @@ import ninefoo.config.Session;
 import ninefoo.controller.handler.Project_controller;
 import ninefoo.helper.DateHelper;
 import ninefoo.lib.lang.LanguageText;
-import ninefoo.model.object.Member;
-import ninefoo.model.object.Project;
 import ninefoo.model.sql.Member_model;
 import ninefoo.model.sql.Project_model;
 import org.junit.Before;
@@ -17,6 +15,8 @@ import org.junit.Test;
 
 /**
  * Created by samuel on 2015-08-15.
+ * <p/>
+ * Black Box testing for Create and Update Project.
  */
 public class ProjectTest extends TestCase {
     private MockUpdatableView mockUpdatableView = new MockUpdatableView();
