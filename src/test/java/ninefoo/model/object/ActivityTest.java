@@ -26,13 +26,13 @@ public class ActivityTest extends TestCase {
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        ninefoo.config.Config.autoload();
         Session.getInstance().open();
         Session.getInstance().setUserId(1);
     }
 
     @Before
     public void setUp() throws Exception {
+    	ninefoo.config.Config.autoload();
         activity_model = new Activity_model();
         member_model = new Member_model();
         project_model = new Project_model();
