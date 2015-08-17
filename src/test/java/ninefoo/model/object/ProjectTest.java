@@ -41,7 +41,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_successful() throws Exception {
+    public void testInsertNewProject_successful() throws Exception {
         project_controller = new Project_controller(mockUpdatableView);
         project_controller.createProject("name", "0", "1/1/1111", "1/1/1112", "description");
         assertEquals("project is successful method", "updateCreateProject", mockUpdatableView.get_called_method());
@@ -50,7 +50,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_no_name() throws Exception {
+    public void testInsertNewProject_no_name() throws Exception {
         project_controller = new Project_controller(mockUpdatableView);
         project_controller.createProject("", "0", "1/1/1112", "1/1/1112", "description");
         assertEquals("project has no name method", "updateCreateProject", mockUpdatableView.get_called_method());
@@ -59,7 +59,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_no_description() throws Exception {
+    public void testInsertNewProject_no_description() throws Exception {
         project_controller = new Project_controller(mockUpdatableView);
         project_controller.createProject("foo", "0", "1/1/1112", "1/1/1115", "");
         assertEquals("project has no description method", "updateCreateProject", mockUpdatableView.get_called_method());
@@ -68,7 +68,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_invalid_budget() throws Exception {
+    public void testInsertNewProject_invalid_budget() throws Exception {
         project_controller = new Project_controller(mockUpdatableView);
         project_controller.createProject("foo", "0periwoq", "1/1/1112", "1/1/1115", "");
         assertEquals("project has invalid budget method", "updateCreateProject", mockUpdatableView.get_called_method());
@@ -77,7 +77,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_end_earlier_than_start() throws Exception {
+    public void testInsertNewProject_end_earlier_than_start() throws Exception {
         project_controller = new Project_controller(mockUpdatableView);
         project_controller.createProject("foo", "0", "1/1/1114", "1/1/1112", "description");
         assertEquals("project deadline do not make sense method", "updateCreateProject", mockUpdatableView.get_called_method());
@@ -86,7 +86,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_multiple_errors() throws Exception {
+    public void testInsertNewProject_multiple_errors() throws Exception {
         project_controller = new Project_controller(mockUpdatableView);
         project_controller.createProject("", "0", "1/1/1112", "1/1/1110", "description");
         assertEquals("project has multiple errors method", "updateCreateProject", mockUpdatableView.get_called_method());
@@ -157,7 +157,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_A_0() throws Exception {
+    public void testInsertNewProject_A_0() throws Exception {
         Project projectA = new Project("A", 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -170,7 +170,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_ZZZZZZZZZZZZZZZZZZZZZZZZZ_0() throws Exception {
+    public void testInsertNewProject_ZZZZZZZZZZZZZZZZZZZZZZZZZ_0() throws Exception {
         Project projectA = new Project("ZZZZZZZZZZZZZZZZZZZZZZZZZ", 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -183,7 +183,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_AB_0() throws Exception {
+    public void testInsertNewProject_AB_0() throws Exception {
         Project projectA = new Project("AB", 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -196,7 +196,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_ZZZZZZZZZZZZZZZZZZZZZZZY_0() throws Exception {
+    public void testInsertNewProject_ZZZZZZZZZZZZZZZZZZZZZZZY_0() throws Exception {
         Project projectA = new Project("ZZZZZZZZZZZZZZZZZZZZZZZY", 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -209,7 +209,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_PROJECT_0() throws Exception {
+    public void testInsertNewProject_PROJECT_0() throws Exception {
         Project projectA = new Project("PROJECT", 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -222,7 +222,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_0_0() throws Exception {
+    public void testInsertNewProject_0_0() throws Exception {
         Project projectA = new Project("0", 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -235,7 +235,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_1234567890123456789012345_0() throws Exception {
+    public void testInsertNewProject_1234567890123456789012345_0() throws Exception {
         Project projectA = new Project("1234567890123456789012345", 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -248,7 +248,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_01_0() throws Exception {
+    public void testInsertNewProject_01_0() throws Exception {
         Project projectA = new Project("01", 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -261,7 +261,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_123456789012345678901234_0() throws Exception {
+    public void testInsertNewProject_123456789012345678901234_0() throws Exception {
         Project projectA = new Project("123456789012345678901234", 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -274,7 +274,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_125845_0() throws Exception {
+    public void testInsertNewProject_125845_0() throws Exception {
         Project projectA = new Project("125845", 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -287,7 +287,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_PROJECT125845_0() throws Exception {
+    public void testInsertNewProject_PROJECT125845_0() throws Exception {
         Project projectA = new Project("PROJECT125845", 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -300,7 +300,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_A_1000000000() throws Exception {
+    public void testInsertNewProject_A_1000000000() throws Exception {
         Project projectA = new Project("A", 1000000000d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -313,7 +313,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_ZZZZZZZZZZZZZZZZZZZZZZZZZ_1000000000() throws Exception {
+    public void testInsertNewProject_ZZZZZZZZZZZZZZZZZZZZZZZZZ_1000000000() throws Exception {
         Project projectA = new Project("ZZZZZZZZZZZZZZZZZZZZZZZZZ", 1000000000d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -326,7 +326,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_AB_1000000000() throws Exception {
+    public void testInsertNewProject_AB_1000000000() throws Exception {
         Project projectA = new Project("AB", 1000000000d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -339,7 +339,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_ZZZZZZZZZZZZZZZZZZZZZZZZY_1000000000() throws Exception {
+    public void testInsertNewProject_ZZZZZZZZZZZZZZZZZZZZZZZZY_1000000000() throws Exception {
         Project projectA = new Project("ZZZZZZZZZZZZZZZZZZZZZZZZY", 1000000000d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -352,7 +352,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_PROJECT_1000000000() throws Exception {
+    public void testInsertNewProject_PROJECT_1000000000() throws Exception {
         Project projectA = new Project("PROJECT", 1000000000d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -365,7 +365,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_125845_1000000000() throws Exception {
+    public void testInsertNewProject_125845_1000000000() throws Exception {
         Project projectA = new Project("125845", 1000000000d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -378,7 +378,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_PROJECT125845_1000000000() throws Exception {
+    public void testInsertNewProject_PROJECT125845_1000000000() throws Exception {
         Project projectA = new Project("PROJECT125845", 1000000000d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -391,7 +391,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_PROJECT_1() throws Exception {
+    public void testInsertNewProject_PROJECT_1() throws Exception {
         Project projectA = new Project("PROJECT", 1d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -404,7 +404,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_125845_1() throws Exception {
+    public void testInsertNewProject_125845_1() throws Exception {
         Project projectA = new Project("125845", 1d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -417,7 +417,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_PROJECT125845_1() throws Exception {
+    public void testInsertNewProject_PROJECT125845_1() throws Exception {
         Project projectA = new Project("PROJECT125845", 1d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -430,7 +430,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_PROJECT_999999999() throws Exception {
+    public void testInsertNewProject_PROJECT_999999999() throws Exception {
         Project projectA = new Project("PROJECT", 999999999d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -443,7 +443,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_125845_999999999() throws Exception {
+    public void testInsertNewProject_125845_999999999() throws Exception {
         Project projectA = new Project("125845", 999999999d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -456,7 +456,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_PROJECT125845_999999999() throws Exception {
+    public void testInsertNewProject_PROJECT125845_999999999() throws Exception {
         Project projectA = new Project("PROJECT125845", 999999999d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -469,7 +469,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_AB_1() throws Exception {
+    public void testInsertNewProject_AB_1() throws Exception {
         Project projectA = new Project("AB", 1d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -482,7 +482,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_12_1() throws Exception {
+    public void testInsertNewProject_12_1() throws Exception {
         Project projectA = new Project("12", 1d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -495,7 +495,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_ZZZZZZZZZZZZZZZZZZZZZZZY_999999999() throws Exception {
+    public void testInsertNewProject_ZZZZZZZZZZZZZZZZZZZZZZZY_999999999() throws Exception {
         Project projectA = new Project("ZZZZZZZZZZZZZZZZZZZZZZZY", 999999999d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -508,7 +508,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_123456789012345678901234_999999999() throws Exception {
+    public void testInsertNewProject_123456789012345678901234_999999999() throws Exception {
         Project projectA = new Project("123456789012345678901234", 999999999d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -521,7 +521,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_AB_999999999() throws Exception {
+    public void testInsertNewProject_AB_999999999() throws Exception {
         Project projectA = new Project("AB", 999999999d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -534,7 +534,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_12_999999999() throws Exception {
+    public void testInsertNewProject_12_999999999() throws Exception {
         Project projectA = new Project("12", 999999999d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -547,7 +547,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_ZZZZZZZZZZZZZZZZZZZZZZZY_1() throws Exception {
+    public void testInsertNewProject_ZZZZZZZZZZZZZZZZZZZZZZZY_1() throws Exception {
         Project projectA = new Project("ZZZZZZZZZZZZZZZZZZZZZZZY", 1d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);
@@ -560,7 +560,7 @@ public class ProjectTest extends TestCase {
     }
 
     @Test
-    public void testCreateProject_123456789012345678901234_1() throws Exception {
+    public void testInsertNewProject_123456789012345678901234_1() throws Exception {
         Project projectA = new Project("123456789012345678901234", 1d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), "description");
         int insertedProjectID = project_model.insertNewProject(projectA);
         assertTrue(insertedProjectID != Database.ERROR);

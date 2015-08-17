@@ -41,7 +41,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_A_0() throws Exception {
+    public void testInsertNewActitivity_A_0() throws Exception {
         Activity activityA = new Activity("A", "description", 2, 2, 2, 2, 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -56,7 +56,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_ZZZZZZZZZZZZZZZZZZZZZZZZZ_0() throws Exception {
+    public void testInsertNewActitivity_ZZZZZZZZZZZZZZZZZZZZZZZZZ_0() throws Exception {
         Activity activityA = new Activity("ZZZZZZZZZZZZZZZZZZZZZZZZZ", "description", 2, 2, 2, 2, 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -71,7 +71,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_AB_0() throws Exception {
+    public void testInsertNewActitivity_AB_0() throws Exception {
         Activity activityA = new Activity("AB", "description", 2, 2, 2, 2, 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -86,7 +86,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_ZZZZZZZZZZZZZZZZZZZZZZZY_0() throws Exception {
+    public void testInsertNewActitivity_ZZZZZZZZZZZZZZZZZZZZZZZY_0() throws Exception {
         Activity activityA = new Activity("ZZZZZZZZZZZZZZZZZZZZZZZY", "description", 2, 2, 2, 2, 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -101,7 +101,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_PROJECT_0() throws Exception {
+    public void testInsertNewActitivity_PROJECT_0() throws Exception {
         Activity activityA = new Activity("PROJECT", "description", 2, 2, 2, 2, 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -116,7 +116,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_0_0() throws Exception {
+    public void testInsertNewActitivity_0_0() throws Exception {
         Activity activityA = new Activity("0", "description", 2, 2, 2, 2, 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -131,7 +131,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_1234567890123456789012345_0() throws Exception {
+    public void testInsertNewActitivity_1234567890123456789012345_0() throws Exception {
         Activity activityA = new Activity("1234567890123456789012345", "description", 2, 2, 2, 2, 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -146,7 +146,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_01_0() throws Exception {
+    public void testInsertNewActitivity_01_0() throws Exception {
         Activity activityA = new Activity("01", "description", 2, 2, 2, 2, 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -161,7 +161,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_123456789012345678901234_0() throws Exception {
+    public void testInsertNewActitivity_123456789012345678901234_0() throws Exception {
         Activity activityA = new Activity("123456789012345678901234", "description", 2, 2, 2, 2, 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -176,7 +176,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_125845_0() throws Exception {
+    public void testInsertNewActitivity_125845_0() throws Exception {
         Activity activityA = new Activity("125845", "description", 2, 2, 2, 2, 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -191,7 +191,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_PROJECT125845_0() throws Exception {
+    public void testInsertNewActitivity_PROJECT125845_0() throws Exception {
         Activity activityA = new Activity("PROJECT125845", "description", 2, 2, 2, 2, 0d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -206,7 +206,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_A_1000000000() throws Exception {
+    public void testInsertNewActitivity_A_1000000000() throws Exception {
         Activity activityA = new Activity("A", "description", 2, 2, 2, 2, 1000000000d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -221,7 +221,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_ZZZZZZZZZZZZZZZZZZZZZZZZZ_1000000000() throws Exception {
+    public void testInsertNewActitivity_ZZZZZZZZZZZZZZZZZZZZZZZZZ_1000000000() throws Exception {
         Activity activityA = new Activity("ZZZZZZZZZZZZZZZZZZZZZZZZZ", "description", 2, 2, 2, 2, 1000000000d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -236,7 +236,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_AB_1000000000() throws Exception {
+    public void testInsertNewActitivity_AB_1000000000() throws Exception {
         Activity activityA = new Activity("AB", "description", 2, 2, 2, 2, 1000000000d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -251,7 +251,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_ZZZZZZZZZZZZZZZZZZZZZZZZY_1000000000() throws Exception {
+    public void testInsertNewActitivity_ZZZZZZZZZZZZZZZZZZZZZZZZY_1000000000() throws Exception {
         Activity activityA = new Activity("ZZZZZZZZZZZZZZZZZZZZZZZZY", "description", 2, 2, 2, 2, 1000000000d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -266,7 +266,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_PROJECT_1000000000() throws Exception {
+    public void testInsertNewActitivity_PROJECT_1000000000() throws Exception {
         Activity activityA = new Activity("PROJECT", "description", 2, 2, 2, 2, 1000000000d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -281,7 +281,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_125845_1000000000() throws Exception {
+    public void testInsertNewActitivity_125845_1000000000() throws Exception {
         Activity activityA = new Activity("125845", "description", 2, 2, 2, 2, 1000000000d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -296,7 +296,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_PROJECT125845_1000000000() throws Exception {
+    public void testInsertNewActitivity_PROJECT125845_1000000000() throws Exception {
         Activity activityA = new Activity("PROJECT125845", "description", 2, 2, 2, 2, 1000000000d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -311,7 +311,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_PROJECT_1() throws Exception {
+    public void testInsertNewActitivity_PROJECT_1() throws Exception {
         Activity activityA = new Activity("PROJECT", "description", 2, 2, 2, 2, 1d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -326,7 +326,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_125845_1() throws Exception {
+    public void testInsertNewActitivity_125845_1() throws Exception {
         Activity activityA = new Activity("125845", "description", 2, 2, 2, 2, 1d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -341,7 +341,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_PROJECT125845_1() throws Exception {
+    public void testInsertNewActitivity_PROJECT125845_1() throws Exception {
         Activity activityA = new Activity("PROJECT125845", "description", 2, 2, 2, 2, 1d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -356,7 +356,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_PROJECT_999999999() throws Exception {
+    public void testInsertNewActitivity_PROJECT_999999999() throws Exception {
         Activity activityA = new Activity("PROJECT", "description", 2, 2, 2, 2, 999999999d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -371,7 +371,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_125845_999999999() throws Exception {
+    public void testInsertNewActitivity_125845_999999999() throws Exception {
         Activity activityA = new Activity("125845", "description", 2, 2, 2, 2, 999999999d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -386,7 +386,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_PROJECT125845_999999999() throws Exception {
+    public void testInsertNewActitivity_PROJECT125845_999999999() throws Exception {
         Activity activityA = new Activity("PROJECT125845", "description", 2, 2, 2, 2, 999999999d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -401,7 +401,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_AB_1() throws Exception {
+    public void testInsertNewActitivity_AB_1() throws Exception {
         Activity activityA = new Activity("AB", "description", 2, 2, 2, 2, 1d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -416,7 +416,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_12_1() throws Exception {
+    public void testInsertNewActitivity_12_1() throws Exception {
         Activity activityA = new Activity("12", "description", 2, 2, 2, 2, 1d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -431,7 +431,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_ZZZZZZZZZZZZZZZZZZZZZZZY_999999999() throws Exception {
+    public void testInsertNewActitivity_ZZZZZZZZZZZZZZZZZZZZZZZY_999999999() throws Exception {
         Activity activityA = new Activity("ZZZZZZZZZZZZZZZZZZZZZZZY", "description", 2, 2, 2, 2, 999999999d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -446,7 +446,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_123456789012345678901234_999999999() throws Exception {
+    public void testInsertNewActitivity_123456789012345678901234_999999999() throws Exception {
         Activity activityA = new Activity("123456789012345678901234", "description", 2, 2, 2, 2, 999999999d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -461,7 +461,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_AB_999999999() throws Exception {
+    public void testInsertNewActitivity_AB_999999999() throws Exception {
         Activity activityA = new Activity("AB", "description", 2, 2, 2, 2, 999999999d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -476,7 +476,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_12_999999999() throws Exception {
+    public void testInsertNewActitivity_12_999999999() throws Exception {
         Activity activityA = new Activity("12", "description", 2, 2, 2, 2, 999999999d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -491,7 +491,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_ZZZZZZZZZZZZZZZZZZZZZZZY_1() throws Exception {
+    public void testInsertNewActitivity_ZZZZZZZZZZZZZZZZZZZZZZZY_1() throws Exception {
         Activity activityA = new Activity("ZZZZZZZZZZZZZZZZZZZZZZZY", "description", 2, 2, 2, 2, 1d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
@@ -506,7 +506,7 @@ public class ActivityTest extends TestCase {
     }
 
     @Test
-    public void testCreateActivity_123456789012345678901234_1() throws Exception {
+    public void testInsertNewActitivity_123456789012345678901234_1() throws Exception {
         Activity activityA = new Activity("123456789012345678901234", "description", 2, 2, 2, 2, 1d, DateHelper.parse("11/11/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), DateHelper.parse("11/12/2011", ninefoo.config.Config.DATE_FORMAT_SHORT), 1, 1, null);
         activityA.setProject(project);
         activityA.setMember(member);
